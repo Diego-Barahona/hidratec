@@ -75,7 +75,7 @@ class Client extends CI_Controller {
 				} 	
 			}     
         } else {
-			redirect('Home/login', 'refresh')
+			redirect('Home/login', 'refresh');
         }
     }    
 

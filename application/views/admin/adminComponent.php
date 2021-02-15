@@ -17,7 +17,7 @@
 
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
           <div class="card-body">
-           En esta sección podra cargar todas las ubicaciones existentes donde se puede encontrar almacenada una orden a nivel de taller.
+           En esta sección podra cargar todos los tipos de componentes que recibe la empresa para terminos de reparación , fabricación y mantención.
           </div>
         </div>
       </div>
@@ -30,11 +30,11 @@
       </div>
       <div class="card-body">
       <div class="table-responsive">
-          <table class="table table-bordered" id="table-location" width="100%" cellspacing="0">
+          <table class="table table-bordered" id="table-component" width="100%" cellspacing="0">
             <thead>
               <tr>
                 <th>Nombre</th>
-                <th>Descripción</th>
+                <th>Estado</th>
                 <th>Editar</th>
                 <th>Bloquear/Desbloquear</th>
               </tr>
@@ -51,3 +51,41 @@
 
   </div>
 </div>
+
+<div class="modal fade bd-example-modal-lg" id="addComponent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="title">Crear Componente</h5>
+        <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm">
+            <p id="UserModalInfo"></p>
+          </div>
+        </div>
+      
+        <div class="form-group">
+        
+        <form>
+            <input type="hidden" class="form-control" id="id" name="id" >
+            <div class="form-group" id="frm_name">
+                <label>Nombre</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese nombre">
+                 <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group float-right">
+            <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" id="createComponent" class="btn btn-primary">Guardar</button>
+                    </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script src="<?php echo base_url(); ?>assets/js_admin/adminComponent.js"></script>
