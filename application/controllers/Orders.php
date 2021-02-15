@@ -7,23 +7,41 @@ class Orders extends CI_Controller
     { 
         
         if ($this->accesscontrol->checkAuth()['correct']) {
-            $this->load->view('admin/header');
+            $this->load->view('shared/super_admin/header');
             $this->load->view('admin/adminOrders');
-            $this->load->view('admin/footer');
+            $this->load->view('shared/super_admin/footer');
         } else {
             redirect(base_url() . 'login', 'refresh');
         }
     }
 
+
+    public function newOrder()
+    { 
+        
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $this->load->view('shared/super_admin/header');
+            $this->load->view('admin/registerOrder');
+            $this->load->view('shared/super_admin/footer');
+        } else {
+            redirect(base_url() . 'login', 'refresh');
+        }
+    }
+
+
+
+
+
     public function stagesOrder()
     { 
         
         if ($this->accesscontrol->checkAuth()['correct']) {
-            $this->load->view('admin/header');
+            $this->load->view('shared/super_admin/header');
             $this->load->view('admin/stagesOrder');
-            $this->load->view('admin/footer');
+            $this->load->view('shared/super_admin/footer');
         } else {
             redirect(base_url() . 'login', 'refresh');
         }
     }
 }
+
