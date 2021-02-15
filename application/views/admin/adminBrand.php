@@ -34,7 +34,7 @@
             <thead>
               <tr>
                 <th>Nombre</th>
-                <th>Descripción</th>
+                <th>Estado</th>
                 <th>Editar</th>
                 <th>Bloquear/Desbloquear</th>
               </tr>
@@ -51,4 +51,36 @@
   </div>
 </div>
 
+<div class="modal fade bd-example-modal-lg" id="addBrand" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="title">Crear marca</h5>
+        <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm">
+            <p id="UserModalInfo"></p>
+          </div>
+        </div>
+        <div class="form-group">
+        <form>
+            <input type="hidden" class="form-control" id="id" name="id" >
+            <div class="form-group" id="frm_name">
+                <label>Nombre</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese nombre">
+                 <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group float-right">
+            <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" id="createBrand" class="btn btn-primary">Guardar</button>
+          </div>
 
+      </form>
+    </div>
+  </div>
+</div>
+<script src="<?php echo base_url(); ?>assets/js_admin/adminBrand.js"></script>
