@@ -14,72 +14,57 @@
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="col-md-4 mb-3">
-                        <label for="actividad">Fecha de ingreso</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="rut_empresa" id="rut_empresa" placeholder="" aria-describedby="inputGroupPrepend3">
-                            <div class="invalid-feedback rut_empresa" style="display: none;  color:red">
-                                Ingrese un rut porfavor.
-                            </div>
+                        <label for="actividad">Numero de OT</label>
+                        <div class="input-group" id='frm_ot_number'>
+                            <input type="text" class="form-control" name="ot_number" id="ot_number" placeholder="" aria-describedby="inputGroupPrepend3">
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="actividad">Empresa</label>
-                        <select class="custom-select d-block w-100" id="servicio" required="">
-                            <option value="0">Opciones...</option>
-                            <option value="Reparación">AC PERFORACIONES </option>
-                            <option value="Fabricación">CASERONES </option>
+                    <div class="col-md-4 mb-3" id='frm_enterprise'>
+                        <label>Empresa</label>
+                        <select class="form-select form-control" name="enterprise" id="enterprise" >
+                            <option></option>
                         </select>
-                        <div class="invalid-feedback servicio" style="display: none;  color:red">
-                            Seleccione un servicio porfavor.
-                        </div>
+                        <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-md-4 mb-3">
-                    <label for="actividad">Tipo servicio</label>
-                        <select class="custom-select d-block w-100" id="servicio" required="">
-                            <option value="0">Opciones...</option>
+                    <div class="col-md-4 mb-3" id='frm_service'>
+                        <label>Tipo servicio</label>
+                        <select class="form-select form-control" name="service" id="service" required="">
+                            <option></option>
                             <option value="Reparación">Reparación</option>
                             <option value="Fabricación">Fabricación</option>
                             <option value="Mantención">Mantención</option>
                         </select>
-                        <div class="invalid-feedback servicio" style="display: none;  color:red">
-                            Seleccione un servicio porfavor.
-                        </div>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="row mb-2">
-                    
-                   
-                    <div class="col-md-4 mb-3">
-                        <label for="actividad">Tipo de componente</label>
-                        <select class="custom-select d-block w-100" id="servicio" required="">
-                            <option value="0">Opciones...</option>
-                            <option value="Reparación">Reparación</option>
-                            <option value="Fabricación">Fabricación</option>
+                    <div class="col-md-4 mb-3" id="frm_component">
+                        <label>Componente</label>
+                        <select class="form-select form-control" id="component" name="component" >
+                            <option></option>
                         </select>
-                        <div class="invalid-feedback servicio" style="display: none;  color:red">
-                            Seleccione un servicio porfavor.
-                        </div>
+                        <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-md-4 mb-3">
+
+                    <div class="col-md-4 mb-3" id="frm_priority">
                         <label for="actividad">Tipo de prioridad</label>
-                        <select class="custom-select d-block w-100" id="servicio" required="">
-                            <option value="0">Opciones...</option>
+                        <select class="custom-select d-block w-100" id="priority" name="priority" required="">
+                            <option></option>
                             <option value="Baja">BAJA</option>
                             <option value="Media">MEDIA</option>
                             <option value="Alta">ALTA</option>
                         </select>
-                        <div class="invalid-feedback servicio" style="display: none;  color:red">
-                            Seleccione un servicio porfavor.
-                        </div>
-                    </div>
+                        <div class="invalid-feedback"></div>
+                    </div> 
                 </div>
                 <div class="row mb-2">
                     <div class="col-md-12 mb-3">
-                        <label for="actividad">Nota</label>
+                        <label for="actividad">Descripción</label>
                         <div class="input-group">
-                            <textarea type="text" class="form-control" rows="5" name="descripcion" id="descripcion" placeholder="" aria-describedby="inputGroupPrepend3"></textarea>
+                            <textarea type="text" class="form-control" rows="2" name="description" id="description" placeholder="" aria-describedby="inputGroupPrepend3"></textarea>
                             <div class="invalid-feedback descripcion" style="display: none;  color:red">
-                                Ingrese una nota porfavor.
+                                Ingrese una descripción porfavor.
                             </div>
                         </div>
                     </div>  
@@ -97,20 +82,16 @@
                 <div class="row mb-2">
                     <div class="col-md-4 mb-3">
                         <label for="actividad">Fecha de ingreso</label>
-                        <div class="input-group">
+                        <div class="input-group" id="frm_date_admission">
                             <input type="text" class="form-control" name="date_admission" id="date_admission" placeholder="" aria-describedby="inputGroupPrepend3">
-                            <div class="invalid-feedback rut_empresa" style="display: none;  color:red">
-                                Ingrese una fecha porfavor.
-                            </div>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                     <label for="actividad">Dias para cotización</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="rut_empresa" id="rut_empresa" placeholder="" aria-describedby="inputGroupPrepend3">
-                            <div class="invalid-feedback rut_empresa" style="display: none;  color:red">
-                                Ingrese numero de días porfavor.
-                            </div>
+                        <div class="input-group" id="frm_days_quotation">
+                            <input type="number" min="0" class="form-control" name="days_quotation" id="days_quotation" placeholder="" aria-describedby="inputGroupPrepend3">
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div> 
                 </div>   
@@ -125,59 +106,44 @@
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="col-md-4 mb-3">
-          
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                     <label class="custom-control-label" for="customSwitch1">Evaluación</label>
+                                <input type="checkbox" class="custom-control-input" id="check_evaluation" >
+                                     <label class="custom-control-label" for="check_evaluation">Evaluación</label>
                                      </div>
-                            
                         </div>
                     <div class="col-md-4 mb-3">
-                        
                             <div class="custom-control custom-switch">
-                                 <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                 <label class="custom-control-label" for="customSwitch1">Informe Técnico</label>
+                                 <input type="checkbox" class="custom-control-input" id="check_report_technical">
+                                 <label class="custom-control-label" for="check_report_technical">Informe Técnico</label>
                             </div>
-                 
                      </div>
                      <div class="col-md-4 mb-3">
                                <div class="custom-control custom-switch">
-                              <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                      <label class="custom-control-label" for="customSwitch1">Prueba Hidráulica</label>
+                               <input type="checkbox" class="custom-control-input" id="check_hydraulic_test">
+                                      <label class="custom-control-label" for="check_hydraulic_test">Prueba Hidráulica</label>
                              </div>
                         
                         </div>
                      </div>
-
-                     <div class="row mb-2">
-                     <div class="col-md-4 mb-3">
-                         <label for="actividad">Asignar técnico</label>
-                             <select class="custom-select d-block w-100" id="servicio" required="">
-                               <option value="0">Opciones...</option>
-                               <option value="J">MARCOS PLAZA</option>
-                               <option value="M">JUAN LOPEZ </option>
-                             </select>
-                         <div class="invalid-feedback servicio" style="display: none;  color:red">
-                            Seleccione un técnico por favor.
-                         </div>
+                    <div class="row mb-2">
+                    <div class="col-md-4 mb-3" id="frm_technical" style="display:none">
+                        <label>Asignar técnico para la evaluación</label>
+                        <select class="form-select form-control" id="technical" name="technical" >
+                            <option></option>
+                        </select>
+                        <div class="invalid-feedback"></div>
                     </div>
                     </div>
                     <div class="row mb-2">
-                     
-                          
-                    <div style="padding-right: 40px">
-                           <button class="btn btn-success " type='button' data-toggle="modal" data-target="#addComponent" id="btn"> Crear OT</button>
-                            </div>
-                    </div>
-
-
-
-                
+                </div>
             </div>
+        </div>
+        <div style="margin-right: 40px; margin-bottom: 40px;">
+                <button style="float: right" class="btn btn-success" type='button' id="btn"> Crear OT</button>
         </div>
     </div>
 </div>
-
+<script src="<?php echo base_url(); ?>assets/js_admin/createOrder.js"></script>
 <script>
   
   $( function() {
@@ -186,7 +152,8 @@
       buttonImageOnly: true,
       buttonText: "Select date",
       changeMonth: true,
-      changeYear: true
+      changeYear: true,
+      dateFormat: 'yy-mm-dd',
     });
   } );
   </script>

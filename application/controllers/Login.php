@@ -69,6 +69,7 @@ class Login extends CI_Controller
                             //Consulta para obtener el rango del usuario
                             $user_data_rol = $this->LoginModel->checkRole($user_data->id, $table_rol, $table_user);  
                             $data = array(
+                                'id' => $user_data->id,
                                 'rut' => $user_data->rut,
                                 'full_name' => $user_data->full_name,
                                 'email' =>  $user_data->email,

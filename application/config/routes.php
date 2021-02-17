@@ -62,9 +62,16 @@ $route['api/new_password']['POST']= 'Login/new_password';
 /* $route['login']['GET']= 'Login/index'; */
 
 //views admin OT 
-$route['newOrder']['GET']='Orders/newOrder';
+$route['newOrder']['GET']='Orders/newOrder'; //view load create new order
+$route['api/createOrder']['POST']='Orders/createOrder'; //controller action create new order
+
 $route['stagesOrder']['GET']='Orders/stagesOrder';
 $route['adminOrders']['GET']='Orders/adminOrders';
+$route['api/getOrders']['GET']='Orders/getOrders';
+$route['api/getFieldsOrder']['GET']='Orders/getFieldsOrder';
+
+
+
 //views admin resources
 $route['adminComponent']['GET']='Component/adminComponent';
 $route['adminBrand']['GET']='Brand/adminBrand';
