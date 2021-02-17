@@ -4,7 +4,6 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item active">Órdenes de trabajo / Lista general</li>
     </ol>
-
     <div class="accordion" id="accordionExample">
       <div class="card mb-3">
         <div class="card-header" id="headingOne">
@@ -22,8 +21,6 @@
         </div>
       </div>
     </div>
-
-
     <div class="accordion" id="accordionExample">
       <div class="card mb-3">
         <div class="card-header" id="headingOne">
@@ -36,10 +33,6 @@
 
       </div>
     </div>
-   
-
-   
-
     <div class="card mb-3">
       <div class="card-header">
         <i class="fas fa-table"></i>
@@ -47,36 +40,24 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-bordered" id="table-location" width="100%" cellspacing="0">
+          <table class="table table-bordered" id="table_orders" width="100%" cellspacing="0">
             <thead>
               <tr>
                 <th>N° de OT </th>
                 <th>Fecha de ingreso </th>
                 <th>Cliente</th>
                 <th>Componente </th>
-                <th>Estado </th>
+                <th>Estado</th>
+                <th>Tipo de servicio</th>
                 <th>Administrar</th>
                 <th>Editar</th>
                 <th>Imagenes</th>
               </tr>
             </thead>
-            <body>
-              <tr>
-                <th>2334</th>
-                <th>9/12/2021</th>
-                <th>AC perforaciones</th>
-                <th>Valvula </th>
-                <th>En evaluación </th>
-                <th><a href="<?php echo base_url(); ?>stagesOrder">Administrar</a></th>
-                <th><a href="#">Detalles</a></th>
-                <th><a href="#">Imagenes</a></th>
-              </tr>
-            </body>
           </table>
         </div>
       </div>
     </div>
-    
     <div class="row mb-3"></div>
   </div>
 </div>
