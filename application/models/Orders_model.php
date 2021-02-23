@@ -10,14 +10,23 @@ class Orders_model extends CI_Model
 
     public function getOrder($id)
     {
-        $this->db->select('ot.id number_ot, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, c.name component, s.id state, s.name state' );
-        $this->db->from('ot'); 
-        $this->db->join('enterprise e', 'e.id = ot.enterprise_id','left');
-        $this->db->join('component c', 'c.id = ot.component_id','left');
-        $this->db->join('ot_state os', 'os.ot_id = ot.id','left');
-        $this->db->join('state s', 's.id = os.state_id','left');
-        $this->db->where('ot.id', $id);
-        return $query = $this->db->get()->row_array();
+        $query = "SELECT ot.id number_ot, ot.days_quote days_quote, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, c.name component, s.name state
+                  FROM ot
+                  JOIN enterprise e ON ot.enterprise_id = e.id
+                  JOIN component c ON ot.component_id = c.id
+                  JOIN ot_state os ON ot.id = os.ot_id
+                  JOIN state s ON os.state_id = s.id
+                  WHERE os.id = (
+                      SELECT f.id 
+                      FROM ot_state f 
+                      WHERE f.ot_id = ".$id." AND f.date_update = (
+                            SELECT MAX(j.date_update)
+                            FROM ot_state j
+                            WHERE j.ot_id = ".$id."
+                          ) 
+                    )
+        "; 
+        return $this->db->query($query)->row_array();;
     }
 
     public function getStates()
@@ -26,22 +35,32 @@ class Orders_model extends CI_Model
     }
 
     public function getOrders()
-    {
-        $this->db->select('ot.id number_ot, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, c.name component, s.name state' );
-        $this->db->from('ot'); 
-        $this->db->join('enterprise e', 'e.id = ot.enterprise_id','left');
-        $this->db->join('component c', 'c.id = ot.component_id','left');
-        $this->db->join('ot_state os', 'os.ot_id = ot.id','left');
-        $this->db->join('state s', 's.id = os.state_id','left');
-        return $query = $this->db->get()->result();
+    {        
+        $query = "SELECT ot.id number_ot, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, c.name component, s.name state
+                  FROM ot
+                  JOIN enterprise e ON ot.enterprise_id = e.id
+                  JOIN component c ON ot.component_id = c.id
+                  JOIN ot_state os ON ot.id = os.ot_id
+                  JOIN state s ON os.state_id = s.id
+                  WHERE os.id = (
+                      SELECT f.id 
+                      FROM ot_state f 
+                      WHERE f.ot_id = ot.id AND f.date_update = (
+                            SELECT MAX(j.date_update)
+                            FROM ot_state j
+                            WHERE j.ot_id = ot.id
+                          ) 
+                    )
+        "; 
+        return $this->db->query($query)->result_array();
     }
-    
+
     public function getComponents(){
-        return $query=$this->db->get('component')->result();
+        return $query = $this->db->get_where('component', array('state' => 1))->result_array();
     }
 
     public function getEnterprises(){
-        return $query=$this->db->get('enterprise')->result();
+        return $query = $this->db->get_where('enterprise', array('state' => 1))->result_array();
     }
 
     public function getTechnicals()
@@ -50,7 +69,8 @@ class Orders_model extends CI_Model
         $this->db->from('user u'); 
         $this->db->join('user_role ur', 'ur.user_id = u.id','left');
         $this->db->where('ur.role_id', 3);
-        return $query = $this->db->get()->result();
+        $this->db->where('u.state', 1);
+        return $query = $this->db->get()->result_array();
     }
 
     public function createOrder($data, $user_id){
@@ -118,6 +138,15 @@ class Orders_model extends CI_Model
             'ot_id' => $id_ot,
         );
         if($this->db->insert('hydraulic_test', $datos_ht)) return true; else return false;
+    }
+
+    public function changeStateOrder($data, $user_id){
+        $datos_ot_state = array(
+            'ot_id' => $data['ot_number'],
+            'state_id' => $data['state'],
+            'user_id' => $user_id,
+        );
+        if($this->db->insert('ot_state', $datos_ot_state)) return true; else return false; 
     }
 
 }

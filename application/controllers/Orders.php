@@ -9,9 +9,6 @@ class Orders extends CI_Controller
         $this->load->helper('ot_rules');
 	}
 
-
-
-	
     public function adminOrders()
     { 
         
@@ -128,16 +125,20 @@ class Orders extends CI_Controller
         }
     }
 
- /*    public function stagesOrderSearch()
+    
+    public function changeStateOrder()
     { 
         if ($this->accesscontrol->checkAuth()['correct']) {
-            $data = $this->input->post('data_ot');
-            $id = $data['ot_number'];
-            $order = $this->Orders_model->getOrder($id);
-            $this->response->sendJSONResponse($clients, $roles, $enterprises, $sellers));
+            $data = $this->input->post('data');
+            $id = $_SESSION['id'];
+            if($this->Orders_model->changeStateOrder($data, $id)){
+            /*Crear los informes de ser necesario*/
+                $msg['msg'] = "Estado cambiado con éxito.";
+                $this->response->sendJSONResponse($msg);
+            }	
         } else {
             redirect(base_url() . 'login', 'refresh');
         }
-    } */
+    }
 }
 
