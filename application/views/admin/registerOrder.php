@@ -80,7 +80,7 @@
 
             <div class="card-body">
                 <div class="row mb-2">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-4 mb-3 ">
                         <label for="actividad">Fecha de ingreso</label>
                         <div class="input-group" id="frm_date_admission">
                             <input type="text" class="form-control" name="date_admission" id="date_admission" placeholder="" aria-describedby="inputGroupPrepend3">
@@ -148,9 +148,9 @@
   
   $( function() {
     $( "#date_admission" ).datepicker({
-      showOn: "button",
-      buttonImageOnly: true,
-      buttonText: "Select date",
+       showOn: "button",
+      
+      buttonText: "Calendario",
       changeMonth: true,
       changeYear: true,
       dateFormat: 'yy-mm-dd',

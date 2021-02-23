@@ -1,3 +1,7 @@
+<script src="<?php echo base_url(); ?>assets/vendor/fileinput/fileinput.js"></script>
+<link href="<?php echo base_url(); ?>assets/vendor/fileinput/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+
+
 <div id="content-wrapper">
   <div class="container-fluid mb-5">
 
@@ -61,5 +65,7 @@
     <div class="row mb-3"></div>
   </div>
 </div>
+
+
 
 <script src="<?php echo base_url(); ?>assets/js_admin/adminOrders.js"></script>

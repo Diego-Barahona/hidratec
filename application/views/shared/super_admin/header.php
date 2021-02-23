@@ -70,7 +70,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="<?php echo base_url();?>counterOrders">
                     <i class="fas fa-home"></i>
                     <span>Inicio</span></a>
                     <hr class="sidebar-divider">

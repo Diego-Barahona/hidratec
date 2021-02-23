@@ -11,6 +11,15 @@ $(document).on({
 	},
 });
 
+$("#name").change(() => { 
+	let name = $("#name").val();
+	if(name){
+		$("#frm_name > input").removeClass("is-invalid");
+	}else{
+		$("#frm_name > input").addClass("is-invalid");
+	}
+});
+
 var edit = false;
 var idEdit = 0;
 let currentName = "_[[][ÑLLKLHHGHJKUUHYT%&%%$%//&%%$%%$$#";
