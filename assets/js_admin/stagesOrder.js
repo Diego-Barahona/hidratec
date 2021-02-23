@@ -1,3 +1,5 @@
+let state = $('#state').val();
+
 getOrders = () => {
 	let xhr = new XMLHttpRequest();
 	xhr.open("get", `${host_url}/api/getOrders`);
@@ -20,6 +22,71 @@ getOrders = () => {
 	xhr.send();
 };
 
+changeState = () => {
+
+    swal({
+        title: `Cambio de estado`,
+        icon: "warning",
+        text: `Esta realmente segur@ de cambiar el estado de la OT:  ${$('#ot_number').val()}?`,
+        buttons: {
+            confirm: {
+                text: `Confirmar`,
+                value: "change",
+            },
+            cancel: {
+                text: "Cancelar",
+                value: "cancelar",
+                visible: true,
+            },
+        },
+    }).then((action) => {
+        if (action == "change") {
+            let state_change = $('#state').val();
+
+            if(state == state_change){
+                swal({
+                    title: "Error",
+                    icon: "error",
+                    text: "La OT ya se encuentra en el estado seleccionado",
+                })
+            }else{
+                data = {
+                    ot_number: $('#ot_number').val(),
+                    state: state_change,
+                }
+                $.ajax({
+                    type: "POST",
+                    url: host_url + 'api/changeStateOrder',
+                    data: {data},
+                    dataType: "json",
+                    success: (result) => {
+                     swal({
+                         title: "Éxito!",
+                         icon: "success",
+                         text: result.msg,
+                         button: "OK",
+                     }).then(() => {
+                        $("#state").val(state_change);
+                        state = state_change;
+                     });
+                    }, 
+                    error: () => {
+                        swal({
+                            title: "Error",
+                            icon: "error",
+                            text: "No se pudo encontrar el recurso",
+                        }).then(() => {
+                            $("body").removeClass("loading");
+                        });
+                    },
+                })   
+            }
+        } else {
+            swal.close();
+        }
+    }); 
+}
+
 const tabla = $('#table_orders').DataTable({
     "columnDefs": [
         {
@@ -34,6 +101,9 @@ const tabla = $('#table_orders').DataTable({
         },
         {
             className: "text-center", "targets": [6] ,
+        },
+        {
+            "width": "10", "targets": [6] , 
         }
     ],
 
@@ -90,9 +160,9 @@ addErrorStyle = errores => {
 	return cadena_error;
 };
 
+$("#btn_change_state").on("click", changeState);
 
 $("#btn_search").on("click", getOrders);
-
 
 $("#btn_create").on('click', () => {
 	window.open(host_url+'newOrder', '_self');

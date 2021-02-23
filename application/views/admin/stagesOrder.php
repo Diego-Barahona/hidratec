@@ -73,8 +73,7 @@
                   <label>Estado</label>
                   <select class="form-select form-control" name="state" id="state">
                     <?php foreach($states as $item) { 
-                      
-                      if($state == $item['id']){
+                      if($state == $item['name']){
                       ?>
                         <option value='<?= $item['id'] ?>' selected="true" name='<?= $item['name'] ?>'><?= $item['name'] ?></option>
                     <?php }else{ ?>  
@@ -83,7 +82,7 @@
                   </select>  
               </div>
               <div class="col-md-2 mb-3" style="margin: auto;">
-                  <button id="btn_ok" type="button" class="btn btn-primary btn-success">Cambiar estado</button>
+                  <button id="btn_change_state" type="button" class="btn btn-primary btn-success">Cambiar estado</button>
               </div> 
           </div>
           <div class="row mb-2">
@@ -106,7 +105,8 @@
     </div>
   </div>
   </div>
-  <?= require("tablesorders.php");?>
+  
+  <?php require('tablesorders.php'); ?>
   <div class="form-group">
     <div class="row mb-2">
       <div class="col-md-12 col-lg-2 control-label">
