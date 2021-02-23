@@ -1,3 +1,6 @@
+
+
+
 $(document).on({
 	ajaxStart: function () {
 		$("body").addClass("loading");
@@ -7,14 +10,18 @@ $(document).on({
     },
 });
 
+
+
+
 $(() => {
     get_orders();
 });
 
+
 $("#newOrder").on('click', () => {
 	window.open(host_url+'newOrder', '_self');
 })
-
+currentName="2428628432869191297121313173";
 /*Funcion para recuperar las ordenes de trabajo*/
 get_orders = () => {
 	let xhr = new XMLHttpRequest();
@@ -78,5 +85,26 @@ $("#table_orders").on("click", "button", function () {
 		let ot = data.number_ot;
 		let url = 'stagesOrder'+'?ot='+ot;
 		window.location.assign(host_url+url);
-    } 
+	}else{
+	if($(this)[0].name == "btn_images"){
+		let ot = data.number_ot;
+		let url = 'adminImages'+'?ot='+ot;
+		window.location.assign(host_url+url);
+    }else{
+		let ot = data.number_ot;
+		let url = 'detailsOrder'+'?ot='+ot;
+		window.location.assign(host_url+url);
+				
+		}
+	}
 });
+
+
+/*Funcion que carga la datatable */
+
+
+
+
+
+    
+

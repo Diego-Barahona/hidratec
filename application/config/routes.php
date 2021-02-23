@@ -64,11 +64,15 @@ $route['api/new_password']['POST']= 'Login/new_password';
 //views admin OT 
 $route['newOrder']['GET']='Orders/newOrder'; //view load create new order
 $route['api/createOrder']['POST']='Orders/createOrder'; //controller action create new order
-
+$route['adminImages']['GET']='Images/adminImages/$1';
 $route['stagesOrder']['GET']='Orders/stagesOrder';
 $route['adminOrders']['GET']='Orders/adminOrders';
 $route['api/getOrders']['GET']='Orders/getOrders';
 $route['api/getFieldsOrder']['GET']='Orders/getFieldsOrder';
+
+//view counter
+
+$route['counterOrders']['GET']='Counter/counterOrders';
 
 
 
@@ -121,4 +125,19 @@ $route['api/createBrand']['POST']='Brand/createBrand';
 $route['api/editBrand']['POST']='Brand/editBrand';
 $route['api/changeStateBrand']['POST']='Brand/changeState';
 $route['api/getBrand']['GET']='Brand/getBrand';
+
+
+//api admin images OT
+
+$route['api/addImage']['POST']  = 'Images/addImage';
+$route['api/upImage/(:num)']['POST']  = 'Images/upImage/$1';
+$route['api/getImagesByOrder/(:num)']['GET']  = 'Images/getImagesByOrder/$1';
+$route['api/editImage/(:num)']['POST']  = 'Images/editImage/$1';
+
+//api counter
+$route['api/counterOrders']['GET'] = 'Counter/getData';
+
+
+
+
 

@@ -8,6 +8,9 @@ class Orders extends CI_Controller
 		$this->load->model('Orders_model');
         $this->load->helper('ot_rules');
 	}
+
+
+
 	
     public function adminOrders()
     { 
