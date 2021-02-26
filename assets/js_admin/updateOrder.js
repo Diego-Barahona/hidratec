@@ -7,9 +7,13 @@ $(document).on({
     },
 });
 
-$(() => {
-    getFields();
-});
+let check_evaluation_old = $('#check_evaluation').is(':checked');
+let check_report_technical_old = $('#check_report_technical').is(':checked');
+let check_hydraulic_test_old = $('#check_hydraulic_test').is(':checked');
+let ot_number_old = $('#ot_number').val();
+let location_old = $('#location').val();
+let service_old = $('#service').val();
+
 
 $("#ot_number").change(() => { 
 	let ot_number = $("#ot_number").val();
@@ -83,99 +87,39 @@ $("#check_evaluation").change(() => {
 	}
 });
 
-
-/* check_evaluation */
-
-let components = []; /*Variable que almacenara los componentes*/
-let enterprises = []; /*Variable que almacenara las empresas*/
-let technicals = []; /*Variable que almacenara los tecnicos*/
-let locations = []; /*Variable que almacenara las ubicaciones*/
-
-/*Funcion para recuperar las ordenes de trabajo*/
-getFields = () => {
-	let xhr = new XMLHttpRequest();
-	xhr.open("get", `${host_url}/api/getFieldsOrder`);
-	xhr.responseType = "json";
-	xhr.addEventListener("load", () => {
-		if (xhr.status === 200) {
-            if(components.length == 0){
-                xhr.response[0].map((u) => {
-                    let option = document.createElement("option"); 
-                    $(option).val(u.id); 
-                    $(option).attr('name', u.name);
-                    $(option).html(u.name); 
-                    $(option).appendTo("#component");
-                    components.push(u.name);
-                });
-            }
-            if(enterprises.length == 0){
-                xhr.response[1].map((u) => {
-                    let option = document.createElement("option"); 
-                    $(option).val(u.id); 
-                    $(option).attr('name', u.name);
-                    $(option).html(u.name); 
-                    $(option).appendTo("#enterprise");
-                    enterprises.push(u.name);
-                });
-            }
-            if(technicals.length == 0){
-                xhr.response[2].map((u) => {
-                    let option = document.createElement("option"); 
-                    $(option).val(u.id); 
-                    $(option).attr('name', u.full_name);
-                    $(option).html(u.full_name); 
-                    $(option).appendTo("#technical");
-                    technicals.push(u.full_name);
-                });
-            }
-            if(locations.length == 0){
-                xhr.response[3].map((u) => {
-                    let option = document.createElement("option"); 
-                    $(option).val(u.id); 
-                    $(option).attr('name', u.name);
-                    $(option).html(u.name); 
-                    $(option).appendTo("#location");
-                    locations.push(u.name);
-                });
-            }
-		} else {
-			swal({
-				title: "Error",
-				icon: "error",
-				text: "Error al obtener las órdenes de trabajo",
-			});
-		}
-	});
-	xhr.send();
-};
-
-createOrder = () => {
+updateOrder = () => {
     let data = {
         ot_number : $('#ot_number').val(),
         enterprise : $('#enterprise').val(),
         service : $('#service').val(),
+		service_old : service_old,
         component : $('#component').val(),
         priority : $('#priority').val(),
-        location: $('#location').val(),
         description : $('#description').val(),
         date_admission : $('#date_admission').val(),
         days_quotation : $('#days_quotation').val(),
+		location: $('#location').val(),
+		location_old : location_old,
+        date_provider_number : $('#date_provider_number').val(),
+        provider_number : $('#provider_number').val(),
         check_evaluation : $('#check_evaluation').is(':checked'),
         check_report_technical : $('#check_report_technical').is(':checked'),
         check_hydraulic_test : $('#check_hydraulic_test').is(':checked'),
-        technical : $('#technical').val(),
+        check_evaluation_old: check_evaluation_old,
+        check_report_technical_old: check_report_technical_old,
+        check_hydraulic_test_old: check_hydraulic_test_old,
+        ot_number_old : ot_number_old, 
     }
-
     $.ajax({
         type: "POST",
-        url: host_url + "api/createOrder",
+        url: host_url + "api/updateOrder",
         data: {data},
         dataType: "json",
         success: () => {
          swal({
              title: "Éxito!",
              icon: "success",
-             text: "órden de trabajo ingresada con éxito",
+             text: "órden de trabajo editada con éxito",
              button: "OK",
          }).then(() => {
             window.location.assign(host_url+"adminOrders");
@@ -236,4 +180,4 @@ addErrorStyle = errores => {
 	return cadena_error;
 };
 
-$("#btn").on("click", createOrder);
+$("#btnUpdate").on("click", updateOrder);
