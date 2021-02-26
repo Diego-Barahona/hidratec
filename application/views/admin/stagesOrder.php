@@ -158,3 +158,16 @@
 </div>
 
 <script src="<?php echo base_url(); ?>assets/js_admin/stagesOrder.js"></script>
+<script>
+$( function() {
+    $( "#date_admission" ).datepicker({
+       showOn: "button",
+      
+      buttonText: "Calendario",
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'yy-mm-dd',
+    });
+  } );
+  </script>
+
