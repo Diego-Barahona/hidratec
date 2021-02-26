@@ -140,6 +140,10 @@ $route['api/editImage/(:num)']['POST']  = 'Images/editImage/$1';
 //api counter
 $route['api/counterOrders']['GET'] = 'Counter/getData';
 
+//api evaluation 
+$route['api/getEvaluationByOrder/(:num)']['GET'] = 'Evaluation/getEvaluationByOrder/$1';
+$route['api/editEvaluation/(:num)']['POST'] = 'Evaluation/editEvaluation/$1';
+
 
 
 
