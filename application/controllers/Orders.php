@@ -34,7 +34,6 @@ class Orders extends CI_Controller
 
     public function createOrder()
     { 
-        
         if ($this->accesscontrol->checkAuth()['correct']) {
 			/* Datos de formulario*/
 			$data = $this->input->post('data');
@@ -69,15 +68,19 @@ class Orders extends CI_Controller
                 $id = $_SESSION['id'];
                 if($this->Orders_model->createOrder($data, $id)){
 				/*Crear los informes de ser necesario*/
-                    if($check_evaluation){
-                        $this->Orders_model->createEvaluation($ot_number, $id_technical);
+                    if($check_evaluation == 'true'){
+                        if($data['technical']){
+                            $this->Orders_model->createEvaluation($ot_number, $id_technical);
+                        }else{
+                            $this->Orders_model->createEvaluation($ot_number, null);
+                        }
                     }
 
-                    if($check_report_technical){
+                    if($check_report_technical == 'true'){
                         $this->Orders_model->createTechnicalReport($ot_number);
                     }
 
-                    if($check_hydraulic_test){
+                    if($check_hydraulic_test == 'true'){
                         $this->Orders_model->createHydraulicTest($ot_number);
                     }
                     $msg['msg'] = "OT registrado con éxito.";
@@ -105,7 +108,8 @@ class Orders extends CI_Controller
         $components = $this->Orders_model->getComponents();
         $enterprises = $this->Orders_model->getEnterprises();
 		$technicals = $this->Orders_model->getTechnicals();
-        $this->response->sendJSONResponse(array($components, $enterprises, $technicals));
+        $locations = $this->Orders_model->getLocations();
+        $this->response->sendJSONResponse(array($components, $enterprises, $technicals, $locations));
     }
 
     public function stagesOrder()
@@ -116,7 +120,6 @@ class Orders extends CI_Controller
             $id = $params['ot'];
             $order = $this->Orders_model->getOrder($id);
             $order['states'] = $this->Orders_model->getStates();
-            
             $this->load->view('shared/super_admin/header');
             $this->load->view('admin/stagesOrder', $order);
             $this->load->view('shared/super_admin/footer');
@@ -125,6 +128,101 @@ class Orders extends CI_Controller
         }
     }
 
+    public function newUpdateOrder()
+    { 
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $url = parse_url($_SERVER['REQUEST_URI']);
+            parse_str($url['query'], $params);
+            $id = $params['ot'];
+            $order = $this->Orders_model->getOrder($id);
+            $order['states'] = $this->Orders_model->getStates();
+            $order['components'] = $this->Orders_model->getComponents();
+            $order['enterprises'] = $this->Orders_model->getEnterprises();
+            $order['technicals'] = $this->Orders_model->getTechnicals();
+            $order['locations'] = $this->Orders_model->getLocations();
+            $order['config'] = json_decode($order['config'], true);
+            $this->load->view('shared/super_admin/header');
+            $this->load->view('admin/updateOrder', $order);
+            $this->load->view('shared/super_admin/footer');
+        } else {
+            redirect(base_url() . 'login', 'refresh');
+        }
+    }
+
+    public function updateOrder()
+    {
+        if ($this->accesscontrol->checkAuth()['correct']) {
+			/* Datos de formulario*/
+			$data = $this->input->post('data');
+            $check_evaluation = $data['check_evaluation'];
+            $check_report_technical = $data['check_report_technical'];
+            $check_hydraulic_test = $data['check_hydraulic_test'];
+            $check_evaluation_old = $data['check_evaluation_old'];
+            $check_report_technical_old = $data['check_report_technical_old'];
+            $check_hydraulic_test_old = $data['check_hydraulic_test_old'];
+           
+            /* Cargar datos para la validación de formulario*/
+			$rules = get_rules_ot_create();
+			$this->form_validation->set_error_delimiters('', '');
+			$this->form_validation->set_data($data);
+			$this->form_validation->set_rules($rules);
+	
+			/*Validación de formulario
+			Si el formulario no es valido*/
+			if($this->form_validation->run() == FALSE){
+				if(form_error('ot_number')) $msg['ot_number'] = form_error('ot_number');
+                if(form_error('enterprise')) $msg['enterprise'] = form_error('enterprise');
+                if(form_error('service')) $msg['service'] = form_error('service');
+                if(form_error('component')) $msg['component'] = form_error('component');
+                if(form_error('priority')) $msg['priority'] = form_error('priority');
+                if(form_error('date_admission')) $msg['date_admission'] = form_error('date_admission');
+                if(form_error('days_quotation')) $msg['days_quotation'] = form_error('days_quotation');
+				$this->response->sendJSONResponse($msg);
+				$this->output->set_status_header(400); 
+			}else{
+			/*Si el formulario es valido*/
+				/*Editar ot*/
+                /*Ingresada correctamente*/
+                $id = $_SESSION['id'];
+                if($this->Orders_model->updateOrder($data, $id)){
+				/*Actualizar los informes de ser necesario*/
+                    if($check_evaluation != $check_evaluation_old){
+                        if($check_evaluation == 'true'){
+                            $this->Orders_model->createEvaluation($data['ot_number'], null);
+                        }else{
+                            $this->Orders_model->desEvaluation($data['ot_number']);
+                        }
+                    }
+
+                    if($check_report_technical != $check_report_technical_old){
+                        if($check_report_technical == 'true'){
+                            $this->Orders_model->createTechnicalReport($data['ot_number']);
+                        }else{
+                            $this->Orders_model->desTechnicalReport($data['ot_number']);
+                        }
+                    }
+
+                    if($check_hydraulic_test != $check_hydraulic_test_old){
+                        if($check_hydraulic_test == 'true'){
+                            $this->Orders_model->createHydraulicTest($data['ot_number']);
+                        }else{
+                            $this->Orders_model->desHydraulicTest($data['ot_number']);
+                        }
+                    }
+                    $msg['msg'] = "OT actualizada con éxito.";
+                    $this->response->sendJSONResponse($msg);
+                /*Fallo en el ingreso */
+				}else{
+					$msg['msg'] = "El número de OT al cual se quiere actualizar ya se encuentra registrado.";
+					$this->response->sendJSONResponse($msg);
+					$this->output->set_status_header(405);
+				} 	
+			}     
+			
+        } else {
+			redirect('Home/login', 'refresh');
+        }
+    }
     
     public function changeStateOrder()
     { 

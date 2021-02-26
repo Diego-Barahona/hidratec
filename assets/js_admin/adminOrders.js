@@ -31,8 +31,8 @@ get_orders = () => {
 		if (xhr.status === 200) {
             let data =xhr.response;
             tabla.clear();
-			tabla.rows.add(data);
-			tabla.draw();
+			tabla.rows.add(data);	
+			tabla.order( [ 1, 'desc' ] ).draw();
 		} else {
 			swal({
 				title: "Error",
@@ -92,15 +92,13 @@ $("#table_orders").on("click", "button", function () {
 		window.location.assign(host_url+url);
     }else{
 		let ot = data.number_ot;
-		let url = 'detailsOrder'+'?ot='+ot;
-		window.location.assign(host_url+url);
-				
+		let url = 'newUpdateOrder'+'?ot='+ot;
+		window.location.assign(host_url+url);	
 		}
 	}
 });
 
 
-/*Funcion que carga la datatable */
 
 
 
