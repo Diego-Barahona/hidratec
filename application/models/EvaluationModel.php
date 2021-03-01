@@ -7,6 +7,7 @@ class EvaluationModel extends CI_Model {
     }
 
     public function getEvaluationByOrder($id){
+
         
         
         $query= "SELECT e.details , u.full_name , e.user_assignment,e.state
@@ -19,6 +20,7 @@ class EvaluationModel extends CI_Model {
 
            
       
+
     }
 
     public function editEvaluation($id,$data){
@@ -36,6 +38,4 @@ class EvaluationModel extends CI_Model {
     }  
 
     
-
-
 }

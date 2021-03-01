@@ -1,5 +1,5 @@
 
- <div id="content-wrapper">
+<div id="content-wrapper">
   <div class="container-fluid mb-5">
     <div class="card mb-3">
       <div class="card-header">
@@ -8,7 +8,7 @@
                   <a class="nav-link active" data-toggle="tab" href="#evaluacion">Evaluacion  </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#cotizacion">Informe Técnico</a>
+                  <a class="nav-link" data-toggle="tab" href="#technicalReport">Informe Técnico</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link " data-toggle="tab" href="#aprobadas">Aprobación</a>
@@ -27,6 +27,7 @@
               </li>
             </ul>
       </div>
+
      <div class="card-body tab-content">
      <!-- Evaluations View and Edit -->
      <?php if ($_SESSION['rango']=="1"){ ?>
