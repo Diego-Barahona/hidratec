@@ -25,9 +25,9 @@ class Evaluation extends CI_Controller
         $data = $this->input->post('data');
         $date_evaluation = $data['date_evaluation'];
         $description = $data['description'];
-
         $notes = $data['notes'];
         $technical = $data['technical'];
+        
         $ok=true;
 
         if ($date_evaluation== "") { $ok = false;  $err['date_evaluation']  = "Ingrese fecha de evaluación";  }

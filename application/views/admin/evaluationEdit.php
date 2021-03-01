@@ -57,10 +57,10 @@
             <button type="button" style="height:40px; width:120px "id="btn_edit" class="btn btn-primary">Edit</button>
          </div>
           </form>
-   </div>
+   </div><!-- card body end-->
       
-    </div> 
-    </div>
+    </div> <!-- card body end-->
+    </div><!-- acordion-->
     </div> <!-- End content Evaluation-->
 
     <script src="<?php echo base_url(); ?>assets/js_admin/evaluation.js"></script>

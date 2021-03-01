@@ -17,7 +17,7 @@
                   <a class="nav-link " data-toggle="tab" href="#aprobadas">Reparación</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link " data-toggle="tab" href="#aprobadas">Prueba Hidráulica</a>
+                  <a class="nav-link " data-toggle="tab" href="#hidraulicTest">Prueba Hidráulica</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link " data-toggle="tab" href="#aprobadas">Historial de estados</a>
@@ -32,8 +32,9 @@
      <?php if ($_SESSION['rango']=="1"){ ?>
      <?php require('evaluationEdit.php');} ?>
      <!-- Evaluations End -->
+    
 
-<div class="table-responsive tab-pane fade  " id="cotizacion" class="tab-pane fade ">
+  
 
 <div class="table-responsive tab-pane fade" id="aprobadas" class="tab-pane fade ">
          <div class="card-header">
@@ -62,6 +63,10 @@
               </tr>
             </body>
           </table>
- </div>
-</div>
-</div>
+ </div><!--fin evaluacion-->
+
+
+</div><!--hidraulictest-->
+</div><!--cotizacion-->
+</div><!--aprobadas--> 
+

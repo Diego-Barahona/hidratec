@@ -260,6 +260,8 @@
     <script src="<?php echo base_url(); ?>assets/js_admin/menu.js"></script>
 
     <script src="<?php echo base_url(); ?>assets/vendor/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <script src="<?php echo base_url(); ?>assets/vendor/lodash/lodash.js"></script>
+   
   
     
 
