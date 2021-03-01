@@ -9,7 +9,7 @@ let technicals_user = 0;
 
 get_data_evaluation = () =>{
 
-    id= $("#id_ot").val();
+    id= $("#ot_number").val();
 	let xhr = new XMLHttpRequest();
 	xhr.open("get", `${host_url}/api/getEvaluationByOrder/${id}`);
 	xhr.responseType = "json";
@@ -18,7 +18,6 @@ get_data_evaluation = () =>{
 			
 			let data = xhr.response[0].details;
 			let technical=xhr.response[0].full_name;
-			
             evaluation= JSON.parse(data);
             $( "#date_evaluation" ).val(evaluation.date_evaluation);
             $( "#description_ev" ).val(evaluation.description);
