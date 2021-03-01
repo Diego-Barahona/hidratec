@@ -93,13 +93,21 @@
                     <div class="col-md-4 mb-3" id='frm_location'>
                         <label>Ubicación</label>
                         <select class="custom-select d-block w-100" name="location" id="location">
-                            <?php foreach($locations as $item) { 
-                            if($location == $item['name']){
-                            ?>
-                                <option value='<?= $item['id'] ?>' selected="true" name='<?= $item['name'] ?>'><?= $item['name'] ?></option>
-                            <?php }else{ ?>  
-                                <option value='<?= $item['id'] ?>' name='<?= $item['name'] ?>'><?= $item['name'] ?></option>
-                            <?php }} ?>  
+                            <?php if($location != null) {?>
+                                <option></option>
+                                <?php foreach($locations as $item) { 
+                                if($location == $item['name']){
+                                ?>
+                                    <option value='<?= $item['id'] ?>' selected="true" name='<?= $item['name'] ?>'><?= $item['name'] ?></option>
+                                <?php }else{ ?>  
+                                    <option value='<?= $item['id'] ?>' name='<?= $item['name'] ?>'><?= $item['name'] ?></option>
+                                <?php }} ?>  
+                            <?php } else {?>
+                                <option></option>
+                                <?php foreach($locations as $item) { ?>
+                                    <option value='<?= $item['id'] ?>' name='<?= $item['name'] ?>'><?= $item['name'] ?></option>
+                                <?php } ?>  
+                            <?php }?>
                         </select>   
                         <div class="invalid-feedback"></div>
                     </div>

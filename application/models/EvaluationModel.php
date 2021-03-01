@@ -8,7 +8,7 @@ class EvaluationModel extends CI_Model {
 
     public function getEvaluationByOrder($id){
 
-        $query= "SELECT * FROM evaluation WHERE ot_id = ? and  evaluation.state = 1 ";
+        $query= "SELECT * FROM evaluation WHERE ot_id = ? AND  evaluation.state = 1 ";
         $result= $this->db->query($query, array($id));
 
         if($result->num_rows() > 0){
@@ -18,7 +18,7 @@ class EvaluationModel extends CI_Model {
                      JOIN user_role ur ON ur.user_id = e.user_assignment
                      JOIN user u ON u.id = ur.user_id
                      WHERE ot_id = ?";
-            return $this->db->query($query, array($id))->result(); 
+            var_dump($this->db->query($query, array($id))->result()); 
 
         }else { 
             return false;
