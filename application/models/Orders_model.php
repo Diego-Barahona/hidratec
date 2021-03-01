@@ -10,34 +10,53 @@ class Orders_model extends CI_Model
 
     public function getOrder($id)
     {
-        $query = "SELECT ot.id number_ot, ot.config, ot.provider_number, ot.date_provider_number ,ot.days_quote days_quote, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, l.name location, c.name component, s.name state
-                  FROM ot
-                  JOIN enterprise e ON ot.enterprise_id = e.id
-                  JOIN component c ON ot.component_id = c.id
-                  JOIN ot_state os ON ot.id = os.ot_id
-                  JOIN state s ON os.state_id = s.id
-                  JOIN ot_location ol ON ot.id = ol.ot_id
-                  JOIN locations l ON ol.location_id = l.id
-                  WHERE os.id = (
-                      SELECT f.id 
-                      FROM ot_state f 
-                      WHERE f.ot_id = ".$id." AND f.date_update = (
-                            SELECT MAX(j.date_update)
-                            FROM ot_state j
-                            WHERE j.ot_id = ".$id."
-                          ) 
-                    )   AND
-                    ol.id = (
-                    SELECT f.id 
-                    FROM ot_location f 
-                    WHERE f.ot_id = ".$id." AND f.id = (
-                        SELECT MAX(j.id)
-                        FROM ot_location j
-                        WHERE j.ot_id = ".$id."
-                        ) 
-                )              
-        "; 
-        return $this->db->query($query)->row_array();;
+        $query = "SELECT * FROM ot_location WHERE ot_id = ?";
+        $result = $this->db->query($query, array($id));
+
+        if(sizeof($result->result()) >= 1){
+            $query = "SELECT ot.id number_ot, ot.config, ot.provider_number, ot.date_provider_number ,ot.days_quote days_quote, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, l.name location, c.name component, s.name state
+            FROM ot
+            LEFT JOIN enterprise e ON ot.enterprise_id = e.id
+            LEFT JOIN component c ON ot.component_id = c.id
+            LEFT JOIN ot_state os ON ot.id = os.ot_id
+            LEFT JOIN state s ON os.state_id = s.id
+            LEFT JOIN ot_location ol ON ot.id = ol.ot_id
+            LEFT JOIN locations l ON ol.location_id = l.id
+            WHERE os.id = (
+                SELECT f.id 
+                FROM ot_state f 
+                WHERE f.ot_id = ".$id." AND f.date_update = (
+                      SELECT MAX(j.date_update)
+                      FROM ot_state j
+                      WHERE j.ot_id = ".$id."
+                    ) 
+              )   AND
+              ol.id =  (
+                  SELECT MAX(j.id)
+                  FROM ot_location j
+                  WHERE j.ot_id = ".$id."
+              )          
+            "; 
+            return $this->db->query($query)->row_array();
+        }else{
+            $query = "SELECT ot.id number_ot, ot.config, ot.provider_number, ot.date_provider_number ,ot.days_quote days_quote, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, c.name component, s.name state
+            FROM ot
+            LEFT JOIN enterprise e ON ot.enterprise_id = e.id
+            LEFT JOIN component c ON ot.component_id = c.id
+            LEFT JOIN ot_state os ON ot.id = os.ot_id
+            LEFT JOIN state s ON os.state_id = s.id
+            WHERE os.id = (
+                SELECT f.id 
+                FROM ot_state f 
+                WHERE f.ot_id = ".$id." AND f.date_update = (
+                      SELECT MAX(j.date_update)
+                      FROM ot_state j
+                      WHERE j.ot_id = ".$id."
+                    ) 
+              )
+            "; 
+            return $this->db->query($query)->row_array();;
+        }
     }
 
     public function getStates()
@@ -47,14 +66,12 @@ class Orders_model extends CI_Model
 
     public function getOrders()
     {        
-        $query = "SELECT ot.id number_ot, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, c.name component, l.name location, s.name state
+        $query = "SELECT ot.id number_ot, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, c.name component, s.name state
                   FROM ot
                   JOIN enterprise e ON ot.enterprise_id = e.id
                   JOIN component c ON ot.component_id = c.id
                   JOIN ot_state os ON ot.id = os.ot_id
                   JOIN state s ON os.state_id = s.id
-                  JOIN ot_location ol ON ot.id = ol.ot_id
-                  JOIN locations l ON ol.location_id = l.id
                   WHERE os.id = (
                       SELECT f.id 
                       FROM ot_state f 
@@ -63,19 +80,9 @@ class Orders_model extends CI_Model
                             FROM ot_state j
                             WHERE j.ot_id = ot.id
                           ) 
-                    ) AND
-                    ol.id = (
-                    SELECT f.id 
-                    FROM ot_location f 
-                    WHERE f.ot_id = ot.id AND f.id = (
-                        SELECT MAX(j.id)
-                        FROM ot_location j
-                        WHERE j.ot_id = ot.id
-                        ) 
-                )
+                    ) 
         "; 
-        return $this->db->query($query)->result_array();
-        
+        return $this->db->query($query)->result_array(); 
     }
 
     public function getComponents(){
@@ -87,7 +94,11 @@ class Orders_model extends CI_Model
     }
 
     public function getLocations(){
-        return $query = $this->db->get_where('locations', array('state' => 1))->result_array();
+        $this->db->select('*');
+        $this->db->from('locations l'); 
+        $this->db->where('l.state', 1);
+        $this->db->where('l.id !=', 1);
+        return $query = $this->db->get()->result_array();
     }
 
     public function getTechnicals()
@@ -136,12 +147,15 @@ class Orders_model extends CI_Model
                 );
                 $this->db->insert('ot_state', $datos_ot_state);
                 
-                $datos_ot_location = array(
-                    'ot_id' => $data['ot_number'],
-                    'location_id' => $data['location'],
-                    'user_id' => $user_id,
-                );
-                $this->db->insert('ot_location', $datos_ot_location);
+
+                if($data['location']){
+                    $datos_ot_location = array(
+                        'ot_id' => $data['ot_number'],
+                        'location_id' => $data['location'],
+                        'user_id' => $user_id,
+                    );
+                    $this->db->insert('ot_location', $datos_ot_location);
+                }
 
                 if($data['technical']){
                     $datos_ot_user = array(
@@ -187,10 +201,16 @@ class Orders_model extends CI_Model
             if($this->db->update('ot', $datos_ot)){
 
                 /* Hacer el cambio de ubicación si es necesario */
+                $location = '';
+                if($data['location']){
+                   $location = $data['location'];
+                }else{
+                   $location = 1;
+                } 
                 if($data['location'] != $data['location_old']){
                     $datos_ot_location = array(
                         'ot_id' => $data['ot_number'],
-                        'location_id' => $data['location'],
+                        'location_id' => $location,
                         'user_id' => $user_id,
                     );
                     $this->db->insert('ot_location', $datos_ot_location);
