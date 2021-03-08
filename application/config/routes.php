@@ -145,6 +145,13 @@ $route['api/getEvaluationByOrder/(:num)']['GET'] = 'Evaluation/getEvaluationByOr
 $route['api/editEvaluation/(:num)']['POST'] = 'Evaluation/editEvaluation/$1';
 
 
-
+//api hydraulicTEST
+$route['api/getHydraulicTestByOrder/(:num)']['GET'] = 'HydraulicTest/getHydraulicTestByOrder/$1';
+$route['api/editHydraulicTest/(:num)']['POST'] = 'HydraulicTest/editHydraulicTest/$1';
+$route['api/editInfoHt/(:num)']['POST'] = 'HydraulicTest/editInfoHt/$1';
+$route['api/get_info_ht/(:num)']['GET'] = 'HydraulicTest/get_info_ht/$1';
+$route['api/editPdf/(:num)']['POST'] = 'HydraulicTest/editPdf/$1';
+$route['api/getPdf/(:num)']['GET'] = 'HydraulicTest/getPdf/$1';
+$route['api/deletePdf/(:num)']['POST'] = 'HydraulicTest/deletePdf/$1';
 
 

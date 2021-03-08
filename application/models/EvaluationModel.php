@@ -7,7 +7,6 @@ class EvaluationModel extends CI_Model {
     }
 
     public function getEvaluationByOrder($id){
-
         
         
         $query= "SELECT e.details , u.full_name , e.user_assignment,e.state
@@ -20,7 +19,6 @@ class EvaluationModel extends CI_Model {
 
            
       
-
     }
 
     public function editEvaluation($id,$data){
@@ -30,7 +28,10 @@ class EvaluationModel extends CI_Model {
             "ot"=>$id,
             "date_evaluation"=> $data['date_evaluation'],
             "description"=> $data['description'],
-            "notes" => $data['notes'] )
+            "notes" => $data['notes'],
+            "approve_technical" => $data['approve_technical'],
+            "approve_admin" => $data['approve_admin']
+             )
         );
 
         $query = "UPDATE evaluation SET details = ? , user_assignment = ? WHERE ot_id = ?";
@@ -38,4 +39,6 @@ class EvaluationModel extends CI_Model {
     }  
 
     
+
+
 }
