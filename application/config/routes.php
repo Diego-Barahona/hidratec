@@ -74,7 +74,6 @@ $route['api/getOrders']['GET']='Orders/getOrders';
 $route['api/getFieldsOrder']['GET']='Orders/getFieldsOrder';
 
 //view counter
-
 $route['counterOrders']['GET']='Counter/counterOrders';
 
 
@@ -145,6 +144,10 @@ $route['api/getEvaluationByOrder/(:num)']['GET'] = 'Evaluation/getEvaluationByOr
 $route['api/editEvaluation/(:num)']['POST'] = 'Evaluation/editEvaluation/$1';
 
 
+//api technical report 
+$route['api/getTechnicalReportByOrder/(:num)']['GET'] = 'TechnicalReport/getTechnicalReportByOrder/$1';
+$route['api/getImagesByTechnicalReport']['POST']  = 'TechnicalReport/getImagesByTechnicalReport';
+$route['api/editTechnicalReport']['POST']  = 'TechnicalReport/editTechnicalReport';
 
 
 

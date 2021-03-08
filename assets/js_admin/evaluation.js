@@ -18,13 +18,25 @@ get_data_evaluation = () =>{
 			
 			let data = xhr.response[0].details;
 			let technical=xhr.response[0].full_name;
-            evaluation= JSON.parse(data);
-            $( "#date_evaluation" ).val(evaluation.date_evaluation);
-            $( "#description_ev" ).val(evaluation.description);
-            $( "#notes" ).val(evaluation.notes);
-            $( "#technical" ).val(technical);
+
+			if(data){
+				evaluation= JSON.parse(data);
+				$( "#date_evaluation" ).val(evaluation.date_evaluation);
+				$( "#description_ev" ).val(evaluation.description);
+				$( "#notes" ).val(evaluation.notes);
+			}else{
+				$( "#date_evaluation" ).val('');
+				$( "#description_ev" ).val('');
+				$( "#notes" ).val('');
+			}
+
+			if(technical){
+				$("#technical" ).val(technical);
+			}else{
+				$("#technical" ).val('');
+			}
 			technicals_user = xhr.response[0].user_assignment;
-			
+			disabledAlertEv();
 		}else { 
             alert_not_evaluation(xhr.response.msg);
         }
@@ -112,12 +124,18 @@ getFields = () => {
 
 
 alert_not_evaluation = (msg)=>{
+	alert(msg);
     $("#evaluation_info" ).css("display","none");
     $("#alert_evaluation").addClass("alert alert-warning col-md-6 mb-3").text("Aviso : "+ msg);
-    $("#title_alert").text( "Detalle:");
+    $("#title_alert_ev").text( "Detalle:");
 }
 
-
+disabledAlertEv= () =>{
+    $("#evaluation_info" ).show();
+    $("#alert_evaluation").removeClass("alert alert-warning col-md-6 mb-3");
+    $("#alert_evaluation").text('');
+    $("#title_alert_ev").css("display","none");
+}
 
 $("#btn_edit").on("click", () => {
 	edit_evaluation();

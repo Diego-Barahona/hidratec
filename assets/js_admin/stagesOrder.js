@@ -140,6 +140,8 @@ $("#table_orders").on("click", "button", function () {
          $('#description').val(data.description); 
          $('#priority').val(data.priority);
          $("#search_ot").modal('hide');
+         get_data_technical_report();
+         get_data_evaluation();
     } 
 });
 

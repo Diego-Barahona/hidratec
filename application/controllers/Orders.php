@@ -17,7 +17,7 @@ class Orders extends CI_Controller
             $this->load->view('admin/adminOrders');
             $this->load->view('shared/super_admin/footer');
         } else {
-            redirect(base_url() . 'login', 'refresh');
+            redirect(base_url() . 'home/login', 'refresh');
         }
     }
 
