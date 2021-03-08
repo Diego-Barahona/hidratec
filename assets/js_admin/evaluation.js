@@ -18,6 +18,7 @@ get_data_evaluation = () =>{
 			
 			let data = xhr.response[0].details;
 			let technical=xhr.response[0].full_name;
+
            
 		
 			if(data){
@@ -40,7 +41,7 @@ get_data_evaluation = () =>{
 				$( "#approve_technical_ev" ).prop('checked', false);
 			    $( "#approve_admin_ev" ).prop('checked', false);
 				$( "#notes" ).val('');
-				
+			
 			}
 
 			if(technical){
@@ -191,11 +192,6 @@ getFields = () => {
 	xhr.send();
 };
 
-alert_not_evaluation = (msg)=>{
-    $("#evaluation_info" ).css("display","none");
-    $("#alert_evaluation").addClass("alert alert-warning col-md-6 mb-3").text("Aviso : "+ msg);
-    $("#title_alert").text( "Detalle:");
-}
 
 $("#btn_edit").on("click", () => {
 	edit_evaluation();

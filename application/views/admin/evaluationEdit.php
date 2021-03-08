@@ -1,6 +1,6 @@
 <div class="table-responsive tab-pane fade show active " id="evaluacion" >
       <div role="alert" id="alert_evaluation">
-          <strong id="title_alert"></strong>
+          <strong id="title_alert_ev"></strong>
         </div>
       <div id="accordion">
       <div id="evaluation_info" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
