@@ -31,11 +31,18 @@
      <div class="card-body tab-content">
      <!-- Evaluations View and Edit -->
      <?php if ($_SESSION['rango']=="1"){ ?>
-     <?php require('evaluationEdit.php');} ?>
+     <?php require('evaluationView.php');} ?>
      <!-- Evaluations End -->
     
 
-  
+   <!--   <div class="table-responsive tab-pane fade " id="technicalReport" class="tab-pane fade ">
+         <?php //if ($_SESSION['rango']=="1"){require('technicalReportView.php'); }
+          //else if ($_SESSION['rango']=="2"){require('technicalReportEdit.php'); }
+         ?>
+     </div> -->
+     <div class="table-responsive tab-pane fade " id="technicalReport" class="tab-pane fade ">
+        <?php require('technicalReportEdit.php'); ?> 
+     </div>
 
 <div class="table-responsive tab-pane fade" id="aprobadas" class="tab-pane fade ">
          <div class="card-header">

@@ -249,10 +249,11 @@ class Orders_model extends CI_Model
         }
     }
 
-
     public function createEvaluation($id_ot, $id_technical){
         $this->db->select('*'); $this->db->from('evaluation'); $this->db->where('ot_id', $id_ot);
         $query = $this->db->get();
+        $id = $_SESSION['id'];
+
         $datos_ev = array(
             'ot_id' => $id_ot,
             'state' => 1,
