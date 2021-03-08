@@ -1,3 +1,6 @@
+
+
+
 let state = $('#state').val();
 
 getOrders = () => {
@@ -132,6 +135,7 @@ $("#table_orders").on("click", "button", function () {
     let data = tabla.row($(this).parents("tr")).data();
     if ($(this)[0].name == "btn_change") {
 		 $('#ot_number').val(data.number_ot);
+         $('#id_ot').val(data.number_ot);
 		 $('#date_admission').val(data.date);
          $('#enterprise').val(data.enterprise);
          $('#service').val(data.service);
@@ -140,8 +144,13 @@ $("#table_orders").on("click", "button", function () {
          $('#description').val(data.description); 
          $('#priority').val(data.priority);
          $("#search_ot").modal('hide');
+
+         get_data_evaluation();//funciona
+         get_data_ht();//funciona
+         get_info_ht(); //??
+         verifyFile();//funciona
          get_data_technical_report();
-         get_data_evaluation();
+       
     } 
 });
 

@@ -35,6 +35,10 @@
      <!-- Evaluations End -->
     
 
+   <?php require('hidraulicTest.php');?>
+  
+
+
    <!--   <div class="table-responsive tab-pane fade " id="technicalReport" class="tab-pane fade ">
          <?php //if ($_SESSION['rango']=="1"){require('technicalReportView.php'); }
           //else if ($_SESSION['rango']=="2"){require('technicalReportEdit.php'); }
@@ -44,34 +48,7 @@
         <?php require('technicalReportEdit.php'); ?> 
      </div>
 
-<div class="table-responsive tab-pane fade" id="aprobadas" class="tab-pane fade ">
-         <div class="card-header">
-              <i class="fas fa-table"></i>
-                En aprobación
-         </div>
-          <table class="table table-bordered" id="table-component" width="100%" cellspacing="0">
-          <thead>
-              <tr>
-                <th>Ot</th>
-                <th>Estado</th>
-                <th>componente</th>
-                <th>Fecha</th>
-                <th>Cambio estado</th>
-        
-              </tr>
-            </thead>
-            <body>
-            <tr>
-                <th>2334</th>
-                <th>En aprobacion </th>
-                <th>Valvula</th>
-                <th>aprobar </th>
-                <th>cambio estado</th>
-                
-              </tr>
-            </body>
-          </table>
- </div><!--fin evaluacion-->
+
 
 
 </div><!--hidraulictest-->

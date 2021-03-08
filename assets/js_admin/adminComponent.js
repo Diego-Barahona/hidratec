@@ -62,7 +62,7 @@ getComponent = () => {
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
-			
+			console.log(xhr.response);
 			let data = xhr.response.map((u) => {
 				if (u.state == 1) {
 					u.state = "En utilización";

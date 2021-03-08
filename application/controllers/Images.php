@@ -123,9 +123,7 @@ class Images extends CI_Controller
 			if ($this->upload->do_upload("file")) {
 				$data = array('upload_data' => $this->upload->data());
 				$image = $data['upload_data']['file_name'];
-               
 				$this->load->model('ImageModel');
-              
 				$s = $this->ImageModel->imageUpload($id, $image);
             
 				if ($s == "success") {
