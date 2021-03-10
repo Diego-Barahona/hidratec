@@ -9,7 +9,7 @@ let id_image_change;
 let id_file_change;
 let img_header = false;
 let img_header_file = '';
-
+let tr_check_adm_old = '';
 
 const tr_table_images = $('#tr_table_images').DataTable({
 	// searching: true,
@@ -53,29 +53,32 @@ const tr_table_images = $('#tr_table_images').DataTable({
 get_data_technical_report = () =>{
     $('#tr_images').empty();
     id= $("#ot_number").val();
+    tr_id_images = [];
+    tr_file_images = [];
 	let xhr = new XMLHttpRequest();
 	xhr.open("get", `${host_url}/api/getTechnicalReportByOrder/${id}`);
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
-            console.log('entro ')
 			let data = xhr.response[0][0].data;
             
 			let data_images = xhr.response[0][0].data_images;
+
+            let data_interaction = xhr.response[0][0].data_interaction;
 
             let user = xhr.response[0][0].user;
             
             if(data){
                 technical_report = JSON.parse(data);
-                console.info(xhr.response[0][0].data);
-                console.info(technical_report);
                 $("#tr_date_technical_report").val(technical_report.date_technical_report);
                 $("#tr_details").val(technical_report.details);
                 $("#tr_notes").val(technical_report.notes);
                 if(technical_report.check_adm === 'true'){
                     $("#tr_check_adm").prop("checked", true);
+                    tr_check_adm_old = 'true';
                 }else{
                     $("#tr_check_adm").prop("checked", false);
+                    tr_check_adm_old = 'false';
                 }
                 if(technical_report.check_technical === 'true'){
                     $("#tr_check_technical").prop("checked", true);
@@ -87,10 +90,20 @@ get_data_technical_report = () =>{
                 img_header_file = technical_report.image_header;
                 $("#tr_conclusion").val(technical_report.conclusion);
                 $("#tr_recommendation").val(technical_report.recommendation);
+            }else{
+                $("#tr_date_technical_report").val('');
+                $("#tr_details").val('');
+                $("#tr_notes").val('');
+                $("#tr_check_adm").prop("checked", false);
+                $("#tr_check_technical").prop("checked", false);
+                $("#tr_image_header").attr('src','');;
+                $("#tr_conclusion").val('');
+                $("#tr_recommendation").val('');
             }
 
             if(data_images){
                 technical_report_images = JSON.parse(data_images);
+                console.log(technical_report_images);
                 $.each(technical_report_images, function(i, item) {
                     let image = "<div id='tr_div_details_image_"+item.id+"'><div class='row mb-2'><div class='col-md-5 mb-3'><label id='tr_label_image_"+item.id+"'>Imagen</label><button id='tr_btn_image_"+item.id+"' onclick='loadImages("+item.id+")' class='btn btn-primary' style='margin-right: 5px; margin-bottom: 5px; display:none;'><i class='fas fa-plus'></i>Seleccione imagen</button><div class='input-group'><img style='display:block;margin:auto;' width='400' heigth='400' id='tr_image_file_"+item.id+"' src='http://localhost/hidrat/assets/upload/"+item.image+"' width='100%' class='responsive'></div></div>"
                     let minus = "<div class='col-md-7 mb-3'><div name='tr_delete_' id='tr_delete_"+item.id+"' style='text-align: right; display:none;'><button class='btn btn-danger rounded-circle' id='tr_btn_delete_"+item.id+"' onclick='deleteFields("+item.id+")'><i class='fas fa-minus'></i></button></div>"
@@ -101,6 +114,23 @@ get_data_technical_report = () =>{
                     tr_id_images.push(item.id);
                     tr_file_images.push(item.image);
                 });
+            }
+
+            if(data_interaction){
+                interaction = JSON.parse(data_interaction);
+                $('#tr_date_create').val(interaction.date_create);
+                $('#tr_user_create').val(interaction.user_create);
+                $('#tr_date_modify').val(interaction.date_modify);
+                $('#tr_user_modify').val(interaction.user_modify);
+                $('#tr_date_approve').val(interaction.date_approve);
+                $('#tr_user_approve').val(interaction.user_approve);
+            }else{
+                $('#tr_date_create').val('');
+                $('#tr_user_create').val('');
+                $('#tr_date_modify').val('');
+                $('#tr_user_modify').val('');
+                $('#tr_date_approve').val('');
+                $('#tr_user_approve').val('');
             }
 
             if(tr_technicals.length == 0){
@@ -116,7 +146,9 @@ get_data_technical_report = () =>{
 
             if(user){
                 $("#tr_technical").val(user);
-            };
+            }else{
+                $("#tr_technical").val('');
+            }
             disabledAlertTr();
 		}else { 
             alertNotTechnical(xhr.response.msg);
@@ -125,7 +157,7 @@ get_data_technical_report = () =>{
 	xhr.send();
 }
 
-enableFields = ()=>{
+tr_enableFields = ()=>{
     a = $("#tr_btnEdit").val();
     if(a == 0){
         $("#tr_date_technical_report").attr("readonly", false);
@@ -248,6 +280,11 @@ saveTechnicalReport = () =>{
         details_images: details_images,
         technical : $('#tr_technical').val(),
         ot_id : $("#ot_number").val(),
+        date_create: $('#tr_date_create').val(),
+        user_create:$('#tr_user_create').val(),
+        date_approve: $('#tr_date_approve').val(),
+        user_approve:$('#tr_user_approve').val(),
+        check_adm_old: tr_check_adm_old,
     } 
 
     $.ajax({
@@ -270,7 +307,7 @@ saveTechnicalReport = () =>{
             id_file_change = '';
             img_header = false;
             img_header_file = '';
-            enableFields();
+            tr_enableFields();
          });
         }, 
         statusCode: {
@@ -293,8 +330,6 @@ saveTechnicalReport = () =>{
 			});
 		},
     });  
-    
-
 }
 
 $("#tr_table_images").on("click", "button", function () {
@@ -434,6 +469,6 @@ addErrorStyle = errores => {
 
 $("#tr_btn_add").on("click", createFields);
 
-$("#tr_btnEdit").on("click", enableFields);
+$("#tr_btnEdit").on("click", tr_enableFields);
 
 $("#tr_btnSave").on("click", saveTechnicalReport);

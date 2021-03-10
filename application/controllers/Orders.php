@@ -66,22 +66,25 @@ class Orders extends CI_Controller
 				/*Crear ot*/
                 /*Ingresada correctamente*/
                 $id = $_SESSION['id'];
+                $name = $_SESSION['full_name'];
+                date_default_timezone_set("America/Santiago");
+                $date = date("Y-m-d G:i:s");
                 if($this->Orders_model->createOrder($data, $id)){
 				/*Crear los informes de ser necesario*/
                     if($check_evaluation == 'true'){
                         if($data['technical']){
-                            $this->Orders_model->createEvaluation($ot_number, $id_technical);
+                            $this->Orders_model->createEvaluation($ot_number, $id_technical, $name, $date);
                         }else{
-                            $this->Orders_model->createEvaluation($ot_number, null);
+                            $this->Orders_model->createEvaluation($ot_number, null, $name, $date);
                         }
                     }
 
                     if($check_report_technical == 'true'){
-                        $this->Orders_model->createTechnicalReport($ot_number);
+                        $this->Orders_model->createTechnicalReport($ot_number, $name, $date);
                     }
 
                     if($check_hydraulic_test == 'true'){
-                        $this->Orders_model->createHydraulicTest($ot_number);
+                        $this->Orders_model->createHydraulicTest($ot_number, $name, $date);
                     }
                     $msg['msg'] = "OT registrado con éxito.";
                     $this->response->sendJSONResponse($msg);
@@ -184,11 +187,14 @@ class Orders extends CI_Controller
 				/*Editar ot*/
                 /*Ingresada correctamente*/
                 $id = $_SESSION['id'];
+                $name = $_SESSION['full_name'];
+                date_default_timezone_set("America/Santiago");
+                $date = date("Y-m-d G:i:s");
                 if($this->Orders_model->updateOrder($data, $id)){
 				/*Actualizar los informes de ser necesario*/
                     if($check_evaluation != $check_evaluation_old){
                         if($check_evaluation == 'true'){
-                            $this->Orders_model->createEvaluation($data['ot_number'], null);
+                            $this->Orders_model->createEvaluation($data['ot_number'], null, $name, $date);
                         }else{
                             $this->Orders_model->desEvaluation($data['ot_number']);
                         }
@@ -196,7 +202,7 @@ class Orders extends CI_Controller
 
                     if($check_report_technical != $check_report_technical_old){
                         if($check_report_technical == 'true'){
-                            $this->Orders_model->createTechnicalReport($data['ot_number']);
+                            $this->Orders_model->createTechnicalReport($data['ot_number'], $name, $date);
                         }else{
                             $this->Orders_model->desTechnicalReport($data['ot_number']);
                         }
@@ -204,7 +210,7 @@ class Orders extends CI_Controller
 
                     if($check_hydraulic_test != $check_hydraulic_test_old){
                         if($check_hydraulic_test == 'true'){
-                            $this->Orders_model->createHydraulicTest($data['ot_number']);
+                            $this->Orders_model->createHydraulicTest($data['ot_number'], $name, $date);
                         }else{
                             $this->Orders_model->desHydraulicTest($data['ot_number']);
                         }
@@ -236,6 +242,21 @@ class Orders extends CI_Controller
             }	
         } else {
             redirect(base_url() . 'login', 'refresh');
+        }
+    }
+
+    public function getHistoryStatesByOrder($id)
+    {
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            if($history = $this->Orders_model->getHistoryStatesByOrder($id)){
+                $this->response->sendJSONResponse($history); 
+            }else{
+                $msg['msg'] = "Error al obtener los estados asociados a la órden de trabajo";
+                $this->response->sendJSONResponse($msg);
+                $this->output->set_status_header(405);
+            } 
+        } else {
+            redirect('Home/login', 'refresh');
         }
     }
 }

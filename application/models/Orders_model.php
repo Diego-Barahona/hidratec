@@ -147,7 +147,6 @@ class Orders_model extends CI_Model
                 );
                 $this->db->insert('ot_state', $datos_ot_state);
                 
-
                 if($data['location']){
                     $datos_ot_location = array(
                         'ot_id' => $data['ot_number'],
@@ -165,6 +164,14 @@ class Orders_model extends CI_Model
                     );
                     $this->db->insert('ot_user', $datos_ot_user);
                 }
+
+                $datos_reparation = array(
+                    'ot_id' => $data['ot_number'],
+                    'check_adm' => 0,   
+                    'check_technical' => 0,   
+                );
+                $this->db->insert('reparation', $datos_reparation);
+
                 return true;
             }else{
                 return false;
@@ -249,16 +256,23 @@ class Orders_model extends CI_Model
         }
     }
 
-    public function createEvaluation($id_ot, $id_technical){
+    public function createEvaluation($id_ot, $id_technical, $id_user_create, $date){
         $this->db->select('*'); $this->db->from('evaluation'); $this->db->where('ot_id', $id_ot);
         $query = $this->db->get();
-        $id = $_SESSION['id'];
-
         $datos_ev = array(
             'ot_id' => $id_ot,
             'state' => 1,
             'user_assignment'=> $id_technical,
+            'user_interaction' => json_encode(array(
+                'user_create' => $id_user_create,
+                'date_create' =>  $date,
+                'user_modify' => '',
+                'date_modify' => '',
+                'user_approve' => '',
+                'date_approve' => '',
+            )),
         );
+
         if(sizeof($query->result()) == 0){
             $this->db->insert('evaluation', $datos_ev);
             return true; 
@@ -280,12 +294,20 @@ class Orders_model extends CI_Model
         return true;
     }
 
-    public function createTechnicalReport($id_ot){
+    public function createTechnicalReport($id_ot, $id_user, $date){
         $this->db->select('*'); $this->db->from('technical_report'); $this->db->where('ot_id', $id_ot);
         $query = $this->db->get();
         $datos_tr = array(
             'state' => 1,
             'ot_id' => $id_ot,
+            'user_interaction' => json_encode(array(
+                'user_create' => $id_user,
+                'date_create' => $date,
+                'user_modify' => '',
+                'date_modify' => '',
+                'user_approve' => '',
+                'date_approve' => '',
+            )),
         );
         if(sizeof($query->result()) == 0){
             $this->db->insert('technical_report', $datos_tr);
@@ -308,13 +330,22 @@ class Orders_model extends CI_Model
         return true;
     }
 
-    public function createHydraulicTest($id_ot){
+    public function createHydraulicTest($id_ot, $id_user, $date){
         $this->db->select('*'); $this->db->from('hydraulic_test'); $this->db->where('ot_id', $id_ot);
         $query = $this->db->get();
         $datos_ht = array(
             'state' => 1,
             'ot_id' => $id_ot,
+            'user_interaction' => json_encode(array(
+                'user_create' => $id_user,
+                'date_create' => $date,
+                'user_modify' => '',
+                'date_modify' => '',
+                'user_approve' => '',
+                'date_approve' => '',
+            )),
         );
+
         if(sizeof($query->result()) == 0){
             $this->db->insert('hydraulic_test', $datos_ht);
             return true; 
@@ -345,5 +376,13 @@ class Orders_model extends CI_Model
         if($this->db->insert('ot_state', $datos_ot_state)) return true; else return false; 
     }
 
+    public function getHistoryStatesByOrder($id){
+        $query = "SELECT ot_s.date_update date, u.full_name user, s.name state
+        FROM ot_state ot_s
+        JOIN user u ON ot_s.user_id = u.id
+        JOIN state s ON ot_s.state_id = s.id
+        WHERE ot_s.ot_id = $id"; 
+        return $this->db->query($query)->result_array(); 
+    }
 }
 

@@ -72,6 +72,7 @@ $route['api/changeStateOrder']['POST']='Orders/changeStateOrder';
 $route['adminOrders']['GET']='Orders/adminOrders';
 $route['api/getOrders']['GET']='Orders/getOrders';
 $route['api/getFieldsOrder']['GET']='Orders/getFieldsOrder';
+$route['api/getHistoryStatesByOrder/(:num)']['GET'] = 'Orders/getHistoryStatesByOrder/$1';
 
 //view counter
 $route['counterOrders']['GET']='Counter/counterOrders';
@@ -159,6 +160,8 @@ $route['api/getTechnicalReportByOrder/(:num)']['GET'] = 'TechnicalReport/getTech
 $route['api/getImagesByTechnicalReport']['POST']  = 'TechnicalReport/getImagesByTechnicalReport';
 $route['api/editTechnicalReport']['POST']  = 'TechnicalReport/editTechnicalReport';
 
-
+//api reparation
+$route['api/getReparationByOrder/(:num)']['GET'] = 'Reparation/getReparationByOrder/$1';
+$route['api/editReparation']['POST']  = 'Reparation/editReparation';
 
 

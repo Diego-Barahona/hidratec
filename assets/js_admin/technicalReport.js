@@ -2,6 +2,8 @@ $(() => {
     get_data_technical_report();
 });
 
+let tr_technicals = [];
+
 get_data_technical_report = () =>{
     $('#tr_images').empty();
     id= $("#ot_number").val();
@@ -14,7 +16,12 @@ get_data_technical_report = () =>{
             
 			let data_images = xhr.response[0][0].data_images;
 
+            let data_interaction = xhr.response[0][0].data_interaction;
+
             let user = xhr.response[0][0].user;
+            console.log(data);
+            console.log(user);
+            console.log(data_images);
             
             if(data){
                 technical_report = JSON.parse(data);
@@ -31,10 +38,20 @@ get_data_technical_report = () =>{
                 }else{
                     $("#tr_check_technical").prop("checked", false);
                 }
+                
                 $("#tr_image_header").attr('src',`${host_url}assets/upload/${technical_report.image_header}`);;
                 img_header_file = technical_report.image_header;
                 $("#tr_conclusion").val(technical_report.conclusion);
                 $("#tr_recommendation").val(technical_report.recommendation);
+            }else{
+                $("#tr_date_technical_report").val('');
+                $("#tr_details").val('');
+                $("#tr_notes").val('');
+                $("#tr_check_adm").prop("checked", false);
+                $("#tr_check_technical").prop("checked", false);
+                $("#tr_image_header").attr('src','');;
+                $("#tr_conclusion").val('');
+                $("#tr_recommendation").val('');
             }
 
             if(data_images){
@@ -46,9 +63,24 @@ get_data_technical_report = () =>{
                     let description = "<div style='padding-top: 15px;'><label>Descripción</label><div class='input-group'><textarea type='text' rows='6' class='form-control' id='tr_image_description_"+item.id+"' readonly>"+item.description+"</textarea></div></div></div></div><hr></div>"
                     let admin_images = image+minus+name+description;
                     $(admin_images).appendTo("#tr_images"); 
-                    tr_id_images.push(item.id);
-                    tr_file_images.push(item.image);
                 });
+            }
+
+            if(data_interaction){
+                interaction = JSON.parse(data_interaction);
+                $('#tr_date_create').val(interaction.date_create);
+                $('#tr_user_create').val(interaction.user_create);
+                $('#tr_date_modify').val(interaction.date_modify);
+                $('#tr_user_modify').val(interaction.user_modify);
+                $('#tr_date_approve').val(interaction.date_approve);
+                $('#tr_user_approve').val(interaction.user_approve);
+            }else{
+                $('#tr_date_create').val('');
+                $('#tr_user_create').val('');
+                $('#tr_date_modify').val('');
+                $('#tr_user_modify').val('');
+                $('#tr_date_approve').val('');
+                $('#tr_user_approve').val('');
             }
 
             if(tr_technicals.length == 0){
@@ -64,10 +96,13 @@ get_data_technical_report = () =>{
 
             if(user){
                 $("#tr_technical").val(user);
-            };
-            disabledAlert();
+            }else{
+                $("#tr_technical").val('');
+            }
+            
+            disabledAlertTr();
 		}else { 
-            alert_not_evaluation(xhr.response.msg);
+            alertNotTechnical(xhr.response.msg);
         }
 	});
 	xhr.send();
@@ -79,7 +114,7 @@ alert_not_evaluation = (msg)=>{
     $("#title_alert").text( "Detalle:");
 }
 
-disabledAlert() = () =>{
+disabledAlert = () =>{
     $("#technical_report_info" ).show();
     $("#alert_technical_report").removeClass("alert alert-warning col-md-6 mb-3");
     $("#alert_technical_report").text('');
