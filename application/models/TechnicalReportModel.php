@@ -7,7 +7,7 @@ class TechnicalReportModel extends CI_Model {
     }
 
     public function getTechnicalReportByOrder($id){
-        $query= "SELECT tr.details data, tr.details_images data_images, u.id user
+        $query= "SELECT tr.details data, tr.details_images data_images, u.id user, tr.user_interaction data_interaction
         FROM technical_report tr
         LEFT JOIN user u ON u.id = tr.user_assignment
         WHERE tr.ot_id = ? AND tr.state = ? ";
@@ -48,12 +48,29 @@ class TechnicalReportModel extends CI_Model {
         return $query = $this->db->get()->result();
     }
 
-    public function editTechnicalReport($data){
-        
+    public function editTechnicalReport($data, $date_update){
+        $user = $_SESSION['full_name'];
+        date_default_timezone_set("America/Santiago");
+        $date = date("Y-m-d G:i:s");
         $technical = null;
+        $date_approve = '';
+        $user_approve = '';     
+ 
         if($data['technical']){
             $technical = $data['technical'];
         }
+
+        if($data['check_adm'] == 'true' AND $data['check_adm_old'] =='false'){
+            $date_approve = $date;
+            $user_approve = $user;
+        }else if($data['check_adm'] == 'true' AND $data['check_adm_old'] =='true'){
+            $date_approve = $data['date_approve'];
+            $user_approve = $data['user_approve'];
+        }else {
+            $date_approve = '';
+            $user_approve = '';
+        }      
+        
         $imagenes = $data['details_images'];
 
         $datos_tr = array(
@@ -69,6 +86,14 @@ class TechnicalReportModel extends CI_Model {
                 'recommendation' => $data['recommendation'],
             )),
             'details_images' => json_encode($data['details_images']),
+            'user_interaction' => json_encode(array(
+                'user_create' => $data['user_create'],
+                'date_create' => $data['date_create'],
+                'user_modify' => $user,
+                'date_modify' => $date,
+                'user_approve' => $user_approve,
+                'date_approve' => $date_approve,
+            )),
         );
         
         $this->db->where('ot_id', $data['ot_id']);

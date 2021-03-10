@@ -47,7 +47,9 @@ class TechnicalReport extends CI_Controller
             /*Update technical report*/
             /*Success*/
             $id = $_SESSION['id'];
-            if($this->TechnicalReportModel->editTechnicalReport($data)){
+            date_default_timezone_set("America/Santiago");
+            $date_update = date("Y-m-d G:i:s");
+            if($this->TechnicalReportModel->editTechnicalReport($data, $date_update)){
                 $msg['msg'] = "Reporte técnico actualizado con éxito.";
                 $this->response->sendJSONResponse($msg);
             /*Fail */

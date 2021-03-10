@@ -15,6 +15,27 @@
         </div>
         <div id="technicalReportGeneral" class="collapse show" aria-labelledby="headingTR">
             <div class="card-body">
+                <div class="row mb-2 ">
+                    <div class="col-md-3 mb-3 ">
+                        <div class="form-check">
+                                <input class="form-check-input"  type="checkbox" value="" id="tr_check_adm" disabled>
+                                <label class="form-check-label"  for="tr_check_adm">
+                                Aprobado por administración
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3 ">
+                        <div class="form-check">
+                            <input class="form-check-input"  type="checkbox" value="" id="tr_check_technical" disabled>
+                            <label class="form-check-label"  for="tr_check_technical">
+                                Aprobado por técnico master
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3" style='text-align: right;'>
+                        <button type="button" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#tr_user_interaction"><i class="fas fa-info"></i></button>
+                    </div>                       
+                </div>
                 <div class="row mb-2">
                     <div class="col-md-4 mb-3">
                         <label for="actividad">Fecha de reporte técnico</label>
@@ -27,18 +48,6 @@
                         <select class="form-select form-control" id="tr_technical" name="tr_technical" disabled>
                             <option></option>
                         </select>
-                    </div>
-                    <div class="col-md-2 mb-3" style='text-align: center;'>
-                        <div style='margin-top: 30px;'>
-                            <input type="checkbox" class="form-check-input" id="tr_check_technical" disabled>
-                            <label class="form-check-label" for="tr_check_technical">Aprobación Técnico</label>
-                        </div>
-                    </div>
-                    <div class="col-md-2 mb-3" style='text-align: center;'>
-                        <div style='margin-top: 30px;'>
-                            <input type="checkbox" class="form-check-input" id="tr_check_adm" disabled>
-                            <label class="form-check-label" for="tr_check_adm">Aprobación Administración</label>
-                        </div>
                     </div>
                 </div>
                 <div class="row mb-2">
@@ -113,5 +122,61 @@
     </div>
 </div>
 
+<!---   modal user interaction ---->
+<div class="modal fade" id="tr_user_interaction" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row mb-2">
+            <div class="col-md-6 mb-3">
+                <label for="actividad">Fecha de creación</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="tr_date_create"  readonly>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="actividad">Usuario responsable</label>
+                <div class="input-group" id='frm_date_technical_report'>
+                    <input type="text" class="form-control" id="tr_user_create"  readonly>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row mb-2">
+            <div class="col-md-6 mb-3">
+                <label>Fecha de última modificación</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="tr_date_modify"  readonly>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Usuario responsable</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="tr_user_modify"  readonly>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row mb-2">
+            <div class="col-md-6 mb-3">
+                <label>Fecha de aprobación</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="tr_date_approve"  readonly>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Usuario responsable</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="tr_user_approve"  readonly>
+                </div>
+            </div>
+        </div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+    </div>
+  </div>
+</div>
 <script src="<?php echo base_url(); ?>assets/js_admin/technicalReport.js"></script>
 

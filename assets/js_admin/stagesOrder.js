@@ -71,6 +71,7 @@ changeState = () => {
                      }).then(() => {
                         $("#state").val(state_change);
                         state = state_change;
+                        get_history_states();
                      });
                     }, 
                     error: () => {
@@ -150,6 +151,7 @@ $("#table_orders").on("click", "button", function () {
          get_info_ht(); //??
          verifyFile();//funciona
          get_data_technical_report();
+         get_data_reparation();
        
     } 
 });
