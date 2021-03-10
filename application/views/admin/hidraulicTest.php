@@ -4,23 +4,40 @@
         </div>
       <div id="accordion">
       <div id="hydraulic_info" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-      <div class="card-header" data-toggle="collapse" data-target="#c1">
-              <i class="fas fa-table"></i>
+      <div class="card-header" >
+      <button class="btn btn-link" data-toggle="collapse" data-target="#c1" aria-expanded="true" aria-controls="technicalReportGeneral">
+                <i class="fas fa-table"></i>
                 Información 
+                </button>
+              
          </div>
         <div class="card-body collapse in " id= "c1">
+
+        <input type="hidden" class="form-control" id="user_create" name="id" >
+        <input type="hidden" class="form-control" id="date_create" name="id" >
+        <input type="hidden" class="form-control" id="user_modify" name="id" >
+        <input type="hidden" class="form-control" id="date_modify" name="id" >
+        <input type="hidden" class="form-control" id="user_approve" name="id" >
+        <input type="hidden" class="form-control" id="date_approve" name="id" >
+
+        <div class="row mb-2 mr-2 justify-content-end">
+        <a href="#" id="ht_popover" data-toggle="popover" data-placement="left"><i class=" fas fa-info-circle fa-lg"></i></a>  
+
+        </div>
         
         <div class="row mb-2 ">
-                <div class="col-md-3 mb-3 ">
-                 
+                
+                
+                <div class="col-md-2 mb-3 ">
+                      
                       <div class="form-check">
                                 <input class="form-check-input"  type="checkbox" value="" id="approve_admin_ht" disabled>
                                 <label class="form-check-label"  for="approve_admin_ht">
                                  Aprobado por administración
                                </label>
                              </div>
-                          </div>
-                <div class="col-md-3 mb-3 ">
+                       </div>
+                <div class="col-md-2 mb-3 ">
                  
                       <div class="form-check">
                            <input class="form-check-input"  type="checkbox" value="" id="approve_technical_ht" disabled>
@@ -30,6 +47,7 @@
                         </div>
                      </div>
           </div>
+          
    
     <div class="row mb-2">
               
@@ -104,9 +122,13 @@
           </div>
           </div>  <!-- End card body information-->
            <!-- Table medidas-->
-           <div class="card-header" data-toggle="collapse" data-target="#c2">
-              <i class="fas fa-table"></i>
+           <div class="card-header" >
+           <button class="btn btn-link" data-toggle="collapse" data-target="#c2" aria-expanded="true" aria-controls="technicalReportGeneral">
+                <i class="fas fa-table"></i>
                 Mediciones 
+                </button>
+              
+         </div>
          </div>
         
          <div class="card-body collapse in " id= "c2">
@@ -138,9 +160,11 @@
          </div> <!-- End card body medidas-->
   
    
-   <div class="card-header" data-toggle="collapse" data-target="#c3">
-              <i class="fas fa-table"></i>
-                Archivos (PDF)
+   <div class="card-header">
+   <button class="btn btn-link" data-toggle="collapse" data-target="#c3" aria-expanded="true" aria-controls="technicalReportGeneral">
+                <i class="fas fa-table"></i>
+                Archivos(PDF) 
+                </button>
    </div>
    
    <div class="card-body collapse in " id= "c3">
@@ -274,3 +298,4 @@
     });
   } );
 </script>
+

@@ -35,7 +35,7 @@
      <!-- Evaluations End -->
     
 
-   <?php require('hidraulicTest.php');?>
+  
   
 
 
@@ -48,6 +48,9 @@
         <?php require('technicalReportEdit.php'); ?> 
      </div>
 
+
+     <?php require('hidraulicTest.php');?>
+     
 
 
 
