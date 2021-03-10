@@ -29,6 +29,7 @@
       </div>
 
      <div class="card-body tab-content">
+
         <!-- Evaluations View and Edit -->
         <?php if ($_SESSION['rango']=="1"){ ?>
         <?php require('evaluationView.php');} ?>
@@ -48,8 +49,11 @@
 
 
         <?php require('hidraulicTest.php');?>
-     </div>
 
+
+
+    
+     
 
 
 

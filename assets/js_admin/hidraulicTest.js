@@ -7,7 +7,7 @@ $(() => {
 });
 
 
-
+let check_admin_old = false;
 
 let medida = []; 
 
@@ -44,9 +44,11 @@ unable_edition =()=>{
 
 
 edit_ht = () => {
-    
+
+   
 	event.preventDefault();
 	let id = $("#ot_number").val();//Image ID 
+	
 	let data = {
         date_ht :$("#date_ht").val(),
         conclusion: $("#conclusion_ht").val(),
@@ -54,6 +56,11 @@ edit_ht = () => {
         approve_technical: $("#approve_technical_ht").is(':checked'),
 		approve_admin: $("#approve_admin_ht").is(':checked'),
         technical: $("#technical_ht").val(),
+		user_create:$("#user_create").val(),//lineas nuevas
+		date_create: $("#date_create").val(),
+		user_approve: $("#user_approve").val(),
+		date_approve:$("#date_approve").val(),//fin
+		check_admin_old: check_admin_old,
 	};
 
 	Object.keys(data).map((d) => $(`.${d}`).hide());
@@ -90,8 +97,10 @@ edit_ht = () => {
 };
 
 
-let technicals_user_ht = 0; 
 
+
+let technicals_user_ht = 0; 
+info_popover="";
 get_data_ht = () =>{
 
     id= $("#ot_number").val();
@@ -103,17 +112,24 @@ get_data_ht = () =>{
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
 		
-			let data = xhr.response[0].details;
+			let data1 = xhr.response[0].details;
+			let data2 =xhr.response[0].user_interaction;//nueva linea
 			let technical=xhr.response[0].full_name;
 			
-			if(data){
-				let ht= JSON.parse(data);
+			if(data1){ //linea nueva
+				let ht= JSON.parse(data1);
 			    
-			    if(ht.approve_admin === "true" ){	$("#approve_admin_ht" ).prop('checked', true);
-			    } else {$( "#approve_admin_ht" ).prop('checked', false );}
+			    if(ht.approve_admin === "true" ){	
+					$("#approve_admin_ht" ).prop('checked', true);
+					check_admin_old = true;
+
+			    } else {
+					$( "#approve_admin_ht" ).prop('checked', false );
+				    check_admin_old = false;                               
+				}
 
 			    if(ht.approve_technical === "true"){
-				
+				     
 					$( "#approve_technical_ht").prop('checked', true);
 			    } else {
 					
@@ -123,14 +139,36 @@ get_data_ht = () =>{
 				$( "#conclusion_ht" ).val(ht.conclusion);
 				$( "#notes_ht" ).val(ht.notes);
 				$( "#technical_ht" ).val(technical);
+			
 			}else{
 				$( "#date_ht" ).val('');
 				$( "#conclusion_ht" ).val('');
 				$( "#notes_ht" ).val('');
 				$( "#approve_technical_ht" ).prop('checked', false);
 			    $( "#approve_admin_ht" ).prop('checked', false);
+	
+			}
+
+			if(data2){
+				let us = JSON.parse(data2);//linea nueva
+				$("#user_create").val(us.user_create);//lineas nuevas
+				$("#user_modify").val(us.user_modify);
+				$("#user_approve").val(us.user_approve);
+				$("#date_create").val(us.date_create);
+				$("#date_modify").val(us.date_modify);
+				$("#date_approve").val(us.date_approve);//fin lineas nuevas
+				
+			
+			}else { 
+				$("#user_create").val("");//lineas nuevas
+				$("#user_modify").val("");
+				$("#user_approve").val("");
+				$("#date_create").val("");
+				$("#date_modify").val("");
+				$("#date_approve").val("");
 				
 			}
+
 			if(technical){
 				$("#technical_ht" ).val(technical);
 			}else{
@@ -162,6 +200,15 @@ disabledAlert_ht= () =>{
 }
 
 
+$("#ht_popover").on("click",function(){
+    $("#ht_popover").popover(
+		{ 
+		html: true,
+		title: "Información",
+		content: "Creado por: " +$("#user_create").val()+"<br />"+"Fecha creación: "+ 
+	    $("#date_create").val()+"<br />"+"Modificado por: " +$("#user_modify").val()+"<br />"+"Fecha mod.: "+ $("#date_modify").val()+"<br />"+
+	    "Aprobado por: " +$("#user_approve").val()+"<br />"+"Fecha aprv.: "+ $("#date_approve").val()});   
+});
 
 
 
@@ -270,7 +317,7 @@ $("#table-ht").on("click", "button", function () {
 	}
 });
 
-// get information medidas 
+		
 get_info_ht = () =>{
 
     id= $("#ot_number").val();
