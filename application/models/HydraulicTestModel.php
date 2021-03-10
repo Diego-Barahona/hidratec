@@ -10,7 +10,7 @@ class HydraulicTestModel extends CI_Model {
 
         
         
-        $query= "SELECT ht.details , u.full_name , ht.user_assignment, ht.state
+        $query= "SELECT ht.details , u.full_name , ht.user_assignment, ht.state , ht.user_interaction
         FROM hydraulic_test ht
         LEFT JOIN user_role ur ON ur.user_id = ht.user_assignment
         LEFT JOIN user u ON u.id = ur.user_id
@@ -30,8 +30,31 @@ class HydraulicTestModel extends CI_Model {
 
 
     public function editHydraulicTest($id,$data){
+        date_default_timezone_get("America/Santiago");
+        $user= $_SESSION['full_name'];
+        $date=  date('Y-m-d G:i:s');
 
+        $date_approve="";
+        $user_approve="";
+        
         $technical = $data['technical'];
+      
+        if($data['approve_admin'] == "true" && $data['check_admin_old'] == "false"){
+      
+            $date_approve= $date;
+            $user_approve= $user;
+           
+        }else  if($data['approve_admin'] == "true" &&  $data['check_admin_old'] == "true"){
+                  
+                    $date_approve= $data['date_approve'];
+                     $user_approve= $data['user_approve'];
+                    }else {
+ 
+                    $date_approve="";
+                    $user_approve="";
+                        }
+
+        
 
         $details= json_encode ( array( 
             "ot"=>$id,
@@ -42,8 +65,19 @@ class HydraulicTestModel extends CI_Model {
             "approve_admin" => $data['approve_admin'],)
         );
 
-        $query = "UPDATE hydraulic_test SET details = ? , user_assignment = ? WHERE ot_id = ?";
-            return $this->db->query($query, array($details,$technical,$id));  
+        $user_interaction= json_encode ( array( 
+        
+            "user_create"=> $data['user_create'],
+            "date_create"=> $data['date_create'],
+            "user_modify"=> $user,
+            "date_modify"=> $date,
+            "user_approve"=> $user_approve,
+            "date_approve"=> $date_approve,
+            )
+        );
+
+        $query = "UPDATE hydraulic_test SET details = ? , user_assignment = ? , user_interaction = ? WHERE ot_id = ?";
+            return $this->db->query($query, array( $details, $technical, $user_interaction , $id));  
     } 
 
 
