@@ -18,7 +18,7 @@ class Reparation extends CI_Controller
                 $this->response->sendJSONResponse(array('msg' => 'No se pudo encontrar el recurso.'), 400); 
             }
         }else {
-            redirect(base_url() . 'home/login', 'refresh');
+            redirect('Home/login', 'refresh');
         }
     }
 
@@ -42,7 +42,7 @@ class Reparation extends CI_Controller
                 $this->output->set_status_header(405);
             } 	
         }else {
-            redirect(base_url() . 'home/login', 'refresh');
+            redirect('Home/login', 'refresh');
         }
     }
 }

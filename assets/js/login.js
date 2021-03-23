@@ -19,16 +19,6 @@ $(() => {
 	}
 });
 
-$("#btn_hidratec").click(() =>{ 
-	let lbl = document.getElementById('label_user');
-	lbl.innerText = 'Usuario Hidratec';
-});
-
-$("#btn_client").click(() =>{ 
-	let lbl = document.getElementById('label_user');
-	lbl.innerText = 'Cliente';
-});
-
 $("#passwd").change(() =>{ 
 	let pass = $("#passwd").val();
 	if(pass){
@@ -61,12 +51,10 @@ $("#email_rec").change(() => {
 login = () => {
 	let email = $("#email").val();
 	let passwd = $("#passwd").val();
-	let option = $('input:radio[name=options]:checked').val();
 
 	let data = {
 		email: email,
 		passwd: passwd,
-		option: option,
 	};
 	$.ajax({
 		data: {

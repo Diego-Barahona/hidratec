@@ -168,10 +168,17 @@ class Orders_model extends CI_Model
                 $datos_reparation = array(
                     'ot_id' => $data['ot_number'],
                     'check_adm' => 0,   
-                    'check_technical' => 0,   
+                    'check_technical' => 0, 
+                    'user_interaction' => json_encode(array(
+                        'user_assignment' => '',
+                        'date_reparation' =>  '',
+                        'user_modify' => '',
+                        'date_modify' => '',
+                        'user_approve' => '',
+                        'date_approve' => '',
+                    )), 
                 );
                 $this->db->insert('reparation', $datos_reparation);
-
                 return true;
             }else{
                 return false;
@@ -256,7 +263,7 @@ class Orders_model extends CI_Model
         }
     }
 
-    public function createEvaluation($id_ot, $id_technical, $id_user_create, $date){
+    public function createEvaluation($id_ot, $id_technical){
         $this->db->select('*'); $this->db->from('evaluation'); $this->db->where('ot_id', $id_ot);
         $query = $this->db->get();
         $datos_ev = array(
@@ -264,8 +271,8 @@ class Orders_model extends CI_Model
             'state' => 1,
             'user_assignment'=> $id_technical,
             'user_interaction' => json_encode(array(
-                'user_create' => $id_user_create,
-                'date_create' =>  $date,
+                'user_create' => '',
+                'date_create' =>  '',
                 'user_modify' => '',
                 'date_modify' => '',
                 'user_approve' => '',
@@ -294,15 +301,15 @@ class Orders_model extends CI_Model
         return true;
     }
 
-    public function createTechnicalReport($id_ot, $id_user, $date){
+    public function createTechnicalReport($id_ot){
         $this->db->select('*'); $this->db->from('technical_report'); $this->db->where('ot_id', $id_ot);
         $query = $this->db->get();
         $datos_tr = array(
             'state' => 1,
             'ot_id' => $id_ot,
             'user_interaction' => json_encode(array(
-                'user_create' => $id_user,
-                'date_create' => $date,
+                'user_create' => '',
+                'date_create' => '',
                 'user_modify' => '',
                 'date_modify' => '',
                 'user_approve' => '',
@@ -330,15 +337,15 @@ class Orders_model extends CI_Model
         return true;
     }
 
-    public function createHydraulicTest($id_ot, $id_user, $date){
+    public function createHydraulicTest($id_ot){
         $this->db->select('*'); $this->db->from('hydraulic_test'); $this->db->where('ot_id', $id_ot);
         $query = $this->db->get();
         $datos_ht = array(
             'state' => 1,
             'ot_id' => $id_ot,
             'user_interaction' => json_encode(array(
-                'user_create' => $id_user,
-                'date_create' => $date,
+                'user_create' => '',
+                'date_create' => '',
                 'user_modify' => '',
                 'date_modify' => '',
                 'user_approve' => '',

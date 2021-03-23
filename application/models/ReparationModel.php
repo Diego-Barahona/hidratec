@@ -7,7 +7,7 @@ class ReparationModel extends CI_Model {
     }
 
     public function getReparationByOrder($ot_id){
-        $query= "SELECT r.check_adm check_adm, r.check_technical check_technical, r.user_assignment user, r.date_reparation date, ot.days_reparation days
+        $query= "SELECT r.check_adm check_adm, r.check_technical check_technical, r.user_assignment user, r.date_reparation date, ot.days_reparation days, r.user_interaction
         FROM reparation r
         LEFT JOIN ot ON ot.id = r.ot_id
         WHERE r.ot_id = ? ";
@@ -25,6 +25,11 @@ class ReparationModel extends CI_Model {
     }
 
     public function editReparation($data){
+        $user_approve = ''; 
+        $date_approve = '';
+        $technical_assignment = '';    
+        $date_reparation = ''; 
+        $user = $_SESSION['full_name'];
         $technical = null;
         $op = 0;
         date_default_timezone_set("America/Santiago");
@@ -36,14 +41,43 @@ class ReparationModel extends CI_Model {
             $technical = null;
             $op = 2;
         }
+
+        /*Verify changes in approve reparation*/
+        if($data['check_adm'] == '1' AND $data['check_adm_old'] =='false'){
+            $date_approve = $date;
+            $user_approve = $user;
+        }else if($data['check_adm'] == '1' AND $data['check_adm_old'] =='true'){
+            $date_approve = $data['date_approve'];
+            $user_approve = $data['user_approve'];
+        }else {
+            $date_approve = '';
+            $user_approve = '';
+        } 
+        /*Verify if technical finalize report */
+        if($data['check_technical'] == '1' AND $data['technical_assignment']){
+            $technical_assignment = $data['technical_assignment'];
+            $date_reparation = $data['date_reparation'];
+        }else{
+            $technical_assignment = '';
+            $date_reparation = '';
+        }
+
         $datos_r = array(
             'user_assignment' => $data['user_assignment'],
             'check_adm' => $data['check_adm'],   
             'check_technical' => $data['check_technical'],   
             'user_assignment' => $technical,
             'date_reparation' => $data['date_reparation'],
+            'user_interaction' => json_encode(array(
+                'technical_assignment' => $technical_assignment,
+                'date_reparation' => $date_reparation,
+                'user_modify' => $user,
+                'date_modify' => $date,
+                'user_approve' => $user_approve,
+                'date_approve' => $date_approve,
+            )),
         );
-     
+
         $this->db->where('ot_id', $data['ot_id']);
         if($this->db->update('reparation', $datos_r)){
 

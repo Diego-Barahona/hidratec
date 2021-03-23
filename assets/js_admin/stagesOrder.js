@@ -152,7 +152,8 @@ $("#table_orders").on("click", "button", function () {
          verifyFile();//funciona
          get_data_technical_report();
          get_data_reparation();
-       
+         get_history_states();
+         get_notes_ot();
     } 
 });
 

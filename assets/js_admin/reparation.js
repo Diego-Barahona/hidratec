@@ -3,8 +3,10 @@ $(() => {
 });
 
 let r_technicals = [];
+let r_check_adm_old = '';
 
 get_data_reparation = () =>{
+    
     id= $("#ot_number").val();
 	let xhr = new XMLHttpRequest();
 	xhr.open("get", `${host_url}/api/getReparationByOrder/${id}`);
@@ -24,8 +26,10 @@ get_data_reparation = () =>{
 
             if(xhr.response[0][0].check_adm == 1){
                 $("#r_check_adm").prop("checked", true);
+                r_check_adm_old = 'true';
             }else{
                 $("#r_check_adm").prop("checked", false);
+                r_check_adm_old = 'false';
             }
 
             if(xhr.response[0][0].check_technical == 1){
@@ -51,6 +55,46 @@ get_data_reparation = () =>{
             }else{
                 $("#r_days_reparation").val('');
             }
+
+            if(xhr.response[0][0].user_interaction){
+                interaction = JSON.parse(xhr.response[0][0].user_interaction);
+                date_reparation = interaction.date_reparation;
+                technical_assignment = interaction.technical_assignment;
+                date_modify = interaction.date_modify;
+                user_modify = interaction.user_modify;
+                date_approve = interaction.date_approve;
+                user_approve = interaction.user_approve;
+                console.log(interaction);
+                $("#r_popover").popover(
+                    { 
+                    html: true,
+                    title: "Información",
+                    content: "Técnico que realizó la reparación: " +technical_assignment+"<br />"+"Fecha reparación: "+date_reparation+"<br />"+
+                            "Modificado por: " +user_modify+"<br />"+"Fecha mod.: "+date_modify+"<br />"+
+                            "Aprobado por: " +user_approve+"<br />"+"Fecha aprv.: "+date_approve
+                    }
+                ); 
+
+            }else{
+                date_reparation = '';
+                technical_assignment  = '';
+                date_modify = '';
+                user_modify = '';
+                date_approve = '';
+                user_approve = '';
+
+                $("#r_popover").popover(
+                    { 
+                    html: true,
+                    title: "Información",
+                    content: "Técnico que realizó la reparación:" +  technical_assignment +"<br />"+"Fecha reparación: "+date_reparation+"<br />"+
+                            "Modificado por: " +user_modify+"<br />"+"Fecha mod.: "+date_modify+"<br />"+
+                            "Aprobado por: " +user_approve+"<br />"+"Fecha aprv.: "+date_approve
+                    }
+                ); 
+            }
+
+
 		}else {
 			swal({
 				title: "Error",
@@ -114,6 +158,10 @@ saveReparation = () =>{
         ot_id : $("#ot_number").val(),
         days_reparation: $('#r_days_reparation').val(),
         date_reparation: $('#r_date_reparation').val(),
+        check_adm_old: r_check_adm_old,
+        date_approve: date_approve,
+        user_approve: user_approve,
+        technical_assignment: $('#r_technical option:selected').text(),
     } 
 
     $.ajax({
@@ -129,7 +177,9 @@ saveReparation = () =>{
              button: "OK",
          }).then(() => {
             $("#r_btnEdit").val('1');
+            $("#r_popover").popover('dispose');
             r_enableFields();
+            get_data_reparation();
          });
         }, 
         statusCode: {

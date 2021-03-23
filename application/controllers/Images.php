@@ -12,11 +12,11 @@ class Images extends CI_Controller
             $url = parse_url($_SERVER['REQUEST_URI']);
             parse_str($url['query'], $params);
             $id = $params['ot'];
-            $this->load->view('shared/super_admin/header');
+            $this->load->view('shared/headerSuperAdmin');
             $this->load->view('admin/adminImages', array ('id'=> $id));
-            $this->load->view('shared/super_admin/footer');
+            $this->load->view('shared/footer');
         } else {
-            redirect(base_url() . 'login', 'refresh');
+			redirect('Home/login', 'refresh');
         }
     }
 

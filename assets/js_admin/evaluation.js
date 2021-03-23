@@ -45,9 +45,10 @@ get_data_evaluation = () =>{
 			}
 
 			if(technical){
-				$("#technical" ).val(technical);
+				let a = $(`option[name ="${technical}"]`).val();
+				$("#technical").val(a);
 			}else{
-				$("#technical" ).val('');
+				$("#technical").val('');
 			}
 			technicals_user = xhr.response[0].user_assignment;
 			disabledAlertEv();

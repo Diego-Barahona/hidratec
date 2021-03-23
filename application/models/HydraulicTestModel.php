@@ -30,9 +30,9 @@ class HydraulicTestModel extends CI_Model {
 
 
     public function editHydraulicTest($id,$data){
-        date_default_timezone_get("America/Santiago");
+        
         $user= $_SESSION['full_name'];
-        $date=  date('Y-m-d G:i:s');
+        $date=  date('Y-m-d H:i:s');
 
         $date_approve="";
         $user_approve="";

@@ -23,7 +23,7 @@
                   <a class="nav-link " data-toggle="tab" href="#historyStates">Historial de estados</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link " data-toggle="tab" href="#aprobadas">Notas</a>
+                  <a class="nav-link " data-toggle="tab" href="#notesOrder">Notas</a>
               </li>
             </ul>
       </div>
@@ -32,7 +32,7 @@
 
         <!-- Evaluations View and Edit -->
         <?php if ($_SESSION['rango']=="1"){ ?>
-        <?php require('evaluationView.php');} ?>
+        <?php require('evaluationEdit.php');} ?>
         <!-- Evaluations End -->
 
         <div class="table-responsive tab-pane fade" id="technicalReport">
@@ -47,6 +47,9 @@
             <?php require('historyStates.php'); ?> 
         </div>
 
+        <div class="table-responsive tab-pane fade" id="notesOrder">
+            <?php require('notesOrder.php'); ?> 
+        </div>
 
         <?php require('hidraulicTest.php');?>
 
