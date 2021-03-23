@@ -11,7 +11,7 @@ class AccessControl {
   public function checkAuth ($isAjax = false) {
 
     if (!$isAjax || ($isAjax && $this->CI->input->is_ajax_request())){
-      if (isset($_SESSION['rut']) && isset($_SESSION['email']) && isset($_SESSION['full_name'])){
+      if (isset($_SESSION['email']) && isset($_SESSION['full_name'])){
           return array('correct' => true);
       } else {
         return array('correct' => false, 'err' => 'NO_LOGGED');

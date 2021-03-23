@@ -13,7 +13,7 @@
             </button>
             </h5>
         </div>
-        <div id="technicalReportGeneral" class="collapse" aria-labelledby="headingTR">
+        <div id="technicalReportGeneral" class="collapse show" aria-labelledby="headingTR">
             <div class="card-body">
                 <div class="row mb-2 ">
                     <div class="col-md-3 mb-3 ">
@@ -33,10 +33,10 @@
                         </div>
                     </div>
                     <div class="col-md-6 mb-3" style='text-align: right;'>
-                        <button type="button" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#tr_user_interaction"><i class="fas fa-info"></i></button>
-                    </div>                       
+                        <button id="tr_export" style='display: none;' type="button" class="btn btn-primary rounded-circle" data-toggle="popover" data-placement="left"><i class="fas fa-file-export"></i></i></button>
+                        <button id="tr_popover" type="button" class="btn btn-primary rounded-circle" data-toggle="popover" data-placement="left"><i class="fas fa-info"></i></button>
+                    </div>                  
                 </div>
-
                 <div class="row mb-2">
                     <div class="col-md-4 mb-3">
                         <label for="actividad">Fecha de reporte técnico</label>
@@ -239,5 +239,5 @@
   </div>
 </div>
 
-<script src="<?php echo base_url(); ?>assets/js_admin/editTechnicalReport.js"></script>
+<script src="<?php echo base_url(); ?>assets/js_admin/technicalReport.js"></script>
 

@@ -23,8 +23,8 @@ class ImageModel extends CI_Model
     public function insertImage($data)
     {   
 
-        $query= "SELECT * FROM images WHERE images.name = ?";
-        $result= $this->db->query($query, array("name"=> $data["name"]));
+        $query= "SELECT * FROM images WHERE images.name = ? AND images.ot_id = ?";
+        $result= $this->db->query($query, array("name"=> $data["name"], "ot_id"=> $data["id"]));
          
 
         $data = array( 

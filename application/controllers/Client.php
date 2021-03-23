@@ -13,9 +13,9 @@ class Client extends CI_Controller {
     public function index()
 	{
 		if ($this->accesscontrol->checkAuth()['correct']) {
-			$this->load->view('shared/super_admin/header');
+			$this->load->view('shared/headerSuperAdmin');
 			$this->load->view('admin/admin_client');
-			$this->load->view('shared/super_admin/footer');
+			$this->load->view('shared/footer');
         } else {
 			redirect('Home/login', 'refresh');
         }

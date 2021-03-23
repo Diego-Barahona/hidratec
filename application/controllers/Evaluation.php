@@ -49,8 +49,4 @@ class Evaluation extends CI_Controller
             $this->response->sendJSONResponse( array("msg" => "No tiene los permisos suficientes "),400);
         }
     }
-
-
-
-    
 }

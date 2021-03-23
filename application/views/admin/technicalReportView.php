@@ -15,7 +15,7 @@
         </div>
         <div id="technicalReportGeneral" class="collapse show" aria-labelledby="headingTR">
             <div class="card-body">
-                <div class="row mb-2 ">
+            <div class="row mb-2 ">
                     <div class="col-md-3 mb-3 ">
                         <div class="form-check">
                                 <input class="form-check-input"  type="checkbox" value="" id="tr_check_adm" disabled>
@@ -31,10 +31,11 @@
                                 Aprobado por técnico master
                             </label>
                         </div>
-                    </div>
+                    </div> 
                     <div class="col-md-6 mb-3" style='text-align: right;'>
-                        <button type="button" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#tr_user_interaction"><i class="fas fa-info"></i></button>
-                    </div>                       
+                        <button id="tr_export" style='display: none;' type="button" class="btn btn-primary rounded-circle" data-toggle="popover" data-placement="left"><i class="fas fa-file-export"></i></i></button>
+                        <button id="tr_popover" type="button" class="btn btn-primary rounded-circle" data-toggle="popover" data-placement="left"><i class="fas fa-info"></i></button>
+                    </div>                 
                 </div>
                 <div class="row mb-2">
                     <div class="col-md-4 mb-3">

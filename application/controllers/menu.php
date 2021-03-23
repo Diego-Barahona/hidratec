@@ -11,7 +11,7 @@ class Menu extends CI_Controller
             $this->load->view('admin/menu');
             $this->load->view('admin/footer');
         } else {
-            redirect(base_url() . 'login', 'refresh');
+            redirect('Home/login', 'refresh');
         }
     }
 }

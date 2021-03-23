@@ -17,6 +17,7 @@ const table_history_states = $('#table_history_states').DataTable({
 });
 
 get_history_states = () =>{
+	table_history_states.clear();
     let xhr = new XMLHttpRequest();
 	xhr.open("get", `${host_url}/api/getHistoryStatesByOrder/${id}`);
 	xhr.responseType = "json";

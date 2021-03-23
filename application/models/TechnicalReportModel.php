@@ -48,18 +48,33 @@ class TechnicalReportModel extends CI_Model {
         return $query = $this->db->get()->result();
     }
 
+    public function getTechnicalExport($id){
+        $query= "SELECT tr.details data, tr.details_images data_images, u.id user, tr.user_interaction data_interaction, e.name enterprise, c.name component
+        FROM technical_report tr
+        LEFT JOIN user u ON u.id = tr.user_assignment
+        LEFT JOIN ot ON ot.id = tr.ot_id
+        LEFT JOIN enterprise e ON e.id = ot.enterprise_id
+        LEFT JOIN component c ON c.id = ot.component_id
+        WHERE tr.ot_id = ? AND tr.state = ? ";
+        return $this->db->query($query, array($id,true))->result_array(); 
+    } 
+
+
     public function editTechnicalReport($data, $date_update){
         $user = $_SESSION['full_name'];
         date_default_timezone_set("America/Santiago");
         $date = date("Y-m-d G:i:s");
         $technical = null;
+        $user_approve = ''; 
         $date_approve = '';
-        $user_approve = '';     
+        $user_create = '';    
+        $date_create = '';   
  
         if($data['technical']){
             $technical = $data['technical'];
         }
 
+        /*Verify changes in approve technical report*/
         if($data['check_adm'] == 'true' AND $data['check_adm_old'] =='false'){
             $date_approve = $date;
             $user_approve = $user;
@@ -69,8 +84,16 @@ class TechnicalReportModel extends CI_Model {
         }else {
             $date_approve = '';
             $user_approve = '';
-        }      
-        
+        } 
+
+        /*Verify if create technical report*/
+        if($data['check_technical'] == 'true' AND $data['technical']){
+            $user_create = $data['user_create'];
+            $date_create = $data['date_create'];
+        }else{
+            $user_create = '';
+            $date_create = '';
+        }
         $imagenes = $data['details_images'];
 
         $datos_tr = array(
@@ -87,8 +110,8 @@ class TechnicalReportModel extends CI_Model {
             )),
             'details_images' => json_encode($data['details_images']),
             'user_interaction' => json_encode(array(
-                'user_create' => $data['user_create'],
-                'date_create' => $data['date_create'],
+                'user_create' => $user_create,
+                'date_create' => $date_create,
                 'user_modify' => $user,
                 'date_modify' => $date,
                 'user_approve' => $user_approve,

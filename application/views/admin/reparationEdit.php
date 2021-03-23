@@ -12,7 +12,7 @@
         <div id="reparationGeneral" class="collapse show" aria-labelledby="headingTR">
             <div class="card-body">
                 <div class="row mb-2 ">
-                    <div class="col-md-4 mb-3 ">
+                    <div class="col-md-3 mb-3 ">
                         <div class="form-check">
                                 <input class="form-check-input"  type="checkbox" value="" id="r_check_adm" disabled>
                                 <label class="form-check-label"  for="r_check_adm">
@@ -20,14 +20,17 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3 ">
+                    <div class="col-md-3 mb-3 ">
                         <div class="form-check">
                             <input class="form-check-input"  type="checkbox" value="" id="r_check_technical" disabled>
                             <label class="form-check-label"  for="r_check_technical">
                                 Aprobado por técnico master
                             </label>
                         </div>
-                    </div>                 
+                    </div>   
+                    <div class="col-md-6 mb-3" style='text-align: right;'>
+                        <button id="r_popover" type="button" class="btn btn-primary rounded-circle" data-toggle="popover" data-placement="left"><i class="fas fa-info"></i></button>
+                    </div>               
                 </div>
 
                 <div class="row mb-2">

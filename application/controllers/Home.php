@@ -19,26 +19,27 @@ class Home extends CI_Controller {
 		/*Verificar que el usuario esta logeado*/
 		if ($this->accesscontrol->checkAuth()['correct']) {
 			$rango = $this->session->rango;
+
 			if($this->session->usuario == "user"){
 				//SuperAdmin
-				if ($rango == 1) $this->load_page_role("super_admin");
+				if ($rango == 1) $this->load_page_role("SuperAdmin");
 				//Admin
-				else if ($rango == 2) $this->load_page_role("");
+				else if ($rango == 2) $this->load_page_role("Admin");
 				//técnico master
-				else if ($rango == 3) $this->load_page_role("");
+				else if ($rango == 3) $this->load_page_role("TechnicalMaster");
 				//ayudante técnico
-				else if ($rango == 4) $this->load_page_role("");
+				else if ($rango == 4) $this->load_page_role("TechnicalAssistant");
 				//vendedor
-				else if ($rango == 5) $this->load_page_role("");
-				//cliente
-				else if ($rango == 6) $this->load_page_role("");
+				else if ($rango == 5) $this->load_page_role("Seller");
 			}else if($this->session->usuario == "client"){
-				//Cliente Read
-				if ($rango == 1) $this->load_page_role("super_admin");
-				//Cliente Edir
-				else if ($rango == 2) $this->load_page_role("");
+				//Client Read
+				if ($rango == 1) $this->load_page_role("ClientRead");
+				//Client Edit
+				else if ($rango == 2){
+					$this->load_page_role("ClientEdit");
+				} 
 			}else{
-				redirect(base_url() . 'home/login', 'refresh');
+				redirect(base_url() . 'Home/login', 'refresh');
 			}
         } else {
 			redirect('Home/login', 'refresh');
@@ -47,8 +48,7 @@ class Home extends CI_Controller {
 
 	public function load_page_role($path)
 	{
-		$this->load->view('shared/'.$path.'/header');
-		$this->load->view('shared/'.$path.'/index');
-		$this->load->view('shared/'.$path.'/footer');
+		$this->load->view('shared/header'.$path);
+		$this->load->view('shared/footer');
 	}
 }

@@ -13,9 +13,9 @@ class Enterprise extends CI_Controller {
     public function index()
 	{
         if ($this->accesscontrol->checkAuth()['correct']) {
-            $this->load->view('shared/super_admin/header');
+            $this->load->view('shared/headerSuperAdmin');
             $this->load->view('admin/admin_enterprise');
-            $this->load->view('shared/super_admin/footer');
+            $this->load->view('shared/footer');
         } else {
 			redirect('Home/login', 'refresh');
         }
@@ -62,7 +62,7 @@ class Enterprise extends CI_Controller {
                 }
             }     
         } else {
-			redirect('Home/login', 'refresh');
+            redirect('Home/login', 'refresh');
         }
     }      
 
@@ -98,7 +98,7 @@ class Enterprise extends CI_Controller {
             }
         }     
         } else {
-			redirect('Home/login', 'refresh');
+            redirect('Home/login', 'refresh');
         }
 	}
 
@@ -123,7 +123,7 @@ class Enterprise extends CI_Controller {
                 $this->response->sendJSONResponse($msg);
             }
         } else {
-			redirect('Home/login', 'refresh');
+            redirect('Home/login', 'refresh');
         }
 	}
 }
