@@ -72,6 +72,7 @@ $route['api/changeStateOrder']['POST']='Orders/changeStateOrder';
 $route['adminOrders']['GET']='Orders/adminOrders';
 $route['api/getOrders']['GET']='Orders/getOrders';
 $route['api/getFieldsOrder']['GET']='Orders/getFieldsOrder';
+$route['api/getHistoryStatesByOrder/(:num)']['GET'] = 'Orders/getHistoryStatesByOrder/$1';
 
 //view counter
 $route['counterOrders']['GET']='Counter/counterOrders';
@@ -159,6 +160,8 @@ $route['api/save_config/(:num)']['POST'] = 'HydraulicTest/save_config/$1';
 $route['api/getTechnicalReportByOrder/(:num)']['GET'] = 'TechnicalReport/getTechnicalReportByOrder/$1';
 $route['api/getImagesByTechnicalReport']['POST']  = 'TechnicalReport/getImagesByTechnicalReport';
 $route['api/editTechnicalReport']['POST']  = 'TechnicalReport/editTechnicalReport';
+$route['api/getPdfTechnicalReport']['POST']  = 'TechnicalReport/getPdfTechnicalReport';
+
 
 //api aprobation 
 $route['api/getAprobationByOrder/(:num)']['GET'] = 'Aprobation/getAprobationByOrder/$1';
@@ -168,10 +171,12 @@ $route['api/getOC/(:num)']['GET'] = 'Aprobation/getOC/$1';
 $route['api/deleteOC/(:num)']['POST'] = 'Aprobation/deleteOC/$1';
 
 
+$route['api/getReparationByOrder/(:num)']['GET'] = 'Reparation/getReparationByOrder/$1';
+$route['api/editReparation']['POST']  = 'Reparation/editReparation';
 
 
-
-
-
-
-
+//api notes
+$route['api/getNotesByOrder/(:num)']['GET'] = 'Notes/getNotesByOrder/$1';
+$route['api/createNote']['POST'] = 'Notes/createNote';
+$route['api/updateNote']['POST'] = 'Notes/updateNote';
+$route['api/deleteNote']['POST'] = 'Notes/deleteNote';

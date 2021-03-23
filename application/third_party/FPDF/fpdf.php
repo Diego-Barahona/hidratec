@@ -1404,6 +1404,13 @@ protected function _readstream($f, $n)
 	return $res;
 }
 
+
+protected function SetWidths($w)
+{
+	//Set the array of column widths
+	$this->widths=$w;
+}
+
 protected function _readint($f)
 {
 	// Read a 4-byte integer from stream

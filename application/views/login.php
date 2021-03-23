@@ -45,15 +45,6 @@
         <div class="row justify-content-center my-auto">
             <div class="col-md-8 col-10">
                 <div class="row justify-content-center"> <img id="logo" src="<?php echo base_url(); ?>assets/img/logos/logo_hidratec.jpg"> </div>
-                <div class="col-md-12 btn-group btn-group-toggle" data-toggle="buttons">
-                  <label  class="btn btn-secondary active">
-                    <input id="btn_hidratec" type="radio" name="options" id="option1" value='0' checked> Hidratec
-                  </label>
-                  <label class="btn btn-secondary">
-                    <input id="btn_client" type="radio" name="options" id="option2" value ='1'> Clientes
-                  </label>
-                </div>
-
                 <h6 class="msg-info text-center">Ingrese sus credenciales de acceso </h6>
                 <form>
                   <div id="frm_email" class="form-floating mb-3"> 

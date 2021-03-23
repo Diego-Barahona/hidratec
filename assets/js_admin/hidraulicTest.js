@@ -190,7 +190,7 @@ get_data_ht = () =>{
 				$("#date_approve").val("");
 				$("#technical_name_ht" ).val("");
 			}
-
+			console.log(technical);
 			if(technical){
 				$("#technical_ht" ).val(technical);
 			}else{

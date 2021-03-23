@@ -8,11 +8,31 @@ class LoginModel extends CI_Model
         parent::__construct();
     }
 
-    public function checkUser($email, $table)
+    public function getUser($email, $table)
     {
         $query = $this->db->get_where($table, array('email' => $email), 1)->row();
         if (!$query) {return false;} else{return $query;}  
     }
+
+    public function checkUser($email)
+    {
+        $query_user = "SELECT * FROM user WHERE email = ?";
+        $user = $this->db->query($query_user, array($email));
+
+        if(sizeof($user->result()) >= 1){
+            return 1;
+        }else{
+            $query_client = "SELECT * FROM client WHERE email = ?";
+            $client = $this->db->query($query_client, array($email));
+
+            if(sizeof($client->result()) >= 1){
+                return 2;
+            }else{
+                return 3;
+            }
+        }
+    }
+
 
     public function checkRole($user_id, $table, $id)
     {

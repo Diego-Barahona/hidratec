@@ -7,11 +7,11 @@ class Location extends CI_Controller
     { 
         
         if ($this->accesscontrol->checkAuth()['correct']) {
-            $this->load->view('shared/super_admin/header');
+            $this->load->view('shared/headerSuperAdmin');
             $this->load->view('admin/adminLocation');
-            $this->load->view('shared/super_admin/footer');
+            $this->load->view('shared/footer');
         } else {
-            redirect(base_url() . 'login', 'refresh');
+            redirect('Home/login', 'refresh');
         }
     }
 

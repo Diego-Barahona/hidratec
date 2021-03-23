@@ -24,20 +24,7 @@ class Login extends CI_Controller
             $data = $this->input->post('data');
             $email = $data['email'];
             $pass = $data['passwd'];
-            $option = $data['option'];
 
-            /* Discriminar tabla en la cual buscar al usuario/rol e inicializar las variables de busqueda*/
-            if($option == 0){
-                //Usuario Hidratec
-                $table_user = "user";
-                $table_rol = "user_role";
-                $id_rol = "role_id";
-            }else if($option == 1){
-                //cliente
-                $table_user = "client";
-                $table_rol = "client_role";   
-                $id_rol = "rolClient_id"; 
-            }
 
              /* Cargar datos para la validación de formulario*/
             $rules = get_rules_login();
@@ -54,8 +41,22 @@ class Login extends CI_Controller
                 $this->output->set_status_header(400);  /*Algunos o todos los campos estan vacios */ 
             }else{ 
             /*Si el formulario es valido*/
-                //Verificar si el usuario existe
-                if ($user_data = $this->LoginModel->checkUser($email, $table_user)) {
+                //Verificar si el usuario existe y si es cliente o de la empresa
+                $option = $this->LoginModel->checkUser($email, $table_user);
+                if ($option == 1 || $option == 2 ) {
+                    if($option == 1){
+                        //Usuario Hidratec
+                        $table_user = "user";
+                        $table_rol = "user_role";
+                        $id_rol = "role_id";
+                    }else if($option == 2){
+                        //cliente
+                        $table_user = "client";
+                        $table_rol = "client_role";   
+                        $id_rol = "roleClient_id"; 
+                    }
+
+                    $user_data = $this->LoginModel->getUser($email, $table_user);
                     //Verificar que el usuario se encuentra habilitado
                     if ($user_data->state !=1) {
                         $msg['msg']="Usuario no tiene permisos para acceder al sistema.";
@@ -68,14 +69,26 @@ class Login extends CI_Controller
                             //Credenciales correctas: Crear variables de session
                             //Consulta para obtener el rango del usuario
                             $user_data_rol = $this->LoginModel->checkRole($user_data->id, $table_rol, $table_user);  
-                            $data = array(
-                                'id' => $user_data->id,
-                                'rut' => $user_data->rut,
-                                'full_name' => $user_data->full_name,
-                                'email' =>  $user_data->email,
-                                'rango' => $user_data_rol-> $id_rol,
-                                'usuario' => $table_user,
-                            );
+                            if($option == 1)
+                            {
+                                $data = array(
+                                    'id' => $user_data->id,
+                                    'rut' => $user_data->rut,
+                                    'full_name' => $user_data->full_name,
+                                    'email' =>  $user_data->email,
+                                    'rango' => $user_data_rol-> $id_rol,
+                                    'usuario' => $table_user,
+                                );
+                            }else
+                            {
+                                $data = array(
+                                    'id' => $user_data->id,
+                                    'full_name' => $user_data->full_name,
+                                    'email' =>  $user_data->email,
+                                    'rango' => $user_data_rol-> $id_rol,
+                                    'usuario' => $table_user,
+                                );
+                            }   
                             $this->session->set_userdata($data);
                             $msg['msg']="Inicio de Sesión exitoso.";
                             $this->response->sendJSONResponse($msg);
@@ -85,7 +98,7 @@ class Login extends CI_Controller
                             $this->output->set_status_header(401);
                         }
                     }
-                } else {
+                }else {
                     $msg['msg']="El usuario no se encuentra registrado.";
                     $this->response->sendJSONResponse($msg);
                     $this->output->set_status_header(401);
@@ -236,10 +249,11 @@ class Login extends CI_Controller
     public function logout()
 	{
 		//Para cerrar sesion me pide los indices del actual userdata
-		$vars = array('rut','full_name','email','rangoo','usuario','is_logged');
+		$vars = array('id','rut','full_name','email','rango','usuario');
 		$this->session->unset_userdata($vars);
 		$this->session->sess_destroy();
-        $msg['msg']=".";
-        $this->response->sendJSONResponse($msg);
+        $this->response->sendJSONResponse(array('msg' => "Se ha cerrado la sesión."));
 	}
 }
+
+

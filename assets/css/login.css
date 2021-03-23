@@ -91,7 +91,7 @@ textarea:focus {
 
 #logo {
     width: 280px;
-    height: 250px;
+    height: 250px;  
 }
 
 .heading {
@@ -119,8 +119,7 @@ textarea:focus {
 .msg-info {
     padding-left: 20px;
     margin-bottom: 15px;
-    /* margin-top: -25px; Para login sin opciones*/
-    margin-top: 10px;
+    margin-top: -25px;
 }
 
 .btn-group{

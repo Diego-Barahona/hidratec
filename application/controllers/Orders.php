@@ -7,28 +7,29 @@ class Orders extends CI_Controller
 		parent:: __construct(); 
 		$this->load->model('Orders_model');
         $this->load->helper('ot_rules');
+        $this->load->library('Fpdf_lib');
 	}
 
     public function adminOrders()
     { 
         
         if ($this->accesscontrol->checkAuth()['correct']) {
-            $this->load->view('shared/super_admin/header');
+            $this->load->view('shared/headerSuperAdmin');
             $this->load->view('admin/adminOrders');
-            $this->load->view('shared/super_admin/footer');
+            $this->load->view('shared/footer');
         } else {
-            redirect(base_url() . 'home/login', 'refresh');
+            redirect('Home/login', 'refresh');
         }
     }
 
     public function newOrder()
     { 
         if ($this->accesscontrol->checkAuth()['correct']) {
-            $this->load->view('shared/super_admin/header');
+            $this->load->view('shared/headerSuperAdmin');
             $this->load->view('admin/registerOrder');
-            $this->load->view('shared/super_admin/footer');
+            $this->load->view('shared/footer');
         } else {
-            redirect(base_url() . 'login', 'refresh');
+            redirect('Home/login', 'refresh');
         }
     }
 
@@ -78,6 +79,9 @@ class Orders extends CI_Controller
 
                     if($check_report_technical == 'true'){
                         $this->Orders_model->createTechnicalReport($ot_number);
+                        $pdf = $this->fpdf_lib->pdfTechnicalReport($ot_number);
+                        $msg['msg'] = "No se pudo encontrar el recurso.";
+                        $this->response->sendJSONResponse($msg);
                     }
 
                     if($check_hydraulic_test == 'true'){
@@ -122,11 +126,11 @@ class Orders extends CI_Controller
             $id = $params['ot'];
             $order = $this->Orders_model->getOrder($id);
             $order['states'] = $this->Orders_model->getStates();
-            $this->load->view('shared/super_admin/header');
+            $this->load->view('shared/headerSuperAdmin');
             $this->load->view('admin/stagesOrder', $order);
-            $this->load->view('shared/super_admin/footer');
+            $this->load->view('shared/footer');
         } else {
-            redirect(base_url() . 'login', 'refresh');
+            redirect('Home/login', 'refresh');
         }
     }
 
@@ -143,11 +147,11 @@ class Orders extends CI_Controller
             $order['technicals'] = $this->Orders_model->getTechnicals();
             $order['locations'] = $this->Orders_model->getLocations();
             $order['config'] = json_decode($order['config'], true);
-            $this->load->view('shared/super_admin/header');
+            $this->load->view('shared/headerSuperAdmin');
             $this->load->view('admin/updateOrder', $order);
-            $this->load->view('shared/super_admin/footer');
+            $this->load->view('shared/footer');
         } else {
-            redirect(base_url() . 'login', 'refresh');
+            redirect('Home/login', 'refresh');
         }
     }
 
@@ -186,11 +190,14 @@ class Orders extends CI_Controller
 				/*Editar ot*/
                 /*Ingresada correctamente*/
                 $id = $_SESSION['id'];
+                $name = $_SESSION['full_name'];
+                date_default_timezone_set("America/Santiago");
+                $date = date("Y-m-d G:i:s");
                 if($this->Orders_model->updateOrder($data, $id)){
 				/*Actualizar los informes de ser necesario*/
                     if($check_evaluation != $check_evaluation_old){
                         if($check_evaluation == 'true'){
-                            $this->Orders_model->createEvaluation($data['ot_number'], null);
+                            $this->Orders_model->createEvaluation($data['ot_number'], null, $name, $date);
                         }else{
                             $this->Orders_model->desEvaluation($data['ot_number']);
                         }
@@ -198,7 +205,8 @@ class Orders extends CI_Controller
 
                     if($check_report_technical != $check_report_technical_old){
                         if($check_report_technical == 'true'){
-                            $this->Orders_model->createTechnicalReport($data['ot_number']);
+                            $this->Orders_model->createTechnicalReport($data['ot_number'], $name, $date);
+                            $pdf = $this->fpdf_lib->pdfTechnicalReport($data['ot_number']);
                         }else{
                             $this->Orders_model->desTechnicalReport($data['ot_number']);
                         }
@@ -206,7 +214,7 @@ class Orders extends CI_Controller
 
                     if($check_hydraulic_test != $check_hydraulic_test_old){
                         if($check_hydraulic_test == 'true'){
-                            $this->Orders_model->createHydraulicTest($data['ot_number']);
+                            $this->Orders_model->createHydraulicTest($data['ot_number'], $name, $date);
                         }else{
                             $this->Orders_model->desHydraulicTest($data['ot_number']);
                         }
@@ -237,7 +245,22 @@ class Orders extends CI_Controller
                 $this->response->sendJSONResponse($msg);
             }	
         } else {
-            redirect(base_url() . 'login', 'refresh');
+            redirect('Home/login', 'refresh');
+        }
+    }
+
+    public function getHistoryStatesByOrder($id)
+    {
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            if($history = $this->Orders_model->getHistoryStatesByOrder($id)){
+                $this->response->sendJSONResponse($history); 
+            }else{
+                $msg['msg'] = "Error al obtener los estados asociados a la órden de trabajo";
+                $this->response->sendJSONResponse($msg);
+                $this->output->set_status_header(405);
+            } 
+        } else {
+            redirect('Home/login', 'refresh');
         }
     }
 }
