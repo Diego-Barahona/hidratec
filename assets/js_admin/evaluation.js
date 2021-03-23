@@ -18,8 +18,9 @@ get_data_evaluation = () =>{
 			
 			let data = xhr.response[0].details;
 			let technical=xhr.response[0].full_name;
+			let file=xhr.response[0].export;
 
-           
+        
 		
 			if(data){
 				let evaluation= JSON.parse(data);
@@ -27,12 +28,20 @@ get_data_evaluation = () =>{
 				if(evaluation.approve_admin === "true"){$( "#approve_admin_ev" ).prop('checked', true);
 				} else {$( "#approve_admin_ev" ).prop('checked', false );}
 
-				if(evaluation.approve_technical === "true"){$( "#approve_technical_ev").prop('checked', true);
-				} else {$( "#approve_technical_ev" ).prop('checked', false );}
+				if(evaluation.approve_technical === "true"){
+				$("#export_ev").show();
+				$( "#approve_technical_ev").prop('checked', true);
+				
+				} else {
+					$("#export_ev").css("display","none");
+					$( "#approve_technical_ev" ).prop('checked', false );
+				}
                 
 				$( "#date_evaluation").val(evaluation.date_evaluation);
 				$( "#description_ev").val(evaluation.description);
 				$( "#notes" ).val(evaluation.notes);
+				$("#record_path_pdf").val(file);
+                 $("#name_technical").val(technical);
 				
 				
 			}else{
@@ -41,7 +50,8 @@ get_data_evaluation = () =>{
 				$( "#approve_technical_ev" ).prop('checked', false);
 			    $( "#approve_admin_ev" ).prop('checked', false);
 				$( "#notes" ).val('');
-			
+				$("#record_path_pdf").val("");
+			    $("#name_technical").val("");
 			}
 
 			if(technical){
@@ -87,21 +97,28 @@ $("#hab_edit_ev").change(() => {
         $( "#technical" ).prop( "disabled", false );
 		$( "#approve_admin_ev" ).prop( "disabled", false );
         $( "#approve_technical_ev" ).prop( "disabled", false );
+		$("#date_evaluation").datepicker({
+            showOn: "button",
+            buttonText: "Calendario",
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'yy-mm-dd',
+            buttonImage: host_url + 'assets/img/about/calendario2.png',
+        });
 	
 	}else{
-        $( "#date_evaluation"  ).prop( "disabled", true );
-        $( "#description_ev"  ).prop( "disabled", true);
+        $( "#date_evaluation" ).prop( "disabled", true );
+        $( "#description_ev" ).prop( "disabled", true);
         $(  "#notes").prop( "disabled", true );
         $(  "#technical").prop( "disabled", true );
 		$( "#approve_admin_ev" ).prop( "disabled", true );
         $( "#approve_technical_ev" ).prop( "disabled", true );
 		$( "#id_ot" ).prop( "disabled", true );
+		$("#date_evaluation").datepicker("destroy");	
 
 		
 	}
 });
-
-
 
 
 edit_evaluation = () => {
@@ -109,10 +126,13 @@ edit_evaluation = () => {
 	event.preventDefault();
 	let id = $("#id_ot").val();//Image ID 
 	let data = {
+		id : $("#id_ot").val(),
         date_evaluation :$("#date_evaluation").val(),
         description: $("#description_ev").val(),
         notes: $("#notes").val(),
         technical: $("#technical").val(),
+		name_technical:  $("#name_technical").val(),
+		old_pdf: $("#record_path_pdf").val(),
 		approve_technical: $("#approve_technical_ev").is(':checked'),
 		approve_admin: $("#approve_admin_ev").is(':checked'),
 		
@@ -134,7 +154,7 @@ edit_evaluation = () => {
 				text: result.msg,
                 button: "OK",
 			}).then(() => {
-			    
+				get_data_evaluation();
 				$('#hab_edit_ev').prop( "checked", false );
 				$( "#date_evaluation" ).prop( "disabled", true );
 				$( "#description_ev" ).prop( "disabled", true);
@@ -142,6 +162,7 @@ edit_evaluation = () => {
 				$( "#approve_admin_ev" ).prop( "disabled", true );
 				$( "#approve_technical_ev" ).prop( "disabled", true );
 				$( "#technical" ).prop( "disabled", true );
+				$("#date_evaluation").datepicker("destroy");	
 
 			   });
 		},
@@ -193,18 +214,39 @@ getFields = () => {
 	xhr.send();
 };
 
+showExportEvaluation = ()=>{ 
+
+	id= $("#ot_number").val();
+ 
+	let xhr = new XMLHttpRequest();
+	xhr.open("get", `${host_url}/api/getEvaluationByOrder/${id}`);
+	xhr.responseType = "json";
+	xhr.addEventListener("load", () => {
+		if (xhr.status === 200) {
+			    
+			$file=xhr.response[0].export; //definir en base de datos 
+			$url= host_url+$file;
+			console.log($url);
+			window.open($url);
+		
+        }else { 
+			
+			swal({
+				title: "Error",
+				icon: "error",
+				text:  "Error al cargar el archivo ",
+			});
+		}
+	});
+	xhr.send();
+}
+
 
 $("#btn_edit").on("click", () => {
 	edit_evaluation();
 });
 
-
-
-
-
-
-
-
+$("#btn_export_ev").on("click",showExportEvaluation );
 
 
 

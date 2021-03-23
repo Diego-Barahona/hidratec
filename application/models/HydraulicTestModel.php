@@ -10,7 +10,7 @@ class HydraulicTestModel extends CI_Model {
 
         
         
-        $query= "SELECT ht.details , u.full_name , ht.user_assignment, ht.state , ht.user_interaction
+        $query= "SELECT ht.details , u.full_name , ht.user_assignment, ht.state , ht.user_interaction ,ht.export,ht.config
         FROM hydraulic_test ht
         LEFT JOIN user_role ur ON ur.user_id = ht.user_assignment
         LEFT JOIN user u ON u.id = ur.user_id
@@ -23,7 +23,7 @@ class HydraulicTestModel extends CI_Model {
 
     }
     public function get_info_ht($id){
-        $query= "SELECT extra_info FROM hydraulic_test WHERE ot_id = ? ";
+        $query= "SELECT extra_info , config FROM hydraulic_test WHERE ot_id = ? ";
          return $this->db->query($query, array($id))->result(); 
 
     }
@@ -112,7 +112,27 @@ class HydraulicTestModel extends CI_Model {
     }
     
 
+    public function pdfHidraulicTest($id,$new){
+       
+          $query = "UPDATE hydraulic_test SET export = ? WHERE ot_id = ?";
+          return $this->db->query($query, array($new,$id));  
+    }
 
+   
+
+    public function  save_config($id,$data){
+
+        $config= json_encode ( array( 
+            "config_speed"=> $data['config_speed'],
+            "config_presion"=> $data['config_presion'],
+            "config_caudal" => $data['config_caudal'],
+            "config_time" => $data['config_time'],
+        ));
+       
+        $query = "UPDATE hydraulic_test SET config = ? WHERE ot_id = ?";
+        return $this->db->query($query, array($config,$id));  
+  }
+      
 
     
 }

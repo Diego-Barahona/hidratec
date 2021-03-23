@@ -11,7 +11,7 @@
                   <a class="nav-link" data-toggle="tab" href="#technicalReport">Informe Técnico</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link " data-toggle="tab" href="#aprobadas">Aprobación</a>
+                  <a class="nav-link " data-toggle="tab" href="#aprobation">Aprobación</a>
               </li>
               <li class="nav-item">
                   <a class="nav-link " data-toggle="tab" href="#reparation">Reparación</a>
@@ -30,10 +30,11 @@
 
      <div class="card-body tab-content">
 
-        <!-- Evaluations View and Edit -->
-        <?php if ($_SESSION['rango']=="1"){ ?>
-        <?php require('evaluationEdit.php');} ?>
-        <!-- Evaluations End -->
+     <!-- Evaluations View and Edit -->
+     <?php if ($_SESSION['rango']=="1"){ 
+      require('evaluationEdit.php');} ?>
+     <!-- Evaluations End -->
+
 
         <div class="table-responsive tab-pane fade" id="technicalReport">
             <?php require('technicalReportEdit.php'); ?> 
@@ -47,15 +48,22 @@
             <?php require('historyStates.php'); ?> 
         </div>
 
+
         <div class="table-responsive tab-pane fade" id="notesOrder">
             <?php require('notesOrder.php'); ?> 
         </div>
 
-        <?php require('hidraulicTest.php');?>
+
+     <?php require('aprobation.php');?>
+     <?php require('hydraulicTestEdit.php');?>
+     
+
+
 
 
 
     
+
      
 
 

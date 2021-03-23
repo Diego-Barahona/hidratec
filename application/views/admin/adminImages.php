@@ -39,31 +39,25 @@
         <div class="form-group">
         <form  id= "foto" >
               <div class="row">
-               <div class="col-md-6 mb-3">
-                      
-                        <div class="form-group" id="frm_name">
-                            <label for="actividad">Nombre de la imagen</label>
-                            <input type="text" class="form-control"  name="name" id="name" placeholder="Ingrese nombre">
-                            <div class="invalid-feedback "></div>
+               
+                   <div class="col-md-4 mb-3 ml-2">
+                      <input type="hidden" class="form-control" id="id" name="id" value='<?= $id ?>' >
+                          <div class="form-group" id="frm_foto">
+                           <div class= "custom-input" id= 'custom-file-create' >
+                           <input type="file" class="custom-file-input" data-preview-file-type="any" name="file[]" id="file" multiple>
+                          <label class="custom-file-label " id='label-file-create' for="file">Elegir imágenes</label>
+                           </div>
+                               <label id='auxiliar' ></label>
+                          </div>
+
                         </div>
-                        
+              
+                    <div class="col-md-6 "> 
+                          <button type="button" id="addImage" class="btn btn-primary">Guardar</button>
                     </div>
-          
-              <div class="col-md-6 mb-3">
-            <input type="hidden" class="form-control" id="id" name="id" value='<?= $id ?>' >
-        
-            <label for="actividad">Cargar imagen:</label>
-            <div class="form-group" id="frm_foto">
-                  <input type="file" class="file " data-preview-file-type="any" name="file" id="file">
-                 
-            </div>
-            <div class="form-group float-right">
-         
-            <button type="button" id="addImage" class="btn btn-primary">Guardar</button>
-                    </div>
-           </form>
-           </div>
-      </div>
+                    </form>
+               </div>
+               </div>
 
 
       <div class="table-responsive">
@@ -136,10 +130,12 @@
                       
                  
                       <label for="actividad">Cargar imagen:</label>
-                      <div class="form-group" id="frm_foto">
-                          <input type="file" class="file" data-preview-file-type="any" name="file" id="file_e">
-                          <div class="invalid-feedback "></div>
+                      <div class="form-group " id="frm_foto">
+                       <div class= "custom-input" >
+                          <input type="file" class="custom-file-input" data-preview-file-type="any" name="file" id="file_e">
+                          <label class="custom-file-label" for="file_e">Elegir imagen</label>
                           </form>
+                          </div>
                       </div>
                    <div class="form-group float-right">
                        <button type="button" id="editButton" class="btn btn-primary">Guardar</button>

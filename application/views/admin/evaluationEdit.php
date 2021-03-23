@@ -6,6 +6,9 @@
       <div id="evaluation_info" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
         <div class="card-body">
     <form>
+    
+    <input type="hidden" class="form-control" id="record_path_pdf" name="id" >
+    <input type="hidden" class="form-control" id="name_technical" name="id" >
     <div class="row mb-2 ">
                 <div class="col-md-3 mb-3 ">
                  
@@ -25,6 +28,11 @@
                           </label>
                         </div>
                      </div>
+
+                 <div class="col-md-3 mb-3 " id="export_ev">
+                 <button type="button"  id="btn_export_ev" class="btn btn-primary btn-circle "><i class="fas fa-file-export"></i></button>
+                     
+                </div>
         </div>
         <div class="row mb-2">
               <div class="col-md-4 mb-3">
@@ -93,18 +101,5 @@
     </div> <!-- End content Evaluation-->
 
     <script src="<?php echo base_url(); ?>assets/js_admin/evaluation.js"></script>
-    <script>
   
-  $( function() {
-    $( "#date_evaluation" ).datepicker({
-       showOn: "button",
-      
-      buttonText: "Calendario",
-      changeMonth: true,
-      changeYear: true,
-      dateFormat: 'yy-mm-dd',
-      buttonImage: host_url + 'assets/img/about/calendario2.png'
-    });
-  } );
-  </script>
 

@@ -87,6 +87,8 @@ class Orders extends CI_Controller
                     if($check_hydraulic_test == 'true'){
                         $this->Orders_model->createHydraulicTest($ot_number);
                     }
+
+                    $this->Orders_model->createAprobation($ot_number);
                     $msg['msg'] = "OT registrado con éxito.";
                     $this->response->sendJSONResponse($msg);
                 /*Fallo en el ingreso */

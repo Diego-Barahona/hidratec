@@ -25,12 +25,13 @@ editarImage = () => {
 			uploadImage_e(id);
 		},
 		error: (result) => {
+			
 			$("#file_e").show();
 			$("#file").show();
 			swal({
 				title: "Error",
 				icon: "error",
-				text: "Corrija nombre o carga de imagen ",
+				text: result.responseJSON.err ,
 			})
 		},
 	});
@@ -57,6 +58,7 @@ uploadImage_e = (id) => {
 			}).then(() => {
 				$("#editImage").modal("hide");
 				getImages();
+				$(".custom-file-label").removeClass("selected").html("Chosee");
 				$("#file_e").show();
 		     	$("#file").show();
 			
@@ -72,6 +74,9 @@ uploadImage_e = (id) => {
 	});
 };
 
-
+$(".custom-file-input").on("change", function() {
+	var fileName = $(this).val().split("\\").pop();
+	$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
 
 $("#editButton").on('click', editarImage);
