@@ -8,6 +8,27 @@
       <div id="accordion">
       <div id="evaluation_info" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
         <div class="card-body">
+        
+        <div class="row mb-2 ">
+                <div class="col-md-3 mb-3 ">
+                 
+                      <div class="form-check">
+                                <input class="form-check-input" style="background:white"  type="checkbox"  id="approve_admin_ev" disabled>
+                                <label class="form-check-label"  for="approve_admin_ev">
+                                 Aprobado por administración
+                               </label>
+                             </div>
+                          </div>
+                <div class="col-md-3 mb-3 ">
+                 
+                      <div class="form-check">
+                           <input class="form-check-input"  style="background:white" type="checkbox" id="approve_technical_ev" disabled>
+                           <label class="form-check-label"  for="approve_technical_ev">
+                            Aprobado por técnico master
+                          </label>
+                        </div>
+                     </div>
+        </div>
         <div class="row mb-2">
               <div class="col-md-4 mb-3">
                   <label for="actividad">Número de OT</label>

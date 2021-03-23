@@ -178,11 +178,74 @@ uploadImage = (id) => {
 	});
 };
 
+uploadMultiplesImage = () => {
+    ot= $("#id").val();
+	let files = $("#file")[0].files;
+
+	if (files.length != 0){
+
+	$.ajax({
+		data: new FormData($("#foto")[0]),
+		processData: false,
+		contentType: false,
+		cache: false,
+		type: "post",
+		url: `${host_url}api/upMultiplesImage/${id}`,
+		success: (result) => {
+			
+		swal({
+				title: "Exito!",
+				icon: "success",
+				text: result.msg,
+				button: "OK",
+			}).then(() => {
+				getImages();
+				$('#auxiliar').text("");
+				$("#label-file-create").removeClass("selected").html("Elegir imagenes");
+				$("#name").val("");
+                $('#file').val('');
+				swal.close();                     // let url = 'adminImages'+'?ot='+ot;
+		                           // window.open(host_url+url);
+			});
+		},
+		error: (result) => {
+			swal({
+				title: "Error",
+				icon: "error",
+				text: result.responseJSON.msg,
+			}).then(() => {
+				getImages();
+		});
+	  },
+	});
+}else{
+	swal({
+		title: "Error",
+		icon: "error",
+		text: "Seleccione algun archivo por favor.",
+	});
+ }
+};
 
 
-$("#addImage").on('click', registerImagen);
+$("#addImage").on('click', uploadMultiplesImage );
+//$("#addImage").on('click', registerImagen);  Original
 
  
+$("#file").on("change", function() {
+	const totalFicheros = $(this).get(0).files.length;
+    let mensaje = '';
+    if (totalFicheros > 1) {
+        mensaje = `${totalFicheros} ficheros seleccionados.`;
+    } else {
+        mensaje = "1 fichero seleccionado";
+    }
+   
+    $('#auxiliar').text(mensaje);
+});
+	
+	
+  
 
 
 

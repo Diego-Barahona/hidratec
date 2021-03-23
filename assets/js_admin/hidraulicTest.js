@@ -8,7 +8,7 @@ $(() => {
 
 
 let check_admin_old = false;
-
+let config =[];
 let medida = []; 
 
 $("#hab_edit").change(() => { 
@@ -20,6 +20,14 @@ $("#hab_edit").change(() => {
         $( "#approve_admin_ht" ).prop( "disabled", false );
 		$( "#approve_technical_ht" ).prop( "disabled", false );
         $( "#technical_ht" ).prop( "disabled", false );
+		$("#date_ht").datepicker({
+            showOn: "button",
+            buttonText: "Calendario",
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'yy-mm-dd',
+            buttonImage: host_url + 'assets/img/about/calendario2.png',
+        });
 	}else{
         $( "#date_ht" ).prop( "disabled", true );
         $( "#conclusion_ht" ).prop( "disabled", true);
@@ -27,6 +35,7 @@ $("#hab_edit").change(() => {
         $( "#approve_admin_ht" ).prop( "disabled", true );
 		$( "#approve_technical_ht" ).prop( "disabled", true );
         $( "#technical_ht" ).prop( "disabled", true );
+		$("#date_ht").datepicker("destroy");	
 		
 	}
 });
@@ -50,12 +59,14 @@ edit_ht = () => {
 	let id = $("#ot_number").val();//Image ID 
 	
 	let data = {
+		id: $("#ot_number").val(),
         date_ht :$("#date_ht").val(),
         conclusion: $("#conclusion_ht").val(),
         notes: $("#notes_ht").val(),
         approve_technical: $("#approve_technical_ht").is(':checked'),
 		approve_admin: $("#approve_admin_ht").is(':checked'),
         technical: $("#technical_ht").val(),
+		technical_name: $("#technical_name_ht").val(),
 		user_create:$("#user_create").val(),//lineas nuevas
 		date_create: $("#date_create").val(),
 		user_approve: $("#user_approve").val(),
@@ -63,10 +74,14 @@ edit_ht = () => {
 		check_admin_old: check_admin_old,
 	};
 
+	data2=JSON.stringify(medida);
+	
+
 	Object.keys(data).map((d) => $(`.${d}`).hide());
 	$.ajax({
 		data: {
 			data,
+			data2
 		},
 		type: "POST",
 		url: host_url + `api/editHydraulicTest/${id}`,
@@ -79,6 +94,8 @@ edit_ht = () => {
 				text: result.msg,
                 button: "OK",
 			}).then(() => {
+				get_data_ht();
+				$("#date_ht").datepicker("destroy");
 				unable_edition();
 				swal.close();
 			   });
@@ -129,11 +146,15 @@ get_data_ht = () =>{
 				}
 
 			    if(ht.approve_technical === "true"){
-				     
+					$( "#export_ht").show();
 					$( "#approve_technical_ht").prop('checked', true);
+					
+
 			    } else {
 					
-					$( "#approve_technical_ht" ).prop('checked', false );}
+					$( "#approve_technical_ht" ).prop('checked', false );
+					$("#export_ht").css("display","none");
+				}
 				
 				$( "#date_ht" ).val(ht.date_ht);
 				$( "#conclusion_ht" ).val(ht.conclusion);
@@ -151,13 +172,14 @@ get_data_ht = () =>{
 
 			if(data2){
 				let us = JSON.parse(data2);//linea nueva
+			
 				$("#user_create").val(us.user_create);//lineas nuevas
 				$("#user_modify").val(us.user_modify);
 				$("#user_approve").val(us.user_approve);
 				$("#date_create").val(us.date_create);
 				$("#date_modify").val(us.date_modify);
 				$("#date_approve").val(us.date_approve);//fin lineas nuevas
-				
+				$("#technical_name_ht" ).val(technical);
 			
 			}else { 
 				$("#user_create").val("");//lineas nuevas
@@ -166,7 +188,7 @@ get_data_ht = () =>{
 				$("#date_create").val("");
 				$("#date_modify").val("");
 				$("#date_approve").val("");
-				
+				$("#technical_name_ht" ).val("");
 			}
 
 			if(technical){
@@ -187,6 +209,7 @@ get_data_ht = () =>{
 alert_not_evaluation_ht = (msg)=>{
 	
     $("#hydraulic_info" ).css("display","none");
+	$("#card-option-ht").css("display","none");
     $("#alert_hydraulicTest").addClass("alert alert-warning col-md-6 mb-3").text("Aviso : "+ msg);
     $("#title_alert_ht").text( "Detalle:");
 }
@@ -194,21 +217,15 @@ alert_not_evaluation_ht = (msg)=>{
 disabledAlert_ht= () =>{
 
     $("#hydraulic_info" ).show();
+	$("#card-option-ht").show();
     $("#alert_hydraulicTest").removeClass("alert alert-warning col-md-6 mb-3");
     $("#alert_hydraulicTest").text('');
     $("#title_alert_ht").css("display","none");
 }
 
 
-$("#ht_popover").on("click",function(){
-    $("#ht_popover").popover(
-		{ 
-		html: true,
-		title: "Información",
-		content: "Creado por: " +$("#user_create").val()+"<br />"+"Fecha creación: "+ 
-	    $("#date_create").val()+"<br />"+"Modificado por: " +$("#user_modify").val()+"<br />"+"Fecha mod.: "+ $("#date_modify").val()+"<br />"+
-	    "Aprobado por: " +$("#user_approve").val()+"<br />"+"Fecha aprv.: "+ $("#date_approve").val()});   
-});
+
+
 
 
 
@@ -249,10 +266,12 @@ getFields_ht = () => {
 
 
 const tabla_ht = $("#table-ht").DataTable({
-	// searching: true,
+	// searching: true,   
+
 	language: {
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
 	},
+	
 	columns: [
 		{ data: "dato" },
 		{ data: "speed" },
@@ -286,7 +305,7 @@ $("#table-ht").on("click", "button", function () {
 			text: `¿Está seguro/a de Eliminar el dato: "${data.id}"?`,
 			buttons: {
 				confirm: {
-					text: "Bloquear/Desbloquear",
+					text: "Eliminar",
 					value: "exec",
 				},
 				cancel: {
@@ -329,7 +348,9 @@ get_info_ht = () =>{
 		if (xhr.status === 200) {
 			
 			let info = xhr.response[0].extra_info;
+			let c=xhr.response[0].config;
 
+            setting = JSON.parse(c);
 		    if(info){
 			data = JSON.parse(info);
 		    
@@ -340,22 +361,41 @@ get_info_ht = () =>{
             tabla_ht.clear();
 			tabla_ht.rows.add(data);
 			tabla_ht.draw();
+
 		}else { 
 			medida=[];
 			tabla_ht.clear();
 			tabla_ht.rows.add("");
 			tabla_ht.draw();
 		}
-		
-        }
+
+		if(setting){
+			if(setting.config_speed === "false"){ tabla_ht.columns([1]).visible(false);$("#frm_speed").css("display",'none'); }else{tabla_ht.columns([1]).visible(true); $("#frm_speed").show();}
+			if(setting.config_presion === "false"){ 
+				tabla_ht.columns([2]).visible(false);$("#frm_presion").css("display",'none'); }else{tabla_ht.columns([2]).visible(true);$("#frm_presion").show();}
+			if(setting.config_caudal === "false"){ 
+				tabla_ht.columns([3]).visible(false); $("#frm_caudal").css("display",'none');}else{tabla_ht.columns([3]).visible(true);$("#frm_caudal").show();}
+			if(setting.config_time === "false"){ 
+				tabla_ht.columns([4]).visible(false);$("#frm_time").css("display",'none'); }else{tabla_ht.columns([4]).visible(true);$("#frm_time").show();}
+		}
+	}
 	});
 	xhr.send();
 }
 
 // Delete by id
 deleted= (key) =>{
- 
-    id= $("#ot_number").val();
+	id= $("#ot_number").val();
+    
+	let data2 = {
+		id: $("#ot_number").val(),
+        date_ht :$("#date_ht").val(),
+        conclusion: $("#conclusion_ht").val(),
+        notes: $("#notes_ht").val(),
+        technical: $("#technical_ht").val(),
+		technical_name: $("#technical_name_ht").val(),
+		
+	};
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("get", `${host_url}/api/get_info_ht/${id}`);
@@ -371,7 +411,7 @@ deleted= (key) =>{
 
 			$.ajax({
 				data: {
-					data
+					data,data2
 				},
 				type: "POST",
 				url: host_url + `api/editInfoHt/${id}`,
@@ -397,7 +437,33 @@ deleted= (key) =>{
 	
 }
 
+$("#ht_popover").on("click",function(){
+
+
+	$("#ht_popover").popover( 
+	
+		{ html: true,
+		title: "Información",
+		content: "Creado por: " +$("#user_create").val() +"<br />"+"Fecha creación: "+ 
+		$("#date_create").val()+"<br />"+"Modificado por: " +$("#user_modify").val()+"<br />"+"Fecha mod.: "+ $("#date_modify").val()+"<br />"+
+		"Aprobado por: " +$("#user_approve").val()+"<br />"+"Fecha aprv.: "+ $("#date_approve").val(),
+	});
+});
+
+
+
+ 
 edit_by_info= (key) =>{
+   
+	let data2 = {
+		id: $("#ot_number").val(),
+        date_ht :$("#date_ht").val(),
+        conclusion: $("#conclusion_ht").val(),
+        notes: $("#notes_ht").val(),
+        technical: $("#technical_ht").val(),
+		technical_name: $("#technical_name_ht").val(),
+		
+	};
     
    valid = true;
    if($('#dato').val()== ""){ valid = false; }
@@ -440,7 +506,7 @@ edit_by_info= (key) =>{
 		 
 			$.ajax({
 				data: {
-					data
+					data,data2
 				},
 				type: "POST",
 				url: host_url + `api/editInfoHt/${id}`,
@@ -495,13 +561,16 @@ xhr.send();
 // create register  
 edit_info =()=>{
 
-	valid = true;
-	if($('#dato').val()== ""){ valid = false; }
-	if($('#speed').val()== ""){ valid = false; }
-	if($('#presion').val()== ""){ valid = false; }
-	if($('#caudal').val()== ""){ valid = false; }
-	if($('#time').val()== ""){ valid = false; }
-	if(valid){
+	let data2 = {
+		id: $("#ot_number").val(),
+        date_ht :$("#date_ht").val(),
+        conclusion: $("#conclusion_ht").val(),
+        notes: $("#notes_ht").val(),
+        technical: $("#technical_ht").val(),
+		technical_name: $("#technical_name_ht").val(),
+		
+	};
+
 
 	id= $("#ot_number").val();
     let data1 = {
@@ -523,7 +592,8 @@ edit_info =()=>{
 	
 	$.ajax({
 		data: {
-			data
+			data,
+			data2
 		},
 		type: "POST",
 		url: host_url + `api/editInfoHt/${id}`,
@@ -553,19 +623,39 @@ edit_info =()=>{
 		},
 	});
 
-}else { 
-   
-	swal({
-		title: "Registro denegado!",
-		icon: "error",
-		text: "Complete todos lo campos.  ",
-	}).then(() => {
-	 swal.close();
-	});	 
 
 }
+
+
+
+showExportHidraulicTest = () => { 
+    console.log(config);
+	id= $("#ot_number").val();
+	let xhr = new XMLHttpRequest();
+	xhr.open("get", `${host_url}/api/getHydraulicTestByOrder/${id}`);
+	xhr.responseType = "json";
+	xhr.addEventListener("load", () => {
+		if (xhr.status === 200) {
+			    
+			$file=xhr.response[0].export; //definir en base de datos 
+			$url= host_url+$file;
+			console.log($url);
+			window.open($url);
+		
+        }else { 
+			
+			swal({
+				title: "Error",
+				icon: "error",
+				text:  "Error al cargar el archivo ",
+			});
+		}
+	});
+	xhr.send();
+}
+
 	
-	};
+
     
 clearInput=()=> { 
 	$("#title_modal").text("Agragar registro ");
@@ -577,7 +667,65 @@ clearInput=()=> {
 
 };
 
+
+
+save_config = () => { 
+    let data = {
+    config_speed: $("#config_speed").is(':checked'),
+	config_presion: $("#config_presion").is(':checked'),
+	config_caudal:$("#config_caudal").is(':checked'),
+	config_time:$("#config_time").is(':checked'),
+	}
+    config.push(data);
+
+	$.ajax({
+		data: {
+			data
+		},
+		type: "POST",
+		url: host_url + `api/save_config/${id}`,
+		crossOrigin: false,
+		dataType: "json",
+		success: (result) => {
+			swal({
+				title: "Exito",
+				icon: "success",
+				text: "Configuración guardada.",
+				button: "OK",
+			}).then(() => {
+			    get_info_ht();
+				$("#config").modal("hide");
+				
+		        medida=[];
+		
+			   });	 
+		},
+		error: (result) => {
+			swal({
+				title: "Denegado!",
+				icon: "error",
+				text: result.responseJSON.msg,
+			}).then(() => {
+			 swal.close();
+			});	 
+		},
+	});
+}
+
+
+
+
+
+
+$("#btn_config").on("click", ()=>{	
+	$("#config").modal("show");
+}); 
+
+$("#btn_export_ht").on("click",()=>{
+	showExportHidraulicTest();
+});
 $("#btn_hidraulic").on("click", edit_ht);
+$("#save_config").on("click", save_config);
 
 $("#btn_information").on("click", ()=>{	
 	edit=false;

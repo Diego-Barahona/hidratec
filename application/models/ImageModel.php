@@ -78,7 +78,8 @@ class ImageModel extends CI_Model
             "name" => $data["name"],
         );
         try {
-
+          if($data["name"] != "") { 
+            
             $this->db->where('id', $id);
             $this->db->update("images", $data);
             $s = array(
@@ -86,7 +87,40 @@ class ImageModel extends CI_Model
                 "status" => "success"
             );
             return $s;
-     
+
+        }else{
+            $s = array(
+                "id" => $id,
+                "status" => "success"
+            );
+            return $s;
+
+        }
+        } catch (Exception $e) {
+            $s = array(
+                "id" => null,
+                "status" => "fail"
+            );
+            return $s;
+        }
+    }
+
+
+    public function insert_Image($id, $image)
+    {   
+        $data =array (
+           'name'=>'---',
+           'files'=>$image,
+           'ot_id'=>$id
+
+        );
+
+        try {
+            
+            $this->db->insert("images", $data);
+            $id = $this->db->insert_id();
+            return $s ="success";
+            
         } catch (Exception $e) {
             $s = array(
                 "id" => null,

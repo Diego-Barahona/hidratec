@@ -80,20 +80,21 @@ class Images extends CI_Controller
 			$imagen = $this->input->post("data");
 			$this->load->model('ImageModel');
 		
-			$valid = true;
+			$valid_image = true;
+			$valid_name= true;
 			
 			if (empty($imagen['name'])) {
 				$err = "Ingrese un nombre";
-				$valid = false;
+				$valid_image = false;
 			}
 			
 			if ($imagen['file'] == 0) {
 				$err_image= "Debe seleccionar una foto";
-				$valid = false;
+				$valid_name = false;
 			}
 			
-			if (!$valid) {
-				$this->response->sendJSONResponse(array('status' => "fail", "err" => "Ingrese nombre"), 500);
+			if (!$valid_image && !$valid_name) {
+				$this->response->sendJSONResponse(array('status' => "fail", "err" => "Edite nombre o archivo"), 500);
 
 			} else {
 				$s = $this->ImageModel->editImagen($imagen,$id);
@@ -137,6 +138,63 @@ class Images extends CI_Controller
 					"c" => $config['upload_path']
 				));
 			}
+		} else {
+			$this->response->sendJSONResponse(array('msg' => 'Permisos insuficientes'), 400);
+		}
+	}
+
+
+
+
+	public function upMultiplesImage($id)
+	{
+		if ($this->accesscontrol->checkAuth()['correct']) {
+			
+			$config['upload_path'] = "./assets/upload/";
+			$config['allowed_types'] = 'jpg|png|jpeg';
+			$config['max_size'] = '10000000';
+			$config['encrypt_name'] = TRUE;
+
+            $files= count($_FILES['file']['name'] );
+            $aux = $_FILES;
+			$msg="";
+			$validate = 0;
+			for($i=0;$i < $files ;$i++){
+
+				$_FILES['file']['name'] = $aux['file']['name'][$i];
+				$_FILES['file']['type']=  $aux['file']['type'][$i];
+				$_FILES['file']['tmp_name']=$aux['file']['tmp_name'][$i];
+				$_FILES['file']['error']=$aux['file']['error'][$i];
+				$_FILES['file']['size']=$aux['file']['size'][$i];
+	
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+				if ($this->upload->do_upload("file")) {
+					$data = array('upload_data' => $this->upload->data());
+					$image = $data['upload_data']['file_name'];
+					$this->load->model('ImageModel');
+					$s = $this->ImageModel->insert_Image($id, $image);
+					if ($s == "success") {
+		
+					    $msg="Imagenes registradas con exito";
+					} else {
+					    $validate += 1 ;
+					}
+				} else {
+					$validate++;
+					$this->response->sendJSONResponse(array(
+						"id" => $id, "i" => $this->upload->display_errors(),
+						"c" => $config['upload_path']
+					));
+				}
+			}//fin for
+			
+			    if($validate >0){
+                    $this->response->sendJSONResponse(array("msg" => "Uno de los archivos tiene formato no compatible."),400);
+				}else{ 
+					$this->response->sendJSONResponse(array("msg" => $msg));
+				}
+
 		} else {
 			$this->response->sendJSONResponse(array('msg' => 'Permisos insuficientes'), 400);
 		}

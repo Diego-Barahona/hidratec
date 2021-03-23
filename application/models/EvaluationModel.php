@@ -9,7 +9,7 @@ class EvaluationModel extends CI_Model {
     public function getEvaluationByOrder($id){
         
         
-        $query= "SELECT e.details , u.full_name , e.user_assignment,e.state
+        $query= "SELECT e.details , u.full_name , e.user_assignment,e.state,e.export
         FROM evaluation e
         LEFT JOIN user_role ur ON ur.user_id = e.user_assignment
         LEFT JOIN user u ON u.id = ur.user_id
@@ -38,7 +38,12 @@ class EvaluationModel extends CI_Model {
             return $this->db->query($query, array($details,$technical,$id));  
     }  
 
-    
+
+    public function pdfEvaluation($id,$new){
+  //  unlink('./'.$old);
+    $query = "UPDATE evaluation SET export = ? WHERE ot_id = ?";
+    return $this->db->query($query, array($new,$id));  
+    }
 
 
 }

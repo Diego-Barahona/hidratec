@@ -150,6 +150,8 @@ $("#table_orders").on("click", "button", function () {
          get_info_ht(); //??
          verifyFile();//funciona
          get_data_technical_report();
+         get_data_ap();
+         verifyFile_OC();
        
     } 
 });

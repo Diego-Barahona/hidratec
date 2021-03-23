@@ -135,7 +135,7 @@ $route['api/addImage']['POST']  = 'Images/addImage';
 $route['api/upImage/(:num)']['POST']  = 'Images/upImage/$1';
 $route['api/getImagesByOrder/(:num)']['GET']  = 'Images/getImagesByOrder/$1';
 $route['api/editImage/(:num)']['POST']  = 'Images/editImage/$1';
-
+$route['api/upMultiplesImage/(:num)']['POST']  = 'Images/upMultiplesImage/$1';
 //api counter
 $route['api/counterOrders']['GET'] = 'Counter/getData';
 
@@ -153,11 +153,24 @@ $route['api/get_info_ht/(:num)']['GET'] = 'HydraulicTest/get_info_ht/$1';
 $route['api/editPdf/(:num)']['POST'] = 'HydraulicTest/editPdf/$1';
 $route['api/getPdf/(:num)']['GET'] = 'HydraulicTest/getPdf/$1';
 $route['api/deletePdf/(:num)']['POST'] = 'HydraulicTest/deletePdf/$1';
+$route['api/save_config/(:num)']['POST'] = 'HydraulicTest/save_config/$1';
 
 //api technical report 
 $route['api/getTechnicalReportByOrder/(:num)']['GET'] = 'TechnicalReport/getTechnicalReportByOrder/$1';
 $route['api/getImagesByTechnicalReport']['POST']  = 'TechnicalReport/getImagesByTechnicalReport';
 $route['api/editTechnicalReport']['POST']  = 'TechnicalReport/editTechnicalReport';
+
+//api aprobation 
+$route['api/getAprobationByOrder/(:num)']['GET'] = 'Aprobation/getAprobationByOrder/$1';
+$route['api/editAprobation/(:num)']['POST'] = 'Aprobation/editAprobation/$1';
+$route['api/editOC/(:num)']['POST'] = 'Aprobation/editOC/$1';
+$route['api/getOC/(:num)']['GET'] = 'Aprobation/getOC/$1';
+$route['api/deleteOC/(:num)']['POST'] = 'Aprobation/deleteOC/$1';
+
+
+
+
+
 
 
 
