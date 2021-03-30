@@ -59,7 +59,6 @@ class TechnicalReportModel extends CI_Model {
         return $this->db->query($query, array($id,true))->result_array(); 
     } 
 
-
     public function editTechnicalReport($data, $date_update){
         $user = $_SESSION['full_name'];
         date_default_timezone_set("America/Santiago");
@@ -96,6 +95,10 @@ class TechnicalReportModel extends CI_Model {
         }
         $imagenes = $data['details_images'];
 
+        if($data['details_images']) $details_images = json_encode($data['details_images']);
+        else $details_images = null;
+        
+
         $datos_tr = array(
             'user_assignment' => $technical,
             'details' => json_encode(array(
@@ -108,7 +111,7 @@ class TechnicalReportModel extends CI_Model {
                 'conclusion' => $data['conclusion'],
                 'recommendation' => $data['recommendation'],
             )),
-            'details_images' => json_encode($data['details_images']),
+            'details_images' => $details_images,
             'user_interaction' => json_encode(array(
                 'user_create' => $user_create,
                 'date_create' => $date_create,
@@ -121,5 +124,26 @@ class TechnicalReportModel extends CI_Model {
         
         $this->db->where('ot_id', $data['ot_id']);
         if($this->db->update('technical_report', $datos_tr)) return true; else return false;
+    }
+
+    public function getTechnicalReportApprove(){
+        $query = "SELECT ot.id number_ot, ot.date_admission date, ot.type_service service, e.name enterprise, c.name component, s.name state, tr.details, tr.user_interaction
+        FROM ot
+        JOIN enterprise e ON ot.enterprise_id = e.id
+        JOIN component c ON ot.component_id = c.id
+        JOIN ot_state os ON ot.id = os.ot_id
+        JOIN technical_report tr ON ot.id = tr.ot_id
+        JOIN state s ON os.state_id = s.id
+        WHERE os.id = (
+            SELECT f.id 
+            FROM ot_state f 
+            WHERE f.ot_id = ot.id AND f.date_update = (
+                  SELECT MAX(j.date_update)
+                  FROM ot_state j
+                  WHERE j.ot_id = ot.id
+                ) 
+          ) 
+        "; 
+        return $this->db->query($query)->result_array();
     }
 }

@@ -11,7 +11,6 @@ class Notes extends CI_Controller
     public function getNotesByOrder($id)
     {
         if ($this->accesscontrol->checkAuth()['correct']) {
-
             if($this->NotesModel->checkNotes($id)){
                 if($notes= $this->NotesModel->getNotesByOrder($id)){
                     $user = $_SESSION['full_name'];

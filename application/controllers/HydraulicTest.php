@@ -179,7 +179,7 @@ class HydraulicTest extends CI_Controller
         if($ok){ 
             $this->load->model('HydraulicTestModel');
             if($this->HydraulicTestModel->editHydraulicTest($id,$data)){
-                $this->load->library('Fpdf_lib');
+                /* $this->load->library('Fpdf_lib'); */
               //  $old=$data['old_pdf'];
                // $pdf = $this->fpdf_lib->pdfEvaluation($data);
                 $pdf = $this->pdfHidraulicTest($data,$data2);
