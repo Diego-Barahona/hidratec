@@ -21,7 +21,7 @@ class Counter extends CI_Controller
         
         if ($this->accesscontrol->checkAuth()['correct']) {
             $this->load->view('shared/headerSeller');
-            $this->load->view('seller/counterSeller');
+            $this->load->view('seller/counterOrders');
             $this->load->view('shared/footer');
         } else {
             redirect('Home/login', 'refresh');
