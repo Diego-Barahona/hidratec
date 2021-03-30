@@ -40,7 +40,6 @@ class SellerModel extends CI_Model
         JOIN component c ON ot.component_id = c.id
         JOIN ot_state os ON ot.id = os.ot_id
         JOIN quotation q ON ot.id = q.ot_id
-         JOIN technical_report tr ON ot.id = tr.ot_id
         JOIN state s ON os.state_id = s.id
         WHERE s.id=3 AND os.id = (
             SELECT f.id 
@@ -53,7 +52,7 @@ class SellerModel extends CI_Model
           ) 
         "; 
 
-     return  $this->db->query($query)->result(); 
+     var_dump($this->db->query($query)->result()); 
     
      }
  

@@ -124,8 +124,9 @@ const tabla = $('#table_orders').DataTable({
 $("#table_orders").on("click", "button", function () {
     let data = tabla.row($(this).parents("tr")).data();
     if ($(this)[0].name == "btn_show") {
-
-		window.open(host_url+ '/upload/technical_report.'+ data.number_ot + ".pdf", '_self');
+		file = 'assets/upload/technicalReport/technical_report_'+data.number_ot+'.pdf';
+        url = host_url + file;
+        window.open(url);
 	}
 });
 
