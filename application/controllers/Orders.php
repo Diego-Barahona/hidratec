@@ -79,6 +79,7 @@ class Orders extends CI_Controller
 
                     if($check_report_technical == 'true'){
                         $this->Orders_model->createTechnicalReport($ot_number);
+
                         $msg['msg'] = "No se pudo encontrar el recurso.";
                         $this->response->sendJSONResponse($msg);
                     }

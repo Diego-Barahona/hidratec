@@ -8,6 +8,20 @@
       <div id="accordion">
       <div id="evaluation_info" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
         <div class="card-body">
+
+        <input type="hidden" class="form-control" id="record_path_pdf" name="id" >
+        <input type="hidden" class="form-control" id="name_technical" name="id" >
+        <input type="hidden" class="form-control" id="user_create_ev" name="id" >
+        <input type="hidden" class="form-control" id="date_create_ev" name="id" >
+        <input type="hidden" class="form-control" id="user_modify_ev" name="id" >
+        <input type="hidden" class="form-control" id="date_modify_ev" name="id" >
+        <input type="hidden" class="form-control" id="user_approve_ev" name="id" >
+        <input type="hidden" class="form-control" id="date_approve_ev" name="id" >
+      
+
+        <div class="row mb-2 mr-2 justify-content-end">
+        <a  id="ev_popover" data-toggle="popover" data-placement="left"><i class=" fas fa-info-circle fa-lg"></i></a>  
+        </div>
         
         <div class="row mb-2 ">
                 <div class="col-md-3 mb-3 ">

@@ -14,6 +14,19 @@ class Counter extends CI_Controller
             redirect('Home/login', 'refresh');
         }
     }
+    
+
+    public function counterSeller()
+    { 
+        
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $this->load->view('shared/headerSeller');
+            $this->load->view('seller/counterSeller');
+            $this->load->view('shared/footer');
+        } else {
+            redirect('Home/login', 'refresh');
+        }
+    }
 
     public function counterOrdersByClient()
     { 

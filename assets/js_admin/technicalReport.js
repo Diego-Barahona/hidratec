@@ -138,6 +138,7 @@ get_data_technical_report = () =>{
                 user_modify = interaction.user_modify;
                 date_approve = interaction.date_approve;
                 user_approve = interaction.user_approve;
+
                 $("#tr_popover").popover(
                     { 
                     html: true,

@@ -1,5 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+
 include APPPATH . '/third_party/FPDF/fpdf.php';
 
 class Fpdf_lib extends FPDF
@@ -11,4 +12,6 @@ class Fpdf_lib extends FPDF
     {
         $this->CI = &get_instance();
     }
+
 }
+

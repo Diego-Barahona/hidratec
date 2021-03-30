@@ -12,6 +12,11 @@
               
          </div>
         <div class="card-body collapse in " id= "c1">
+        <input type="hidden" class="form-control" id="speed_c" name="id" >
+        <input type="hidden" class="form-control" id="caudal_c" name="id" >
+        <input type="hidden" class="form-control" id="presion_c" name="id" >
+        <input type="hidden" class="form-control" id="temperature_c" name="id" >
+     
 
         <input type="hidden" class="form-control" id="user_create" name="id" >
         <input type="hidden" class="form-control" id="date_create" name="id" >
@@ -22,7 +27,7 @@
         <input type="hidden" class="form-control" id="technical_name_ht" name="id" >
 
         <div class="row mb-2 mr-2 justify-content-end">
-        <a  id="ht_popover" data-toggle="popover" data-placement="left"><i class=" fas fa-info-circle fa-lg"></i></a>  
+        <button id="ht_popover" type="button" class="btn btn-primary rounded-circle" data-toggle="popover" data-placement="left"><i class="fas fa-info"></i></button> 
         </div>
         
              <div class="row mb-2 ">
@@ -45,7 +50,7 @@
                         </div>
                      </div>
 
-                 <div class="col-md-3 mb-3 " id="export_ht">
+                 <div class="col-md-3 mb-3 " id="export_ht"  style="display:none">
                  <button type="button"  id="btn_export_ht" class="btn btn-primary btn-circle "><i class="fas fa-file-export"></i></button>
                      
                 </div>
@@ -150,7 +155,7 @@
                 <th>Velocidad</th>
                 <th>Presión</th>
                 <th>Caudal</th>
-                <th>Tiempo</th>
+                <th>Temperatura</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
                 </tr>
@@ -215,7 +220,7 @@
                  <div class="col-md-3 mb-3 ">
                       
                       <div class="form-check">
-                                <input class="form-check-input"  type="checkbox" value="" id="config_speed" >
+                                <input class="form-check-input"  type="checkbox" value=""    id="config_speed" >
                                 <label class="form-check-label"  for="config_speed">
                                  Velocidad
                                </label>
@@ -223,7 +228,7 @@
                 </div>
                 <div class="col-md-3 mb-3 ">
                       <div class="form-check">
-                                <input class="form-check-input"  type="checkbox" value="" id="config_presion" >
+                                <input class="form-check-input"  type="checkbox"   value="" id="config_presion" >
                                  <label class="form-check-label"  for="config_presion">
                                   Presión
                                 </label>
@@ -231,7 +236,7 @@
                 </div>
                 <div class="col-md-3 mb-3 ">
                     <div class="form-check">
-                        <input class="form-check-input"  type="checkbox" value="" id="config_caudal" >
+                        <input class="form-check-input"  type="checkbox"  value="" id="config_caudal" >
                         <label class="form-check-label"  for="config_caudal">
                          Caudal
                         </label>
@@ -239,9 +244,9 @@
                 </div>
                 <div class="col-md-3 mb-3 ">
                     <div class="form-check">
-                        <input class="form-check-input"  type="checkbox" value="" id="config_time" >
+                        <input class="form-check-input"  type="checkbox"  value="" id="config_time" >
                         <label class="form-check-label"  for="config_time">
-                          Tiempo
+                          Temperatura
                         </label>
                     </div>
                 </div>
@@ -277,7 +282,7 @@
                         <div class="col-md-4 mb-3">
                           <label for="actividad">Dato</label>
                            <div class="input-group" id='frm_dato'>
-                             <input type="text" class="form-control" name="dato" id="dato">
+                             <input type="text" class="form-control" maxlength="10" name="dato" id="dato">
                              <div class="invalid-feedback"></div>
                           </div>
                        </div>
@@ -285,7 +290,7 @@
                        <div class="col-md-4 mb-3">
                           <label for="actividad">Velocidad</label>
                            <div class="input-group" id='frm_speed'>
-                             <input type="text" class="form-control" name="speed" id="speed">
+                             <input type="text" class="form-control" maxlength="10" name="speed" id="speed">
                              <div class="invalid-feedback"></div>
                           </div>
                        </div>
@@ -293,7 +298,7 @@
                        <div class="col-md-4 mb-3">
                           <label for="actividad">Presión</label>
                            <div class="input-group" id='frm_presion'>
-                             <input type="text" class="form-control" name="presion" id="presion">
+                             <input type="text" class="form-control"maxlength="10" name="presion" id="presion">
                              <div class="invalid-feedback"></div>
                           </div>
                        </div>
@@ -304,7 +309,7 @@
                          <div class="col-md-4 mb-3">
                           <label for="actividad">Caudal</label>
                            <div class="input-group" id='frm_caudal'>
-                             <input type="text" class="form-control" name="caudal" id="caudal">
+                             <input type="text" class="form-control"maxlength="10" name="caudal" id="caudal">
                              <div class="invalid-feedback"></div>
                           </div>
                          </div>
@@ -313,7 +318,7 @@
                          <div class="col-md-4 mb-3">
                           <label for="actividad">Temperatura</label>
                            <div class="input-group" id='frm_time'>
-                             <input type="text" class="form-control" name="time" id="time">
+                             <input type="text" class="form-control"maxlength="10" name="time" id="time">
                              <div class="invalid-feedback"></div>
                           </div>
                          </div>

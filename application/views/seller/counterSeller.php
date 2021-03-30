@@ -4,39 +4,33 @@
    <br>
    <div class="row justify-content-center ">
 
-      <div class="card text-white  mb-3 mx-2" style="width: 13rem; height:13rem;background:#59698d ">
-         <div class="card-header text-center" style="font-weight: bold; color:black;" id="evaluation"><strong>0</strong> </div>
-         <div class="card-body">
-            <h5 class="card-title">En evaluación  </h5>
-            <button type="button" class="btn btn-outline-light"><i class="fas fa-brain" style="font-size:60px;" id="btnevaluation"></i></button>
-         </div>
-      </div>
 
-      <div class="card text-white bg-info mb-3 mx-4" style="width: 13rem; height:13rem;">
+      <div class="card text-white bg-info mb-3 mx-2" style="width: 13rem; height:13rem;">
          <div class="card-header text-center" style="font-weight: bold; color:black;" id="e_quotation"><strong>0</strong> </div>
          <div class="card-body">
             <h5 class="card-title">Esp. Cotización </h5>
             <button type="button" class="btn btn-outline-light"><i class="fa fa-clock" style="font-size:60px;" id="btnequotation"></i></button>
          </div>
       </div>
-      <div class="card text-white mb-3 mx-2" style="width: 13rem; height:13rem; background-color: #ab47bc">
+      <div class="card text-white mb-3 mx-3" style="width: 13rem; height:13rem; background-color: #ab47bc">
          <div class="card-header text-center" style="font-weight: bold; color:black" id="e_aprobation"><strong>0</strong></div>
          <div class="card-body">
             <h5 class="card-title">Esp. Aprobación</h5>
             <button type="button" class="btn btn-outline-light"><i class="fas fa-user-clock" style="font-size:60px;" id="btneaprobation"></i></button>
          </div>
       </div>
-      <div class="card text-white mb-3 ml-3" style="width: 13rem; height:13rem; background:#00897b">
+      <div class="card text-white mb-3 ml-2" style="width: 13rem; height:13rem; background:#00897b">
       <div class="card-header text-center" style="font-weight: bold; color:black" id="reparation"><strong>0</strong> </div>
          <div class="card-body">
             <h5 class="card-title"> En Reparación</h5>
             <button type="button" class="btn btn-outline-light"><i class="fa fa-cogs" style="font-size:60px;" id="btnreparation"></i></button>
          </div> 
       </div>
+      
    </div>
-   <br>
+
    <div class="row justify-content-center">
-      <div class="card text-white  mb-3 mx-3" style="width: 13rem; height:13rem; background:#00897b">
+      <div class="card text-white  mb-3 mx-2" style="width: 13rem; height:13rem; background:#00897b">
          <div class="card-header text-center" style="font-weight: bold; color:black" id="retired"><strong>0</strong> </div>
          <div class="card-body">
             <h5 class="card-title"> Lista para retiro</h5>
@@ -44,9 +38,7 @@
          </div> 
         
       </div>
-
-      <div class="card text-white  mb-3 mx-4" style="width: 13rem; height:13rem; background: #ffa726 ">
-
+      <div class="card text-white  mb-3 mx-3" style="width: 13rem; height:13rem; background: #ffa726 ">
          <div class="card-header text-center" style="font-weight: bold; color:black" id="finished"><strong>0</strong> </div>
          <div class="card-body">
             <h5 class="card-title"> Terminadas</h5>
@@ -54,7 +46,7 @@
          </div>
       </div>
       
-      <div class="card text-white bg-danger mb-3 mx" style="width: 13rem; height:13rem;">
+      <div class="card text-white bg-danger mb-3 ml-2" style="width: 13rem; height:13rem;">
          <div class="card-header text-center" style="font-weight: bold; color:black" id="down"><strong>0</strong></div>
          <div class="card-body">
             <h5 class="card-title">De Baja </h5>
@@ -62,7 +54,8 @@
          </div>
       </div>
    </div>
-</div>
+   </div>
+  
 
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -88,7 +81,7 @@
                               <th>OT</th>
                               <th>Tipo servicio</th>
                               <th>Fecha ingreso</th>
-                              <th>Detalles</th>
+                      
                            </tr>
                         </thead>
                      </table>
@@ -102,8 +95,4 @@
       </div>
    </div>
 </div>
-
-
-
-<script src="<?php echo base_url(); ?>assets/js_admin/counterOrder.js"></script>
-
+<script src="<?php echo base_url(); ?>assets/js_admin/counterSeller.js"></script>
