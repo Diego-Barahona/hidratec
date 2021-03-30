@@ -165,6 +165,11 @@ class Orders_model extends CI_Model
                     $this->db->insert('ot_user', $datos_ot_user);
                 }
 
+                $datos_note = array(
+                    'ot_id' => $data['ot_number'],
+                );
+                $this->db->insert('notes', $datos_note);
+
                 $datos_reparation = array(
                     'ot_id' => $data['ot_number'],
                     'check_adm' => 0,   

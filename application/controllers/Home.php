@@ -22,9 +22,9 @@ class Home extends CI_Controller {
 
 			if($this->session->usuario == "user"){
 				//SuperAdmin
-				if ($rango == 1) $this->load_page_role("SuperAdmin");
+				if ($rango == 1) $this->load_page_role("SuperAdmin", "admin");
 				//Admin
-				else if ($rango == 2) $this->load_page_role("Admin");
+				else if ($rango == 2) $this->load_page_role("Admin","admin");
 				//técnico master
 				else if ($rango == 3) $this->load_page_role("TechnicalMaster");
 				//ayudante técnico
@@ -33,10 +33,10 @@ class Home extends CI_Controller {
 				else if ($rango == 5) $this->load_page_role("Seller");
 			}else if($this->session->usuario == "client"){
 				//Client Read
-				if ($rango == 1) $this->load_page_role("ClientRead");
+				if ($rango == 1) $this->load_page_role("ClientRead", "client");
 				//Client Edit
 				else if ($rango == 2){
-					$this->load_page_role("ClientEdit");
+					$this->load_page_role("ClientEdit", "client");
 				} 
 			}else{
 				redirect(base_url() . 'Home/login', 'refresh');
@@ -46,9 +46,10 @@ class Home extends CI_Controller {
         }
 	}
 
-	public function load_page_role($path)
+	public function load_page_role($path, $folderView)
 	{
 		$this->load->view('shared/header'.$path);
+		$this->load->view($folderView.'/counterOrders');
 		$this->load->view('shared/footer');
 	}
 }

@@ -10,6 +10,7 @@ let id_file_change;
 let img_header = false;
 let img_header_file = '';
 let tr_check_adm_old = '';
+let tr_check_technical_old = '';
 let date_create;
 let user_create;
 let date_modify;
@@ -88,9 +89,11 @@ get_data_technical_report = () =>{
                 }
                 if(technical_report.check_technical === 'true'){
                     $("#tr_check_technical").prop("checked", true);
+                    tr_check_technical_old = 'true'
                     $('#tr_export').show();
                 }else{
                     $("#tr_check_technical").prop("checked", false);
+                    tr_check_technical_old = 'false'
                     $('#tr_export').hide();
                 }
                 
@@ -107,7 +110,8 @@ get_data_technical_report = () =>{
                 $("#tr_image_header").attr('src','');;
                 $("#tr_conclusion").val('');
                 $("#tr_recommendation").val('');
-                tr_check_adm_old = '';
+                tr_check_adm_old = 'false';
+                tr_check_technical_old = 'false';
             }
 
             if(data_images){
@@ -134,9 +138,7 @@ get_data_technical_report = () =>{
                 user_modify = interaction.user_modify;
                 date_approve = interaction.date_approve;
                 user_approve = interaction.user_approve;
-                console.log(interaction);
 
-                
                 $("#tr_popover").popover(
                     { 
                     html: true,
@@ -321,8 +323,8 @@ saveTechnicalReport = () =>{
         date_approve: date_approve,
         user_approve: user_approve,
         check_adm_old: tr_check_adm_old,
+        check_technical_old: tr_check_technical_old,
     } 
-
     $.ajax({
         type: "POST",
         url: host_url + "api/editTechnicalReport",
@@ -476,31 +478,10 @@ loadImages = (id) =>{
 }
 
 exportTechnicalReport = () =>{
-    
-    data = {
-        ot_id : $("#ot_number").val(),
-    } 
-    $.ajax({
-        type: "POST",
-        url: host_url + "api/getPdfTechnicalReport",
-        data: {data},
-        dataType: "json",
-        success: () => {
-            export_id = $("#ot_number").val();
-            file = 'assets/upload/technicalReport/technical_report_'+export_id+'.pdf';
-            url = host_url + file;
-            window.open(url);  
-        }, 
-        error: () => {
-			swal({
-				title: "Error",
-				icon: "error",
-				text: "Error al obtener el archivo",
-			}).then(() => {
-				$("body").removeClass("loading");
-			});
-		},
-    });  
+    export_id = $("#ot_number").val();
+    file = 'assets/upload/technicalReport/technical_report_'+export_id+'.pdf';
+    url = host_url + file;
+    window.open(url);
 }
 
 alertNotTechnical = (msg)=>{

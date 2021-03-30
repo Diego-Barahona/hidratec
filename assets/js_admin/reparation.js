@@ -56,43 +56,22 @@ get_data_reparation = () =>{
                 $("#r_days_reparation").val('');
             }
 
-            if(xhr.response[0][0].user_interaction){
-                interaction = JSON.parse(xhr.response[0][0].user_interaction);
-                date_reparation = interaction.date_reparation;
-                technical_assignment = interaction.technical_assignment;
-                date_modify = interaction.date_modify;
-                user_modify = interaction.user_modify;
-                date_approve = interaction.date_approve;
-                user_approve = interaction.user_approve;
-                console.log(interaction);
-                $("#r_popover").popover(
-                    { 
-                    html: true,
-                    title: "Información",
-                    content: "Técnico que realizó la reparación: " +technical_assignment+"<br />"+"Fecha reparación: "+date_reparation+"<br />"+
-                            "Modificado por: " +user_modify+"<br />"+"Fecha mod.: "+date_modify+"<br />"+
-                            "Aprobado por: " +user_approve+"<br />"+"Fecha aprv.: "+date_approve
-                    }
-                ); 
-
-            }else{
-                date_reparation = '';
-                technical_assignment  = '';
-                date_modify = '';
-                user_modify = '';
-                date_approve = '';
-                user_approve = '';
-
-                $("#r_popover").popover(
-                    { 
-                    html: true,
-                    title: "Información",
-                    content: "Técnico que realizó la reparación:" +  technical_assignment +"<br />"+"Fecha reparación: "+date_reparation+"<br />"+
-                            "Modificado por: " +user_modify+"<br />"+"Fecha mod.: "+date_modify+"<br />"+
-                            "Aprobado por: " +user_approve+"<br />"+"Fecha aprv.: "+date_approve
-                    }
-                ); 
-            }
+            interaction = JSON.parse(xhr.response[0][0].user_interaction);
+            date_reparation = interaction.date_reparation;
+            technical_assignment = interaction.technical_assignment;
+            date_modify = interaction.date_modify;
+            user_modify = interaction.user_modify;
+            date_approve = interaction.date_approve;
+            user_approve = interaction.user_approve;
+            $("#r_popover").popover(
+                { 
+                html: true,
+                title: "Información",
+                content: "Técnico que realizó la reparación: " + technical_assignment +"<br />"+"Fecha reparación: "+date_reparation+"<br />"+
+                        "Modificado por: " +user_modify+"<br />"+"Fecha mod.: "+date_modify+"<br />"+
+                        "Aprobado por: " +user_approve+"<br />"+"Fecha aprv.: "+date_approve
+                }
+            ); 
 
 
 		}else {

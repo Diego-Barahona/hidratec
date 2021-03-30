@@ -141,13 +141,15 @@ $route['api/upImage/(:num)']['POST']  = 'Images/upImage/$1';
 $route['api/getImagesByOrder/(:num)']['GET']  = 'Images/getImagesByOrder/$1';
 $route['api/editImage/(:num)']['POST']  = 'Images/editImage/$1';
 $route['api/upMultiplesImage/(:num)']['POST']  = 'Images/upMultiplesImage/$1';
+
+
 //api counter
 $route['api/counterOrders']['GET'] = 'Counter/getData';
+
 
 //api evaluation 
 $route['api/getEvaluationByOrder/(:num)']['GET'] = 'Evaluation/getEvaluationByOrder/$1';
 $route['api/editEvaluation/(:num)']['POST'] = 'Evaluation/editEvaluation/$1';
-
 
 
 //api hydraulicTEST
@@ -161,6 +163,8 @@ $route['api/deletePdf/(:num)']['POST'] = 'HydraulicTest/deletePdf/$1';
 $route['api/save_config/(:num)']['POST'] = 'HydraulicTest/save_config/$1';
 
 //api technical report 
+$route['adminTechnicalReports']['GET'] = 'TechnicalReport/adminTechnicalReports';
+$route['api/getTechnicalReportApprove']['GET']  = 'TechnicalReport/getTechnicalReportApprove';
 $route['api/getTechnicalReportByOrder/(:num)']['GET'] = 'TechnicalReport/getTechnicalReportByOrder/$1';
 $route['api/getImagesByTechnicalReport']['POST']  = 'TechnicalReport/getImagesByTechnicalReport';
 $route['api/editTechnicalReport']['POST']  = 'TechnicalReport/editTechnicalReport';
@@ -186,12 +190,32 @@ $route['api/updateNote']['POST'] = 'Notes/updateNote';
 $route['api/deleteNote']['POST'] = 'Notes/deleteNote';
 
 
+
 //api Seller 
 $route['api/getApproveTechnicalReport']['GET'] = 'Seller/getApproveTechnicalReport';
 $route['api/getOrdersQuotation']['GET'] = 'Seller/getOrdersQuotation';
 $route['api/changeState']['POST'] = 'Seller/changeState';
 $route['api/OCseller/(:num)']['POST'] = 'Seller/editOC/$1';
 
+
+
+
+/*------------------------------- Routes To Client------------------------------------ */
+
+/*Admin Counter*/
+$route['counterOrdersByClient']['GET']='Counter/counterOrdersByClient';
+$route['api/counterOrdersByClient']['GET'] = 'Counter/getDataByClient';
+
+/*Admin Orders*/
+$route['adminOrdersByClient']['GET']= 'OrdersClient/adminOrders';
+$route['adminOrdersByClientView']['GET']= 'OrdersClient/adminOrdersView';
+$route['api/getOrdersByClient']['GET'] = 'OrdersClient/getOrders';
+
+/*Admin Orders Approve*/
+$route['adminOrdersApproveByClient']['GET'] = 'OrdersClient/adminOrdersApprove';
+$route['adminOrdersApproveByClientView']['GET'] = 'OrdersClient/adminOrdersApproveView';
+$route['api/getOrdersApproveByClient']['GET'] = 'OrdersClient/getOrdersApprove';
+$route['api/approveByClient/(:num)']['POST'] = 'OrdersClient/approve/$1';
 
 
 

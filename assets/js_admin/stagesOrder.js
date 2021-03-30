@@ -30,7 +30,7 @@ changeState = () => {
     swal({
         title: `Cambio de estado`,
         icon: "warning",
-        text: `Esta realmente segur@ de cambiar el estado de la OT:  ${$('#ot_number').val()}?`,
+        text: `Esta  segur@ de cambiar el estado de la OT:  ${$('#ot_number').val()}?`,
         buttons: {
             confirm: {
                 text: `Confirmar`,

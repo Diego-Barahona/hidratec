@@ -114,4 +114,66 @@ class PHPMailer_Lib
             return true;
         }
     }
+
+
+    public function send_approve($email_info, $pdf, $emails){
+
+        require_once APPPATH.'third_party/PHPMailer/Exception.php';
+        require_once APPPATH.'third_party/PHPMailer/PHPMailer.php';
+        require_once APPPATH.'third_party/PHPMailer/SMTP.php';
+
+
+        $name = $_SESSION['full_name'];
+        $email = $_SESSION['email'];
+
+        $template = file_get_contents("application/views/client/approve_email.php", true);
+        $template = str_replace("{{ot}}", $email_info[0]['number_ot'], $template);
+        $template = str_replace("{{client}}", $name, $template);
+        $template = str_replace("{{enterprise}}", $email_info[0]['enterprise'], $template);
+        $template = str_replace("{{year}}", date('Y'), $template);
+        $template = str_replace("{{operating_system}}", get_os(), $template);
+        $template = str_replace("{{browser_name}}", get_brow(), $template);
+        
+        $mail = new PHPMailer;
+        $mail->CharSet = "UTF-8";
+        
+        // SMTP configuration
+        $mail->isSMTP();
+        $mail->Host = 'smtp.googlemail.com';  //gmail SMTP server
+        $mail->SMTPAuth = true;
+        $mail->Username = 'baraippox835@gmail.com';   //username
+        $mail->Password = 'hnaijciomlee';   //password
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465; 
+        
+        $mail->setFrom('baraippox835@gmail.com', 'Sistema de notificación Hidratec');
+        
+        // Add a recipient
+        for($i=0; $i< count($emails); $i++){
+            $mail->addAddress($emails[$i]['email']);
+        }
+        $mail->addAddress($email);
+        $mail->addAddress('p.pinnola28@gmail.com');
+        
+        // Email subject
+        $mail->Subject ="Aprobación OT ".$email_info[0]['number_ot'];
+        
+        // Set email format to HTML
+        $mail->isHTML(true);
+        
+        //Email attachment
+        $url = 'assets/upload/purshaseOrder/'.$pdf;
+        $mail->addAttachment($url,'OrdenCompra'.$email_info[0]['number_ot'].'.pdf');
+
+        // Email body content
+        $mail->Body = $template;
+        $env = 'no';
+        $noenv = 'so';
+        // Send email
+        if(!$mail->send()){
+            return $mail->ErrorInfo;
+        }else{
+            return true;
+        }
+    }
 }

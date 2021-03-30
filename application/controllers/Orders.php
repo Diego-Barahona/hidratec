@@ -79,7 +79,7 @@ class Orders extends CI_Controller
 
                     if($check_report_technical == 'true'){
                         $this->Orders_model->createTechnicalReport($ot_number);
-                  
+
                         $msg['msg'] = "No se pudo encontrar el recurso.";
                         $this->response->sendJSONResponse($msg);
                     }
@@ -206,7 +206,6 @@ class Orders extends CI_Controller
                     if($check_report_technical != $check_report_technical_old){
                         if($check_report_technical == 'true'){
                             $this->Orders_model->createTechnicalReport($data['ot_number'], $name, $date);
-                            $pdf = $this->fpdf_lib->pdfTechnicalReport($data['ot_number']);
                         }else{
                             $this->Orders_model->desTechnicalReport($data['ot_number']);
                         }

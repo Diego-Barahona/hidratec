@@ -44,7 +44,9 @@
          </div> 
         
       </div>
+
       <div class="card text-white  mb-3 mx-4" style="width: 13rem; height:13rem; background: #ffa726 ">
+
          <div class="card-header text-center" style="font-weight: bold; color:black" id="finished"><strong>0</strong> </div>
          <div class="card-body">
             <h5 class="card-title"> Terminadas</h5>

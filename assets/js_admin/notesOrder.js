@@ -63,7 +63,7 @@ get_notes_ot = () =>{
                         });
                     }
                     success(notes);
-                }
+                    }
                 else if (xhr.status === 400) {
                     notes = [];
                     success(notes);
@@ -79,15 +79,16 @@ get_notes_ot = () =>{
             xhr.send();
         },
         postComment: function(commentJSON, success, error) {
+            let notas = [];
+            if(notes.length == 0) notas = false; else notas = notes;
             data = {
                 id : commentJSON.id,
                 content: commentJSON.content,
                 user: commentJSON.user,
                 createdByCurrentUser: commentJSON.createdByCurrentUser,
-                notes: notes,
+                notes: notas,
                 ot_id: $("#ot_number").val(),
             } 
-         console.log(data);
             $.ajax({
                 type: "POST",
                 url: host_url + "api/createNote",
@@ -195,14 +196,18 @@ get_notes_ot = () =>{
                     });
                 };
             }
-            
-            console.log(notes)
 
+            let aux;
+            if(notes.length == 0){
+                aux = '';
+            }else {
+                aux = notes;
+            }
+         
             data = {
-                notes: notes,
+                notes: aux,
                 ot_id: $("#ot_number").val(),
             } 
-         
             $.ajax({
                 type: "POST",
                 url: host_url + "api/deleteNote",
