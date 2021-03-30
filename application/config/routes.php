@@ -76,8 +76,12 @@ $route['api/getHistoryStatesByOrder/(:num)']['GET'] = 'Orders/getHistoryStatesBy
 
 //view counter
 $route['counterOrders']['GET']='Counter/counterOrders';
+$route['counterSeller']['GET']='Counter/counterSeller';
 
+////view seller
 
+$route['ordersApproved']['GET']='Seller/ordersApproved';
+$route['ordersWapprobation']['GET']='Seller/ordersWapprobation';
 
 //views admin resources
 $route['adminComponent']['GET']='Component/adminComponent';
@@ -180,3 +184,14 @@ $route['api/getNotesByOrder/(:num)']['GET'] = 'Notes/getNotesByOrder/$1';
 $route['api/createNote']['POST'] = 'Notes/createNote';
 $route['api/updateNote']['POST'] = 'Notes/updateNote';
 $route['api/deleteNote']['POST'] = 'Notes/deleteNote';
+
+
+//api Seller 
+$route['api/getApproveTechnicalReport']['GET'] = 'Seller/getApproveTechnicalReport';
+$route['api/getOrdersQuotation']['GET'] = 'Seller/getOrdersQuotation';
+$route['api/changeState']['POST'] = 'Seller/changeState';
+$route['api/OCseller/(:num)']['POST'] = 'Seller/editOC/$1';
+
+
+
+

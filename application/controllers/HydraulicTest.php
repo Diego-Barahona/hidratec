@@ -179,7 +179,7 @@ class HydraulicTest extends CI_Controller
         if($ok){ 
             $this->load->model('HydraulicTestModel');
             if($this->HydraulicTestModel->editHydraulicTest($id,$data)){
-                $this->load->library('Fpdf_lib');
+               // $this->load->library('Fpdf_lib');
               //  $old=$data['old_pdf'];
                // $pdf = $this->fpdf_lib->pdfEvaluation($data);
                 $pdf = $this->pdfHidraulicTest($data,$data2);
@@ -233,21 +233,32 @@ class HydraulicTest extends CI_Controller
         $pdf->SetFont('Arial','B',9);
         $pdf->SetFillColor(232, 232, 232);
         $pdf->SetTextColor(0,0,0);
-        $pdf->Cell(40, 6, 'id', 1, 0, 'C', 1);
-        $pdf->Cell(50, 6, 'Dato', 1, 0, 'C', 1);
-        $pdf->Cell(25, 6, 'Velocidad', 1, 0, 'C', 1);
-        $pdf->Cell(25, 6, 'Presion', 1, 0, 'C', 1);
-        $pdf->Cell(25, 6, 'Caudal', 1, 0, 'C', 1);
-        $pdf->Cell(25, 6, 'Tiempo' , 1, 1, 'C', 1);
+     
+        $pdf->Cell(50, 6, utf8_decode('Dato'), 1, 0, 'C', 1);
+        $pdf->Cell(35, 6, utf8_decode('Velocidad'), 1, 0, 'C', 1);
+        $pdf->Cell(35, 6, utf8_decode('Presión'), 1, 0, 'C', 1);
+        $pdf->Cell(35, 6, utf8_decode('Caudal'), 1, 0, 'C', 1);
+        $pdf->Cell(35, 6, utf8_decode('Temperatura') , 1, 1, 'C', 1);
         $pdf->SetFillColor(250, 250, 250);
         $info = json_decode($data2);
         foreach ($info as $key => $value) {
-            $pdf->Cell(40, 6, $value->id, 1, 0, 'C', 1);
+            
+           
             $pdf->Cell(50, 6, $value->dato, 1, 0, 'C', 1);
-            $pdf->Cell(25, 6, $value->speed, 1, 0, 'C', 1);
-            $pdf->Cell(25, 6, $value->presion, 1, 0, 'C', 1);
-            $pdf->Cell(25, 6, $value->caudal, 1, 0, 'C', 1);
-            $pdf->Cell(25, 6, $value->time , 1, 1, 'C', 1);
+            if($data['config_speed']=="true"){ $pdf->Cell(35, 6, $value->speed, 1, 0, 'C', 1);}else{
+                $pdf->Cell(35, 6, "-", 1, 0, 'C', 1);
+            }
+            if($data['config_presion']=="true"){ $pdf->Cell(35, 6, $value->presion, 1, 0, 'C', 1);}else{
+                $pdf->Cell(35, 6, "-", 1, 0, 'C', 1);
+            }
+            if($data['config_caudal']=="true"){$pdf->Cell(35, 6, $value->caudal, 1, 0, 'C', 1);}else{
+                $pdf->Cell(35, 6, "-", 1, 0, 'C', 1);
+            }
+            if($data['config_temperature']=="true"){
+                $pdf->Cell(35, 6, $value->time , 1, 1, 'C', 1);}else{
+                     $pdf->Cell(35, 6, "-", 1, 1, 'C', 1);
+                }
+            
         }
         $pdf->Ln(10);
         $pdf->SetFont('Arial','B',15);

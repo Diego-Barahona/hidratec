@@ -31,8 +31,8 @@
      <div class="card-body tab-content">
 
      <!-- Evaluations View and Edit -->
-     <?php if ($_SESSION['rango']=="1"){ 
-      require('evaluationEdit.php');} ?>
+     <?php 
+      require('evaluationEdit.php'); ?>
      <!-- Evaluations End -->
 
 

@@ -8,6 +8,7 @@ $(() => {
 
 
 let check_admin_old = false;
+let check_technical_old_ht = false;
 let config =[];
 let medida = []; 
 
@@ -72,6 +73,11 @@ edit_ht = () => {
 		user_approve: $("#user_approve").val(),
 		date_approve:$("#date_approve").val(),//fin
 		check_admin_old: check_admin_old,
+		check_technical_old :check_technical_old_ht,
+		config_speed:$("#speed_c").val(),//lineas nuevas
+		config_presion:$("#presion_c").val(),
+		config_caudal:$("#caudal_c").val(),
+		config_temperature:$("#temperature_c").val(),
 	};
 
 	data2=JSON.stringify(medida);
@@ -94,9 +100,10 @@ edit_ht = () => {
 				text: result.msg,
                 button: "OK",
 			}).then(() => {
-				get_data_ht();
+				
 				$("#date_ht").datepicker("destroy");
 				unable_edition();
+				get_data_ht();
 				swal.close();
 			   });
 		},
@@ -132,6 +139,8 @@ get_data_ht = () =>{
 			let data1 = xhr.response[0].details;
 			let data2 =xhr.response[0].user_interaction;//nueva linea
 			let technical=xhr.response[0].full_name;
+			let config=xhr.response[0].config;
+			
 			
 			if(data1){ //linea nueva
 				let ht= JSON.parse(data1);
@@ -148,12 +157,14 @@ get_data_ht = () =>{
 			    if(ht.approve_technical === "true"){
 					$( "#export_ht").show();
 					$( "#approve_technical_ht").prop('checked', true);
+					check_technical_old_ht=true;
 					
 
 			    } else {
 					
 					$( "#approve_technical_ht" ).prop('checked', false );
 					$("#export_ht").css("display","none");
+					check_technical_old_ht=false;
 				}
 				
 				$( "#date_ht" ).val(ht.date_ht);
@@ -180,6 +191,17 @@ get_data_ht = () =>{
 				$("#date_modify").val(us.date_modify);
 				$("#date_approve").val(us.date_approve);//fin lineas nuevas
 				$("#technical_name_ht" ).val(technical);
+				
+                
+				
+	           $("#ht_popover").popover( 
+	
+		          { html: true,
+		            title: "Información",
+		            content: "Creado por: " +us.user_create +"<br />"+"Fecha creación: "+ 
+					us.date_create+"<br />"+"Modificado por: " +us.user_modify+"<br />"+"Fecha mod.: "+ us.date_modify+"<br />"+
+		             "Aprobado por: " +us.user_approve+"<br />"+"Fecha aprv.: "+ us.date_approve,
+                	});
 			
 			}else { 
 				$("#user_create").val("");//lineas nuevas
@@ -189,12 +211,39 @@ get_data_ht = () =>{
 				$("#date_modify").val("");
 				$("#date_approve").val("");
 				$("#technical_name_ht" ).val("");
+				$("#ht_popover").popover( 
+	
+					{ html: true,
+					  title: "Información",
+					  content: "Creado por: " +"" +"<br />"+"Fecha creación: "+ 
+					""+"<br />"+"Modificado por: " +""+"<br />"+"Fecha mod.: "+ ""+"<br />"+
+					   "Aprobado por: " +""+"<br />"+"Fecha aprv.: "+ "",
+					  });
 			}
-			console.log(technical);
+
+			if(config){
+				let settings = JSON.parse(config);//linea nueva
+			
+				$("#speed_c").val(settings.config_speed);//lineas nuevas
+				$("#presion_c").val(settings.config_presion);
+				$("#caudal_c").val(settings.config_caudal);
+				$("#temperature_c").val(settings.config_time);
+			
+			
+			}else { 
+				$("#speed_c").val("");//lineas nuevas
+				$("#presion_c").val("");
+				$("#caudal_c").val("");
+				$("#temperature_c").val("");
+			}
+
+
+		
 			if(technical){
-				$("#technical_ht" ).val(technical);
+				let a = $(`option[name ="${technical}"]`).val();
+				$("#technical_ht").val(a);
 			}else{
-				$("#technical_ht" ).val('');
+				$("#technical_ht").val('');
 			}
            
 			technicals_user_ht = xhr.response[0].user_assignment;
@@ -394,6 +443,10 @@ deleted= (key) =>{
         notes: $("#notes_ht").val(),
         technical: $("#technical_ht").val(),
 		technical_name: $("#technical_name_ht").val(),
+		config_speed:$("#speed_c").val(),//lineas nuevas
+		config_presion:$("#presion_c").val(),
+		config_caudal:$("#caudal_c").val(),
+		config_temperature:$("#temperature_c").val(),
 		
 	};
 
@@ -403,8 +456,8 @@ deleted= (key) =>{
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
 			let info = xhr.response[0].extra_info;
-			info = JSON.parse(info);
-			update =  data.filter(function(item) {
+			info1 = JSON.parse(info);
+			update =  info1.filter(function(item) {
 				return item.id != key;
 			});//filter all "id"  different to "key_id" 
 			data =JSON.stringify(update);
@@ -418,6 +471,7 @@ deleted= (key) =>{
 				crossOrigin: false,
 				dataType: "json",
 				success: () => {
+					   
 						get_info_ht();
 						medida=[];
 				},
@@ -437,18 +491,6 @@ deleted= (key) =>{
 	
 }
 
-$("#ht_popover").on("click",function(){
-
-
-	$("#ht_popover").popover( 
-	
-		{ html: true,
-		title: "Información",
-		content: "Creado por: " +$("#user_create").val() +"<br />"+"Fecha creación: "+ 
-		$("#date_create").val()+"<br />"+"Modificado por: " +$("#user_modify").val()+"<br />"+"Fecha mod.: "+ $("#date_modify").val()+"<br />"+
-		"Aprobado por: " +$("#user_approve").val()+"<br />"+"Fecha aprv.: "+ $("#date_approve").val(),
-	});
-});
 
 
 
@@ -462,6 +504,10 @@ edit_by_info= (key) =>{
         notes: $("#notes_ht").val(),
         technical: $("#technical_ht").val(),
 		technical_name: $("#technical_name_ht").val(),
+		config_speed:$("#speed_c").val(),//lineas nuevas
+		config_presion:$("#presion_c").val(),
+		config_caudal:$("#caudal_c").val(),
+		config_temperature:$("#temperature_c").val(),
 		
 	};
     
@@ -568,6 +614,10 @@ edit_info =()=>{
         notes: $("#notes_ht").val(),
         technical: $("#technical_ht").val(),
 		technical_name: $("#technical_name_ht").val(),
+		config_speed:$("#speed_c").val(),//lineas nuevas
+		config_presion:$("#presion_c").val(),
+		config_caudal:$("#caudal_c").val(),
+		config_temperature:$("#temperature_c").val(),
 		
 	};
 
@@ -670,7 +720,21 @@ clearInput=()=> {
 
 
 save_config = () => { 
+    let data2={
+		id: $("#ot_number").val(),
+        date_ht :$("#date_ht").val(),
+        conclusion: $("#conclusion_ht").val(),
+        notes: $("#notes_ht").val(),
+        technical: $("#technical_ht").val(),
+		technical_name: $("#technical_name_ht").val(),
+		config_speed:$("#speed_c").val(),//lineas nuevas
+		config_presion:$("#presion_c").val(),
+		config_caudal:$("#caudal_c").val(),
+		config_temperature:$("#temperature_c").val(),
+	}
+
     let data = {
+	technical_name: $("#technical_name_ht").val(),
     config_speed: $("#config_speed").is(':checked'),
 	config_presion: $("#config_presion").is(':checked'),
 	config_caudal:$("#config_caudal").is(':checked'),
@@ -680,7 +744,7 @@ save_config = () => {
 
 	$.ajax({
 		data: {
-			data
+			data,data2
 		},
 		type: "POST",
 		url: host_url + `api/save_config/${id}`,
@@ -693,6 +757,7 @@ save_config = () => {
 				text: "Configuración guardada.",
 				button: "OK",
 			}).then(() => {
+				get_data_ht();
 			    get_info_ht();
 				$("#config").modal("hide");
 				

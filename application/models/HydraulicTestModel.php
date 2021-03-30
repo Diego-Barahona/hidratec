@@ -10,7 +10,7 @@ class HydraulicTestModel extends CI_Model {
 
         
         
-        $query= "SELECT ht.details , u.full_name , ht.user_assignment, ht.state , ht.user_interaction ,ht.export,ht.config
+        $query= "SELECT ht.details , u.full_name , ht.user_assignment, ht.state , ht.user_interaction ,ht.export, ht.config
         FROM hydraulic_test ht
         LEFT JOIN user_role ur ON ur.user_id = ht.user_assignment
         LEFT JOIN user u ON u.id = ur.user_id
@@ -35,9 +35,27 @@ class HydraulicTestModel extends CI_Model {
         $date=  date('Y-m-d H:i:s');
 
         $date_approve="";
-        $user_approve="";
+        $user_approve="";  
+        $user_create="";
+        $date_create="";
         
         $technical = $data['technical'];
+
+        if($data['approve_technical'] == "true" && $data['check_technical_old'] == "false"){
+      
+            $date_create= $date;
+            $user_create= $user;
+           
+        }else  if($data['approve_technical'] == "true" &&  $data['check_technical_old'] == "true"){
+                  
+                     $date_create= $data['date_create'];
+                     $user_create= $data['user_create'];
+                    }else {
+ 
+                    $date_create="";
+                    $user_create="";
+
+                        }
       
         if($data['approve_admin'] == "true" && $data['check_admin_old'] == "false"){
       
@@ -67,8 +85,8 @@ class HydraulicTestModel extends CI_Model {
 
         $user_interaction= json_encode ( array( 
         
-            "user_create"=> $data['user_create'],
-            "date_create"=> $data['date_create'],
+            "user_create"=> $user_create,
+            "date_create"=> $date_create,
             "user_modify"=> $user,
             "date_modify"=> $date,
             "user_approve"=> $user_approve,

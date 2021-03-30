@@ -368,6 +368,7 @@ class Orders_model extends CI_Model
     public function createAprobation($id_ot){
         $datos_ap = array(
             'ot_id' => $id_ot,
+            'approve_client'=> false
         );
 
         return $this->db->insert('quotation', $datos_ap);

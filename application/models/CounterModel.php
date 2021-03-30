@@ -52,22 +52,32 @@ class CounterModel extends CI_Model
                 FROM ot_state OS INNER JOIN ot O
                  ON OS.ot_id = O.id 
                 INNER JOIN state S ON S.id = OS.state_id
-                WHERE OS.state_id = 5 AND OS.date_update= (SELECT MAX(OS2.date_update)
+                WHERE OS.state_id = 6 AND OS.date_update= (SELECT MAX(OS2.date_update)
                                 FROM ot_state OS2
                                 WHERE OS2.ot_id = O.id)";
                 $data4 = $this->db->query($sql)->result();
 
-                $sql =  $sql = "SELECT  O.id, O.type_service,O.date_admission 
+                $sql = "SELECT  O.id, O.type_service,O.date_admission 
                 FROM ot_state OS INNER JOIN ot O
                  ON OS.ot_id = O.id 
                 INNER JOIN state S ON S.id = OS.state_id
-                WHERE OS.state_id = 6 AND OS.date_update= (SELECT MAX(OS2.date_update)
+                WHERE OS.state_id = 7 AND OS.date_update= (SELECT MAX(OS2.date_update)
                                 FROM ot_state OS2
                                 WHERE OS2.ot_id = O.id)";
                 $data5 = $this->db->query($sql)->result();
 
+                $sql = "SELECT  O.id, O.type_service,O.date_admission 
+                FROM ot_state OS INNER JOIN ot O
+                 ON OS.ot_id = O.id 
+                INNER JOIN state S ON S.id = OS.state_id
+                WHERE OS.state_id = 5 AND OS.date_update= (SELECT MAX(OS2.date_update)
+                                FROM ot_state OS2
+                                WHERE OS2.ot_id = O.id)";
+                $data6 = $this->db->query($sql)->result();
+
+
 
                 return array("evaluation"=> $data0 , "e_quotation" => $data1, "e_aprobation" => $data2, "reparation" => $data3, "finished" => $data4,
-                "down" => $data5);
+                "down" => $data5 , "retired"=> $data6);
         }
 }

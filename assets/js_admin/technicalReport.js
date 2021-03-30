@@ -135,6 +135,8 @@ get_data_technical_report = () =>{
                 date_approve = interaction.date_approve;
                 user_approve = interaction.user_approve;
                 console.log(interaction);
+
+                
                 $("#tr_popover").popover(
                     { 
                     html: true,

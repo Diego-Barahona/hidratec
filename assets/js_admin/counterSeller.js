@@ -1,4 +1,3 @@
-
 $(() => {
 	get_Info_orders();
 });
@@ -11,23 +10,11 @@ const tabla = $("#table-orders").DataTable({
 		{ data: "id" },
 		{ data: "type_service" },
 		{ data: "date_admission" },
-		{
-			defaultContent: `<button type='button' name='btn_admin' class='btn btn-primary'>
-                                  Administrar 
-                                  <i class="fas fa-edit"></i>
-                              </button>`,
-		},
 	],
 });
 
-let down;
-let e_quotation;
-let e_aprobation;
-let finished;
-let reparation;
-let evaluation;
-let retired;
 
+let e_quotation;
 
 get_Info_orders= () => {
 	let xhr = new XMLHttpRequest();
@@ -40,16 +27,14 @@ get_Info_orders= () => {
 			e_aprobation = data.e_aprobation;
 			finished = data.finished;
 			reparation = data.reparation;
-			evaluation = data.evaluation;
             e_quotation= data.e_quotation;
-			retired= data.retired;
-			$("#down").html(down.length);
+            retired= data.retired;
+            $("#down").html(down.length);
 			$("#e_quotation").html(e_quotation.length);
 			$("#finished").html(finished.length);
 			$("#e_aprobation").html(e_aprobation.length);
 			$("#reparation").html(reparation.length);
-            $("#evaluation").html(evaluation.length);
-		    $("#retired").html(retired.length);
+		    $("#retired").html(retired.length);	
 		} else {
 			swal({
 				title: "Error",
@@ -68,10 +53,7 @@ loadDataModal = (title, data) => {
 	tabla.draw();
 };
 
-$("#btnevaluation").on("click", () => {
-	loadDataModal("Órdenes en evaluación", evaluation);
-	$("#modal").modal("show");
-});
+
 
 $("#btnequotation").on("click", () => {
 	loadDataModal("Órdenes en espera de cotización", e_quotation);
@@ -88,7 +70,7 @@ $("#btnreparation").on("click", () => {
 });
 
 $("#btnretired").on("click", () => {
-	loadDataModal("Listo para retiro", retired);
+	loadDataModal("Órdenes listo para retiro", retired);
 	$("#modal").modal("show");
 });
 
@@ -110,3 +92,4 @@ $("#table-orders").on("click", "button", function () {
 		window.location.assign(host_url+url);
 	}
 });
+

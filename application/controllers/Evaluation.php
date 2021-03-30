@@ -40,7 +40,7 @@ class Evaluation extends CI_Controller
         if($ok){ 
             $this->load->model('EvaluationModel');
             if($this->EvaluationModel->editEvaluation($id,$data)){
-             $this->load->library('Fpdf_lib');
+           //  $this->load->library('Fpdf_lib');
             // $pdf = $this->fpdf_lib->pdfEvaluation($data);
              $pdf = $this->pdfEvaluation($data);
              $this->EvaluationModel->pdfEvaluation($id, $pdf);

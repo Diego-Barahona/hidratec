@@ -79,7 +79,7 @@ class Orders extends CI_Controller
 
                     if($check_report_technical == 'true'){
                         $this->Orders_model->createTechnicalReport($ot_number);
-                        $pdf = $this->fpdf_lib->pdfTechnicalReport($ot_number);
+                  
                         $msg['msg'] = "No se pudo encontrar el recurso.";
                         $this->response->sendJSONResponse($msg);
                     }
