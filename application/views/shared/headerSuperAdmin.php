@@ -116,7 +116,7 @@
 
             <!-- Nav Item - Finanzas e Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link"  href="<?php echo base_url(); ?>adminTechnicalReports">
                 <i class="fas fa-file-invoice"></i>
                     <span>Informes técnicos</span></a>
                     <hr class="sidebar-divider">

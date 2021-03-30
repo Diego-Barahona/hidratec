@@ -11,6 +11,21 @@ class TechnicalReport extends CI_Controller
      
 	}
 
+    public function adminTechnicalReports(){
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $this->load->view('shared/headerSuperAdmin');
+            $this->load->view('admin/adminTechnicalReports');
+            $this->load->view('shared/footer');
+        } else {
+            redirect('Home/login', 'refresh');
+        }
+    }
+
+    public function getTechnicalReportApprove(){
+        $technicalReports= $this->TechnicalReportModel->getTechnicalReportApprove();
+        $this->response->sendJSONResponse($technicalReports);
+    }
+
     public function getTechnicalReportByOrder($id)
     { 
         if ($this->accesscontrol->checkAuth()['correct']) {
@@ -46,13 +61,14 @@ class TechnicalReport extends CI_Controller
         if ($this->accesscontrol->checkAuth()['correct']) {
             /* Datos de formulario*/
 			$data = $this->input->post('data');
-
             /*Update technical report*/
             /*Success*/
             $id = $_SESSION['id'];
             date_default_timezone_set("America/Santiago");
             $date_update = date("Y-m-d G:i:s");
             if($this->TechnicalReportModel->editTechnicalReport($data, $date_update)){
+                /*Verify changes in approve technical report*/
+                $this->getPdfTechnicalReport();
                 $msg['msg'] = "Reporte técnico actualizado con éxito.";
                 $this->response->sendJSONResponse($msg);
             /*Fail */
@@ -177,96 +193,104 @@ class TechnicalReport extends CI_Controller
 
 
             /* Detalle informe técnico */
-            $cont = 1;
-            $pdf->SetDrawColor(19,66,115);
-            for($i=1; $i<= count($data_images); $i++){
-                list($x1, $y1) = getimagesize('http://localhost/hidrat/assets/upload/'.$data_images[$i]['image']);
-                $x = 0;
-                $y = 0;
-                $x_image = 0;
-                if($x1 > $y1) {
-                    $x = 60;
-                    $y = 0;
-                    $x_image = 20;
-                } else {
+
+            if($data_images){
+                $cont = 1;
+                $pdf->SetDrawColor(19,66,115);
+                for($i=1; $i<= count($data_images); $i++){
+                    list($x1, $y1) = getimagesize('http://localhost/hidrat/assets/upload/'.$data_images[$i]['image']);
                     $x = 0;
-                    $y = 55;
-                    $x_image = 30;
-                }
-                if($cont == 1){
-                    $pdf->AddPage('PORTRAIT','LETTER');
-                    $pdf->SetFont('Arial', 'B', 15);
-                    $pdf->SetTextColor(19,66,115);
-                    $pdf->Cell(200, 5,  utf8_decode('Detalle Informe Técnico'), 0, 0, 'C');     
-                    $pdf->Ln(20);
-    
-                   
-
-                    $pdf->MultiCell(80, 59, $pdf->Image('http://localhost/hidrat/assets/upload/'.$data_images[$i]['image'],$x_image,52,$x, $y) , 1, 'C');
-    
-                    $pdf->SetFont('Arial', 'B', 12);
-                    $pdf->SetTextColor(0,0,0);
-                    $pdf->SetY(50);
-                    $pdf->SetX(90);
-        
-                    $charactersName = strlen($data_images[$i]['name']);
-                    $total = ceil($charactersName/50); 
-                    $pdf->MultiCell(120,10, $data_images[$i]['name'], 1, 'L');
-
-                    if($total >= 2){
-                        $y_description = 62;
-                    }else{
-                        $y_description = 60;
+                    $y = 0;
+                    $x_image = 0;
+                    if($x1 > $y1) {
+                        $x = 60;
+                        $y = 0;
+                        $x_image = 20;
+                    } else {
+                        $x = 0;
+                        $y = 55;
+                        $x_image = 30;
                     }
+                    if($cont == 1){
+                        $pdf->AddPage('PORTRAIT','LETTER');
+                        $pdf->SetFont('Arial', 'B', 15);
+                        $pdf->SetTextColor(19,66,115);
+                        $pdf->Cell(200, 5,  utf8_decode('Detalle Informe Técnico'), 0, 0, 'C');     
+                        $pdf->Ln(20);
         
-                    $pdf->SetFont('Arial', '', 10);
-                    $pdf->SetY($y_description);
-                    $pdf->SetX(90);
-                    $pdf->MultiCell(120,10, $data_images[$i]['description'], 0, 'L');
-                    $pdf->SetY($y_description);
-                    $pdf->SetX(90); 
-                    $pdf->MultiCell(120, 49, '' , 1, 'J'); 
-                    $pdf->Ln(5);
-                }else if($cont == 2){
-                    $pdf->MultiCell(80, 58, $pdf->Image('http://localhost/hidrat/assets/upload/'.$data_images[$i]['image'],$x_image,115,$x, $y) , 1, 'C');
-                    
-                    $pdf->SetFont('Arial', 'B', 12);
-                    $pdf->SetTextColor(0,0,0);
-                    $pdf->SetY(114);
-                    $pdf->SetX(90);
-                    $pdf->MultiCell(120,10, $data_images[$i]['name'] , 1, 'L');
+                       
+    
+                        $pdf->MultiCell(80, 59, $pdf->Image('http://localhost/hidrat/assets/upload/'.$data_images[$i]['image'],$x_image,52,$x, $y) , 1, 'C');
+        
+                        $pdf->SetFont('Arial', 'B', 12);
+                        $pdf->SetTextColor(0,0,0);
+                        $pdf->SetY(50);
+                        $pdf->SetX(90);
             
+                        $charactersName = strlen($data_images[$i]['name']);
+                        $total = ceil($charactersName/50); 
+                        $pdf->MultiCell(120,10, $data_images[$i]['name'], 1, 'L');
+    
+                        if($total >= 2){
+                            $y_description = 62;
+                        }else{
+                            $y_description = 60;
+                        }
             
-                    $pdf->SetFont('Arial', '', 10);
-                    $pdf->SetY(124);
-                    $pdf->SetX(90);
-                    $pdf->MultiCell(0,6, $data_images[$i]['description'] , 0, 'L');
-                    $pdf->SetY(114);
-                    $pdf->SetX(90);
-                    $pdf->MultiCell(120, 58, '' , 1, 'J');
-                    $pdf->Ln(5); 
-                }else if($cont == 3){
-                    $pdf->MultiCell(80, 58, $pdf->Image('http://localhost/hidrat/assets/upload/'.$data_images[$i]['image'],$x_image,181,$x, $y) , 1, 'C');
-                    
-                    $pdf->SetFont('Arial', 'B', 12);
-                    $pdf->SetTextColor(0,0,0);
-                    $pdf->SetY(177);
-                    $pdf->SetX(90);
-                    $pdf->MultiCell(120,10, $data_images[$i]['name'] , 1, 'L');
-            
-            
-                    $pdf->SetFont('Arial', '', 10);
-                    $pdf->SetY(187);
-                    $pdf->SetX(90);
-                    $pdf->MultiCell(0,6, $data_images[$i]['description'] , 0, 'L');
-                    $pdf->SetY(177);
-                    $pdf->SetX(90);
-                    $pdf->MultiCell(120, 58, '' , 1, 'J');
-                    $cont = 0;
+                        $pdf->SetFont('Arial', '', 10);
+                        $pdf->SetY($y_description);
+                        $pdf->SetX(90);
+                        $pdf->MultiCell(120,10, $data_images[$i]['description'], 0, 'L');
+                        $pdf->SetY($y_description);
+                        $pdf->SetX(90); 
+                        $pdf->MultiCell(120, 49, '' , 1, 'J'); 
+                        $pdf->Ln(5);
+                    }else if($cont == 2){
+                        $pdf->MultiCell(80, 58, $pdf->Image('http://localhost/hidrat/assets/upload/'.$data_images[$i]['image'],$x_image,115,$x, $y) , 1, 'C');
+                        
+                        $pdf->SetFont('Arial', 'B', 12);
+                        $pdf->SetTextColor(0,0,0);
+                        $pdf->SetY(114);
+                        $pdf->SetX(90);
+                        $pdf->MultiCell(120,10, $data_images[$i]['name'] , 1, 'L');
+                
+                
+                        $pdf->SetFont('Arial', '', 10);
+                        $pdf->SetY(124);
+                        $pdf->SetX(90);
+                        $pdf->MultiCell(0,6, $data_images[$i]['description'] , 0, 'L');
+                        $pdf->SetY(114);
+                        $pdf->SetX(90);
+                        $pdf->MultiCell(120, 58, '' , 1, 'J');
+                        $pdf->Ln(5); 
+                    }else if($cont == 3){
+                        $pdf->MultiCell(80, 58, $pdf->Image('http://localhost/hidrat/assets/upload/'.$data_images[$i]['image'],$x_image,181,$x, $y) , 1, 'C');
+                        
+                        $pdf->SetFont('Arial', 'B', 12);
+                        $pdf->SetTextColor(0,0,0);
+                        $pdf->SetY(177);
+                        $pdf->SetX(90);
+                        $pdf->MultiCell(120,10, $data_images[$i]['name'] , 1, 'L');
+                
+                
+                        $pdf->SetFont('Arial', '', 10);
+                        $pdf->SetY(187);
+                        $pdf->SetX(90);
+                        $pdf->MultiCell(0,6, $data_images[$i]['description'] , 0, 'L');
+                        $pdf->SetY(177);
+                        $pdf->SetX(90);
+                        $pdf->MultiCell(120, 58, '' , 1, 'J');
+                        $cont = 0;
+                    }
+                    $cont++;
                 }
-                $cont++;
+            }else{
+                $pdf->AddPage('PORTRAIT','LETTER');
+                $pdf->SetFont('Arial', 'B', 15);
+                $pdf->SetTextColor(19,66,115);
+                $pdf->Cell(200, 5,  utf8_decode('Detalle Informe Técnico'), 0, 0, 'C');     
+                $pdf->Ln(20);
             }
-	       
 
             /* Página Conlusion y recomendacion */
             $pdf->AddPage('PORTRAIT','LETTER');

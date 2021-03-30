@@ -33,16 +33,18 @@ class NotesModel extends CI_Model
         $date = date("Y-m-d G:i:s");
         $details_record = [];
 
-        for($i=0; $i<count($data['notes']); $i++){
-            $note = array(
-                'id' => $data['notes'][$i]['id'],
-                'date_created' => $data['notes'][$i]['date_created'],
-                'date_modified' => $data['notes'][$i]['date_modified'],
-                'content' => $data['notes'][$i]['content'],
-                'user' => $data['notes'][$i]['user'],
-                'createdByCurrentUser' => $data['notes'][$i]['createdByCurrentUser'],
-            );
-            array_push($details_record, $note);
+        if($data['notes'] != 'false'){
+            for($i=0; $i<count($data['notes']); $i++){
+                $note = array(
+                    'id' => $data['notes'][$i]['id'],
+                    'date_created' => $data['notes'][$i]['date_created'],
+                    'date_modified' => $data['notes'][$i]['date_modified'],
+                    'content' => $data['notes'][$i]['content'],
+                    'user' => $data['notes'][$i]['user'],
+                    'createdByCurrentUser' => $data['notes'][$i]['createdByCurrentUser'],
+                );
+                array_push($details_record, $note);
+            }
         }
 
         $note = array(
@@ -65,11 +67,12 @@ class NotesModel extends CI_Model
     }
 
     public function updateNote($data){
-        $data_notes = array(
-            'record' => json_encode($data['notes']),
-        ); 
-       
-        $this->db->where('ot_id', $data['ot_id']);
-        if($this->db->update('notes', $data_notes)) return true; else return false;
+            $data_notes = array(
+                'record' => json_encode($data['notes']),
+            ); 
+           
+            $this->db->where('ot_id', $data['ot_id']);
+            if($this->db->update('notes', $data_notes)) return true; else return false;
+
     }
 }
