@@ -30,7 +30,7 @@ class Home extends CI_Controller {
 				//ayudante técnico
 				else if ($rango == 4) $this->load_page_role("TechnicalAssistant");
 				//vendedor
-				else if ($rango == 5) $this->load_page_role("Seller", "seller");
+				else if ($rango == 5) $this->load_page_role("Seller");
 			}else if($this->session->usuario == "client"){
 				//Client Read
 				if ($rango == 1) $this->load_page_role("ClientRead", "client");
