@@ -26,7 +26,7 @@ class Home extends CI_Controller {
 				//Admin
 				else if ($rango == 2) $this->load_page_role("Admin","admin");
 				//técnico master
-				else if ($rango == 3) $this->load_page_role("TechnicalMaster");
+				else if ($rango == 3) $this->load_page_role("TechnicalMaster","technicalMaster");
 				//ayudante técnico
 				else if ($rango == 4) $this->load_page_role("TechnicalAssistant");
 				//vendedor
@@ -52,4 +52,5 @@ class Home extends CI_Controller {
 		$this->load->view($folderView.'/counterOrders');
 		$this->load->view('shared/footer');
 	}
+	
 }

@@ -217,5 +217,9 @@ $route['adminOrdersApproveByClientView']['GET'] = 'OrdersClient/adminOrdersAppro
 $route['api/getOrdersApproveByClient']['GET'] = 'OrdersClient/getOrdersApprove';
 $route['api/approveByClient/(:num)']['POST'] = 'OrdersClient/approve/$1';
 
+$route['api/getHydraulicTestEnable']['GET'] = 'TechnicalMaster/getHydraulicTestEnable';
+$route['adminHydraulicTest']['GET'] = 'TechnicalMaster/adminHydraulicTest';
+$route['hydraylicTestForm']['GET']='TechnicalMaster/hydraylicTestForm/$1';
+
 
 
