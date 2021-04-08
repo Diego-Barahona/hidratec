@@ -62,7 +62,6 @@ class Evaluation extends CI_Controller
 
 
     public function pdfEvaluation($data){
-        
         $pdf = new PDF();
         $url="http://localhost/hidrat/";
         $pdf->AliasNbPages();

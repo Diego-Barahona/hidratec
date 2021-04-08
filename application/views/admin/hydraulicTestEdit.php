@@ -55,26 +55,6 @@
                      
                 </div>
              </div>
-          
-   
-             <div class="row mb-2">
-              
-               <div class="col-md-6 mb-3">
-                  <label for="actividad">Cliente</label>
-                  <div class="input-group" id='frm_date_admission'>
-                      <input type="text" class="form-control" style="background:white" name="enterprise_ht" id="enterprise_ht" value='<?= $enterprise ?>' disabled >
-                      <div class="invalid-feedback"></div>
-                  </div>
-               </div>
-
-               <div class="col-md-6 mb-3">
-                  <label for="actividad">Componente</label>
-                  <div class="input-group" id='frm_date_admission'>
-                      <input type="text" class="form-control" style="background:white" name="component_ht" id="component_ht" value='<?= $component ?>' disabled>
-                      <div class="invalid-feedback"></div>
-                  </div>
-               </div> 
-             </div>
 
               <div class="row mb-2">
               
