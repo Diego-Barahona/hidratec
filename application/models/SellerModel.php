@@ -52,7 +52,7 @@ class SellerModel extends CI_Model
           ) 
         "; 
 
-     var_dump($this->db->query($query)->result()); 
+     return $this->db->query($query)->result(); 
     
      }
  

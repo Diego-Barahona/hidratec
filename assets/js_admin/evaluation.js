@@ -83,9 +83,9 @@ get_data_evaluation = () =>{
 
 			if(technical){
 				let a = $(`option[name ="${technical}"]`).val();
-				$("#technical").val(a);
+				$("#technical_ev").val(a);
 			}else{
-				$("#technical").val('');
+				$("#technical_ev").val('');
 			}
 			technicals_user = xhr.response[0].user_assignment;
 			disabledAlertEv();
@@ -121,7 +121,7 @@ $("#hab_edit_ev").change(() => {
         $( "#date_evaluation" ).prop( "disabled", false );
         $( "#description_ev" ).prop( "disabled", false );
         $( "#notes" ).prop( "disabled", false );
-        $( "#technical" ).prop( "disabled", false );
+        $( "#technical_ev" ).prop( "disabled", false );
 		$( "#approve_admin_ev" ).prop( "disabled", false );
         $( "#approve_technical_ev" ).prop( "disabled", false );
 		$("#date_evaluation").datepicker({
@@ -137,7 +137,7 @@ $("#hab_edit_ev").change(() => {
         $( "#date_evaluation" ).prop( "disabled", true );
         $( "#description_ev" ).prop( "disabled", true);
         $(  "#notes").prop( "disabled", true );
-        $(  "#technical").prop( "disabled", true );
+        $(  "#technical_ev").prop( "disabled", true );
 		$( "#approve_admin_ev" ).prop( "disabled", true );
         $( "#approve_technical_ev" ).prop( "disabled", true );
 		$( "#id_ot" ).prop( "disabled", true );
@@ -157,8 +157,8 @@ edit_evaluation = () => {
         date_evaluation :$("#date_evaluation").val(),
         description: $("#description_ev").val(),
         notes: $("#notes").val(),
-        technical: $("#technical").val(),
-		name_technical:  $("#name_technical").val(),
+        technical: $("#technical_ev").val(),
+		name_technical:  $('#technical_ev option:selected').text(),
 		old_pdf: $("#record_path_pdf").val(),
 		approve_technical: $("#approve_technical_ev").is(':checked'),
 		approve_admin: $("#approve_admin_ev").is(':checked'),
@@ -172,7 +172,7 @@ edit_evaluation = () => {
         check_technical_old:check_technical_old_ev,
 		
 	};
-   console.log(data);
+   	console.log(data);
 
 	Object.keys(data).map((d) => $(`.${d}`).hide());
 	$.ajax({
@@ -197,7 +197,7 @@ edit_evaluation = () => {
 				$( "#notes" ).prop( "disabled", true );
 				$( "#approve_admin_ev" ).prop( "disabled", true );
 				$( "#approve_technical_ev" ).prop( "disabled", true );
-				$( "#technical" ).prop( "disabled", true );
+				$( "#technical_ev" ).prop( "disabled", true );
 				$("#date_evaluation").datepicker("destroy");	
 
 			   });
@@ -246,8 +246,8 @@ getFields = () => {
                     $(option).val(u.id); 
                     $(option).attr('name', u.full_name);
                     $(option).html(u.full_name); 
-                    $(option).appendTo("#technical");
-					$("#technical").val(technicals_user);
+                    $(option).appendTo("#technical_ev");
+					$("#technical_ev").val(technicals_user);
                      technicals.push(u.full_name);
                 });
 			

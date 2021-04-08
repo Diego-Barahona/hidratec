@@ -141,7 +141,6 @@ get_data_ht = () =>{
 			let technical=xhr.response[0].full_name;
 			let config=xhr.response[0].config;
 			
-			
 			if(data1){ //linea nueva
 				let ht= JSON.parse(data1);
 			    
@@ -238,7 +237,6 @@ get_data_ht = () =>{
 			}
 
 
-		
 			if(technical){
 				let a = $(`option[name ="${technical}"]`).val();
 				$("#technical_ht").val(a);
@@ -294,7 +292,7 @@ getFields_ht = () => {
                     $(option).attr('name', u.full_name);
                     $(option).html(u.full_name); 
                     $(option).appendTo("#technical_ht");
-					$("#technical_ht").val(technicals_user);
+					$("#technical_ht").val(technicals_user_ht);
                      technicals_ht.push(u.full_name);
                 });
             }
@@ -757,7 +755,6 @@ save_config = () => {
 				text: "Configuración guardada.",
 				button: "OK",
 			}).then(() => {
-				get_data_ht();
 			    get_info_ht();
 				$("#config").modal("hide");
 				

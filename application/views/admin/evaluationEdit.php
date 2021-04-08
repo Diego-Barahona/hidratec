@@ -8,7 +8,7 @@
     <form>
     
     <input type="hidden" class="form-control" id="record_path_pdf" name="id" >
-    <input type="hidden" class="form-control" id="name_technical" name="id" >
+    <input type="hidden" class="form-control" id="name_technical" name="name_technical" >
         <input type="hidden" class="form-control" id="user_create_ev" name="id" >
         <input  type="hidden"  class="form-control" id="date_create_ev" name="id" >
         <input  type="hidden"  class="form-control" id="user_modify_ev" name="id" >
@@ -85,7 +85,7 @@
           <div class="row mb-2">
                <div class="col-md-4 mb-3">
                <label>Asignar técnico para la evaluación</label>
-                <select class="form-select form-control" style="background:white" id="technical" name="technical" disabled>
+                <select class="form-select form-control" style="background:white" id="technical_ev" name="technical_ev" disabled>
                 <option></option>
               </select>
                 <div class="invalid-feedback"></div>
