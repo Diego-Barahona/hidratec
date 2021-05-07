@@ -1,10 +1,10 @@
 
-<input type="hidden" class="form-control" id="ot_number" name="ot_number" value='<?= $id ?>' >
+
 <div id="content-wrapper">
   <div class="container-fluid mb-5">
 
     <ol class="breadcrumb">
-      <li class="breadcrumb-item active">Órdenes de trabajo / Órdenes en E.aprobación</li>
+      <li class="breadcrumb-item active">Evaluaciones/ Lista de evaluaciones </li>
     </ol>
     <div class="accordion" id="accordionExample">
       <div class="card mb-3">
@@ -18,7 +18,7 @@
 
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
           <div class="card-body">
-           En esta sección se podrá realizar la elaboración de las pruebas hidráulicas de las OT que han sido ingresadas por sistema , ademas de su respectiva aprobación por parte de técnico master.
+           En esta sección se podrá realizar la elaboración de evaluaciones de las OT que han sido ingresadas por sistema , ademas de su respectiva aprobación por parte de técnico master.
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-bordered" id="table_ht" width="100%" cellspacing="0">
+          <table class="table table-bordered" id="table_ev" width="100%" cellspacing="0">
             <thead>
               <tr>
                 <th>N° de OT </th>
@@ -40,7 +40,8 @@
                 <th>Realizado </th>
                 <th>Aprobado por administración</th>
                 <th>Tipo de servicio</th>
-                <th>Prueba hidráulica</th>
+                <th>Evaluación</th>
+                <th>Subtareas</th>
               </tr>
             </thead>
           </table>
@@ -50,9 +51,6 @@
     <div class="row mb-3"></div>
   </div>
 </div>
+</div>
 
-
-
-
-
-<script src="<?php echo base_url(); ?>assets/js_admin/technical_master/hydraulicTestList.js"></script>
+<script src="<?php echo base_url(); ?>assets/js_admin/technical_master/evaluationList.js"></script>

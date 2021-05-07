@@ -6,7 +6,7 @@ edit_evaluation = () => {
         date_evaluation :$("#date_evaluation").val(),
         description: $("#description_ev").val(),
         notes: $("#notes").val(),
-        technical: $("#technical").val(),
+       
 	};
 
 	Object.keys(data).map((d) => $(`.${d}`).hide());

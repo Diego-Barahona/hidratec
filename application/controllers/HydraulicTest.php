@@ -114,11 +114,6 @@ class HydraulicTest extends CI_Controller
     }
 
 
-
-
-
-
-
     public function deletePdf($id)
     {
         if ($this->accesscontrol->checkAuth()['correct']) {
@@ -164,17 +159,20 @@ class HydraulicTest extends CI_Controller
         if($this->accesscontrol->checkAuth()['correct']) {
         $data = $this->input->post('data');
         $data2= $this->input->post('data2');
-        $date_ht = $data['date_ht'];
-        $conclusion = $data['conclusion'];
+        $conclusion=$data['conclusion'];
         $notes = $data['notes'];
         $technical = $data['technical'];
-       
-        $ok=true;
 
-        if ($date_ht== "") { $ok = false;  $err['date_ht']  = "Ingrese fecha de evaluación";  }
-        if ($conclusion == "") { $ok = false;  $err['conclusion']  = "Ingrese description.";  }
-        if ($notes == "") { $ok = false;  $err['notes']  = "Ingrese un notas.";  }
-        if ($technical == "") { $ok = false;  $err['technical']  = "Ingrese un tecnico";  }
+        
+        $ok = true;
+
+        if($_SESSION['rango']== 3){
+
+                if ($conclusion == "") { $ok = false;  $err['conclusion']  = "Ingrese fecha de evaluación";  }
+                if ($notes == "") { $ok = false;  $err['notes']  = "Ingrese un tecnico";  }
+
+            }
+        
   
         if($ok){ 
             $this->load->model('HydraulicTestModel');
@@ -220,7 +218,11 @@ class HydraulicTest extends CI_Controller
         $pdf->Cell(50, 6, utf8_decode('Fecha emisión'), 1, 1, 'C', 1);
       //date('Y-m-d H:i:s') sacar datos de fecha
         $pdf->SetFillColor(250, 250, 250);
-        $pdf->Cell(40, 6, $data['date_ht'], 1, 0, 'C', 1);
+        if($_SESSION['rango' ]== 3){
+            $pdf->Cell(40, 6, date('Y-m-d'), 1, 0, 'C', 1);
+        }else{
+            $pdf->Cell(40, 6, $data['date_ht'], 1, 0, 'C', 1);
+        }
         $pdf->Cell(50, 6, $data['id'], 1, 0, 'C', 1);
         $pdf->Cell(50, 6, $data['technical_name'], 1, 0, 'C', 1);
         $pdf->Cell(50, 6, date('Y-m-d H:i:s'), 1, 1, 'C', 1);

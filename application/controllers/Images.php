@@ -202,6 +202,26 @@ class Images extends CI_Controller
 
 
 
+	public function deleteImage($id)
+	{
+		
+	   if ($this->accesscontrol->checkAuth()['correct']) {
+              $this->load->model('ImageModel');
+                 if( $res = $this->ImageModel->deleteImage($id)){
+			         $this->response->sendJSONResponse(array('msg'=> 'La imagen se ha eliminado correctamente.'));
+		        }else{
+			         $this->response->sendJSONResponse(array('msg'=> 'Error al eliminar la imagen.'),400);
+		         }		
+	    } else {
+		    $this->response->sendJSONResponse(array('status' => 'Faltan permisos de usuario.'),400);
+	      }
+			
+	}
+
+
+
+
+
 
 
 

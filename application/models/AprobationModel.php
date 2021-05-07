@@ -7,10 +7,8 @@ class AprobationModel extends CI_Model {
     }
 
     public function getAprobationByOrder($id){
-
-        
-        
-        $query= "SELECT user_interaction , approve_client , date_quotation, date_send_email 
+      
+        $query= "SELECT user_interaction , approve_client , date_quotation , date_send_qt , number_qt ,date_send_email 
         FROM quotation
         WHERE ot_id = ? ";
         
@@ -19,8 +17,9 @@ class AprobationModel extends CI_Model {
     }
    
 
-
     public function editAprobation($id,$data){
+        $sql_ot = "UPDATE ot SET date_quotation = ? WHERE id = ?";
+        $this->db->query($sql_ot, array( $data['date_ap'], $id));  
        
         $user= $_SESSION['full_name'];
         $date=  date('Y-m-d G:i:s');
@@ -53,8 +52,9 @@ class AprobationModel extends CI_Model {
         );  
         $approve_client=false;
         if($data['approve_client']=="true"){ $approve_client= true;} 
-        $query = "UPDATE quotation SET approve_client = ? , date_quotation = ? ,user_interaction = ?  WHERE ot_id = ?";
-            return $this->db->query($query, array( $approve_client, $data['date_ap'],$user_interaction, $id));  
+        
+        $query = "UPDATE quotation SET approve_client = ? ,date_send_qt= ? , number_qt= ?  , date_quotation = ? ,user_interaction = ?  WHERE ot_id = ?";
+            return $this->db->query($query, array( $approve_client, $data['date_ap'] ,$data['qt_number'],$data['date_send'], $user_interaction, $id));  
     } 
 
 

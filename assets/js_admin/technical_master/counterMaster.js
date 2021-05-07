@@ -1,7 +1,11 @@
 $(() => {
-    get_orders_ht();
+
+
+  get_orders_ht();
+	get_orders_ev();
 	get_orders_tr();
 	get_orders_reparation();
+
 });
 
 const tabla = $("#table-orders").DataTable({
@@ -11,9 +15,10 @@ const tabla = $("#table-orders").DataTable({
 	columns: [
 		{ data: "number_ot" },
 		{ data: "date" },
+		{ data: "priority" },
 		{ data: "component" },
-        { data: "enterprise" },
-        { data: "service" },
+    { data: "enterprise" },
+    { data: "service" },
 		{
 			defaultContent: `<button type='button' name='btn_admin' class='btn btn-primary'>
                                   Realizar
@@ -22,6 +27,8 @@ const tabla = $("#table-orders").DataTable({
 		},
 	],
 });
+
+
 
 const tablaReparation = $("#tableReparations").DataTable({
 	language: {
@@ -55,6 +62,7 @@ const tablaReparation = $("#tableReparations").DataTable({
 	],
 });
 
+
 let down;
 let e_quotation;
 let e_aprobation;
@@ -64,6 +72,7 @@ let evaluation;
 let retired;
 let hydraulic;
 let hydraulicTests=[];
+let evaluations=[];
 let technicalsReports = [];
 let reparations = [];
 let urlRedirect = '';
@@ -92,9 +101,9 @@ get_orders_ht= () => {
                       component : item.component,
                       service : item.service,
                       approve_technical:  validation.approve_technical=="true"? "Realizado":"No realizado",
-                      approve_admin:  validation.approve_admin == "true"?  "Aprobado":"No aprobado"
-                       ,
-
+                      approve_admin:  validation.approve_admin == "true"?  "Aprobado":"No aprobado" ,
+					            type:'hidraulic'
+                      ,
                   }
                 console.log(report.approve_technical);
                   
@@ -114,6 +123,69 @@ get_orders_ht= () => {
 	});
 	xhr.send();
 };
+
+get_orders_ev= () => {
+	let xhr = new XMLHttpRequest();
+	xhr.open("get", `${host_url}/api/getEvaluationEnable`);
+	xhr.responseType = "json";
+	xhr.addEventListener("load", () => {
+		if (xhr.status === 200) {
+            let data =xhr.response;
+            data.forEach((item)=>{
+             validation = JSON.parse(item.details);
+             interaction = JSON.parse(item.user_interaction);
+             if(validation){
+             if(validation.approve_technical == "false"){
+             report = 
+                  {
+                      number_ot : item.number_ot,
+                      priority: item.priority,
+                      technical : interaction ? interaction.date_create :"" ,
+                      date : validation ? validation.date_evaluation : "Pendiente",
+                      enterprise : item.enterprise,
+                      component : item.component,
+                      service : item.service,
+					  type:'evaluation'
+                  }
+                
+				  
+				  evaluations.push(report);
+
+                }
+
+			}else{
+
+				report = 
+				{
+					number_ot : item.number_ot,
+					priority: item.priority,
+					technical : interaction ? interaction.date_create :"" ,
+					date :  "Pendiente",
+					enterprise : item.enterprise,
+					component : item.component,
+					service : item.service,
+					type:'evaluation',
+				}
+
+				evaluations.push(report);
+			  
+
+			}
+                });
+         
+           $("#evaluation").html(evaluations.length);
+		} else {
+			swal({
+				title: "Error",
+				icon: "error",
+				text: "Error al obtener las evaluaciones",
+			});
+		}
+	});
+	xhr.send();
+};
+
+
 
 get_orders_tr= () => {
 	let xhr = new XMLHttpRequest();
@@ -152,6 +224,7 @@ get_orders_tr= () => {
 	xhr.send();
 };
 
+
 get_orders_reparation = () => {
 	reparations = [];
 	let xhr = new XMLHttpRequest();
@@ -187,12 +260,27 @@ get_orders_reparation = () => {
 	xhr.send();
 };
 
+
 loadDataModal = (title, data) => {
 	$("#titlemodal").html(title);
 	tabla.clear();
 	tabla.rows.add(data);
 	tabla.draw();
 };
+
+
+
+$("#btnHydraulicTest").on("click", () => {
+	loadDataModal("Pruebas hidráulicas por realizar", hydraulicTests);
+	$("#modal").modal("show");
+});
+
+$("#btnevaluation").on("click", () => {
+	loadDataModal("Evaluaciones por realizar", evaluations);
+	$("#modal").modal("show");
+});
+
+
 
 
 approve = (item) => {
@@ -247,11 +335,7 @@ approve = (item) => {
 
 }
 
-$("#btnHydraulicTest").on("click", () => {
-	urlRedirect = 'hydraulicTest';
-	loadDataModal("Pruebas hidráulicas por realizar", hydraulicTests);
-	$("#modal").modal("show");
-});
+
 
 
 $("#btnTechnicalReports").on("click", () => {
@@ -264,17 +348,30 @@ $("#btnReparations").on("click", () => {
 	$("#modalReparation").modal("show");
 });
 
+
 $("#table-orders").on("click", "button", function () {
 	let data = tabla.row($(this).parents("tr")).data();
 	if ($(this)[0].name == "btn_admin") {
-		if(urlRedirect == 'technicalReport'){
+
+		if(data.type =="evaluation"){
+		let ot = data.number_ot;
+		let url = 'editEvaluation'+'?ot='+ot; 
+		window.location.assign(host_url+url);
+	    }else{
+
+		if(data.type =="hidraulic"){
+		let ot = data.number_ot;
+		let url = 'hydraylicTestForm'+'?ot='+ot; 
+		window.location.assign(host_url+url);
+        }else{
+     
+      if(urlRedirect == 'technicalReport'){
 			window.location.assign(host_url+`tmAdminViewTechnicalReport/${data.number_ot}`);
-		}else if(urlRedirect == 'hydraulicTest'){
-			let ot = data.number_ot;
-			let url = 'hydraylicTestForm'+'?ot='+ot;
-			window.location.assign(host_url+url);
-		}
+		}   
+     }
+
 	}
+  }
 });
 
 $("#tableReparations").on("click", "button", function () {
@@ -285,4 +382,5 @@ $("#tableReparations").on("click", "button", function () {
         approve(data);
     }
 });
+
 

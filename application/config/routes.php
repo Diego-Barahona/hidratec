@@ -141,6 +141,7 @@ $route['api/upImage/(:num)']['POST']  = 'Images/upImage/$1';
 $route['api/getImagesByOrder/(:num)']['GET']  = 'Images/getImagesByOrder/$1';
 $route['api/editImage/(:num)']['POST']  = 'Images/editImage/$1';
 $route['api/upMultiplesImage/(:num)']['POST']  = 'Images/upMultiplesImage/$1';
+$route['api/deleteImage/(:num)']['POST']  = 'Images/deleteImage/$1';
 
 
 //api counter
@@ -217,11 +218,20 @@ $route['api/getOrdersApproveByClient']['GET'] = 'OrdersClient/getOrdersApprove';
 $route['api/approveByClient/(:num)']['POST'] = 'OrdersClient/approve/$1';
 /*------------------------------- End Routes Client------------------------------------ */
 
-
+//api Technical master 
 /*------------------------------- Routes To Technical Master------------------------------------ */
+
 $route['api/getHydraulicTestEnable']['GET'] = 'TechnicalMaster/getHydraulicTestEnable';
+$route['api/getEvaluationEnable']['GET']='TechnicalMaster/getEvaluationEnable';
+
+//view Technical master 
 $route['adminHydraulicTest']['GET'] = 'TechnicalMaster/adminHydraulicTest';
 $route['hydraylicTestForm']['GET']='TechnicalMaster/hydraylicTestForm/$1';
+$route['hydraylicTestFormView']['GET']='TechnicalMaster/hydraylicTestFormView/$1';
+$route['counterMaster']['GET']='TechnicalMaster/counterMaster';
+$route['adminEvaluation']['GET']='TechnicalMaster/adminEvaluation'; 
+$route['editEvaluation']['GET']='TechnicalMaster/editEvaluation/$1';//modo edicion evaluation 
+$route['viewEvaluation']['GET']='TechnicalMaster/viewEvaluation/$1';// modo lectura evaluation 
 
 
 /*Admin technical Report*/

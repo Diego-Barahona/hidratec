@@ -31,11 +31,15 @@ get_data_ap = () =>{
 				}
 
 				$( "#date_ap" ).val(data.date_quotation);
+				$( "#date_send_qt" ).val(data.date_send_qt);
+				$("#number_qt").val(data.number_qt);
 			
 			
 			}else{
 				$( "#date_ap" ).val('');
+				$( "#date_send_qt" ).val('');
 				$( "#approve_client" ).prop('checked', false);
+				$("#number_qt").val('');
 	
 			}
 
@@ -65,9 +69,19 @@ get_data_ap = () =>{
 $("#hab_edit_ap").change(() => { 
 	let check = $('#hab_edit_ap').is(':checked');
 	if(check){
-        $("#date_ap" ).prop( "disabled", false );
+        $('#date_ap').prop( "disabled", false );
+		$('#date_send_qt').prop( "disabled", false );
+		$("#number_qt").prop( "disabled", false );
         $("#approve_client").prop( "disabled", false );
-        $("#date_ap").datepicker({
+        $('#date_ap').datepicker({
+            showOn: "button",
+            buttonText: "Calendario",
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'yy-mm-dd',
+            buttonImage: host_url + 'assets/img/about/calendario2.png',
+        });
+		$('#date_send_qt').datepicker({
             showOn: "button",
             buttonText: "Calendario",
             changeMonth: true,
@@ -79,8 +93,11 @@ $("#hab_edit_ap").change(() => {
 	}else{
 
         $("#date_ap").prop( "disabled", true );
+		$('#date_send_qt').prop( "disabled", true);
+		$("#number_qt").prop( "disabled", true );
         $("#approve_client").prop( "disabled", true );
-        $("#date_ap").datepicker("destroy");		
+        $("#date_ap").datepicker("destroy");
+		$("#date_send_qt").datepicker("destroy");		
 	}
 });
 
@@ -95,6 +112,8 @@ edit_ap = () => {
 	
 	let data = {
         date_ap :$("#date_ap").val(),
+		date_send :$("#date_send_qt").val(),
+		qt_number:$("#number_qt").val(),
 		approve_client: $("#approve_client").is(':checked'),
 		user_approve: $("#user_approve_ap").val(),
 		date_approve:$("#date_approve_ap").val(),//fin
@@ -120,9 +139,12 @@ edit_ap = () => {
                 button: "OK",
 			}).then(() => {
 					$('#hab_edit_ap').prop( "checked", false );
+					$("#number_qt").prop( "disabled", true );
+					$("#date_send_qt").datepicker("destroy");
+					$("#date_send_qt").prop( "disabled", true );
 					$("#date_ap").datepicker("destroy");
-	                $( "#date_ap" ).prop( "disabled", true );
-	                $( "#approve_client" ).prop( "disabled", true );
+	                $("#date_ap").prop( "disabled", true );
+	                $("#approve_client" ).prop( "disabled", true );
 				swal.close();
 			   });
 		},

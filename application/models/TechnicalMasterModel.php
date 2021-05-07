@@ -126,12 +126,41 @@ class TechnicalMasterModel extends CI_Model
                 'user_modify' => $name,
                 'date_modify' => $date_update,
                 'user_approve' =>  $interaction['user_approve'],
-                'date_approve' =>  $interaction['date_approve'],
+                'date_approve' =>  $interaction['date_approve']
 
             )),
         );
 
+
         $this->db->where('ot_id', $data['ot_id']);
         if($this->db->update('reparation', $datos_reparation)) return true; else return false;
     } 
+  
+    public function  getEvaluationEnable () { 
+        
+        $user= $_SESSION['id'];
+
+        $query = "SELECT ot.id number_ot, ot.date_admission date, ot.priority priority, 
+        ot.description description, ot.type_service service, e.name enterprise,
+         c.name component, s.name state ,ev.details,ev.user_interaction , ev.state
+        FROM ot
+        JOIN enterprise e ON ot.enterprise_id = e.id
+        JOIN component c ON ot.component_id = c.id
+        JOIN ot_state os ON ot.id = os.ot_id
+        JOIN evaluation ev ON ot.id = ev.ot_id
+        JOIN state s ON os.state_id = s.id
+        WHERE  ev.state = ? AND ev.user_assignment = ? AND os.id = (
+            SELECT f.id 
+            FROM ot_state f 
+            WHERE f.ot_id = ot.id AND f.date_update = (
+                  SELECT MAX(j.date_update)
+                  FROM ot_state j
+                  WHERE j.ot_id = ot.id
+                ) 
+          ) 
+        "; 
+
+     return  $this->db->query($query,array(true,$user))->result(); 
+    
+     }
 }

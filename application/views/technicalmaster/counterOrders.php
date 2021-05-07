@@ -17,9 +17,13 @@
          <div class="card-header text-center" style="font-weight: bold; color:black" id="technicalReportCount"><strong>0</strong></div>
          <div class="card-body">
             <h5 class="card-title">Inf. Técnicos </h5>
+
             <button type="button" class="btn btn-outline-light"><i class="fas fa-file-invoice" style="font-size:60px;" id="btnTechnicalReports"></i></button>
+
          </div>
+     
       </div>
+
    </div>
 
    <div class="row justify-content-center">
@@ -27,7 +31,9 @@
          <div class="card-header text-center" style="font-weight: bold; color:black" id="reparationCount"><strong>0</strong> </div>
          <div class="card-body">
             <h5 class="card-title">Reparaciones</h5>
+
             <button type="button" class="btn btn-outline-light"><i class="fa fa-cogs" style="font-size:60px;" id="btnReparations"></i></button>
+
          </div> 
         
       </div>
@@ -69,10 +75,12 @@
                            <tr>
                               <th>OT</th>
                               <th>Fecha</th>
+                              <th>Prioridad</th>
                               <th>Component</th>
                               <th>Cliente</th>
                               <th>Servicio</th>
-                              <th>Acción</th>              
+                              <th>Acción</th>
+                 
                            </tr>
                         </thead>
                      </table>
@@ -86,6 +94,7 @@
       </div>
    </div>
 </div>
+
 
 
 

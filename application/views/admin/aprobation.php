@@ -7,7 +7,7 @@
       <div class="card-header" >
       <button class="btn btn-link" data-toggle="collapse" data-target="#ap1" aria-expanded="true" aria-controls="technicalReportGeneral">
                 <i class="fas fa-table"></i>
-                Aprobacion de cotización
+               Información de cotización
                 </button>
               
          </div>
@@ -29,12 +29,13 @@
 
                  
                  <div class="col-md-3 mb-3">
-                  <label for="actividad">Fecha de Aprobación de cotización</label>
+                  <label for="actividad">Fecha de aprobación de cotización</label>
                   <div class="input-group" id='frm_date_admission'>
                       <input type="text" class="form-control"style="background:white" name="date_ap" id="date_ap" disabled>
                       <div class="invalid-feedback"></div>
                   </div>
                  </div>
+
                  <div class="col-md-3 mb-3 ml-5">
                       <div class="form-check">
                                 <input class="form-check-input"  type="checkbox" value="" id="approve_client" disabled>
@@ -43,6 +44,28 @@
                                </label>
                              </div>
                      </div>
+          </div>
+
+          <div class="row mb-2 ">
+
+                 
+                 <div class="col-md-3 mb-3">
+                  <label for="actividad">Fecha de envío de cotización</label>
+                  <div class="input-group" id='frm_send_quotation'>
+                      <input type="text" class="form-control"style="background:white" name="date_send" id="date_send_qt" disabled>
+                      <div class="invalid-feedback"></div>
+                  </div>
+                 </div>
+
+                 <div class="col-md-3 mb-3">
+                  <label for="actividad">Número de cotización</label>
+                  <div class="input-group" id='number_quotation'>
+                      <input type="number" class="form-control"style="background:white" min="1" pattern="^[0-9]+" name="number_qt" id="number_qt" disabled>
+                      <div class="invalid-feedback"></div>
+                  </div>
+                 </div>
+                 
+                 
           </div>
 
           <div class="row mb-2 mr-2 mb-5 justify-content-end">

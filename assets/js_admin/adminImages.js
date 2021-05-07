@@ -57,6 +57,12 @@ const tabla = $('#table_images').DataTable({
                                   <i class="fas fa-edit"></i>
                               </button>`,
 		},
+		{
+            defaultContent: `<button type='button' name='btn_eliminar' class='btn btn-danger'>
+                                  Eliminar
+                                  <i class="fas fa-edit"></i>
+                              </button>`,
+		},
 		
 	],
 });
@@ -71,11 +77,39 @@ $("#table_images").on("click", "button", function () {
 		$('#show_image').modal('show');   
 		//showImage(url);
 	}else {
-		
+	    if($(this)[0].name == "btn_edit"){
 		$("#name_e").val(data.name);
 		$("#id_e").val(data.id);//ID image 
 		$('input[type=file]').val('');
 		$("#editImage").modal("show");
+		}else { 
+
+			swal({
+				title: `Eliminar imagen`,
+				icon: "warning",
+				text: `¿Está seguro/a de que desea eliminar esta imagen ?`,
+				buttons: {
+					confirm: {
+						text: "Eliminar",
+						value: "exec",
+					},
+					cancel: {
+						text: "Cancelar",
+						value: "cancelar",
+						visible: true,
+					},
+				},
+			}).then((action) => {
+				if (action == "exec") {
+					deleteImage(data.id);
+				} else {
+					swal.close();
+				}
+			});
+          
+
+
+		}
 		
 	}
     
@@ -104,6 +138,39 @@ getImages = () => {
 	});
 	xhr.send();
 };
+
+
+deleteImage =(id)=> { 
+
+	$.ajax({
+		type: "POST",
+		url: `${host_url}api/deleteImage/${id}`,
+		crossOrigin: false,
+		dataType: "json",
+		success: (result) => {
+			swal({
+				title: "Éxito",
+				icon: "success",
+				text: "La imagen se ha eliminado correctamente.",
+			}).then(() => {
+				getImages();
+			});
+			
+		
+		},
+		error: (result) => {
+		
+			swal({
+				title: "Error",
+				icon: "error",
+				text: "Error al eliminar la imagen.",
+			})
+		}
+				
+	});
+
+
+}
 
 
 registerImagen = () => {

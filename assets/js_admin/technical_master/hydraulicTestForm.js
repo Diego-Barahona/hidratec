@@ -1,4 +1,3 @@
-
 $(() => {
     get_data_ht();
 	getFields_ht();
@@ -61,12 +60,12 @@ edit_ht = () => {
 	
 	let data = {
 		id: $("#ot_number").val(),
-        date_ht :$("#date_ht").val(),
+       // date_ht :$("#date_ht").val(),
         conclusion: $("#conclusion_ht").val(),
         notes: $("#notes_ht").val(),
         approve_technical: $("#approve_technical_ht").is(':checked'),
 		approve_admin: $("#approve_admin_ht").is(':checked'),
-        technical: $("#technical_ht").val(),
+        technical: $("#technical_aux").val(),
 		technical_name: $("#technical_name_ht").val(),
 		user_create:$("#user_create").val(),//lineas nuevas
 		date_create: $("#date_create").val(),
@@ -82,19 +81,7 @@ edit_ht = () => {
 
 	data2=JSON.stringify(medida);
 	
-	
-
-    if( data.approve_admin === true && data.approve_technical=== false) {
-        swal({
-			title: "Registro denegado!",
-			icon: "warning",
-			text: "El informe debe ser aprobado por técnico master antes de aprobación por administración.",
-		}).then(() => {
-		 swal.close();
-		});	
-		 
-	}else{
-
+  if(data.approve_technical== true){
 	Object.keys(data).map((d) => $(`.${d}`).hide());
 	$.ajax({
 		data: {
@@ -130,9 +117,14 @@ edit_ht = () => {
 		     
 		},
 	});
+} else{
+	swal({
+		title: "Error",
+		icon: "error",
+		text: "Para guardar es necesario aprobar su informe de prueba hidráulica. Apruebe e intente nuevamente",
+	});
 
-	}// end if 
-
+}
 };
 
 
@@ -260,6 +252,7 @@ get_data_ht = () =>{
 			}
            
 			technicals_user_ht = xhr.response[0].user_assignment;
+            $("#technical_aux").val(technicals_user_ht);
             disabledAlert_ht();
 		}else { 
             alert_not_evaluation_ht(xhr.response.msg);
@@ -454,7 +447,7 @@ deleted= (key) =>{
         date_ht :$("#date_ht").val(),
         conclusion: $("#conclusion_ht").val(),
         notes: $("#notes_ht").val(),
-        technical: $("#technical_ht").val(),
+        technical: $("#technical_aux").val(),
 		technical_name: $("#technical_name_ht").val(),
 		config_speed:$("#speed_c").val(),//lineas nuevas
 		config_presion:$("#presion_c").val(),
@@ -515,7 +508,7 @@ edit_by_info= (key) =>{
         date_ht :$("#date_ht").val(),
         conclusion: $("#conclusion_ht").val(),
         notes: $("#notes_ht").val(),
-        technical: $("#technical_ht").val(),
+        technical: $("#technical_aux").val(),
 		technical_name: $("#technical_name_ht").val(),
 		config_speed:$("#speed_c").val(),//lineas nuevas
 		config_presion:$("#presion_c").val(),
@@ -525,6 +518,11 @@ edit_by_info= (key) =>{
 	};
     
    valid = true;
+   if($('#dato').val()== ""){ valid = false; }
+   if($('#speed').val()== ""){ valid = false; }
+   if($('#presion').val()== ""){ valid = false; }
+   if($('#caudal').val()== ""){ valid = false; }
+   if($('#time').val()== ""){ valid = false; }
 
    if(valid){
 
@@ -620,7 +618,7 @@ edit_info =()=>{
         date_ht :$("#date_ht").val(),
         conclusion: $("#conclusion_ht").val(),
         notes: $("#notes_ht").val(),
-        technical: $("#technical_ht").val(),
+        technical: $("#technical_aux").val(),
 		technical_name: $("#technical_name_ht").val(),
 		config_speed:$("#speed_c").val(),//lineas nuevas
 		config_presion:$("#presion_c").val(),
@@ -733,7 +731,7 @@ save_config = () => {
         date_ht :$("#date_ht").val(),
         conclusion: $("#conclusion_ht").val(),
         notes: $("#notes_ht").val(),
-        technical: $("#technical_ht").val(),
+        technical: $("#technical_aux").val(),
 		technical_name: $("#technical_name_ht").val(),
 		config_speed:$("#speed_c").val(),//lineas nuevas
 		config_presion:$("#presion_c").val(),
@@ -784,11 +782,6 @@ save_config = () => {
 	});
 }
 
-
-
-
-
-
 $("#btn_config").on("click", ()=>{	
 	$("#config").modal("show");
 }); 
@@ -796,7 +789,36 @@ $("#btn_config").on("click", ()=>{
 $("#btn_export_ht").on("click",()=>{
 	showExportHidraulicTest();
 });
-$("#btn_hidraulic").on("click", edit_ht);
+
+
+$("#btn_hidraulic").on("click", ()=>{
+
+	swal({
+		title: `Confirmación de guardado `,
+		icon: "warning",
+		text: `¿Está seguro/a de guardar definitivamente este informe de prueba hidráulica?`,
+		buttons: {
+			confirm: {
+				text: "Confirmar guardado",
+				value: "exec",
+			},
+			cancel: {
+				text: "Cancelar",
+				value: "cancelar",
+				visible: true,
+			},
+		},
+	}).then((action) => {
+		if (action == "exec") {
+		    edit_ht();
+		} else {
+			swal.close();
+		}
+	});
+	});
+
+
+
 $("#save_config").on("click", save_config);
 
 $("#btn_information").on("click", ()=>{	

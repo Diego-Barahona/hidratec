@@ -127,7 +127,7 @@
                </div>
                
              </div>
-         
+             <div class="table-responsive">
              <table class="table table-bordered" id="table-ht" width="100%" cellspacing="0">
               <thead>
                 <tr>
@@ -141,6 +141,7 @@
                 </tr>
               </thead>
              </table>
+             </div>
           <!-- Table medidas END -->
         </div> <!-- End card body medidas-->
   

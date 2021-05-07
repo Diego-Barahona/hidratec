@@ -68,6 +68,7 @@
                 <th>Imagen</th>
                 <th>Ver</th>
                 <th>Editar</th>
+                <th>Eliminar</th>
               </tr>
             </thead>
           </table>
