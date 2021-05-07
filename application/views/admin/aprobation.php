@@ -18,6 +18,7 @@
         <input type="hidden" class="form-control" id="date_modify_ap" name="id" >
         <input type="hidden" class="form-control" id="user_approve_ap" name="id" >
         <input type="hidden" class="form-control" id="date_approve_ap" name="id" >
+        <input type="hidden" class="form-control" id="date_send_email" name="id" >
 
         <div class="row mb-2 mr-2 justify-content-end">
         <a  id="ap_popover" data-toggle="popover" data-placement="left"><i class=" fas fa-info-circle fa-lg"></i></a>  

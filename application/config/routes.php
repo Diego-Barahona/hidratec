@@ -64,8 +64,8 @@ $route['api/new_password']['POST']= 'Login/new_password';
 //views admin OT 
 $route['newOrder']['GET']='Orders/newOrder'; //view load create new order
 $route['api/createOrder']['POST']='Orders/createOrder'; //controller action create new order
-$route['adminImages']['GET']='Images/adminImages/$1';
-$route['stagesOrder']['GET']='Orders/stagesOrder';
+$route['adminImages']['GET'] ='Images/adminImages/$1';
+$route['stagesOrder']['GET'] ='Orders/stagesOrder';
 $route['newUpdateOrder']['GET']='Orders/newUpdateOrder';
 $route['api/updateOrder']['POST']='Orders/updateOrder';
 $route['api/changeStateOrder']['POST']='Orders/changeStateOrder';
@@ -190,18 +190,17 @@ $route['api/updateNote']['POST'] = 'Notes/updateNote';
 $route['api/deleteNote']['POST'] = 'Notes/deleteNote';
 
 
-
+/*------------------------------- Routes To Seller------------------------------------ */
 //api Seller 
 $route['api/getApproveTechnicalReport']['GET'] = 'Seller/getApproveTechnicalReport';
 $route['api/getOrdersQuotation']['GET'] = 'Seller/getOrdersQuotation';
 $route['api/changeState']['POST'] = 'Seller/changeState';
 $route['api/OCseller/(:num)']['POST'] = 'Seller/editOC/$1';
-
+/*------------------------------- End Routes Seller------------------------------------ */
 
 
 
 /*------------------------------- Routes To Client------------------------------------ */
-
 /*Admin Counter*/
 $route['counterOrdersByClient']['GET']='Counter/counterOrdersByClient';
 $route['api/counterOrdersByClient']['GET'] = 'Counter/getDataByClient';
@@ -216,10 +215,25 @@ $route['adminOrdersApproveByClient']['GET'] = 'OrdersClient/adminOrdersApprove';
 $route['adminOrdersApproveByClientView']['GET'] = 'OrdersClient/adminOrdersApproveView';
 $route['api/getOrdersApproveByClient']['GET'] = 'OrdersClient/getOrdersApprove';
 $route['api/approveByClient/(:num)']['POST'] = 'OrdersClient/approve/$1';
+/*------------------------------- End Routes Client------------------------------------ */
 
+
+/*------------------------------- Routes To Technical Master------------------------------------ */
 $route['api/getHydraulicTestEnable']['GET'] = 'TechnicalMaster/getHydraulicTestEnable';
 $route['adminHydraulicTest']['GET'] = 'TechnicalMaster/adminHydraulicTest';
 $route['hydraylicTestForm']['GET']='TechnicalMaster/hydraylicTestForm/$1';
 
 
+/*Admin technical Report*/
+$route['tmAdminstechnicalReport']['GET'] = 'TechnicalMaster/adminTechnicalReport';
+$route['api/tmGetTechnicalReport']['GET'] = 'TechnicalMaster/getTechnicalReports';
 
+$route['tmAdminViewTechnicalReport/(:num)']['GET'] = 'TechnicalMaster/adminViewTechnicalReport/$1';
+$route['api/tmDetailsTechnicalReport/(:num)']['GET'] = 'TechnicalMaster/DetailsTechnicalReport/$1';
+$route['api/tmEditTechnicalReport']['POST'] = 'TechnicalMaster/EditTechnicalReport';
+
+/*Admin reparations*/
+$route['tmAdminReparation']['GET'] = 'TechnicalMaster/adminReparation';
+$route['api/tmGetReparation']['GET'] = 'TechnicalMaster/getReparations';
+$route['api/tmApproveReparation']['POST'] = 'TechnicalMaster/approveReparation';
+/*------------------------------- End Routes Technical Master------------------------------------ */

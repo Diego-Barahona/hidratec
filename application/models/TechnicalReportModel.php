@@ -63,65 +63,103 @@ class TechnicalReportModel extends CI_Model {
         $user = $_SESSION['full_name'];
         date_default_timezone_set("America/Santiago");
         $date = date("Y-m-d G:i:s");
-        $technical = null;
-        $user_approve = ''; 
-        $date_approve = '';
+        $datos_tr;
         $user_create = '';    
-        $date_create = '';   
- 
-        if($data['technical']){
-            $technical = $data['technical'];
-        }
-
-        /*Verify changes in approve technical report*/
-        if($data['check_adm'] == 'true' AND $data['check_adm_old'] =='false'){
-            $date_approve = $date;
-            $user_approve = $user;
-        }else if($data['check_adm'] == 'true' AND $data['check_adm_old'] =='true'){
-            $date_approve = $data['date_approve'];
-            $user_approve = $data['user_approve'];
-        }else {
-            $date_approve = '';
-            $user_approve = '';
-        } 
-
-        /*Verify if create technical report*/
-        if($data['check_technical'] == 'true' AND $data['technical']){
-            $user_create = $data['user_create'];
-            $date_create = $data['date_create'];
-        }else{
-            $user_create = '';
-            $date_create = '';
-        }
+        $date_create = '';
         $imagenes = $data['details_images'];
-
-        if($data['details_images']) $details_images = json_encode($data['details_images']);
-        else $details_images = null;
         
+        if($data['profile'] == 'technicalMaster'){
+            if($data['check_technical'] == 'true'){
+                $user_create = $user;
+                $date_create = $date;
+            }else{
+                $user_create = '';
+                $date_create = '';
+            }
 
-        $datos_tr = array(
-            'user_assignment' => $technical,
-            'details' => json_encode(array(
-                'date_technical_report' => $data['date_technical_report'],
-                'image_header' => $data['image_header'],
-                'details' => $data['details'],
-                'notes' => $data['notes'],
-                'check_adm' => $data['check_adm'],
-                'check_technical' => $data['check_technical'],
-                'conclusion' => $data['conclusion'],
-                'recommendation' => $data['recommendation'],
-            )),
-            'details_images' => $details_images,
-            'user_interaction' => json_encode(array(
-                'user_create' => $user_create,
-                'date_create' => $date_create,
-                'user_modify' => $user,
-                'date_modify' => $date,
-                'user_approve' => $user_approve,
-                'date_approve' => $date_approve,
-            )),
-        );
-        
+            if($data['details_images']) $details_images = json_encode($data['details_images']);
+            else $details_images = null;
+
+            $datos_tr = array(
+                'details' => json_encode(array(
+                    'date_technical_report' => $date_create,
+                    'image_header' => $data['image_header'],
+                    'details' => $data['details'],
+                    'notes' => $data['notes'],
+                    'check_adm' => '',
+                    'check_technical' => $data['check_technical'],
+                    'conclusion' => $data['conclusion'],
+                    'recommendation' => $data['recommendation'],
+                )),
+                'details_images' => $details_images,
+                'user_interaction' => json_encode(array(
+                    'user_create' => $user_create,
+                    'date_create' => $date_create,
+                    'user_modify' => $user,
+                    'date_modify' => $date,
+                    'user_approve' => '',
+                    'date_approve' => '',
+                )),
+            );
+
+        }else if($data['profile'] == 'admin'){
+            $technical = null;
+            $user_approve = ''; 
+            $date_approve = '';
+              
+            if($data['technical']){
+                $technical = $data['technical'];
+            }
+
+            /*Verify changes in approve technical report*/
+            if($data['check_adm'] == 'true' AND $data['check_adm_old'] =='false'){
+                $date_approve = $date;
+                $user_approve = $user;
+            }else if($data['check_adm'] == 'true' AND $data['check_adm_old'] =='true'){
+                $date_approve = $data['date_approve'];
+                $user_approve = $data['user_approve'];
+            }else {
+                $date_approve = '';
+                $user_approve = '';
+            } 
+
+            /*Verify if create technical report*/
+            if($data['check_technical'] == 'true' AND $data['technical']){
+                $user_create = $data['user_create'];
+                $date_create = $data['date_create'];
+            }else{
+                $user_create = '';
+                $date_create = '';
+            }
+            $imagenes = $data['details_images'];
+
+            if($data['details_images']) $details_images = json_encode($data['details_images']);
+            else $details_images = null;
+            
+
+            $datos_tr = array(
+                'user_assignment' => $technical,
+                'details' => json_encode(array(
+                    'date_technical_report' => $data['date_technical_report'],
+                    'image_header' => $data['image_header'],
+                    'details' => $data['details'],
+                    'notes' => $data['notes'],
+                    'check_adm' => $data['check_adm'],
+                    'check_technical' => $data['check_technical'],
+                    'conclusion' => $data['conclusion'],
+                    'recommendation' => $data['recommendation'],
+                )),
+                'details_images' => $details_images,
+                'user_interaction' => json_encode(array(
+                    'user_create' => $user_create,
+                    'date_create' => $date_create,
+                    'user_modify' => $user,
+                    'date_modify' => $date,
+                    'user_approve' => $user_approve,
+                    'date_approve' => $date_approve,
+                )),
+            );
+        }
         $this->db->where('ot_id', $data['ot_id']);
         if($this->db->update('technical_report', $datos_tr)) return true; else return false;
     }

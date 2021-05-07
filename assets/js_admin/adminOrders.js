@@ -1,6 +1,3 @@
-
-
-
 $(document).on({
 	ajaxStart: function () {
 		$("body").addClass("loading");
@@ -9,9 +6,6 @@ $(document).on({
 		$("body").removeClass("loading");
     },
 });
-
-
-
 
 $(() => {
     get_orders();
@@ -29,10 +23,26 @@ get_orders = () => {
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
-            let data =xhr.response;
+            let data = xhr.response;
             tabla.clear();
 			tabla.rows.add(data);	
 			tabla.order( [ 1, 'desc' ] ).draw();
+			$('#table_orders thead tr').clone(true).appendTo( '#table_orders thead' );
+
+			$('#table_orders thead tr:eq(1) th').each( function (i) {
+				var title = $(this).text(); //es el nombre de la columna
+				$(this).html( '<input type="text" style="border-radius: .2rem; border: 1px solid #d1d3e2;"/>' );
+		 
+				$( 'input', this ).on( 'keyup change', function () {
+					if (tabla.column(i).search() !== this.value ) {
+						tabla
+							.column(i)
+							.search( this.value )
+							.draw();
+					}
+				} );
+			} );   
+
 		} else {
 			swal({
 				title: "Error",
@@ -46,10 +56,22 @@ get_orders = () => {
 
 /*Constante para rellenar las filas de la tabla: lista de ordenes de trabajo*/
 const tabla = $('#table_orders').DataTable({
-	// searching: true,
+	fixedHeader: true,
+	orderCellsTop: true,
 	language: {
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
 	},
+	columnDefs: [
+        { "width": "10%", "targets": 0 }, /*Id */
+        { "width": "15%", "targets": 1 }, /*Fecha Ingreso*/
+        { "width": "20%", "targets": 2 }, /*Cliente */
+        { "width": "15%", "targets": 3 }, /*Componente */
+        { "width": "10%", "targets": 4 }, /*Estado */
+        { "width": "10%", "targets": 5 }, /*Tipo De Servicio */
+        { "width": "5%", "targets": 6 },  /*Administrar */
+        { "width": "5%", "targets": 7 },  /*Editar */
+		{ "width": "5%", "targets": 8 },  /*Imagenes */
+    ],
 	columns: [
         { data: "number_ot"},
         { data: "date" },

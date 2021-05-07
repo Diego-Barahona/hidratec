@@ -55,7 +55,7 @@ class Orders_model extends CI_Model
                     ) 
               )
             "; 
-            return $this->db->query($query)->row_array();;
+            return $this->db->query($query)->row_array();
         }
     }
 
@@ -389,6 +389,31 @@ class Orders_model extends CI_Model
     }
 
     public function changeStateOrder($data, $user_id){
+
+        if($data['state'] == 7){
+            $datos_ht = array('state'=> 0);
+            $this->db->where('ot_id', $data['ot_number']);
+            $this->db->update('hydraulic_test', $datos_ht); 
+
+            $datos_tr = array('state'=> 0);
+            $this->db->where('ot_id', $data['ot_number']);
+            $this->db->update('technical_report', $datos_tr); 
+
+            $datos_ev = array('state'=> 0);
+            $this->db->where('ot_id', $data['ot_number']);
+            $this->db->update('evaluation', $datos_ev); 
+
+            $datos_ot = array(
+                'config' => json_encode(array(
+                    'evaluation' => false,
+                    'technical_report' => false,
+                    'hydraulic_test' => false,
+                )),
+            );
+            $this->db->where('id', $data['ot_number']);
+            $this->db->update('ot', $datos_ot);
+        }
+
         $datos_ot_state = array(
             'ot_id' => $data['ot_number'],
             'state_id' => $data['state'],
