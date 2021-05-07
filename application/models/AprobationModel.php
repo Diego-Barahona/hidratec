@@ -10,7 +10,7 @@ class AprobationModel extends CI_Model {
 
         
         
-        $query= "SELECT user_interaction , approve_client , date_quotation  
+        $query= "SELECT user_interaction , approve_client , date_quotation, date_send_email 
         FROM quotation
         WHERE ot_id = ? ";
         

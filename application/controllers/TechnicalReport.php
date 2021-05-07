@@ -112,7 +112,9 @@ class TechnicalReport extends CI_Controller
 
 
             /* Página Antecedentes generales*/
-            $pdf->Image('http://localhost/hidrat/assets/upload/technicalReport/cabecera.jpg',110,70,90); 
+            if($data['image_header']){
+            $pdf->Image('http://localhost/hidrat/assets/upload/'.$data['image_header'],110,70,90); 
+            }
             $pdf->SetFont('Arial', 'B', 15);
             $pdf->SetTextColor(19,66,115);
             $pdf->Cell(200, 5,  utf8_decode('Antecedentes Generales'), 0, 0, 'C');     
