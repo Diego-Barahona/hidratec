@@ -49,7 +49,7 @@ get_data_ap = () =>{
 				$("#user_approve_ap").val(us.user_approve);
 				$("#date_modify_ap").val(us.date_modify);
 				$("#date_approve_ap").val(us.date_approve);//fin lineas nuevas
-				
+				$("#date_send_email").val(xhr.response[0].date_send_email );
 			
 			}else { 
 
@@ -168,7 +168,8 @@ $("#ap_popover").on('click',function(){
 		html: true,
 		title: "Información",
 		content: "Modificado por: " + $("#user_modify_ap").val()+"<br />"+"Fecha mod.: "+ $("#date_modify_ap").val()+"<br />"+
-	    "Aprobado por: " + $("#user_approve_ap").val()+"<br />"+"Fecha aprv.: "+ $("#date_approve_ap").val()
+	    "Aprobado por: " + $("#user_approve_ap").val()+"<br />"+"Fecha aprv.: "+ $("#date_approve_ap").val()+
+		"<br />"+"Fecha envio mail cliente: "+ $("#date_send_email").val()
  });
 });
 

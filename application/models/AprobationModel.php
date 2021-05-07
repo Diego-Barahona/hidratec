@@ -7,10 +7,8 @@ class AprobationModel extends CI_Model {
     }
 
     public function getAprobationByOrder($id){
-
-        
-        
-        $query= "SELECT user_interaction , approve_client , date_quotation , date_send_qt , number_qt 
+      
+        $query= "SELECT user_interaction , approve_client , date_quotation , date_send_qt , number_qt ,date_send_email 
         FROM quotation
         WHERE ot_id = ? ";
         
@@ -18,7 +16,6 @@ class AprobationModel extends CI_Model {
 
     }
    
-
 
     public function editAprobation($id,$data){
         $sql_ot = "UPDATE ot SET date_quotation = ? WHERE id = ?";

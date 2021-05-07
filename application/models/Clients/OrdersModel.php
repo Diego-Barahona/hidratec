@@ -67,8 +67,10 @@ class OrdersModel extends CI_Model
 
     public function approve($id, $pdf)
     {   
-        $sql = "UPDATE quotation SET quotation.correlative_oc  = ? , quotation.email_send  = 1 WHERE ot_id = ?"; //crear campo file en base de datos phpmyadmin
-        return $this->db->query($sql, array($pdf, $id, ));
+        date_default_timezone_set("America/Santiago");
+        $date_update = date("Y-m-d G:i:s");
+        $sql = "UPDATE quotation SET quotation.correlative_oc  = ? , quotation.email_send  = 1, quotation.date_send_email = ?  WHERE ot_id = ?"; //crear campo file en base de datos phpmyadmin
+        return $this->db->query($sql, array($pdf, $date_update, $id ));
     }
 
     public function approveEmail($id)

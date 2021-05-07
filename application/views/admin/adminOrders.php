@@ -2,6 +2,12 @@
 <link href="<?php echo base_url(); ?>assets/vendor/fileinput/fileinput.css" media="all" rel="stylesheet" type="text/css" />
 
 
+<style type="text/css">
+  thead input {
+        width: 100%;
+    }
+</style>
+
 <div id="content-wrapper">
   <div class="container-fluid mb-5">
 

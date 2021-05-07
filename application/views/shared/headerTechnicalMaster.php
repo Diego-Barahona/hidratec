@@ -70,7 +70,9 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url(); ?>counterMaster">
+
+                <a class="nav-link" href="<?php echo base_url(); ?>api/load_page">
+
                     <i class="fas fa-home"></i>
                     <span>Inicio</span></a>
                     <hr class="sidebar-divider">
@@ -88,14 +90,15 @@
                     <hr class="sidebar-divider">
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="<?php echo base_url(); ?>tmAdminstechnicalReport">
                 <i class="fas fa-file-invoice"></i>
                     <span>Informes técnicos</span></a>
                     <hr class="sidebar-divider">
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                <i class="fa fa-cogs"></i>
+                <a class="nav-link" href="<?php echo base_url(); ?>tmAdminReparation">
+                <i class="fas fa-file-invoice"></i>
+
                     <span>Reparaciones</span></a>
                     <hr class="sidebar-divider">
             </li>
@@ -105,7 +108,6 @@
                 <i class="fas fa-vial"></i>
                     <span>Pruebas hidráulicas</span></a>
                     <hr class="sidebar-divider">
-                 
             </li>
 
             <!-- Sidebar Toggler (Sidebar) -->

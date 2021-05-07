@@ -17,7 +17,7 @@ class SellerModel extends CI_Model
         JOIN ot_state os ON ot.id = os.ot_id
          JOIN technical_report tr ON ot.id = tr.ot_id
         JOIN state s ON os.state_id = s.id
-        WHERE s.id=3 OR s.id=4 OR s.id=5 OR s.id=6 OR s.id=7 AND os.id = (
+        WHERE s.id > 2  AND os.id = (
             SELECT f.id 
             FROM ot_state f 
             WHERE f.ot_id = ot.id AND f.date_update = (

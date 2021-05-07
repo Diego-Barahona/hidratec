@@ -525,11 +525,6 @@ edit_by_info= (key) =>{
 	};
     
    valid = true;
-   if($('#dato').val()== ""){ valid = false; }
-   if($('#speed').val()== ""){ valid = false; }
-   if($('#presion').val()== ""){ valid = false; }
-   if($('#caudal').val()== ""){ valid = false; }
-   if($('#time').val()== ""){ valid = false; }
 
    if(valid){
 
