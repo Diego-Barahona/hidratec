@@ -131,17 +131,17 @@ class ImageModel extends CI_Model
     }
 
   
-       /*
-    public function imagenById($id)
+       
+    public function deleteImage($id)
     {
-        $sql = "SELECT *
-                FROM imagen_servicio p
-                WHERE p.id_imagen = ?";
-        $prod = $this->db->query($sql, array($id))->result();
+        $sql = "DELETE 
+                FROM images
+                WHERE id= ?";
+        return $this->db->query($sql, array($id));
 
-        return array($prod);
+     
     }
-    */
+    
 
 }
 

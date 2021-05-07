@@ -31,11 +31,13 @@ class Evaluation extends CI_Controller
         $technical = $data['technical'];
         
         $ok=true;
-
+   /*
         if ($date_evaluation== "") { $ok = false;  $err['date_evaluation']  = "Ingrese fecha de evaluación";  }
         if ($description == "") { $ok = false;  $err['description']  = "Ingrese description.";  }
         if ($notes == "") { $ok = false;  $err['notes']  = "Ingrese un notas.";  }
         if ($technical == "") { $ok = false;  $err['technical']  = "Ingrese un tecnico";  }
+
+        */
   
         if($ok){ 
             $this->load->model('EvaluationModel');

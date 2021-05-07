@@ -33,13 +33,22 @@ class HydraulicTestModel extends CI_Model {
         
         $user= $_SESSION['full_name'];
         $date=  date('Y-m-d H:i:s');
+        $details="";
+        $technical=null;
 
         $date_approve="";
         $user_approve="";  
         $user_create="";
         $date_create="";
         
-        $technical = $data['technical'];
+        if($data['technical'] == ""){
+            $technical = null;
+        }else{
+            $technical = $data['technical'];
+        }
+      
+
+        if($technical)
 
         if($data['approve_technical'] == "true" && $data['check_technical_old'] == "false"){
       
@@ -72,8 +81,8 @@ class HydraulicTestModel extends CI_Model {
                     $user_approve="";
                         }
 
-        
-
+        if($_SESSION['rango'] == 1 || $_SESSION['rango'] == 2 ){  // cambiar a rango 2 "admin"
+           
         $details= json_encode ( array( 
             "ot"=>$id,
             "date_ht"=> $data['date_ht'],
@@ -82,6 +91,24 @@ class HydraulicTestModel extends CI_Model {
             "approve_technical" => $data['approve_technical'],
             "approve_admin" => $data['approve_admin'],)
         );
+
+       }else{
+
+
+          if($_SESSION['rango'] == 3 ){
+             
+           $details= json_encode ( array( 
+            "ot"=>$id,
+            "date_ht"=>  date('Y-m-d'),
+            "conclusion"=> $data['conclusion'],
+            "notes" => $data['notes'],
+            "approve_technical" => $data['approve_technical'],
+            "approve_admin" => $data['approve_admin'],)
+          );
+
+          }
+
+       }
 
         $user_interaction= json_encode ( array( 
         

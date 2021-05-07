@@ -1,7 +1,16 @@
 
-    <input type="hidden" class="form-control" id="ot_number" name="ot_number" value='<?= $id ?>' >
-      <div id="accordion">
-      <div id="hydraulic_info" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+     <input type="hidden" class="form-control" id="ot_number" name="ot_number" value='<?= $id ?>' >
+    <div id="content-wrapper">
+    <div class="container-fluid mb-5" id="adminColors">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Prueba hidráulica</li>
+            <li class="breadcrumb-item active">OT NÚMERO <?php echo $id; ?></li>
+        </ol>
+
+        <div class="card mb-3">
+            <div class="card-header">
+         </div>
+        <div class="card-body">
          <div class="card-header" >
            <button class="btn btn-link" data-toggle="collapse" data-target="#c1" aria-expanded="true" aria-controls="technicalReportGeneral">
                 <i class="fas fa-table"></i>
@@ -14,6 +23,7 @@
         <input type="hidden" class="form-control" id="caudal_c" name="id" >
         <input type="hidden" class="form-control" id="presion_c" name="id" >
         <input type="hidden" class="form-control" id="temperature_c" name="id" >
+        <input type="hidden" class="form-control" id="technical_aux" name="technical_aux" >
      
 
         <input type="hidden" class="form-control" id="user_create" name="id" >
@@ -24,20 +34,17 @@
         <input type="hidden" class="form-control" id="date_approve" name="id" >
         <input type="hidden" class="form-control" id="technical_name_ht" name="id" >
 
-        <div class="row mb-2 mr-2 justify-content-end">
-        <button id="ht_popover" type="button" class="btn btn-primary rounded-circle" data-toggle="popover" data-placement="left"><i class="fas fa-info"></i></button> 
-        </div>
+        
         
              <div class="row mb-2 ">
-                 <div class="col-md-2 mb-3 ">
+                
                       
-                      <div class="form-check">
-                                <input class="form-check-input"  type="checkbox" value="" id="approve_admin_ht" disabled>
+                <div class="form-check">
+                                <input class="form-check-input"  type="hidden" value="" id="approve_admin_ht" disabled>
                                 <label class="form-check-label"  for="approve_admin_ht">
-                                 Aprobado por administración
                                </label>
-                             </div>
-                       </div>
+                </div>
+                    
                 <div class="col-md-2 mb-3 ">
                  
                       <div class="form-check">
@@ -48,33 +55,14 @@
                         </div>
                      </div>
 
-                 <div class="col-md-3 mb-3 " id="export_ht"  style="display:none">
-                 <button type="button"  id="btn_export_ht" class="btn btn-primary btn-circle "><i class="fas fa-file-export"></i></button>
-                     
-                </div>
+                 
              </div>
           
    
               <div class="row mb-2">
               
-                <div class="col-md-6 mb-3">
-                  <label for="actividad">Fecha de prueba hidráulica</label>
-                  <div class="input-group" id='frm_date_admission'>
-                      <input type="text" class="form-control"style="background:white" name="date_ht" id="date_ht" disabled>
-                      <div class="invalid-feedback"></div>
-                  </div>
-                </div>
-             
-                <div class="col-md-6 mb-3">
-                  <label>Asignar técnico para prueba hidráulica</label>
-                  <select class="form-select form-control" style="background:white" id="technical_ht" name="technical_ht" disabled>
-                  <option></option>
-                 </select>
-                  <div class="invalid-feedback"></div>
-                </div>  
-              </div>
-              <div class="row mb-2">
-                <div class="col-md-6 mb-3">
+               
+                <div class="col-md-8 mb-3">
                   <label for="actividad">Notas</label>
                     <div class="input-group">
                       <textarea type="text" class="form-control" rows="2" style="background:white" name="notes_ht" id="notes_ht" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>
@@ -83,7 +71,11 @@
                         </div>
                   </div>
                 </div>  
-                <div class="col-md-6 mb-3">
+             
+              </div>
+              <div class="row mb-2">
+                
+                <div class="col-md-12 mb-3">
                   <label for="actividad">Conclusiones</label>
                     <div class="input-group">
                       <textarea type="text" class="form-control" rows="2"style="background:white" name="conclusion_ht" id="conclusion_ht" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>
@@ -126,7 +118,7 @@
                </div>
                
              </div>
-         
+             <div class="table-responsive">
              <table class="table table-bordered" id="table-ht" width="100%" cellspacing="0">
               <thead>
                 <tr>
@@ -140,6 +132,7 @@
                 </tr>
               </thead>
              </table>
+             </div>
           <!-- Table medidas END -->
         </div> <!-- End card body medidas-->
   
@@ -179,7 +172,8 @@
               </div>
          </div>
  
-
+   </div>
+   </div>
     <!-- End card body archivos-->
     </div> 
     </div>
@@ -316,12 +310,16 @@
 </div>
 
 
-
-
-
-
-
-
-
-<script src="<?php echo base_url(); ?>assets/js_admin/hidraulicTest.js"></script>
+<script src="<?php echo base_url(); ?>assets/js_admin/technical_master/hydraulicTestForm.js"></script>
 <script src="<?php echo base_url(); ?>assets/js_admin/file.js"></script>
+<script>
+$( function() {
+    $( "#date_ht").datepicker({
+        showOn: "button",
+        buttonText: "Calendario",
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: 'yy-mm-dd',
+        buttonImage: host_url + 'assets/img/about/calendario2.png',
+    });
+  } );</script>

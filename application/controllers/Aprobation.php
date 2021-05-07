@@ -26,9 +26,17 @@ class Aprobation extends CI_Controller
             
         $data = $this->input->post('data');
         $date_ap = $data['date_ap'];
+        $number_qt = $data['qt_number'];
         $ok=true;
-     
-        if ($date_ap == "") { $ok = false;  $err['date_ht']  = "Ingrese fecha de evaluación";  }
+    
+        if (is_numeric ($number_qt)) { $ok=true;  }else{
+            $ok = false; 
+        }
+
+        if($number_qt<0){
+            $ok = false; 
+        }
+       
       
   
         if($ok){ 
@@ -39,7 +47,7 @@ class Aprobation extends CI_Controller
             $this->response->sendJSONResponse( array("msg" => "No se han podido editar los datos "),400); 
             }
             
-        }else { $this->response->sendJSONResponse( array( "msg"=>"faltan campos","err"=> $err ),400); } 
+        }else { $this->response->sendJSONResponse( array( "msg"=>"Numero de cotización no válido." ),400); } 
 
         }else {
             $this->response->sendJSONResponse( array("msg" => "No tiene los permisos suficientes "),400);

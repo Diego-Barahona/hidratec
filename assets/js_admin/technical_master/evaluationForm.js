@@ -1,4 +1,3 @@
-
 $(() => {
     get_data_evaluation();
 	getFields();
@@ -20,6 +19,7 @@ get_data_evaluation = () =>{
 			let data = xhr.response[0].details;
 			let technical=xhr.response[0].full_name;
 		    let data2 =xhr.response[0].user_interaction;
+
 			let file=xhr.response[0].export;
 
         
@@ -88,8 +88,8 @@ get_data_evaluation = () =>{
 				$("#technical_ev").val('');
 			}
 			technicals_user = xhr.response[0].user_assignment;
-			$("#technical_id").val(technicals_user);
-
+		    $("#technical_id").val(technicals_user);
+            
 			disabledAlertEv();
 		}else { 
             alert_not_evaluation(xhr.response.msg);
@@ -158,10 +158,8 @@ edit_evaluation = () => {
         date_evaluation :$("#date_evaluation").val(),
         description: $("#description_ev").val(),
         notes: $("#notes").val(),
-        technical: $("#technical_ev").val(),
+        technical:$("#technical_id").val(),
 		name_technical:  $('#technical_ev option:selected').text(),
-		technical_id:$("#technical_id").val(),
-		old_pdf: $("#record_path_pdf").val(),
 		approve_technical: $("#approve_technical_ev").is(':checked'),
 		approve_admin: $("#approve_admin_ev").is(':checked'),
 		user_create:$("#user_create_ev").val(),//lineas nuevas
@@ -174,8 +172,8 @@ edit_evaluation = () => {
         check_technical_old:check_technical_old_ev,
 		
 	};
-   console.log(data.technical_id);
-
+   console.log(data.technical);
+   if(data.approve_technical== true){
 	Object.keys(data).map((d) => $(`.${d}`).hide());
 	$.ajax({
 		data: {
@@ -215,20 +213,17 @@ edit_evaluation = () => {
 		     
 		},
 	});
+
+}else{
+    swal({
+		title: "Error",
+		icon: "error",
+		text: "Para guardar es necesario aprobar su informe de evaluación. Apruebe e intente nuevamente",
+	});
+
+}
 };
 
-$("#ev_popover").on("click",function(){
-
-
-	$("#ev_popover").popover( 
-	
-		{ html: true,
-		title: "Información",
-		content: "Creado por: " +$("#user_create_ev").val() +"<br />"+"Fecha creación: "+ 
-		$("#date_create_ev").val()+"<br />"+"Modificado por: " +$("#user_modify_ev").val()+"<br />"+"Fecha mod.: "+ $("#date_modify_ev").val()+"<br />"+
-		"Aprobado por: " +$("#user_approve_ev").val()+"<br />"+"Fecha aprv.: "+ $("#date_approve_ev").val(),
-	});
-});
 
 
 
@@ -266,39 +261,35 @@ getFields = () => {
 	xhr.send();
 };
 
-showExportEvaluation = ()=>{ 
-
-	id= $("#ot_number").val();
- 
-	let xhr = new XMLHttpRequest();
-	xhr.open("get", `${host_url}/api/getEvaluationByOrder/${id}`);
-	xhr.responseType = "json";
-	xhr.addEventListener("load", () => {
-		if (xhr.status === 200) {
-			    
-			$file=xhr.response[0].export; //definir en base de datos 
-			$url= host_url+$file;
-			console.log($url);
-			window.open($url);
-		
-        }else { 
-			
-			swal({
-				title: "Error",
-				icon: "error",
-				text:  "Error al cargar el archivo ",
-			});
-		}
-	});
-	xhr.send();
-}
 
 
 $("#btn_edit").on("click", () => {
-	edit_evaluation();
+
+    swal({
+		title: `Confirmación de guardado `,
+		icon: "warning",
+		text: `¿Está seguro/a de guardar definitivamente este informe de evaluación?`,
+		buttons: {
+			confirm: {
+				text: "Confirmar guardado",
+				value: "exec",
+			},
+			cancel: {
+				text: "Cancelar",
+				value: "cancelar",
+				visible: true,
+			},
+		},
+	}).then((action) => {
+		if (action == "exec") {
+            edit_evaluation();
+		} else {
+			swal.close();
+		}
+	});
+	
 });
 
-$("#btn_export_ev").on("click",showExportEvaluation );
 
 
 

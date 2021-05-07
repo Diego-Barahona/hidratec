@@ -58,7 +58,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center pb-4" href="<?php echo base_url(); ?>menu">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center pb-4" href="<?php echo base_url(); ?>counterMaster">
 
             <img src="<?php echo base_url(); ?>assets/img/icon_hidratec.png" style="height:60px ;width:60px"alt="logo images">
 
@@ -70,7 +70,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="<?php echo base_url(); ?>counterMaster">
                     <i class="fas fa-home"></i>
                     <span>Inicio</span></a>
                     <hr class="sidebar-divider">
@@ -82,8 +82,8 @@
 
             <!-- Nav Item - Finanzas e Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                <i class="fas fa-file-invoice"></i>
+                <a class="nav-link" href="<?php echo base_url(); ?>adminEvaluation">
+                <i class="fas fa-brain"></i>
                     <span>Evaluaciones</span></a>
                     <hr class="sidebar-divider">
             </li>
@@ -95,14 +95,14 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
-                <i class="fas fa-file-invoice"></i>
+                <i class="fa fa-cogs"></i>
                     <span>Reparaciones</span></a>
                     <hr class="sidebar-divider">
             </li>
 
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url(); ?>adminHydraulicTest">
-                <i class="fas fa-file-invoice"></i>
+                <i class="fas fa-vial"></i>
                     <span>Pruebas hidráulicas</span></a>
                     <hr class="sidebar-divider">
                  
