@@ -36,7 +36,8 @@
                             <th>Tipo de servicio</th>
                             <th>Estado </th>
                             <th>Aprobado por administración </th>
-                            <th>Informe Técnico</th>
+                            <th>Acción</th>
+                            <th>Informe</th>
                         </tr>
                         </thead>
                     </table>

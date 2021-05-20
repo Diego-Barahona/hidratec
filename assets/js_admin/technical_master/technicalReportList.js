@@ -27,20 +27,28 @@ getTechnicalReports = () => {
                     if(validation){
                         let check_technical;
                         let check_adm;
+                        let date;
                         if(validation.check_technical == 'true') check_technical = 'Realizado';
                         else check_technical = 'No Realizado';
                         
                         if(validation.check_adm == 'true') check_adm = 'Aprobado';
                         else check_adm = 'No Aprobado';
+
+                        if(validation.date_technical_report) date = validation.date_technical_report;
+                        else date = 'Pendiente';
+
                         report = 
                         {
                             number_ot : item.number_ot,
-                            date : validation.date_technical_report,
+                            date : date,
                             client: item.client,
                             component: item.component,
                             service : item.service,
                             check_technical: check_technical,
                             check_adm: check_adm,
+                            time_init: item.time_init,
+                            aux: item.aux,
+                            time_end: item.time_end,
                         }
                         $aux.push(report);
                     }
@@ -69,11 +77,21 @@ const tabla = $('#tableTechnicalReports').DataTable({
 	},
     "columnDefs": [
         {
-            className: "text-center", "targets": [6] ,
-        },
-        {
             className: "text-center", "targets": [7] ,
         },
+        {
+            className: "text-center", "targets": [8] ,
+        },
+        { "width": "5%", "targets": 0 },
+        { "width": "10%", "targets": 1 },
+        { "width": "20%", "targets": 2 },
+        { "width": "10%", "targets": 3 },
+        { "width": "10%", "targets": 4 },
+        { "width": "10%", "targets": 5 },
+        { "width": "10%", "targets": 6 },
+        { "width": "10%", "targets": 7 },
+        { "width": "10%", "targets": 8 },
+
     ],
 	columns: [
         { data: "number_ot"}, 
@@ -83,6 +101,25 @@ const tabla = $('#tableTechnicalReports').DataTable({
         { data: "service" }, 
         { data: "check_technical" }, 
         { data: "check_adm" }, 
+        { defaultContent: "tec",
+            "render": function (data, type, row){
+                if(row.check_technical === 'Realizado'){
+                    return `<button type='button' class='btn btn-primary'>
+                    Finalizado
+                    </button>`
+                }else{
+                    if(row.time_init){
+                        if(row.aux){
+                            return `<button name='tr_btn_play_continue' class="btn btn-success rounded-circle"><i class="fas fa-play"></i></button>`
+                        }else{
+                            return `<button name='tr_btn_stop' class="btn btn-warning rounded-circle"><i class="fas fa-pause"></i></button>` 
+                        }      
+                    }else{
+                        return `<button name='tr_btn_play' class="btn btn-success rounded-circle"><i class="fas fa-play"></i></button>`      
+                    }
+                }
+            }
+        },
         { defaultContent: "oc",
 		   "render": function (data, type, row){
 			if(row.check_technical === 'Realizado'){
@@ -91,10 +128,21 @@ const tabla = $('#tableTechnicalReports').DataTable({
                 <i class="fas fa-search"></i>
                 </button>`
 			}else{
-				return `<button type='button' name='btn_tr' class='btn btn-warning'>
-				Realizar
-				<i class="fas fa-pencil-alt"></i>
-				</button>`
+                if(row.time_init){
+                    if(row.aux){
+                        return `<button type='button' name='btn_tr' class='btn btn-primary'>
+                Ver informe
+                <i class="fas fa-search"></i>
+                </button>`
+                    }else{
+                        return `<button type='button' name='btn_tr' class='btn btn-warning'>Realizar<i class="fas fa-pencil-alt"></i></button>`  
+                    }  
+                }else{  
+                    return `<button type='button' name='btn_tr' class='btn btn-primary'>
+                Ver informe
+                <i class="fas fa-search"></i>
+                </button>`
+                }
 			}
 		   }
 		},
@@ -107,5 +155,122 @@ $("#tableTechnicalReports").on("click", "button", function () {
     let data = tabla.row($(this).parents("tr")).data();
     if ($(this)[0].name == "btn_tr") {
         window.location.assign(host_url+`tmAdminViewTechnicalReport/${data.number_ot}`);
-	}
+	}else if($(this)[0].name == "tr_btn_play"){
+        show_play(data);
+    }else if($(this)[0].name == "tr_btn_stop"){
+        show_stop(data);
+    }else if($(this)[0].name == "tr_btn_play_continue"){
+        show_continue(data);
+    }
 });
+
+
+show_play = (data) =>{
+    swal({
+        title: `Comenzar Informe Técnico`,
+        icon: "warning",
+        text: `¿Esta seguro de comenzar el informe técnico asociado a la OT ${data.number_ot}"?`,
+        buttons: {
+            confirm: {
+                text: `Confirmar`,
+                value: "play",
+            },
+            cancel: {
+                text: "Cancelar",
+                value: "cancelar",
+                visible: true,
+            },
+        },
+    }).then((action) => {
+        if (action == "play") {
+            chronometer(data, 'iniciado');
+        } else {
+            swal.close();
+        }
+    });
+}
+
+/*Función para preparar la información a des/habilitar*/
+show_continue = (data) =>{
+    swal({
+        title: `Continuar Informe Técnico`,
+        icon: "warning",
+        text: `¿Esta seguro de reanudar el informe técnico asociado a la OT ${data.number_ot}"?`,
+        buttons: {
+            confirm: {
+                text: `Confirmar`,
+                value: "continue",
+            },
+            cancel: {
+                text: "Cancelar",
+                value: "cancelar",
+                visible: true,
+            },
+        },
+    }).then((action) => {
+        if (action == "continue") {
+            chronometer(data, 'reanudado');
+        } else {
+            swal.close();
+        }
+    });
+}
+
+/*Función para preparar la información a des/habilitar*/
+show_stop = (data) =>{
+    swal({
+        title: `Pausar el Informe Técnico`,
+        icon: "warning",
+        text: `¿Esta seguro de pausar el informe técnico asociado a la OT ${data.number_ot}"?`,
+        buttons: {
+            confirm: {
+                text: `Confirmar`,
+                value: "stop",
+            },
+            cancel: {
+                text: "Cancelar",
+                value: "cancelar",
+                visible: true,
+            },
+        },
+    }).then((action) => {
+        if (action == "stop") {
+            chronometer(data, 'detenido');
+        } else {
+            swal.close();
+        }
+    });
+}
+
+
+chronometer = (data, msg) =>{
+    datos = {
+        ot_id : data.number_ot,
+        msg: msg
+    } 
+    $.ajax({
+        type: "POST",
+        url: host_url + "api/chronometer/TechnicalReport",
+        data: {datos},
+        dataType: "json",
+        success: (result) => {
+         swal({
+             title: "Éxito!",
+             icon: "success",
+             text: result.msg,
+             button: "OK",
+         }).then(() => {
+            getTechnicalReports();
+         });
+        }, 
+        error: () => {
+            swal({
+                title: "Error",
+                icon: "error",
+                text: "No se pudo encontrar el recurso",
+            }).then(() => {
+                $("body").removeClass("loading");
+            });
+        },
+    });
+}

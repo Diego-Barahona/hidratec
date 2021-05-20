@@ -40,7 +40,8 @@ class TechnicalMasterModel extends CI_Model
     { 
         $user= $_SESSION['id'];
     
-        $query = "SELECT tr.ot_id number_ot, tr.user_interaction , tr.details details, e.name client, c.name component, ot.type_service service
+        $query = "SELECT tr.ot_id number_ot, ot.priority ,tr.user_interaction , tr.details details,
+         e.name client, c.name component, ot.type_service service, tr.time_init, tr.aux, tr.time_end
         FROM technical_report tr 
         JOIN ot ON tr.ot_id = ot.id
         JOIN enterprise e ON ot.enterprise_id = e.id
@@ -99,7 +100,7 @@ class TechnicalMasterModel extends CI_Model
     }
 
     public function getTechnicalReportByOrder($id){
-        $query= "SELECT tr.details data, tr.details_images data_images
+        $query= "SELECT tr.details data, tr.details_images data_images, tr.aux
         FROM technical_report tr
         WHERE tr.ot_id = ?";
         return $this->db->query($query, $id)->result_array(); 
@@ -114,7 +115,6 @@ class TechnicalMasterModel extends CI_Model
         FROM reparation r
         WHERE r.ot_id = ?";
         $result= $this->db->query($query, $data['ot_id'])->result_Array(); 
-        /* var_dump(json_decode($interaction, true)); */
         $interaction = json_decode($result[0]['user_interaction'], true);
 
         $datos_reparation = array(
@@ -159,8 +159,163 @@ class TechnicalMasterModel extends CI_Model
                 ) 
           ) 
         "; 
-
-     return  $this->db->query($query,array(true,$user))->result(); 
-    
+        return  $this->db->query($query,array(true,$user))->result(); 
      }
+
+     
+    public function getSubstaksReparation($id){
+        $query = "SELECT sr.id, sr.state, sr.ot_id number_ot, sr.date_assigment date, sr.check_tm, sr.check_at, u.full_name technical_assistant, s.name substask
+        FROM subtask_reparation sr
+        JOIN user u ON sr.user_id = u.id
+        JOIN subtask s ON sr.subtask_id = s.id
+        WHERE sr.ot_id = ?"; 
+        return $this->db->query($query,array($id))->result();  
+    } 
+
+
+    public function getTechnicalAssistans(){
+        $query = "SELECT u.id id, u.full_name name
+        FROM user u
+        JOIN user_role ur ON ur.user_id = u.id
+        WHERE u.state = ? AND ur.role_id = ?"; 
+        return $this->db->query($query,array(1, 4))->result_array();  
+    }
+
+    public function getSubstaks(){
+        return $query = $this->db->get_where('subtask', array('state' => 1))->result_array();
+    }
+
+    public function createSubstakReparation($data){
+ 
+        $this->db->select('*'); $this->db->from('subtask_reparation'); 
+        $this->db->where('subtask_id', $data['subtask_id']);
+        $this->db->where('user_id', $data['user_id']);
+        $this->db->where('ot_id', $data['ot_id']);
+        $query = $this->db->get();
+        if(sizeof($query->result()) > 0){
+            return false;
+        }else{
+            $datos_substask = array(
+                'subtask_id' => $data['subtask_id'],
+                'ot_id' => $data['ot_id'],
+                'check_tm' => 0,
+                'check_at' => 0,
+                'date_assigment' => $data['date_assignment'],
+                'user_id' => $data['user_id'],
+                'state' => 1,
+            );
+            if($this->db->insert('subtask_reparation', $datos_substask )) return true; else return false;
+        }
+    }
+
+    public function updateSubstakReparation($data){
+        $this->db->select('*'); 
+        $this->db->from('subtask_reparation'); 
+        $this->db->where('subtask_id', $data['subtask_id']);
+        $this->db->where('user_id', $data['user_id']);
+        $this->db->where('ot_id', $data['ot_id']);
+        $this->db->where('id !=', $data['id']);
+        $query = $this->db->get();
+
+        if(sizeof($query->result()) > 0){
+            return false;
+        }else{
+            $datos_substask = array(
+                'subtask_id' => $data['subtask_id'],
+                'ot_id' => $data['ot_id'],
+                'check_tm' => $data['check_tm'],
+                'check_at' => $data['check_at'],
+                'date_assigment' => $data['date_assignment'],
+                'user_id' => $data['user_id'],
+            );
+
+            $this->db->where('id', $data['id']);
+            if($this->db->update('subtask_reparation', $datos_substask)) return true; else return false;
+        }
+    }
+
+
+    public function desHabSubstakReparation($data){
+        $this->db->where('id', $data['id']);
+        $query = $this->db->update('subtask_reparation', $data);
+        if($query){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function playTechnicalReport($data){
+        date_default_timezone_set("America/Santiago");
+        $date_update = date("Y-m-d G:i:s");
+
+        $datos = array(
+            'time_init' => $date_update,
+            'aux' => null,
+        );
+        $this->db->where('ot_id', $data['ot_id']);
+        if($this->db->update('technical_report', $datos)) return true; else return false;
+    }
+
+    public function stopTechnicalReport($data){
+        date_default_timezone_set("America/Santiago");
+        $date_update = date("Y-m-d G:i:s");
+        $date1 = new DateTime($date_update);
+       
+ 
+        $query= "SELECT tr.time_init, tr.hours
+        FROM technical_report tr
+        WHERE tr.ot_id = ?";
+        $technicalReport = $this->db->query($query, array($data['ot_id']))->result_array(); 
+
+        $hoursData = $technicalReport[0]['hours'];
+
+
+        $date_init = $technicalReport[0]['time_init'];
+        $date2 = new DateTime($date_init);
+
+        $interval = $date1->diff($date2);
+
+        $year = (int)$interval->format('%y');
+        $month = (int)$interval->format('%m');
+        $day = (int)$interval->format('%d');
+        $hour = (int)$interval->format('%h');
+        $minute = (int)$interval->format('%i');
+        $second = (int)$interval->format('%s seconds');
+
+        if($minute != 0){
+            $minute = $minute * 60;
+        }
+
+        if($hour != 0){
+            $hour = $hour * 3600;
+        }
+
+        if($day != 0){
+            $day = $day * 86400;
+        }
+
+        $meses = 0;
+        if($month != 0){ 
+        /*     $month = $day * 86400; */
+            $año = date("Y", strtotime($date_init));
+            $mes = date("m", strtotime($date_init));
+
+            for($i=0; $i<$month; $i++){
+                $aux = (int)$mes + $i;
+                $cantDays = date('t', strtotime($año.'-'.$aux.'-05'));
+                $meses = $meses + ($cantDays*86400);
+            }
+        }
+
+        $suma = $minute + $hour + $day + $meses + $second;
+        $hoursTotal = ($suma/3600) + $hoursData;
+
+        $datos = array(
+            'aux' => $date_update,
+            'hours' => $hoursTotal,
+        );
+        $this->db->where('ot_id', $data['ot_id']);
+        if($this->db->update('technical_report', $datos)) return true; else return false;
+    }
 }
