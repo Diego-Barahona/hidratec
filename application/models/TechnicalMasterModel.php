@@ -40,7 +40,7 @@ class TechnicalMasterModel extends CI_Model
     { 
         $user= $_SESSION['id'];
     
-        $query = "SELECT tr.ot_id number_ot, tr.user_interaction , tr.details details, e.name client, c.name component, ot.type_service service
+        $query = "SELECT tr.ot_id number_ot, ot.priority ,tr.user_interaction , tr.details details, e.name client, c.name component, ot.type_service service
         FROM technical_report tr 
         JOIN ot ON tr.ot_id = ot.id
         JOIN enterprise e ON ot.enterprise_id = e.id
@@ -67,7 +67,7 @@ class TechnicalMasterModel extends CI_Model
         }
     }
 
-    public function  getReparations () 
+    public function getReparations () 
     { 
         $user= $_SESSION['id'];
     
@@ -159,8 +159,162 @@ class TechnicalMasterModel extends CI_Model
                 ) 
           ) 
         "; 
-
-     return  $this->db->query($query,array(true,$user))->result(); 
-    
+        return  $this->db->query($query,array(true,$user))->result(); 
      }
+
+     
+    public function getSubstaksReparation($id){
+        $query = "SELECT sr.id, sr.state, sr.ot_id number_ot, sr.date_assigment date, sr.check_tm, sr.check_at, u.full_name technical_assistant, s.name substask
+        FROM subtask_reparation sr
+        JOIN user u ON sr.user_id = u.id
+        JOIN subtask s ON sr.subtask_id = s.id
+        WHERE sr.ot_id = ?"; 
+        return $this->db->query($query,array($id))->result();  
+    } 
+
+    public function getSubstaksEvaluation($id){
+        $query = "SELECT se.id, se.state, se.ot_id number_ot, se.date_assigment date, se.check_tm, se.check_at, u.full_name technical_assistant, s.name substask
+        FROM subtask_evaluation se
+        JOIN user u ON se.user_id = u.id
+        JOIN subtask s ON se.subtask_id = s.id
+        WHERE se.ot_id = ?"; 
+        return $this->db->query($query,array($id))->result();  
+    } 
+
+
+    public function getTechnicalAssistans(){  //query de los tecnicos master 
+        $query = "SELECT u.id id, u.full_name name
+        FROM user u
+        JOIN user_role ur ON ur.user_id = u.id
+        WHERE u.state = ? AND ur.role_id = ?"; 
+        return $this->db->query($query,array(1, 4))->result_array();  
+    }
+
+    public function getSubstaks(){  // query recursos subtareas activas 
+        return $query = $this->db->get_where('subtask', array('state' => 1))->result_array();
+    }
+
+    public function createSubstakReparation($data){
+ 
+        $this->db->select('*'); $this->db->from('subtask_reparation'); 
+        $this->db->where('subtask_id', $data['subtask_id']);
+        $this->db->where('user_id', $data['user_id']);
+        $this->db->where('ot_id', $data['ot_id']);
+        $query = $this->db->get();
+        if(sizeof($query->result()) > 0){
+            return false;
+        }else{
+            $datos_substask = array(
+                'subtask_id' => $data['subtask_id'],
+                'ot_id' => $data['ot_id'],
+                'check_tm' => 0,
+                'check_at' => 0,
+                'date_assigment' => $data['date_assignment'],
+                'user_id' => $data['user_id'],
+                'state' => 1,
+            );
+            if($this->db->insert('subtask_reparation', $datos_substask )) return true; else return false;
+        }
+    }
+
+  
+    public function createSubstakEvaluation($data){
+ 
+        $this->db->select('*'); $this->db->from('subtask_evaluation'); 
+        $this->db->where('subtask_id', $data['subtask_id']);
+        $this->db->where('user_id', $data['user_id']);
+        $this->db->where('ot_id', $data['ot_id']);
+        $query = $this->db->get();
+        if(sizeof($query->result()) > 0){
+            return false;
+        }else{
+            $datos_substask = array(
+                'subtask_id' => $data['subtask_id'],
+                'ot_id' => $data['ot_id'],
+                'check_tm' => 0,
+                'check_at' => 0,
+                'date_assigment' => $data['date_assignment'],
+                'user_id' => $data['user_id'],
+                'state' => 1,
+            );
+            if($this->db->insert('subtask_evaluation', $datos_substask )) return true; else return false;
+        }
+    }  
+
+    public function updateSubstakReparation($data){
+        $this->db->select('*'); 
+        $this->db->from('subtask_reparation'); 
+        $this->db->where('subtask_id', $data['subtask_id']);
+        $this->db->where('user_id', $data['user_id']);
+        $this->db->where('ot_id', $data['ot_id']);
+        $this->db->where('id !=', $data['id']);
+        $query = $this->db->get();
+
+        if(sizeof($query->result()) > 0){
+            return false;
+        }else{
+            $datos_substask = array(
+                'subtask_id' => $data['subtask_id'],
+                'ot_id' => $data['ot_id'],
+                'check_tm' => $data['check_tm'],
+                'check_at' => $data['check_at'],
+                'date_assigment' => $data['date_assignment'],
+                'user_id' => $data['user_id'],
+            );
+
+            $this->db->where('id', $data['id']);
+            if($this->db->update('subtask_reparation', $datos_substask)) return true; else return false;
+        }
+    }
+
+ 
+    public function updateSubstakEvaluation($data){
+        $this->db->select('*'); 
+        $this->db->from('subtask_evaluation'); 
+        $this->db->where('subtask_id', $data['subtask_id']);
+        $this->db->where('user_id', $data['user_id']);
+        $this->db->where('ot_id', $data['ot_id']);
+        $this->db->where('id !=', $data['id']);
+        $query = $this->db->get();
+
+        if(sizeof($query->result()) > 0){
+            return false;
+        }else{
+            $datos_substask = array(
+                'subtask_id' => $data['subtask_id'],
+                'ot_id' => $data['ot_id'],
+                'check_tm' => $data['check_tm'],
+                'check_at' => $data['check_at'],
+                'date_assigment' => $data['date_assignment'],
+                'user_id' => $data['user_id'],
+            );
+
+            $this->db->where('id', $data['id']);
+            if($this->db->update('subtask_evaluation', $datos_substask)) return true; else return false;
+        }
+    }   
+
+
+
+    public function desHabSubstakReparation($data){
+        $this->db->where('id', $data['id']);
+        $query = $this->db->update('subtask_reparation', $data);
+        if($query){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function desHabSubstakEvaluation($data){
+        $this->db->where('id', $data['id']);
+        $query = $this->db->update('subtask_evaluation', $data);
+        if($query){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    
 }

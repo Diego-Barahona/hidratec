@@ -71,6 +71,7 @@ $route['api/updateOrder']['POST']='Orders/updateOrder';
 $route['api/changeStateOrder']['POST']='Orders/changeStateOrder';
 $route['adminOrders']['GET']='Orders/adminOrders';
 $route['api/getOrders']['GET']='Orders/getOrders';
+$route['api/getOrdersTest']['GET']='Orders/getOrdersTest';
 $route['api/getFieldsOrder']['GET']='Orders/getFieldsOrder';
 $route['api/getHistoryStatesByOrder/(:num)']['GET'] = 'Orders/getHistoryStatesByOrder/$1';
 
@@ -238,12 +239,25 @@ $route['viewEvaluation']['GET']='TechnicalMaster/viewEvaluation/$1';// modo lect
 $route['tmAdminstechnicalReport']['GET'] = 'TechnicalMaster/adminTechnicalReport';
 $route['api/tmGetTechnicalReport']['GET'] = 'TechnicalMaster/getTechnicalReports';
 
+$route['subtasksEvaluationList']['GET'] = 'TechnicalMaster/adminSubstasksEvaluation';
 $route['tmAdminViewTechnicalReport/(:num)']['GET'] = 'TechnicalMaster/adminViewTechnicalReport/$1';
 $route['api/tmDetailsTechnicalReport/(:num)']['GET'] = 'TechnicalMaster/DetailsTechnicalReport/$1';
 $route['api/tmEditTechnicalReport']['POST'] = 'TechnicalMaster/EditTechnicalReport';
+
+
 
 /*Admin reparations*/
 $route['tmAdminReparation']['GET'] = 'TechnicalMaster/adminReparation';
 $route['api/tmGetReparation']['GET'] = 'TechnicalMaster/getReparations';
 $route['api/tmApproveReparation']['POST'] = 'TechnicalMaster/approveReparation';
+$route['api/tmApproveReparation']['POST'] = 'TechnicalMaster/approveReparation';
+$route['api/create/substakEvaluation']['POST'] = 'TechnicalMaster/createSubstakEvaluation';
+$route['api/update/substakEvaluation']['POST'] = 'TechnicalMaster/updateSubstakEvaluation';
+$route['api/tmGetSubstaksEvaluation/(:num)']['GET'] = 'TechnicalMaster/getSubstaksEvaluation/$1';
+$route['api/des_hab/substakEvaluation']['POST']='TechnicalMaster/desHabSubstakEvaluation';
+
+
+
+
 /*------------------------------- End Routes Technical Master------------------------------------ */
+

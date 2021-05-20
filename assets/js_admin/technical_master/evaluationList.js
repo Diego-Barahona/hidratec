@@ -68,7 +68,7 @@ get_orders_ev = () => {
 
             tabla.clear();
 			tabla.rows.add($global);	
-			tabla.order( [ 1, 'desc' ] ).draw();
+			tabla.order( [ 1 , 'desc' ] ).draw();
 		} 
 	});
 	xhr.send();
@@ -122,6 +122,10 @@ $("#table_ev").on("click", "button", function () {
         if($(this)[0].name == "show_ht"){
             let ot = data.number_ot;
             let url = 'viewEvaluation'+'?ot='+ot;
+            window.location.assign(host_url+url);
+        }else{
+            let ot = data.number_ot;
+            let url = 'subtasksEvaluationList'+'?ot='+ot;
             window.location.assign(host_url+url);
         }
 

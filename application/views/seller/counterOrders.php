@@ -71,18 +71,17 @@
             <div class="card mb-3">
                <div class="card-header">
                   <i class="fas fa-table"></i>
-                  Órdenes
+                   Órdenes
                </div>
                <div class="card-body">
                   <div class="table-responsive">
                      <table class="table table-bordered" id="table-orders" width="100%" cellspacing="0">
                         <thead>
-                           <tr>
+                            <tr>
                               <th>OT</th>
                               <th>Tipo servicio</th>
-                              <th>Fecha ingreso</th>
-                      
-                           </tr>
+                              <th>Fecha ingreso</th>       
+                            </tr>
                         </thead>
                      </table>
                   </div>
@@ -95,4 +94,7 @@
       </div>
    </div>
 </div>
+
+
+
 <script src="<?php echo base_url(); ?>assets/js_admin/counterSeller.js"></script>

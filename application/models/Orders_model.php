@@ -85,6 +85,35 @@ class Orders_model extends CI_Model
         return $this->db->query($query)->result_array(); 
     }
 
+    /////////////////////
+
+    public function getOrdersTest()
+    {        
+        $query = "SELECT ot.id number_ot, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, c.name component, s.name state,r.check_adm ,r.check_technical
+                         , tr.details technical_report ,ev.details evaluation ,ht.details hydraulic_test,ev.state ev_state, ht.state ht_state, tr.state tr_state
+                  FROM ot
+                  JOIN enterprise e ON ot.enterprise_id = e.id
+                  JOIN component c ON ot.component_id = c.id
+                  JOIN ot_state os ON ot.id = os.ot_id
+                  JOIN reparation r ON ot.id=r.ot_id
+                  LEFT JOIN evaluation ev ON ot.id=ev.ot_id
+                  LEFT JOIN hydraulic_test ht ON ot.id=ht.ot_id
+                  LEFT JOIN technical_report tr ON ot.id= tr.ot_id
+                  JOIN state s ON os.state_id = s.id
+                  WHERE os.id = (
+                      SELECT f.id 
+                      FROM ot_state f 
+                      WHERE f.ot_id = ot.id AND f.date_update = (
+                            SELECT MAX(j.date_update)
+                            FROM ot_state j
+                            WHERE j.ot_id = ot.id
+                          ) 
+                    ) 
+        "; 
+        return $this->db->query($query)->result_array(); 
+    }
+    /////////////////////////////
+
     public function getComponents(){
         return $query = $this->db->get_where('component', array('state' => 1))->result_array();
     }
