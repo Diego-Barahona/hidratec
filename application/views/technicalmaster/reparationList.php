@@ -1,7 +1,7 @@
 <div id="content-wrapper">
     <div class="container-fluid mb-5">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Informes Técnicos</li>
+            <li class="breadcrumb-item active">Reparaciones</li>
         </ol>
         <div class="accordion" id="accordionExample">
         <div class="card mb-3">
@@ -22,7 +22,7 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fas fa-table"></i>
-                Lista de informes técnicos
+                Lista de reparaciones
             </div>
             <div class="card-body">
                 <div class="table-responsive">

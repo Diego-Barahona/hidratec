@@ -61,6 +61,7 @@ class TechnicalMaster extends CI_Controller
             redirect('Home/login', 'refresh');
         }
     }
+
     public function adminSubstasksEvaluation() // hecho 
     { 
         
@@ -75,6 +76,7 @@ class TechnicalMaster extends CI_Controller
             redirect('Home/login', 'refresh');
         }
     }
+
 
 
 
@@ -293,6 +295,7 @@ class TechnicalMaster extends CI_Controller
         }
     }
 
+
     
     public function getSubstaksEvaluation($id) { 
        
@@ -310,6 +313,7 @@ class TechnicalMaster extends CI_Controller
              $this->response->sendJSONResponse(array('msg' => 'No tiene permisos suficientes.'), 400);
         }
     }
+
     
     
     //Funcion para crear una subtarea de reparación
@@ -349,6 +353,7 @@ class TechnicalMaster extends CI_Controller
             redirect('Home/login', 'refresh');
         }
     }  
+
     
 
     public function createSubstakEvaluation()
@@ -388,6 +393,7 @@ class TechnicalMaster extends CI_Controller
         }
     }  
 
+
     //Funcion para editar una subtarea de reparación
     public function updateSubstakReparation()
     {
@@ -424,6 +430,7 @@ class TechnicalMaster extends CI_Controller
             redirect('Home/login', 'refresh');
         }
     }  
+
 
     public function updateSubstakEvaluation()
     {
@@ -462,6 +469,7 @@ class TechnicalMaster extends CI_Controller
     }  
 
 
+
     public function desHabSubstakReparation(){
         if ($this->accesscontrol->checkAuth()['correct']) {
             /* Datos de formulario*/
@@ -485,6 +493,7 @@ class TechnicalMaster extends CI_Controller
     
         }   
     }
+
     
     public function desHabSubstakEvaluation(){
         if ($this->accesscontrol->checkAuth()['correct']) {
@@ -510,3 +519,32 @@ class TechnicalMaster extends CI_Controller
         }   
     }
 }
+
+
+    public function chronometerTechnicalReport(){
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $data = $this->input->post('datos');
+
+            if($data['msg'] == 'reanudado' || $data['msg'] == 'iniciado'){
+                if($this->TechnicalMasterModel->playTechnicalReport($data)){
+                    $msg['msg'] = "Reporte técnico ".$data['msg']." correctamente";
+                    $this->response->sendJSONResponse($msg);
+                }else{
+                    $msg['msg'] = "No se pudo cargar el recurso.";
+                    $this->response->sendJSONResponse($msg);
+                }
+            }else if($data['msg'] == 'detenido'){
+                if($this->TechnicalMasterModel->stopTechnicalReport($data)){
+                    $msg['msg'] = "Reporte técnico ".$data['msg']." correctamente";
+                    $this->response->sendJSONResponse($msg);
+                }else{
+                    $msg['msg'] = "No se pudo cargar el recurso.";
+                    $this->response->sendJSONResponse($msg);
+                }
+            }
+        } else {
+            redirect('Home/login', 'refresh');
+        }   
+    }
+}
+

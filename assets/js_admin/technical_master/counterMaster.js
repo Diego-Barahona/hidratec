@@ -187,6 +187,7 @@ get_orders_tr= () => {
              report = 
                   {
                       number_ot : item.number_ot,
+					  priority: item.priority,
 					  component: item.client,
 					  enterprise: item.client,
 					  service: item.service,
