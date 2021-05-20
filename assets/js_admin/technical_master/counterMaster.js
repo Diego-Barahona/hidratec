@@ -1,6 +1,4 @@
 $(() => {
-
-
   get_orders_ht();
 	get_orders_ev();
 	get_orders_tr();
@@ -113,13 +111,7 @@ get_orders_ht= () => {
                 });
          
            $("#hydraulicTest").html(hydraulicTests.length);
-		} else {
-			swal({
-				title: "Error",
-				icon: "error",
-				text: "Error al obtener los reportes técnicos",
-			});
-		}
+		} 
 	});
 	xhr.send();
 };
@@ -174,13 +166,7 @@ get_orders_ev= () => {
                 });
          
            $("#evaluation").html(evaluations.length);
-		} else {
-			swal({
-				title: "Error",
-				icon: "error",
-				text: "Error al obtener las evaluaciones",
-			});
-		}
+		} 
 	});
 	xhr.send();
 };

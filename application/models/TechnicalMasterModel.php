@@ -40,8 +40,10 @@ class TechnicalMasterModel extends CI_Model
     { 
         $user= $_SESSION['id'];
     
+
         $query = "SELECT tr.ot_id number_ot, ot.priority ,tr.user_interaction , tr.details details,
          e.name client, c.name component, ot.type_service service, tr.time_init, tr.aux, tr.time_end
+
         FROM technical_report tr 
         JOIN ot ON tr.ot_id = ot.id
         JOIN enterprise e ON ot.enterprise_id = e.id
@@ -68,7 +70,7 @@ class TechnicalMasterModel extends CI_Model
         }
     }
 
-    public function  getReparations () 
+    public function getReparations () 
     { 
         $user= $_SESSION['id'];
     
@@ -173,7 +175,19 @@ class TechnicalMasterModel extends CI_Model
     } 
 
 
+    public function getSubstaksEvaluation($id){
+        $query = "SELECT se.id, se.state, se.ot_id number_ot, se.date_assigment date, se.check_tm, se.check_at, u.full_name technical_assistant, s.name substask
+        FROM subtask_evaluation se
+        JOIN user u ON se.user_id = u.id
+        JOIN subtask s ON se.subtask_id = s.id
+        WHERE se.ot_id = ?"; 
+        return $this->db->query($query,array($id))->result();  
+    } 
+
+
+
     public function getTechnicalAssistans(){
+
         $query = "SELECT u.id id, u.full_name name
         FROM user u
         JOIN user_role ur ON ur.user_id = u.id
@@ -181,7 +195,9 @@ class TechnicalMasterModel extends CI_Model
         return $this->db->query($query,array(1, 4))->result_array();  
     }
 
+
     public function getSubstaks(){
+
         return $query = $this->db->get_where('subtask', array('state' => 1))->result_array();
     }
 
@@ -207,6 +223,32 @@ class TechnicalMasterModel extends CI_Model
             if($this->db->insert('subtask_reparation', $datos_substask )) return true; else return false;
         }
     }
+
+
+  
+    public function createSubstakEvaluation($data){
+ 
+        $this->db->select('*'); $this->db->from('subtask_evaluation'); 
+        $this->db->where('subtask_id', $data['subtask_id']);
+        $this->db->where('user_id', $data['user_id']);
+        $this->db->where('ot_id', $data['ot_id']);
+        $query = $this->db->get();
+        if(sizeof($query->result()) > 0){
+            return false;
+        }else{
+            $datos_substask = array(
+                'subtask_id' => $data['subtask_id'],
+                'ot_id' => $data['ot_id'],
+                'check_tm' => 0,
+                'check_at' => 0,
+                'date_assigment' => $data['date_assignment'],
+                'user_id' => $data['user_id'],
+                'state' => 1,
+            );
+            if($this->db->insert('subtask_evaluation', $datos_substask )) return true; else return false;
+        }
+    }  
+
 
     public function updateSubstakReparation($data){
         $this->db->select('*'); 
@@ -235,6 +277,36 @@ class TechnicalMasterModel extends CI_Model
     }
 
 
+ 
+    public function updateSubstakEvaluation($data){
+        $this->db->select('*'); 
+        $this->db->from('subtask_evaluation'); 
+        $this->db->where('subtask_id', $data['subtask_id']);
+        $this->db->where('user_id', $data['user_id']);
+        $this->db->where('ot_id', $data['ot_id']);
+        $this->db->where('id !=', $data['id']);
+        $query = $this->db->get();
+
+        if(sizeof($query->result()) > 0){
+            return false;
+        }else{
+            $datos_substask = array(
+                'subtask_id' => $data['subtask_id'],
+                'ot_id' => $data['ot_id'],
+                'check_tm' => $data['check_tm'],
+                'check_at' => $data['check_at'],
+                'date_assigment' => $data['date_assignment'],
+                'user_id' => $data['user_id'],
+            );
+
+            $this->db->where('id', $data['id']);
+            if($this->db->update('subtask_evaluation', $datos_substask)) return true; else return false;
+        }
+    }   
+
+
+
+
     public function desHabSubstakReparation($data){
         $this->db->where('id', $data['id']);
         $query = $this->db->update('subtask_reparation', $data);
@@ -244,6 +316,19 @@ class TechnicalMasterModel extends CI_Model
             return false;
         }
     }
+
+
+    public function desHabSubstakEvaluation($data){
+        $this->db->where('id', $data['id']);
+        $query = $this->db->update('subtask_evaluation', $data);
+        if($query){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    
 
     public function playTechnicalReport($data){
         date_default_timezone_set("America/Santiago");
@@ -318,4 +403,5 @@ class TechnicalMasterModel extends CI_Model
         $this->db->where('ot_id', $data['ot_id']);
         if($this->db->update('technical_report', $datos)) return true; else return false;
     }
+
 }

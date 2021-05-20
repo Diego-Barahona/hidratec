@@ -109,6 +109,12 @@ class Orders extends CI_Controller
         $this->response->sendJSONResponse($orders);
     }
 
+    public function getOrdersTest()
+    { 
+		$orders = $this->Orders_model->getOrdersTest();
+        $this->response->sendJSONResponse($orders);
+    }
+
     public function getFieldsOrder()
     { 
         $components = $this->Orders_model->getComponents();
