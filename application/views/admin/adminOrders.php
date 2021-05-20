@@ -36,8 +36,8 @@
         <div class="card-header" id="headingOne">
           <h2 class="mb-0">
           <div style="padding-right: 40px">
-      <button class="btn btn-success float-right" type='button' data-toggle="modal" data-target="#addLocation" id="newOrder"><i class="fas fa-plus"></i> Crear OT</button>
-    </div>
+            <button class="btn btn-success float-right" type='button' data-toggle="modal" data-target="#addLocation" id="newOrder"><i class="fas fa-plus"></i> Crear OT</button>
+          </div>
           </h2>
         </div>
 

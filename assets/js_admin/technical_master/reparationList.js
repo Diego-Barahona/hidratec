@@ -81,13 +81,13 @@ const tabla = $('#tableReparations').DataTable({
         { defaultContent: "oc",
 		   "render": function (data, type, row){
 			if(row.check_technical === 'Realizado'){
-				return `<button type='button' class='btn btn-success'>
+				return `<button type='button' name='btn_substaks' class='btn btn-success'>
                 Ver subtareas
                 <i class="fas fa-search"></i>
                 </button>`
 			}else{
 				return `<button type='button' name='btn_substaks' class='btn btn-primary'>
-				Asignar subtareas
+				Asignar Subtareas
 				<i class="fas fa-pencil-alt"></i>
 				</button>`
 			}
@@ -114,7 +114,9 @@ const tabla = $('#tableReparations').DataTable({
 $("#tableReparations").on("click", "button", function () {
     let data = tabla.row($(this).parents("tr")).data();
     if ($(this)[0].name == "btn_substaks") {
-        alert('substaks');
+        let ot = data.number_ot;
+		let url = 'tmAdminSubstasks/reparation/index'+'?ot='+ot;
+		window.location.assign(host_url+url);
 	}else if ($(this)[0].name == "btn_approve"){
         approve(data);
     }
