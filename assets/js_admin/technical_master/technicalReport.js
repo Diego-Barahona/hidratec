@@ -62,7 +62,9 @@ get_data_technical_report = () =>{
 		if (xhr.status === 200) {
 			let data = xhr.response[0].data;
 			let data_images = xhr.response[0].data_images;
-            let time = xhr.response[0].aux;
+            let aux = xhr.response[0].aux;
+            let time_init = xhr.response[0].time_init;
+            let time_end = xhr.response[0].time_end;
             if(data){
                 technical_report = JSON.parse(data);
                 $("#tr_details").val(technical_report.details);
@@ -112,7 +114,7 @@ get_data_technical_report = () =>{
                     });
                 }
             }
-            tr_enableFields(tr_check_technical_old, time);
+            tr_enableFields(tr_check_technical_old, aux, time_init, time_end);
 		}else { 
             swal({
 				title: "Error",
@@ -127,38 +129,54 @@ get_data_technical_report = () =>{
 }
 
 
-tr_enableFields = (a, time)=>{
+tr_enableFields = (a, aux, time_init, time_end)=>{
     if(a == 'false'){
-        if(time == null){
-            $("#tr_details").attr("readonly", false);
-            $("#tr_notes").attr("readonly", false);
-            $("#tr_conclusion").attr("readonly", false);
-            $("#tr_recommendation").attr("readonly", false);
-            $("#tr_check_technical").removeAttr("disabled");
-            for(let i=0; i < tr_id_images.length; i++){
-                $("#tr_image_description_"+tr_id_images[i]).attr("readonly", false);
-                $("#tr_image_name_"+tr_id_images[i]).attr("readonly", false);
-                $("#tr_delete_"+tr_id_images[i]).show();
-                $("#tr_label_image_"+tr_id_images[i]).hide();
-                $("#tr_btn_image_"+tr_id_images[i]).show();
-            }
-    
-            $("#tr_div_add").show();
-            $("#tr_btn_image_header").show();
-            $("#tr_label_image_header").hide();
-        }else{
-            $("#tr_details").attr("readonly", true);
-            $("#tr_notes").attr("readonly", true);
-            $("#tr_conclusion").attr("readonly", true);
-            $("#tr_recommendation").attr("readonly", true);
-            $("#tr_check_technical").attr("disabled", true);
-    
-            $("#tr_div_add").hide();
-            $("#tr_btn_image_header").hide();
-            $("#tr_label_image_header").show();
-            $("#tr_btnEdit").hide();
-        }
 
+        /*La primera vez */
+        if(aux==null && time_end==null && time_init==null){
+            $("#tr_details").attr("readonly", true);
+                $("#tr_notes").attr("readonly", true);
+                $("#tr_conclusion").attr("readonly", true);
+                $("#tr_recommendation").attr("readonly", true);
+                $("#tr_check_technical").attr("disabled", true);
+        
+                $("#tr_div_add").hide();
+                $("#tr_btn_image_header").hide();
+                $("#tr_label_image_header").show();
+                $("#tr_btnEdit").hide();
+        }else{
+            if(aux == null){
+                /* Esta en proceso */
+                $("#tr_details").attr("readonly", false);
+                $("#tr_notes").attr("readonly", false);
+                $("#tr_conclusion").attr("readonly", false);
+                $("#tr_recommendation").attr("readonly", false);
+                $("#tr_check_technical").removeAttr("disabled");
+                for(let i=0; i < tr_id_images.length; i++){
+                    $("#tr_image_description_"+tr_id_images[i]).attr("readonly", false);
+                    $("#tr_image_name_"+tr_id_images[i]).attr("readonly", false);
+                    $("#tr_delete_"+tr_id_images[i]).show();
+                    $("#tr_label_image_"+tr_id_images[i]).hide();
+                    $("#tr_btn_image_"+tr_id_images[i]).show();
+                }
+        
+                $("#tr_div_add").show();
+                $("#tr_btn_image_header").show();
+                $("#tr_label_image_header").hide();
+            }else{
+                /* Esta en pausa */
+                $("#tr_details").attr("readonly", true);
+                $("#tr_notes").attr("readonly", true);
+                $("#tr_conclusion").attr("readonly", true);
+                $("#tr_recommendation").attr("readonly", true);
+                $("#tr_check_technical").attr("disabled", true);
+        
+                $("#tr_div_add").hide();
+                $("#tr_btn_image_header").hide();
+                $("#tr_label_image_header").show();
+                $("#tr_btnEdit").hide();
+            }
+        }
     }else if(a=='true'){
         $("#tr_details").attr("readonly", true);
         $("#tr_notes").attr("readonly", true);

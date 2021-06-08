@@ -26,6 +26,7 @@ get_orders_ev = () => {
             data.forEach((item)=>{
              validation = JSON.parse(item.details);
              interaction = JSON.parse(item.user_interaction);
+             console.log(validation);
 
             if(validation){
              report = 
@@ -33,7 +34,7 @@ get_orders_ev = () => {
                       number_ot : item.number_ot,
                       priority: item.priority,
                       technical : interaction ? interaction.date_create :"Pendiente" ,
-                      date : validation ? validation.date_evaluation : "Pendiente",
+                      date : validation.date_evaluation == '' ? "Pendiente" : validation.date_evaluation,
                       description: validation ? validation.description : "",
                       notes : validation ? validation.notes : "",
                       enterprise : item.enterprise,

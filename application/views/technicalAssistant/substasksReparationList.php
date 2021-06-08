@@ -1,7 +1,7 @@
 <div id="content-wrapper">
     <div class="container-fluid mb-5">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Reparaciones</li>
+            <li class="breadcrumb-item active">Informes Técnicos</li>
         </ol>
         <div class="accordion" id="accordionExample">
         <div class="card mb-3">
@@ -22,22 +22,20 @@
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fas fa-table"></i>
-                Lista de reparaciones
+                Lista de subtareas de reparación
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="tableReparations" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="tableSubstaksReparations" width="100%" cellspacing="0">
                         <thead>
                         <tr>
                             <th>N° de OT </th>
-                            <th>Fecha de realización </th>
-                            <th>Cliente</th>
-                            <th>Componente </th>
-                            <th>Tipo de servicio</th>
-                            <th>Estado </th>
-                            <th>Aprobado por administración </th>
+                            <th>Id</th>
+                            <th>Fecha Asignación</th>
+                            <th>Subtarea</th>
+                            <th>Realizado por Ayudante técnico </th>
+                            <th>Aprobado por Técnico Master</th>
                             <th>Acción</th>
-                            <th>Subtareas</th>
                             <th>Reparación</th>
                         </tr>
                         </thead>
@@ -47,4 +45,4 @@
         </div>
     </div>
 </div>
-<script src="<?php echo base_url(); ?>assets/js_admin/technical_master/reparationList.js"></script>
+<script src="<?php echo base_url(); ?>assets/js_admin/technical_assistant/substasksReparation.js"></script>

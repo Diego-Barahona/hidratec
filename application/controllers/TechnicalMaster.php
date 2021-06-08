@@ -168,7 +168,6 @@ class TechnicalMaster extends CI_Controller
     }
 
     public function getTechnicalReports() { 
-       
         if ($this->accesscontrol->checkAuth()['correct']) {
             if($res=$this->TechnicalMasterModel->getTechnicalReports()){
                 $this->response->sendJSONResponse($res); 
@@ -194,11 +193,8 @@ class TechnicalMaster extends CI_Controller
         }
     }
 
-     
     public function viewEvaluation()
-    
     { 
-        
         if ($this->accesscontrol->checkAuth()['correct']) {
             $url = parse_url($_SERVER['REQUEST_URI']);
             parse_str($url['query'], $params);
@@ -209,7 +205,6 @@ class TechnicalMaster extends CI_Controller
             redirect('Home/login', 'refresh');
         }
     }
-
 
     public function DetailsTechnicalReport($id)
     { 
@@ -277,7 +272,6 @@ class TechnicalMaster extends CI_Controller
         }
     }
 
-
     public function getSubstaksReparation($id) { 
        
         if ($this->accesscontrol->checkAuth()['correct']) {
@@ -294,8 +288,6 @@ class TechnicalMaster extends CI_Controller
              $this->response->sendJSONResponse(array('msg' => 'No tiene permisos suficientes.'), 400);
         }
     }
-
-
     
     public function getSubstaksEvaluation($id) { 
        
@@ -314,8 +306,6 @@ class TechnicalMaster extends CI_Controller
         }
     }
 
-    
-    
     //Funcion para crear una subtarea de reparación
     public function createSubstakReparation()
     {
@@ -352,9 +342,7 @@ class TechnicalMaster extends CI_Controller
         } else {
             redirect('Home/login', 'refresh');
         }
-    }  
-
-    
+    }     
 
     public function createSubstakEvaluation()
     {
@@ -393,7 +381,6 @@ class TechnicalMaster extends CI_Controller
         }
     }  
 
-
     //Funcion para editar una subtarea de reparación
     public function updateSubstakReparation()
     {
@@ -431,7 +418,6 @@ class TechnicalMaster extends CI_Controller
         }
     }  
 
-
     public function updateSubstakEvaluation()
     {
         if ($this->accesscontrol->checkAuth()['correct']) {
@@ -468,8 +454,6 @@ class TechnicalMaster extends CI_Controller
         }
     }  
 
-
-
     public function desHabSubstakReparation(){
         if ($this->accesscontrol->checkAuth()['correct']) {
             /* Datos de formulario*/
@@ -493,7 +477,6 @@ class TechnicalMaster extends CI_Controller
     
         }   
     }
-
     
     public function desHabSubstakEvaluation(){
         if ($this->accesscontrol->checkAuth()['correct']) {
@@ -518,24 +501,30 @@ class TechnicalMaster extends CI_Controller
     
         }   
     }
-}
 
-
-    public function chronometerTechnicalReport(){
+    public function chronometer(){
         if ($this->accesscontrol->checkAuth()['correct']) {
             $data = $this->input->post('datos');
+            $nombre = '';
+            if($data['name'] == 'technical_report'){
+                $nombre = 'Reporte técnico'; 
+            }else if($data['name'] == 'reparation'){
+                $nombre = 'Reparación'; 
+            }else if($data['name'] == 'subtask_reparation'){
+                $nombre = 'Subtarea de reparación';
+            }
 
             if($data['msg'] == 'reanudado' || $data['msg'] == 'iniciado'){
-                if($this->TechnicalMasterModel->playTechnicalReport($data)){
-                    $msg['msg'] = "Reporte técnico ".$data['msg']." correctamente";
+                if($this->TechnicalMasterModel->play($data)){
+                    $msg['msg'] = $nombre." ".$data['msg']." correctamente";
                     $this->response->sendJSONResponse($msg);
                 }else{
                     $msg['msg'] = "No se pudo cargar el recurso.";
                     $this->response->sendJSONResponse($msg);
                 }
             }else if($data['msg'] == 'detenido'){
-                if($this->TechnicalMasterModel->stopTechnicalReport($data)){
-                    $msg['msg'] = "Reporte técnico ".$data['msg']." correctamente";
+                if($this->TechnicalMasterModel->stop($data)){
+                    $msg['msg'] = $nombre." ".$data['msg']." correctamente";
                     $this->response->sendJSONResponse($msg);
                 }else{
                     $msg['msg'] = "No se pudo cargar el recurso.";

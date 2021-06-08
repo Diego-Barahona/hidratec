@@ -25,32 +25,42 @@ getTechnicalReports = () => {
                 data.forEach((item)=>{
                     validation = JSON.parse(item.details);
                     if(validation){
-                        let check_technical;
-                        let check_adm;
                         let date;
-                        if(validation.check_technical == 'true') check_technical = 'Realizado';
-                        else check_technical = 'No Realizado';
-                        
-                        if(validation.check_adm == 'true') check_adm = 'Aprobado';
-                        else check_adm = 'No Aprobado';
-
                         if(validation.date_technical_report) date = validation.date_technical_report;
                         else date = 'Pendiente';
-
-                        report = 
-                        {
-                            number_ot : item.number_ot,
-                            date : date,
-                            client: item.client,
-                            component: item.component,
-                            service : item.service,
-                            check_technical: check_technical,
-                            check_adm: check_adm,
-                            time_init: item.time_init,
-                            aux: item.aux,
-                            time_end: item.time_end,
+                        if(validation.check_technical == 'true'){
+                            if(validation.check_adm == '') {
+                                report = 
+                                {
+                                    number_ot : item.number_ot,
+                                    date : date,
+                                    client: item.client,
+                                    component: item.component,
+                                    service : item.service,
+                                    check_technical: 'Realizado',
+                                    check_adm: 'No Aprobado',
+                                    time_init: item.time_init,
+                                    aux: item.aux,
+                                    time_end: item.time_end,
+                                }
+                                $aux.push(report);
+                            }
+                        }else{
+                            report = 
+                            {
+                                number_ot : item.number_ot,
+                                date : date,
+                                client: item.client,
+                                component: item.component,
+                                service : item.service,
+                                check_technical: 'No Realizado',
+                                check_adm: 'No Aprobado',
+                                time_init: item.time_init,
+                                aux: item.aux,
+                                time_end: item.time_end,
+                            }
+                            $aux.push(report);
                         }
-                        $aux.push(report);
                     }
                 });
     
@@ -131,17 +141,17 @@ const tabla = $('#tableTechnicalReports').DataTable({
                 if(row.time_init){
                     if(row.aux){
                         return `<button type='button' name='btn_tr' class='btn btn-primary'>
-                Ver informe
-                <i class="fas fa-search"></i>
-                </button>`
+                                Ver informe
+                                <i class="fas fa-search"></i>
+                                </button>`
                     }else{
                         return `<button type='button' name='btn_tr' class='btn btn-warning'>Realizar<i class="fas fa-pencil-alt"></i></button>`  
                     }  
                 }else{  
                     return `<button type='button' name='btn_tr' class='btn btn-primary'>
-                Ver informe
-                <i class="fas fa-search"></i>
-                </button>`
+                            Ver informe
+                            <i class="fas fa-search"></i>
+                            </button>`
                 }
 			}
 		   }
@@ -246,11 +256,12 @@ show_stop = (data) =>{
 chronometer = (data, msg) =>{
     datos = {
         ot_id : data.number_ot,
-        msg: msg
+        msg: msg,
+        name : 'technical_report'
     } 
     $.ajax({
         type: "POST",
-        url: host_url + "api/chronometer/TechnicalReport",
+        url: host_url + "api/chronometer",
         data: {datos},
         dataType: "json",
         success: (result) => {
