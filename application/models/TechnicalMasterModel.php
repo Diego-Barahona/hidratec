@@ -13,7 +13,7 @@ class TechnicalMasterModel extends CI_Model
        
         $query = "SELECT ot.id number_ot, ot.date_admission date, ot.priority priority, 
         ot.description description, ot.type_service service, e.name enterprise,
-         c.name component, s.name state ,ht.details,ht.user_interaction,ht.extra_info,ht.file_ht,ht.config,ht.state
+         c.name component, s.name state ,ht.details,ht.user_interaction,ht.extra_info,ht.file_ht,ht.config,ht.state, ht.time_init, ht.aux, ht.time_end
         FROM ot
         JOIN enterprise e ON ot.enterprise_id = e.id
         JOIN component c ON ot.component_id = c.id
@@ -74,9 +74,7 @@ class TechnicalMasterModel extends CI_Model
     { 
         $user= $_SESSION['id'];
     
-        $query = "SELECT r.ot_id number_ot, r.user_interaction ,r.date_reparation date , r.check_adm, r.check_technical, 
-        e.name client, c.name component, ot.type_service service,
-        r.time_init, r.aux, r.time_end
+        $query = "SELECT r.ot_id number_ot, r.user_interaction ,r.date_reparation date , r.check_adm, r.check_technical, e.name client, c.name component, ot.type_service service
         FROM reparation r 
         JOIN ot ON r.ot_id = ot.id
         JOIN enterprise e ON ot.enterprise_id = e.id
@@ -104,7 +102,7 @@ class TechnicalMasterModel extends CI_Model
     }
 
     public function getTechnicalReportByOrder($id){
-        $query= "SELECT tr.details data, tr.details_images data_images, tr.aux, tr.time_init, tr.time_end
+        $query= "SELECT tr.details data, tr.details_images data_images, tr.aux
         FROM technical_report tr
         WHERE tr.ot_id = ?";
         return $this->db->query($query, $id)->result_array(); 
@@ -114,43 +112,39 @@ class TechnicalMasterModel extends CI_Model
         $name = $_SESSION['full_name'];
         date_default_timezone_set("America/Santiago");
         $date_update = date("Y-m-d G:i:s");
-        $res = $this->setTimeEnd($data['ot_id']);
 
-        if($res = true){
+        $query= "SELECT r.user_interaction
+        FROM reparation r
+        WHERE r.ot_id = ?";
+        $result= $this->db->query($query, $data['ot_id'])->result_Array(); 
+        $interaction = json_decode($result[0]['user_interaction'], true);
 
-            $query= "SELECT r.user_interaction
-            FROM reparation r
-            WHERE r.ot_id = ?";
-            $result= $this->db->query($query, $data['ot_id'])->result_Array(); 
-            $interaction = json_decode($result[0]['user_interaction'], true);
-    
-            $datos_reparation = array(
-                'check_technical' => 1,
+        $datos_reparation = array(
+            'check_technical' => 1,
+            'date_reparation' => $date_update,
+            'user_interaction' => json_encode(array(
+                'technical_assignment' => $name,
                 'date_reparation' => $date_update,
-                'user_interaction' => json_encode(array(
-                    'technical_assignment' => $name,
-                    'date_reparation' => $date_update,
-                    'user_modify' => $name,
-                    'date_modify' => $date_update,
-                    'user_approve' =>  $interaction['user_approve'],
-                    'date_approve' =>  $interaction['date_approve']
-                )),
-            );
-    
-            $this->db->where('ot_id', $data['ot_id']);
-            if($this->db->update('reparation', $datos_reparation)) return true; else return false;
-        }else{
-            return false;
-        }
+                'user_modify' => $name,
+                'date_modify' => $date_update,
+                'user_approve' =>  $interaction['user_approve'],
+                'date_approve' =>  $interaction['date_approve']
+
+            )),
+        );
+
+
+        $this->db->where('ot_id', $data['ot_id']);
+        if($this->db->update('reparation', $datos_reparation)) return true; else return false;
     } 
   
     public function  getEvaluationEnable () { 
         
         $user= $_SESSION['id'];
 
-        $query = "SELECT ot.id number_ot, ot.date_admission date, ot.priority priority, 
+        $query = "SELECT ot.id number_ot, ot.date_admission date, 
         ot.description description, ot.type_service service, e.name enterprise,
-         c.name component, s.name state ,ev.details,ev.user_interaction , ev.state
+         c.name component, s.name state ,ev.details,ev.user_interaction , ev.state ,ev.time_init, ev.aux, ev.time_end,ev.priority
         FROM ot
         JOIN enterprise e ON ot.enterprise_id = e.id
         JOIN component c ON ot.component_id = c.id
@@ -229,6 +223,8 @@ class TechnicalMasterModel extends CI_Model
             if($this->db->insert('subtask_reparation', $datos_substask )) return true; else return false;
         }
     }
+
+
   
     public function createSubstakEvaluation($data){
  
@@ -252,6 +248,7 @@ class TechnicalMasterModel extends CI_Model
             if($this->db->insert('subtask_evaluation', $datos_substask )) return true; else return false;
         }
     }  
+
 
     public function updateSubstakReparation($data){
         $this->db->select('*'); 
@@ -278,6 +275,8 @@ class TechnicalMasterModel extends CI_Model
             if($this->db->update('subtask_reparation', $datos_substask)) return true; else return false;
         }
     }
+
+
  
     public function updateSubstakEvaluation($data){
         $this->db->select('*'); 
@@ -305,6 +304,9 @@ class TechnicalMasterModel extends CI_Model
         }
     }   
 
+
+
+
     public function desHabSubstakReparation($data){
         $this->db->where('id', $data['id']);
         $query = $this->db->update('subtask_reparation', $data);
@@ -326,7 +328,9 @@ class TechnicalMasterModel extends CI_Model
         }
     }
 
-    public function play($data){
+    
+
+    public function playTechnicalReport($data){
         date_default_timezone_set("America/Santiago");
         $date_update = date("Y-m-d G:i:s");
 
@@ -335,18 +339,18 @@ class TechnicalMasterModel extends CI_Model
             'aux' => null,
         );
         $this->db->where('ot_id', $data['ot_id']);
-        if($this->db->update($data['name'], $datos)) return true; else return false;
+        if($this->db->update('technical_report', $datos)) return true; else return false;
     }
 
-    public function stop($data){
-        $tabla = $data['name'];
+
+    public function stopTechnicalReport($data){
         date_default_timezone_set("America/Santiago");
         $date_update = date("Y-m-d G:i:s");
         $date1 = new DateTime($date_update);
        
  
         $query= "SELECT tr.time_init, tr.hours
-        FROM $tabla tr
+        FROM technical_report tr
         WHERE tr.ot_id = ?";
         $technicalReport = $this->db->query($query, array($data['ot_id']))->result_array(); 
 
@@ -398,24 +402,39 @@ class TechnicalMasterModel extends CI_Model
             'hours' => $hoursTotal,
         );
         $this->db->where('ot_id', $data['ot_id']);
-        if($this->db->update($tabla, $datos)) return true; else return false;
+        if($this->db->update('technical_report', $datos)) return true; else return false;
     }
 
-    public function setTimeEnd($ot_id){
+
+    public function playHydraulicTest($data){
         date_default_timezone_set("America/Santiago");
-        $date_end = date("Y-m-d G:i:s");
-        $date1 = new DateTime($date_end);
+        $date_update = date("Y-m-d G:i:s");
+
+        $datos = array(
+            'time_init' => $date_update,
+            'aux' => null,
+        );
+        $this->db->where('ot_id', $data['ot_id']);
+        if($this->db->update('hydraulic_test', $datos)) return true; else return false;
+    }
+
+
+
+    public function stopHydraulicTest($data){
+        date_default_timezone_set("America/Santiago");
+        $date_update = date("Y-m-d G:i:s");
+        $date1 = new DateTime($date_update);
        
  
-        $query= "SELECT tr.time_init, tr.hours
-        FROM reparation tr
-        WHERE tr.ot_id = ?";
-        $technicalReport = $this->db->query($query, array($ot_id))->result_array(); 
+        $query= "SELECT ev.time_init, ev.hours
+        FROM evaluation ev
+        WHERE ev.ot_id = ?";
+        $evaluation = $this->db->query($query, array($data['ot_id']))->result_array(); 
 
-        $hoursData = $technicalReport[0]['hours'];
+        $hoursData = $evaluation[0]['hours'];
 
 
-        $date_init = $technicalReport[0]['time_init'];
+        $date_init = $evaluation[0]['time_init'];
         $date2 = new DateTime($date_init);
 
         $interval = $date1->diff($date2);
@@ -456,12 +475,92 @@ class TechnicalMasterModel extends CI_Model
         $hoursTotal = ($suma/3600) + $hoursData;
 
         $datos = array(
-            'time_end' => $date_end,
-            'time_init' => null,
-            'aux' => null,
+            'aux' => $date_update,
             'hours' => $hoursTotal,
         );
-        $this->db->where('ot_id', $ot_id);
-        if($this->db->update('reparation', $datos)) return true; else return false;
+        $this->db->where('ot_id', $data['ot_id']);
+        if($this->db->update('evaluation', $datos)) return true; else return false;
     }
+
+
+    public function playEvaluation($data){
+        date_default_timezone_set("America/Santiago");
+        $date_update = date("Y-m-d G:i:s");
+
+        $datos = array(
+            'time_init' => $date_update,
+            'aux' => null,
+        );
+        $this->db->where('ot_id', $data['ot_id']);
+        if($this->db->update('evaluation', $datos)) return true; else return false;
+    }
+
+
+
+    public function stopEvaluation($data){
+        date_default_timezone_set("America/Santiago");
+        $date_update = date("Y-m-d G:i:s");
+        $date1 = new DateTime($date_update);
+       
+ 
+        $query= "SELECT ev.time_init, ev.hours
+        FROM evaluation ev
+        WHERE ev.ot_id = ?";
+        $evaluation = $this->db->query($query, array($data['ot_id']))->result_array(); 
+
+        $hoursData = $evaluation[0]['hours'];
+
+
+        $date_init = $evaluation[0]['time_init'];
+        $date2 = new DateTime($date_init);
+
+        $interval = $date1->diff($date2);
+
+        $year = (int)$interval->format('%y');
+        $month = (int)$interval->format('%m');
+        $day = (int)$interval->format('%d');
+        $hour = (int)$interval->format('%h');
+        $minute = (int)$interval->format('%i');
+        $second = (int)$interval->format('%s seconds');
+
+        if($minute != 0){
+            $minute = $minute * 60;
+        }
+
+        if($hour != 0){
+            $hour = $hour * 3600;
+        }
+
+        if($day != 0){
+            $day = $day * 86400;
+        }
+
+        $meses = 0;
+        if($month != 0){ 
+        /*     $month = $day * 86400; */
+            $año = date("Y", strtotime($date_init));
+            $mes = date("m", strtotime($date_init));
+
+            for($i=0; $i<$month; $i++){
+                $aux = (int)$mes + $i;
+                $cantDays = date('t', strtotime($año.'-'.$aux.'-05'));
+                $meses = $meses + ($cantDays*86400);
+            }
+        }
+
+        $suma = $minute + $hour + $day + $meses + $second;
+        $hoursTotal = ($suma/3600) + $hoursData;
+
+        $datos = array(
+            'aux' => $date_update,
+            'hours' => $hoursTotal,
+        );
+        $this->db->where('ot_id', $data['ot_id']);
+        if($this->db->update('evaluation', $datos)) return true; else return false;
+    }
+
+
+
+
+
 }

@@ -35,6 +35,7 @@
         <input type="hidden"  class="form-control" id="user_approve_ev" name="id" >
         <input  type="hidden"  class="form-control" id="date_approve_ev" name="id" >
         <input type="hidden" class="form-control" id="technical_id" name="technical_id" >
+        <input type="hidden" class="form-control" id="priority_ev" name="priority_ev" >
      
        
     <div class="row mb-2 ">

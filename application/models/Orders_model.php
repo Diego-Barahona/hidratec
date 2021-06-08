@@ -303,6 +303,7 @@ class Orders_model extends CI_Model
         $datos_ev = array(
             'ot_id' => $id_ot,
             'state' => 1,
+            'priority' => "2",
             'user_assignment'=> $id_technical,
             'user_interaction' => json_encode(array(
                 'user_create' => '',

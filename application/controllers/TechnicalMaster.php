@@ -502,7 +502,9 @@ class TechnicalMaster extends CI_Controller
         }   
     }
 
+
     public function chronometer(){
+
         if ($this->accesscontrol->checkAuth()['correct']) {
             $data = $this->input->post('datos');
             $nombre = '';
@@ -535,5 +537,70 @@ class TechnicalMaster extends CI_Controller
             redirect('Home/login', 'refresh');
         }   
     }
+
+
+    public function chronometerHydraulicTest() {
+
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $data = $this->input->post('datos');
+
+            if($data['msg'] == 'reanudado' || $data['msg'] == 'iniciado'){
+                if($this->TechnicalMasterModel->playHydraulicTest($data)){
+                    $msg['msg'] = "Reporte técnico ".$data['msg']." correctamente";
+                    $this->response->sendJSONResponse($msg);
+                }else{
+                    $msg['msg'] = "No se pudo cargar el recurso.";
+                    $this->response->sendJSONResponse($msg);
+                }
+            }else if($data['msg'] == 'detenido'){
+                if($this->TechnicalMasterModel->stopHydraulicTest($data)){
+                    $msg['msg'] = "Reporte técnico ".$data['msg']." correctamente";
+                    $this->response->sendJSONResponse($msg);
+                }else{
+                    $msg['msg'] = "No se pudo cargar el recurso.";
+                    $this->response->sendJSONResponse($msg);
+                }
+            }
+        } else {
+            redirect('Home/login', 'refresh');
+        }   
+    }
+
+
+    public function chronometerEvaluation() {
+
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $data = $this->input->post('datos');
+
+            if($data['msg'] == 'reanudado' || $data['msg'] == 'iniciado'){
+                if($this->TechnicalMasterModel->playEvaluation($data)){
+                    $msg['msg'] = "Reporte técnico ".$data['msg']." correctamente";
+                    $this->response->sendJSONResponse($msg);
+                }else{
+                    $msg['msg'] = "No se pudo cargar el recurso.";
+                    $this->response->sendJSONResponse($msg);
+                }
+            }else if($data['msg'] == 'detenido'){
+                if($this->TechnicalMasterModel->stopEvaluation($data)){
+                    $msg['msg'] = "Reporte técnico ".$data['msg']." correctamente";
+                    $this->response->sendJSONResponse($msg);
+                }else{
+                    $msg['msg'] = "No se pudo cargar el recurso.";
+                    $this->response->sendJSONResponse($msg);
+                }
+            }
+        } else {
+            redirect('Home/login', 'refresh');
+        }   
+    }
+
+
+
+
+
+
+
+
+
 }
 
