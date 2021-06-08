@@ -29,9 +29,11 @@ class Evaluation extends CI_Controller
         $description = $data['description'];
         $notes = $data['notes'];
         $technical = $data['technical'];
+        $priority= $data['priority'];
         
         $ok=true;
-   /*
+        if ($priority == "") { $ok = false;  $err['priority']  = "Ingrese prioridad";  }
+   /*   
         if ($date_evaluation== "") { $ok = false;  $err['date_evaluation']  = "Ingrese fecha de evaluación";  }
         if ($description == "") { $ok = false;  $err['description']  = "Ingrese description.";  }
         if ($notes == "") { $ok = false;  $err['notes']  = "Ingrese un notas.";  }
@@ -52,7 +54,7 @@ class Evaluation extends CI_Controller
             $this->response->sendJSONResponse( array("msg" => "No se han podido editar los datos "),400); 
             }
             
-        }else { $this->response->sendJSONResponse( array("msg" => "Complete todos los campos de la evaluación. ", "err"=> $err),400); }
+        }else { $this->response->sendJSONResponse( array("msg" => "Determine nivel de prioridad de la evaluación. ", "err"=> $err),400); }
 
         }else {
             $this->response->sendJSONResponse( array("msg" => "No tiene los permisos suficientes "),400);

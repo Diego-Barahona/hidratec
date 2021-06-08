@@ -40,7 +40,8 @@
                 <th>Realizado </th>
                 <th>Aprobado por administración</th>
                 <th>Tipo de servicio</th>
-                <th>Prueba hidráulica</th>
+                <th>Acción</th>
+                <th>Informe</th>
               </tr>
             </thead>
           </table>

@@ -265,5 +265,7 @@ $route['api/update/substakReparation']['POST'] = 'TechnicalMaster/updateSubstakR
 $route['api/create/substakReparation']['POST'] = 'TechnicalMaster/createSubstakReparation';
 $route['api/des_hab/substakReparation']['POST'] = 'TechnicalMaster/desHabSubstakReparation';
 $route['api/chronometer/TechnicalReport']['POST'] = 'TechnicalMaster/chronometerTechnicalReport';
+$route['api/chronometer/HydraylicTest']['POST'] = 'TechnicalMaster/chronometerHydraulicTest';
+$route['api/chronometer/evaluation']['POST'] = 'TechnicalMaster/chronometerEvaluation';
 /*------------------------------- End Routes Technical Master------------------------------------ */
 

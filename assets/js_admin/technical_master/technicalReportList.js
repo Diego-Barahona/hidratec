@@ -248,6 +248,7 @@ chronometer = (data, msg) =>{
         ot_id : data.number_ot,
         msg: msg
     } 
+    
     $.ajax({
         type: "POST",
         url: host_url + "api/chronometer/TechnicalReport",

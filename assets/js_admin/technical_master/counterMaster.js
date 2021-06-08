@@ -131,9 +131,9 @@ get_orders_ev= () => {
              report = 
                   {
                       number_ot : item.number_ot,
-                      priority: item.priority,
+                      priority: item.priority=="1" ? "Baja":item.priority=="2"?"Media": item.priority=="3"?"Alta":"Por asignar",
                       technical : interaction ? interaction.date_create :"" ,
-                      date : validation ? validation.date_evaluation : "Pendiente",
+                      date :  validation.date_evaluation ==""?"Pendiente": validation.date_evaluation,
                       enterprise : item.enterprise,
                       component : item.component,
                       service : item.service,
@@ -150,7 +150,7 @@ get_orders_ev= () => {
 				report = 
 				{
 					number_ot : item.number_ot,
-					priority: item.priority,
+					priority: item.priority=="1" ? "Baja":item.priority=="2"?"Media": item.priority=="3"?"Alta":"Por asignar",
 					technical : interaction ? interaction.date_create :"" ,
 					date :  "Pendiente",
 					enterprise : item.enterprise,

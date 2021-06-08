@@ -19,6 +19,7 @@ get_data_evaluation = () =>{
 			let data = xhr.response[0].details;
 			let technical=xhr.response[0].full_name;
 		    let data2 =xhr.response[0].user_interaction;
+			let priority=xhr.response[0].priority;
 
 			let file=xhr.response[0].export;
 
@@ -47,6 +48,7 @@ get_data_evaluation = () =>{
 				$( "#notes" ).val(evaluation.notes);
 				$("#record_path_pdf").val(file);
                 $("#name_technical").val(technical);
+				$("#priority_ev").val(priority);
 				
 				
 			}else{
@@ -57,6 +59,7 @@ get_data_evaluation = () =>{
 				$( "#notes" ).val('');
 				$("#record_path_pdf").val("");
 			    $("#name_technical").val("");
+				$("#priority_ev").val("");
 			}
 
 
@@ -168,11 +171,12 @@ edit_evaluation = () => {
 		date_create:$("#date_create_ev").val(),
 		date_modify:$("#date_modify_ev").val(),
 		date_approve:$("#date_approve_ev").val(),
+		priority:$("#priority_ev").val(),
 		check_admin_old:check_admin_old_ev,
         check_technical_old:check_technical_old_ev,
 		
 	};
-   console.log(data.technical);
+
    if(data.approve_technical== true){
 	Object.keys(data).map((d) => $(`.${d}`).hide());
 	$.ajax({

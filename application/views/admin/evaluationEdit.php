@@ -90,6 +90,16 @@
               </select>
                 <div class="invalid-feedback"></div>
               </div> 
+              <div class="col-md-4 mb-3" >
+                        <label for="actividad">Tipo de prioridad</label>
+                        <select class="form-select form-control"  style="background:white" id="priority_ev" name="priority_ev" required="" disabled>
+                            <option></option>
+                            <option value="1">BAJA</option>
+                            <option value="2">MEDIA</option>
+                            <option value="3">ALTA</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div> 
           </div>
 
           <div class="row mb-2 mr-2 mb-5 justify-content-end">
