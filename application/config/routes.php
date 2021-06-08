@@ -264,8 +264,23 @@ $route['api/tmGetSubstaksReparation/(:num)']['GET'] = 'TechnicalMaster/getSubsta
 $route['api/update/substakReparation']['POST'] = 'TechnicalMaster/updateSubstakReparation';
 $route['api/create/substakReparation']['POST'] = 'TechnicalMaster/createSubstakReparation';
 $route['api/des_hab/substakReparation']['POST'] = 'TechnicalMaster/desHabSubstakReparation';
-$route['api/chronometer/TechnicalReport']['POST'] = 'TechnicalMaster/chronometerTechnicalReport';
+
+
 $route['api/chronometer/HydraylicTest']['POST'] = 'TechnicalMaster/chronometerHydraulicTest';
 $route['api/chronometer/evaluation']['POST'] = 'TechnicalMaster/chronometerEvaluation';
+
+$route['api/chronometer']['POST'] = 'TechnicalMaster/chronometer';
+
 /*------------------------------- End Routes Technical Master------------------------------------ */
 
+
+/*------------------------------- Routes To Technical Assitant------------------------------------ */
+$route['atAdminSubstaksReparation']['GET'] = 'TechnicalAssistant/adminSubstaksReparation';
+$route['api/atGetSubstaksReparation']['GET'] = 'TechnicalAssistant/getSubstaksReparation';
+$route['api/atApproveSubstakReparation']['POST'] = 'TechnicalAssistant/approveSubstakReparation';
+
+
+$route['atAdminSubstaksEvaluation']['GET'] = 'TechnicalAssistant/adminSubstaksEvaluation';
+$route['api/atGetSubstaksEvaluation']['GET'] = 'TechnicalAssistant/getSubstaksEvaluation';
+$route['api/atApproveSubstakEvaluation']['POST'] = 'TechnicalAssistant/approveSubstakEvaluation';
+/*------------------------------- End Routes Technical Assitant------------------------------------ */

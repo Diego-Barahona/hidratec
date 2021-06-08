@@ -28,7 +28,7 @@ class Home extends CI_Controller {
 				//técnico master
 				else if ($rango == 3) $this->load_page_role("TechnicalMaster","technicalMaster");
 				//ayudante técnico
-				else if ($rango == 4) $this->load_page_role("TechnicalAssistant");
+				else if ($rango == 4) $this->load_page_role("TechnicalAssistant", "technicalAssistant");
 				//vendedor
 				else if ($rango == 5) $this->load_page_role("Seller", "seller");
 			}else if($this->session->usuario == "client"){
