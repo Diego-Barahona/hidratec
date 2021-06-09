@@ -20,7 +20,8 @@ get_data_evaluation = () =>{
 			let technical=xhr.response[0].full_name;
 		    let data2 =xhr.response[0].user_interaction;
 			let priority=xhr.response[0].priority;
-
+		    let location=xhr.response[0].location;
+            console.log(priority);
 			let file=xhr.response[0].export;
 
         
@@ -59,7 +60,7 @@ get_data_evaluation = () =>{
 				$( "#notes" ).val('');
 				$("#record_path_pdf").val("");
 			    $("#name_technical").val("");
-				$("#priority_ev").val("");
+				$("#priority_ev").val(priority);
 			}
 
 
@@ -82,6 +83,13 @@ get_data_evaluation = () =>{
 				$("#date_modify_ev").val("");
 				$("#date_approve_ev").val("");
 				$("#name_technical" ).val("");
+			}
+
+			if(location){
+            
+				$("#location_ev").val(location);
+			}else{
+				$("#location_ev").val("");
 			}
 
 			if(technical){
@@ -128,6 +136,7 @@ $("#hab_edit_ev").change(() => {
         $( "#technical_ev" ).prop( "disabled", false );
 		$( "#approve_admin_ev" ).prop( "disabled", false );
         $( "#approve_technical_ev" ).prop( "disabled", false );
+		$( "#location_ev" ).prop( "disabled", false );
 		$("#date_evaluation").datepicker({
             showOn: "button",
             buttonText: "Calendario",
@@ -140,6 +149,7 @@ $("#hab_edit_ev").change(() => {
 	}else{
         $( "#date_evaluation" ).prop( "disabled", true );
         $( "#description_ev" ).prop( "disabled", true);
+		$( "#location_ev" ).prop( "disabled", true );
         $(  "#notes").prop( "disabled", true );
         $(  "#technical_ev").prop( "disabled", true );
 		$( "#approve_admin_ev" ).prop( "disabled", true );
@@ -172,12 +182,15 @@ edit_evaluation = () => {
 		date_modify:$("#date_modify_ev").val(),
 		date_approve:$("#date_approve_ev").val(),
 		priority:$("#priority_ev").val(),
+		location:$("#location_ev").val(),
 		check_admin_old:check_admin_old_ev,
         check_technical_old:check_technical_old_ev,
 		
 	};
-
-   if(data.approve_technical== true){
+	console.log(data.location);
+   if (data.location != 0) { 
+   if(data.approve_technical== true ){
+	  
 	Object.keys(data).map((d) => $(`.${d}`).hide());
 	$.ajax({
 		data: {
@@ -218,6 +231,7 @@ edit_evaluation = () => {
 		},
 	});
 
+
 }else{
     swal({
 		title: "Error",
@@ -226,6 +240,15 @@ edit_evaluation = () => {
 	});
 
 }
+   }else{
+	swal({
+		title: "Error",
+		icon: "error",
+		text: "Por favor , seleccione la ubicación del componente a evaluado.",
+	});
+
+   }
+   
 };
 
 
@@ -233,7 +256,7 @@ edit_evaluation = () => {
 
 
 let technicals = [];
-
+let locations = [];
 getFields = () => {
 	let xhr = new XMLHttpRequest();
 	xhr.open("get", `${host_url}/api/getFieldsOrder`);
@@ -251,8 +274,16 @@ getFields = () => {
 					$("#technical_ev").val(technicals_user);
                      technicals.push(u.full_name);
                 });
-			
-				
+            }
+	        if(locations.length == 0){
+                xhr.response[3].map((u) => {
+                    let option = document.createElement("option"); 
+                    $(option).val(u.id); 
+                    $(option).attr('name', u.name);
+                    $(option).html(u.name); 
+                    $(option).appendTo("#location_ev");
+                    locations.push(u.name);
+                });
             }
 		} else {
 			swal({

@@ -47,5 +47,23 @@ class TechnicalAssistant extends CI_Controller
 			redirect('Home/login', 'refresh');
         }
     }
+
+    public function getCounterData(){
+
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $assistant= $_SESSION['id'];
+            if($report=$this->TechnicalAssistantModel->getCounterData($assistant)){
+                $this->response->sendJSONResponse($report); 
+            }else{
+                $this->response->sendJSONResponse(array('msg' => 'No se pudo actualizar la reparación.'), 400); 
+            }
+        }else {
+			redirect('Home/login', 'refresh');
+        }
+
+    }
+
+
+
     
 }

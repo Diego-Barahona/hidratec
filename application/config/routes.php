@@ -283,4 +283,6 @@ $route['api/atApproveSubstakReparation']['POST'] = 'TechnicalAssistant/approveSu
 $route['atAdminSubstaksEvaluation']['GET'] = 'TechnicalAssistant/adminSubstaksEvaluation';
 $route['api/atGetSubstaksEvaluation']['GET'] = 'TechnicalAssistant/getSubstaksEvaluation';
 $route['api/atApproveSubstakEvaluation']['POST'] = 'TechnicalAssistant/approveSubstakEvaluation';
+$route['api/counterAssistant']['GET'] = 'TechnicalAssistant/getCounterData';
+
 /*------------------------------- End Routes Technical Assitant------------------------------------ */
