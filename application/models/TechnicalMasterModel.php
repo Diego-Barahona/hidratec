@@ -74,7 +74,9 @@ class TechnicalMasterModel extends CI_Model
     { 
         $user= $_SESSION['id'];
     
-        $query = "SELECT r.ot_id number_ot, r.user_interaction ,r.date_reparation date , r.check_adm, r.check_technical, e.name client, c.name component, ot.type_service service
+        $query = "SELECT r.ot_id number_ot, r.user_interaction ,r.date_reparation date , r.check_adm, r.check_technical, 
+        e.name client, c.name component, ot.type_service service,
+        r.time_init, r.aux, r.time_end
         FROM reparation r 
         JOIN ot ON r.ot_id = ot.id
         JOIN enterprise e ON ot.enterprise_id = e.id
@@ -112,30 +114,34 @@ class TechnicalMasterModel extends CI_Model
         $name = $_SESSION['full_name'];
         date_default_timezone_set("America/Santiago");
         $date_update = date("Y-m-d G:i:s");
+        $res = $this->setTimeEnd($data['ot_id']);
 
-        $query= "SELECT r.user_interaction
-        FROM reparation r
-        WHERE r.ot_id = ?";
-        $result= $this->db->query($query, $data['ot_id'])->result_Array(); 
-        $interaction = json_decode($result[0]['user_interaction'], true);
+        if($res = true){
 
-        $datos_reparation = array(
-            'check_technical' => 1,
-            'date_reparation' => $date_update,
-            'user_interaction' => json_encode(array(
-                'technical_assignment' => $name,
+            $query= "SELECT r.user_interaction
+            FROM reparation r
+            WHERE r.ot_id = ?";
+            $result= $this->db->query($query, $data['ot_id'])->result_Array(); 
+            $interaction = json_decode($result[0]['user_interaction'], true);
+    
+            $datos_reparation = array(
+                'check_technical' => 1,
                 'date_reparation' => $date_update,
-                'user_modify' => $name,
-                'date_modify' => $date_update,
-                'user_approve' =>  $interaction['user_approve'],
-                'date_approve' =>  $interaction['date_approve']
-
-            )),
-        );
-
-
-        $this->db->where('ot_id', $data['ot_id']);
-        if($this->db->update('reparation', $datos_reparation)) return true; else return false;
+                'user_interaction' => json_encode(array(
+                    'technical_assignment' => $name,
+                    'date_reparation' => $date_update,
+                    'user_modify' => $name,
+                    'date_modify' => $date_update,
+                    'user_approve' =>  $interaction['user_approve'],
+                    'date_approve' =>  $interaction['date_approve']
+                )),
+            );
+    
+            $this->db->where('ot_id', $data['ot_id']);
+            if($this->db->update('reparation', $datos_reparation)) return true; else return false;
+        }else{
+            return false;
+        }
     } 
   
     public function  getEvaluationEnable () { 
@@ -328,83 +334,6 @@ class TechnicalMasterModel extends CI_Model
         }
     }
 
-    
-
-    public function playTechnicalReport($data){
-        date_default_timezone_set("America/Santiago");
-        $date_update = date("Y-m-d G:i:s");
-
-        $datos = array(
-            'time_init' => $date_update,
-            'aux' => null,
-        );
-        $this->db->where('ot_id', $data['ot_id']);
-        if($this->db->update('technical_report', $datos)) return true; else return false;
-    }
-
-
-    public function stopTechnicalReport($data){
-        date_default_timezone_set("America/Santiago");
-        $date_update = date("Y-m-d G:i:s");
-        $date1 = new DateTime($date_update);
-       
- 
-        $query= "SELECT tr.time_init, tr.hours
-        FROM technical_report tr
-        WHERE tr.ot_id = ?";
-        $technicalReport = $this->db->query($query, array($data['ot_id']))->result_array(); 
-
-        $hoursData = $technicalReport[0]['hours'];
-
-
-        $date_init = $technicalReport[0]['time_init'];
-        $date2 = new DateTime($date_init);
-
-        $interval = $date1->diff($date2);
-
-        $year = (int)$interval->format('%y');
-        $month = (int)$interval->format('%m');
-        $day = (int)$interval->format('%d');
-        $hour = (int)$interval->format('%h');
-        $minute = (int)$interval->format('%i');
-        $second = (int)$interval->format('%s seconds');
-
-        if($minute != 0){
-            $minute = $minute * 60;
-        }
-
-        if($hour != 0){
-            $hour = $hour * 3600;
-        }
-
-        if($day != 0){
-            $day = $day * 86400;
-        }
-
-        $meses = 0;
-        if($month != 0){ 
-        /*     $month = $day * 86400; */
-            $año = date("Y", strtotime($date_init));
-            $mes = date("m", strtotime($date_init));
-
-            for($i=0; $i<$month; $i++){
-                $aux = (int)$mes + $i;
-                $cantDays = date('t', strtotime($año.'-'.$aux.'-05'));
-                $meses = $meses + ($cantDays*86400);
-            }
-        }
-
-        $suma = $minute + $hour + $day + $meses + $second;
-        $hoursTotal = ($suma/3600) + $hoursData;
-
-        $datos = array(
-            'aux' => $date_update,
-            'hours' => $hoursTotal,
-        );
-        $this->db->where('ot_id', $data['ot_id']);
-        if($this->db->update('technical_report', $datos)) return true; else return false;
-    }
-
 
     public function playHydraulicTest($data){
         date_default_timezone_set("America/Santiago");
@@ -558,6 +487,146 @@ class TechnicalMasterModel extends CI_Model
         $this->db->where('ot_id', $data['ot_id']);
         if($this->db->update('evaluation', $datos)) return true; else return false;
     }
+
+    public function play($data){
+        date_default_timezone_set("America/Santiago");
+        $date_update = date("Y-m-d G:i:s");
+
+        $datos = array(
+            'time_init' => $date_update,
+            'aux' => null,
+        );
+        $this->db->where('ot_id', $data['ot_id']);
+        if($this->db->update($data['name'], $datos)) return true; else return false;
+    }
+
+    public function stop($data){
+        $tabla = $data['name'];
+        date_default_timezone_set("America/Santiago");
+        $date_update = date("Y-m-d G:i:s");
+        $date1 = new DateTime($date_update);
+       
+ 
+        $query= "SELECT tr.time_init, tr.hours
+        FROM $tabla tr
+        WHERE tr.ot_id = ?";
+        $technicalReport = $this->db->query($query, array($data['ot_id']))->result_array(); 
+
+        $hoursData = $technicalReport[0]['hours'];
+
+
+        $date_init = $technicalReport[0]['time_init'];
+        $date2 = new DateTime($date_init);
+
+        $interval = $date1->diff($date2);
+
+        $year = (int)$interval->format('%y');
+        $month = (int)$interval->format('%m');
+        $day = (int)$interval->format('%d');
+        $hour = (int)$interval->format('%h');
+        $minute = (int)$interval->format('%i');
+        $second = (int)$interval->format('%s seconds');
+
+        if($minute != 0){
+            $minute = $minute * 60;
+        }
+
+        if($hour != 0){
+            $hour = $hour * 3600;
+        }
+
+        if($day != 0){
+            $day = $day * 86400;
+        }
+
+        $meses = 0;
+        if($month != 0){ 
+        /*     $month = $day * 86400; */
+            $año = date("Y", strtotime($date_init));
+            $mes = date("m", strtotime($date_init));
+
+            for($i=0; $i<$month; $i++){
+                $aux = (int)$mes + $i;
+                $cantDays = date('t', strtotime($año.'-'.$aux.'-05'));
+                $meses = $meses + ($cantDays*86400);
+            }
+        }
+
+        $suma = $minute + $hour + $day + $meses + $second;
+        $hoursTotal = ($suma/3600) + $hoursData;
+
+        $datos = array(
+            'aux' => $date_update,
+            'hours' => $hoursTotal,
+        );
+        $this->db->where('ot_id', $data['ot_id']);
+        if($this->db->update($tabla, $datos)) return true; else return false;
+    }
+
+    public function setTimeEnd($ot_id){
+        date_default_timezone_set("America/Santiago");
+        $date_end = date("Y-m-d G:i:s");
+        $date1 = new DateTime($date_end);
+       
+ 
+        $query= "SELECT tr.time_init, tr.hours
+        FROM reparation tr
+        WHERE tr.ot_id = ?";
+        $technicalReport = $this->db->query($query, array($ot_id))->result_array(); 
+
+        $hoursData = $technicalReport[0]['hours'];
+
+
+        $date_init = $technicalReport[0]['time_init'];
+        $date2 = new DateTime($date_init);
+
+        $interval = $date1->diff($date2);
+
+        $year = (int)$interval->format('%y');
+        $month = (int)$interval->format('%m');
+        $day = (int)$interval->format('%d');
+        $hour = (int)$interval->format('%h');
+        $minute = (int)$interval->format('%i');
+        $second = (int)$interval->format('%s seconds');
+
+        if($minute != 0){
+            $minute = $minute * 60;
+        }
+
+        if($hour != 0){
+            $hour = $hour * 3600;
+        }
+
+        if($day != 0){
+            $day = $day * 86400;
+        }
+
+        $meses = 0;
+        if($month != 0){ 
+        /*     $month = $day * 86400; */
+            $año = date("Y", strtotime($date_init));
+            $mes = date("m", strtotime($date_init));
+
+            for($i=0; $i<$month; $i++){
+                $aux = (int)$mes + $i;
+                $cantDays = date('t', strtotime($año.'-'.$aux.'-05'));
+                $meses = $meses + ($cantDays*86400);
+            }
+        }
+
+        $suma = $minute + $hour + $day + $meses + $second;
+        $hoursTotal = ($suma/3600) + $hoursData;
+
+        $datos = array(
+            'time_end' => $date_end,
+            'time_init' => null,
+            'aux' => null,
+            'hours' => $hoursTotal,
+        );
+        $this->db->where('ot_id', $ot_id);
+        if($this->db->update('reparation', $datos)) return true; else return false;
+    }
+
 
 
 
