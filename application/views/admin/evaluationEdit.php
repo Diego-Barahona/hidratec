@@ -60,6 +60,12 @@
                       <div class="invalid-feedback"></div>
                   </div>
               </div>
+              <div class="col-md-4 mb-3" id="frm_location">
+                        <label>Ubicación</label>
+                        <select class="custom-select d-block w-100" id="location_ev" name="location_ev">
+                            <option></option>
+                        </select>
+                    </div>
           </div>
           <div class="row mb-2">
               <div class="col-md-6 mb-3">
@@ -100,6 +106,7 @@
                         </select>
                         <div class="invalid-feedback"></div>
                     </div> 
+                    
           </div>
 
           <div class="row mb-2 mr-2 mb-5 justify-content-end">

@@ -20,6 +20,8 @@ get_data_evaluation = () =>{
 			let data = xhr.response[0].details;
 			let technical=xhr.response[0].full_name;
 			let priority=xhr.response[0].priority;
+			let location=xhr.response[0].location;
+			console.log(typeof(location));
 		    let data2 =xhr.response[0].user_interaction;
 			let file=xhr.response[0].export;
 
@@ -82,6 +84,14 @@ get_data_evaluation = () =>{
 				$("#date_modify_ev").val("");
 				$("#date_approve_ev").val("");
 				$("#name_technical" ).val("");
+			}
+
+			if(location){
+                
+				
+				$("#location_ev").val(location);
+			}else{
+				$("#location_ev").val("");
 			}
 
 			if(technical){
@@ -176,6 +186,7 @@ edit_evaluation = () => {
 		date_modify:$("#date_modify_ev").val(),
 		date_approve:$("#date_approve_ev").val(),
 		priority:$("#priority_ev").val(),
+		location:$("#location_ev").val(),
 		check_admin_old:check_admin_old_ev,
         check_technical_old:check_technical_old_ev,
 		
@@ -240,6 +251,7 @@ $("#ev_popover").on("click",function(){
 
 
 let technicals = [];
+let locations= [];
 
 getFields = () => {
 	let xhr = new XMLHttpRequest();
@@ -260,6 +272,17 @@ getFields = () => {
                 });
 			
 				
+            }
+
+			if(locations.length == 0){
+                xhr.response[3].map((u) => {
+                    let option = document.createElement("option"); 
+                    $(option).val(u.id); 
+                    $(option).attr('name', u.name);
+                    $(option).html(u.name); 
+                    $(option).appendTo("#location_ev");
+                    locations.push(u.name);
+                });
             }
 		} else {
 			swal({

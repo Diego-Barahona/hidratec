@@ -144,7 +144,7 @@ class TechnicalMasterModel extends CI_Model
 
         $query = "SELECT ot.id number_ot, ot.date_admission date, 
         ot.description description, ot.type_service service, e.name enterprise,
-         c.name component, s.name state ,ev.details,ev.user_interaction , ev.state ,ev.time_init, ev.aux, ev.time_end,ev.priority
+         c.name component, s.name state ,ev.details,ev.user_interaction , ev.state ,ev.time_init, ev.aux, ev.time_end, ev.priority
         FROM ot
         JOIN enterprise e ON ot.enterprise_id = e.id
         JOIN component c ON ot.component_id = c.id

@@ -30,6 +30,7 @@ class Evaluation extends CI_Controller
         $notes = $data['notes'];
         $technical = $data['technical'];
         $priority= $data['priority'];
+        $location= $data['location'];
         
         $ok=true;
         if ($priority == "") { $ok = false;  $err['priority']  = "Ingrese prioridad";  }

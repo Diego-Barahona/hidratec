@@ -16,6 +16,9 @@ class TechnicalAssistantModel extends CI_Model
         return $this->db->query($query, array($user, 1, 0))->result();  
     } 
 
+
+
+
     public function approve($data){
         date_default_timezone_set("America/Santiago");
         $date_update = date("Y-m-d G:i:s");
@@ -100,4 +103,26 @@ class TechnicalAssistantModel extends CI_Model
         $this->db->where('subtask_id', $substask_id);
         if($this->db->update($table, $datos)) return true; else return false;
     }
+
+
+    public function getCounterData($user){
+
+        
+        $query1 = "SELECT sr.subtask_id, sr.state, sr.ot_id number_ot, sr.date_assigment date, sr.check_tm, sr.check_at, s.name substask
+        FROM subtask_reparation sr
+        JOIN subtask s ON sr.subtask_id = s.id
+        WHERE sr.user_id = ? && sr.state = ? && sr.check_tm = ? "; 
+        $subtask_rep = $this->db->query($query1, array($user, 1, 0))->result();  
+
+        $query2 = "SELECT se.subtask_id, se.state, se.ot_id number_ot, se.date_assigment date, se.check_tm, se.check_at, s.name substask
+        FROM subtask_evaluation se
+        JOIN subtask s ON se.subtask_id = s.id
+        WHERE se.user_id = ? && se.state = ? && se.check_tm = ? "; 
+        $subtask_ev = $this->db->query($query2, array($user, 1, 0))->result();
+        
+         return array( "subtask_rep" => $subtask_rep ,"subtask_ev"=> $subtask_ev );
+
+
+
+    } 
 }

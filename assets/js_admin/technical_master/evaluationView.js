@@ -17,7 +17,7 @@ get_data_evaluation = () =>{
 			let data = xhr.response[0].details;
 			let technical=xhr.response[0].full_name;
 		    let data2 =xhr.response[0].user_interaction;
-
+			let location=xhr.response[0].location;
 			let file=xhr.response[0].export;
 
         
@@ -77,6 +77,12 @@ get_data_evaluation = () =>{
 				$("#date_modify_ev").val("");
 				$("#date_approve_ev").val("");
 				$("#name_technical" ).val("");
+			}
+			if(location){
+            
+				$("#location_ev").val(location);
+			}else{
+				$("#location_ev").val("");
 			}
 
 			if(technical){

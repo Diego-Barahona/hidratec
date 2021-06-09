@@ -28,7 +28,7 @@ get_orders_ev = () => {
              interaction = JSON.parse(item.user_interaction);
 
             if(validation){
-                if(validation.approve_technical == "false"){
+                if(validation.approve_technical == "false" && validation.approve_admin== "false" || validation.approve_technical == "true" && validation.approve_admin== "false"){
                    
                   report = 
                     {
@@ -258,6 +258,8 @@ show_stop = (data) =>{
         }
     });
 }
+
+
 
 
 chronometer = (data, msg) =>{

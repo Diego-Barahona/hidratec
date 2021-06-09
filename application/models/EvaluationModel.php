@@ -9,7 +9,7 @@ class EvaluationModel extends CI_Model {
     public function getEvaluationByOrder($id){
         
         
-        $query= "SELECT e.details , u.full_name , e.user_assignment,e.state,e.export,e.user_interaction,e.priority
+        $query= "SELECT e.details , u.full_name , e.user_assignment,e.state,e.export,e.user_interaction,e.priority,e.location
         FROM evaluation e
         LEFT JOIN user_role ur ON ur.user_id = e.user_assignment
         LEFT JOIN user u ON u.id = ur.user_id
@@ -31,6 +31,7 @@ class EvaluationModel extends CI_Model {
         $user_create="";
         $date_create="";
         $priority = $data['priority'];
+        $location = $data['location'];
         $technical = $data['technical'];
 
         if($data['approve_technical'] == "true" && $data['check_technical_old'] == "false"){
@@ -89,8 +90,8 @@ class EvaluationModel extends CI_Model {
         );
 
 
-        $query = "UPDATE evaluation SET details = ? , user_assignment = ? , user_interaction = ? , priority = ? WHERE ot_id = ?";
-            return $this->db->query($query, array($details,$technical,$user_interaction,$priority,$id));  
+        $query = "UPDATE evaluation SET details = ? , user_assignment = ? , user_interaction = ? , priority = ? , evaluation.location = ?  WHERE ot_id = ?";
+            return $this->db->query($query, array($details,$technical,$user_interaction,$priority,$location,$id));  
     }  
 
 
