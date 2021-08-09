@@ -286,3 +286,6 @@ $route['api/atApproveSubstakEvaluation']['POST'] = 'TechnicalAssistant/approveSu
 $route['api/counterAssistant']['GET'] = 'TechnicalAssistant/getCounterData';
 
 /*------------------------------- End Routes Technical Assitant------------------------------------ */
+$route['projector']['GET']='Monitor/viewProjector';
+$route['api/projector/kpiQuotation']['GET']='Monitor/chartQuotation';
+$route['api/projector/kpiProduction']['GET']='Monitor/chartProduction';

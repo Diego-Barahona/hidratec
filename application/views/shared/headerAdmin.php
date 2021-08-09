@@ -124,7 +124,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="<?php echo base_url(); ?>projector">
                     <i class="fas fa-tv"></i>
                     <span>Proyector</span></a>
                     <hr class="sidebar-divider">
