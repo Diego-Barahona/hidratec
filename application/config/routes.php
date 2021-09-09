@@ -287,5 +287,5 @@ $route['api/counterAssistant']['GET'] = 'TechnicalAssistant/getCounterData';
 
 /*------------------------------- End Routes Technical Assitant------------------------------------ */
 $route['projector']['GET']='Monitor/viewProjector';
-$route['api/projector/kpiQuotation']['GET']='Monitor/chartQuotation';
+$route['api/projector/kpiQuotation/(:num)']['GET']='Monitor/chartQuotation/$1';
 $route['api/projector/kpiProduction']['GET']='Monitor/chartProduction';

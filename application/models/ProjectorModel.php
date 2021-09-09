@@ -8,29 +8,16 @@ class ProjectorModel extends CI_Model
 
 
 
-    public function getKpiQuotation() { 
-
-
-        // date_admission -> ingreso data 
-        // date_quotation -> fecha de cotizacion 
-        // date _reparation -> fecha reparacion 
-        // date_cellar -> fecha de bodega 
-        // days_quotation y days_reparation 
-       
+    public function getKpiQuotation($month) { 
         
         $query1 = "SELECT  AVG(5 * (DATEDIFF( ot.date_quotation,ot.date_admission) DIV 7) + MID('0123455401234434012332340122123401101234000123450', 7 * WEEKDAY(ot.date_admission) + WEEKDAY(ot.date_quotation) + 1, 1)) as kpi_quotation
                    FROM ot
-                   WHERE  ot.date_quotation IS NOT NULL 
+                   WHERE  ot.date_quotation IS NOT NULL and ot.date_admission  IS NOT NULL and MONTH(ot.date_quotation) = $month
                    ";
 
         $value = $this->db->query($query1)->row_array();
-         
-
         return $value ;
         
-    
-         // suma todas las condiciones  sera el valor final 
-
     }
 
 
