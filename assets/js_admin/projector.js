@@ -1,6 +1,7 @@
 
 
 let kpi_quotation = 0;
+let kpi_production = 0;
 
 const seccionesPagina = new fullpage ('#fullpage',{ 
     autoscrolling:true, 
@@ -46,7 +47,7 @@ function drawQuotation() {
 
 	    	if (xhr.status === 200) {
 			       response = xhr.response;
-             kpi_quotation = parseInt(response.kpi_quotation);
+             kpi_quotation = parseInt(response);
           
 		    } 
 	});
@@ -69,7 +70,7 @@ function drawProduction() {
 
     var data = google.visualization.arrayToDataTable([
       ['Label', 'Value'],
-      ['Producción',5]
+      ['Producción',0]
      
     ]);
   
@@ -85,11 +86,27 @@ function drawProduction() {
     var chart = new google.visualization.Gauge(document.getElementById('chart_production'));
   
     chart.draw(data, options);
-  
-   
     setInterval(function() {
-      
-      data.setValue(0, 1,6 );
+       
+      let xhr = new XMLHttpRequest();
+      xhr.open("get", `${host_url}/api/projector/kpiProduction`);
+      xhr.responseType = "json";
+      xhr.addEventListener("load", () => {
+
+       if (xhr.status === 200) {
+            response = xhr.response;
+            let a = 0;
+            if(response['kpi_reparation']){
+              a = parseInt(response['kpi_reparation'])
+            }else{
+              a = 0;
+            }
+            kpi_production = a;
+       } 
+    });
+      xhr.send();
+      data.setValue(0, 1, kpi_production);
+      //data.setValue(0, 1, Math.round(Math.random()*10));
       chart.draw(data, options);
     }, 3000);
     

@@ -7,6 +7,9 @@ Boa Sandersonia
 Inu Inu: modelo Kyubi-no-kitsune
 Catarina Devon
 
+Inu Inu: modelo Lobo
+Jabra
+
 Sara Sara: modelo Axolote
 Smiley
 
@@ -80,10 +83,10 @@ Toge Toge no mi
 Zala
 
 Doru Doru no mi
-Galdino
+Galdino Mr3
 
 Mane Mane no mi
-Bentham
+Bentham Mr 2
 
 Supa Supa no mi
 Daz Bone
@@ -132,137 +135,220 @@ Raizo
 
 Fruta Numa Numa no mi
 Caribou
+
 Fruta Mato Mato no mi
 Vander Decken
+
 Fruta Pamu Pamu no mi
 Gladius
+
 Fruta Zou Zou no mi
 Funk Freed
+
 Fruta Tori Tori: Modelo Halcón
 Pell
+
 Fruta Tori Tori: Modelo Fénix
 Marco
+
 Fruta Poke Poke no mi
 Blamenco
+
 Fruta Beta Beta no mi
 Trébol
+
 Fruta Kira Kira no mi
 Jozu
+
 Fruta Hira Hira no mi
 Diamante
+
 Fruta Hobi Hobi no mi
 Sugar
+
 Fruta Ori Ori no mi
 Hina
+
 Fruta Doa Doa no mi
 Blueno
+
 Fruta ito ito no mi
 Donquixote Doflamingo
+
 Fruta Gasu Gasu no mi
 Caesar Clown
+
 Fruta Yuki Yuki no mi
 Monet
+
 Fruta Inu Inu: modelo Tanuki
 Bunbuku
+
 Fruta Nagi Nagi no mi
 Donquixote Rosinante
+
 Fruta Ato Ato no mi
 Giolla
+
 Fruta Sui Sui no mi
 Sr. Pink
+
 Fruta Ton Ton no mi
 Machvise
+
 Fruta Guru Guru no mi
 Buffalo
+
 Fruta Ushi Ushi: Modelo Bisonte
 Dalton
+
 Fruta Ushi Ushi: Modelo Jirafa
 Kaku
+
 Fruta Awa Awa no mi
 Kalifa
+
 Fruta Hebi Hebi: Modelo Yamata-no-Orochi
 Kurozumi Orochi
+
 Fruta Mushi Mushi: Modelo Suzumebachi
 Bian
+
 Fruta Mushi Mushi: Modelo Kabutomushi
 Kabu
+
 Fruta Nui Nui no mi
 Leo
+
 Fruta Chiyu Chiyu no mi
 Mansherry
+
 Fruta Uma Uma no mi
 Pierre
+
 Fruta Kage Kage no mi
 Gecko Moria
+
 Fruta Suke Suke no mi
 Shiryu
+
 Fruta Noro Noro no mi
 Foxi
+
 Fruta Beri Beri no mi
 Very Good
+
 Fruta Sabi Sabi no mi
 Shu
+
 Fruta Shari Shari no mi
 Sharinguru
+
 Fruta Shiro Shiro no mi
 Capone Bege
+
 Fruta Gomu Gomu no mi
 Monkey D. Luffy
+
+Moku moku no mi
+Smoker
+
 Fruta Horo Horo no mi
 Perona
+
 Fruta Mero Mero no mi
 Boa Hancock
+
 Fruta Bara Bara no mi
 Buggy
+
 Fruta Yami Yami no mi
 Marshall D. Teach
+
 Fruta Gura Gura no mi
 Marshall D. Teach
+
 Fruta Hie Hie no mi
 Kuzan
+
 Fruta Magu Magu no mi
 Sakazuki
+
 Fruta Pika Pika no mi
 Borsalino
+
 Fruta Woshu Woshu no mi
 Tsuru
+
 Fruta Hito Hito no mi
 Tony Tony Chopper
+
 Fruta Hito Hito: Modelo Daibutsu
 Sengoku
+
 Fruta Wara Wara no mi
 Basil Hawkins
+
 Fruta Doku Doku no mi 
 Magellan
+
 Fruta Fuwa Fuwa no mi
 Shiki
+
 Fruta Goro Goro no mi
 Enel
+
 Fruta Zushi Zushi no mi
 Issho
+
 Fruta Bari Bari no mi
 Bartolomeo
+
 Fruta Giro Giro no mi
 Viola Riku
+
 Fruta Jake Jake no mi
 Kelly Funk
+
 Fruta Pero Pero no mi
 Charlotte Perospero
+
 Fruta Mira Mira no mi
 Charlotte Brulee
+
 Fruta Bisu Bisu no mi
 Charlotte Cracker
+
 Fruta Kuri Kuri no mi
 Charlotte Opera
+
 Fruta Memo Memo no mi
 Charlotte Pudding
+
 Fruta Mochi Mochi no mi
 Charlotte Katakuri
+
 Fruta Hoya Hoya no mi
 Charlotte Daifuku
+
 Fruta Oshi Oshi no mi
 Morley
+
 Fruta Ope Ope no mi
 Trafalgar D. Water Law
+
 Fruta Toki Toki no mi
 Kozuki Toki
+
+Gasha Gasha nomi
+Bullet
+
+Ame Ame no mi
+Gasparde
+
+
+
+
+
+
+

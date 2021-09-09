@@ -50,8 +50,16 @@ public function __construct(){
         }
     }
 
-
-
+    public function getOrders(){
+        
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $this->load->model('ProjectorModel');
+            $orders = $this->ProjectorModel->getOrders();
+            $this->response->sendJSONResponse($orders);
+        } else {
+            $this->response->sendJSONResponse(array('msg' => 'Permisos insuficientes'), 400);
+        }
+    }
 
 
 
