@@ -13,6 +13,11 @@ const seccionesPagina = new fullpage ('#fullpage',{
     sectionsColor: ['#34495E', '#34495E', '#FDFEFE'],
     slidesNavigation: true,
     navigation:true,
+    afterRender: function() {
+      setInterval(function() {
+        fullpage_api.moveSectionDown();
+      },180000)
+    }
 });
 
 function drawQuotation() {
@@ -38,9 +43,11 @@ function drawQuotation() {
 
 
   setInterval(function() {
-       
+       let m = new Date();
+       let month = m.getMonth()+ 1;
+      console.log(month);
        let xhr = new XMLHttpRequest();
-	     xhr.open("get", `${host_url}/api/projector/kpiQuotation`);
+	     xhr.open("get", `${host_url}/api/projector/kpiQuotation/${month}`);
 	     xhr.responseType = "json";
 	     xhr.addEventListener("load", () => {
 

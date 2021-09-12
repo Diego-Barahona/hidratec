@@ -24,12 +24,12 @@ public function __construct(){
 
 
 
-    public function chartQuotation(){
+    public function chartQuotation($month){
 
         if ($this->accesscontrol->checkAuth()['correct']) {
 
             $this->load->model('ProjectorModel');
-            $datos = $this->ProjectorModel->getKpiQuotation();
+            $datos = $this->ProjectorModel->getKpiQuotation($month);
             $this->response->sendJSONResponse($datos);
 
         } else {
