@@ -33,7 +33,9 @@ class Evaluation extends CI_Controller
         $location= $data['location'];
         
         $ok=true;
-        if ($priority == "") { $ok = false;  $err['priority']  = "Ingrese prioridad";  }
+
+        if($_SESSION['rango']== 2 || $_SESSION['rango']== 1 ){
+        if ($priority == "") { $ok = false;  $err['priority']  = "Ingrese prioridad";  }}
    /*   
         if ($date_evaluation== "") { $ok = false;  $err['date_evaluation']  = "Ingrese fecha de evaluación";  }
         if ($description == "") { $ok = false;  $err['description']  = "Ingrese description.";  }

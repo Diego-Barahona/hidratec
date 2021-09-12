@@ -189,7 +189,7 @@ edit_evaluation = () => {
 	};
 	console.log(data.location);
    if (data.location != 0) { 
-   if(data.approve_technical== true ){
+  // if(data.approve_technical== true ){
 	  
 	Object.keys(data).map((d) => $(`.${d}`).hide());
 	$.ajax({
@@ -207,7 +207,6 @@ edit_evaluation = () => {
 				text: result.msg,
                 button: "OK",
 			}).then(() => {
-				get_data_evaluation();
 				$('#hab_edit_ev').prop( "checked", false );
 				$( "#date_evaluation" ).prop( "disabled", true );
 				$( "#description_ev" ).prop( "disabled", true);
@@ -216,7 +215,8 @@ edit_evaluation = () => {
 				$( "#approve_technical_ev" ).prop( "disabled", true );
 				$( "#technical_ev" ).prop( "disabled", true );
 				$("#date_evaluation").datepicker("destroy");	
-
+				window.location.assign(host_url+'adminEvaluation');
+				get_data_evaluation();
 			   });
 		},
 		error: (result) => {
@@ -240,14 +240,14 @@ edit_evaluation = () => {
 	});
 
 }
-   }else{
+  /* }else{
 	swal({
 		title: "Error",
 		icon: "error",
 		text: "Por favor , seleccione la ubicación del componente a evaluado.",
 	});
 
-   }
+   }*/
    
 };
 

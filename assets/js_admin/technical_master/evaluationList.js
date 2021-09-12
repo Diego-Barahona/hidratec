@@ -171,7 +171,7 @@ $("#table_ev").on("click", "button", function () {
             show_stop(data);
         }else if($(this)[0].name == "tr_btn_play_continue"){
             show_continue(data);
-        }else {
+        }else if($(this)[0].name == "admin_subtask"){
             let ot = data.number_ot;
             let url = 'subtasksEvaluationList'+'?ot='+ot;
             window.location.assign(host_url+url);
