@@ -16,22 +16,23 @@ const tabla = $("#table-work").DataTable({
 		{ data: "component" }, 
         { data: "service" }, 
 		{ data: "dias_rep" },
-        { data: "fecha_rep" },
+        { data: "date_assignment" },
         { data: "technical" },
 		
-		/* { defaultContent: "oc",
+		{ defaultContent: "oc",
 			"render": function (data, type, row){
-				if(row){
-					return `<button type='button' name='btnApprove' class='btn btn-primary'>
-					Aprobar
-					<i class="fas fa-thumbs-up"></i>
+				if(parseInt(row.dias_rep) > parseInt(row.days_passed)){
+					return `<button type='button' class='btn btn-success'>
+					En Reparación
 					</button>`
 				}else{
-					return 
+					return `<button type='button' class='btn btn-danger'>
+					Atrasado
+					<i class="fas fa-exclamation-triangle"></i>
+					</button>`
 				}
 			}
-		}, */
-	
+		},
 	],
 });
 

@@ -50,6 +50,13 @@ get_data_reparation = () =>{
                 $("#r_date_reparation").val('');
             }
 
+            console.log(xhr.response[0][0].date_assignment);
+            if(xhr.response[0][0].date_assignment){
+                $("#r_date_assignment").val(xhr.response[0][0].date_assignment);
+            }else{
+                $("#r_date_assignment").val('');
+            }
+
             if(xhr.response[0][0].days){
                 $("#r_days_reparation").val(xhr.response[0][0].days);
             }else{
@@ -89,6 +96,7 @@ r_enableFields = ()=>{
     a = $("#r_btnEdit").val();
     if(a == 0){
         $("#r_date_reparation").attr("readonly", false);
+        $("#r_date_assignment").attr("readonly", false);
         $("#r_days_reparation").attr("readonly", false);
         $("#r_technical").removeAttr("disabled");
         $("#r_check_adm").removeAttr("disabled");
@@ -102,6 +110,16 @@ r_enableFields = ()=>{
             dateFormat: 'yy-mm-dd',
             buttonImage: host_url + 'assets/img/about/calendario2.png',
         });
+
+        $("#r_date_assignment").datepicker({
+            showOn: "button",
+            buttonText: "Calendario",
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'yy-mm-dd',
+            buttonImage: host_url + 'assets/img/about/calendario2.png',
+        });
+
         $("#r_btnEdit").val(1);
         $("#r_btnEdit").removeClass("btn btn-success");
         $("#r_btnEdit").addClass("btn btn-danger");
@@ -109,11 +127,13 @@ r_enableFields = ()=>{
         $("#r_btnSave").show();
     }else if(a==1){
         $("#r_date_reparation").attr("readonly", true);
+        $("#r_date_assignment").attr("readonly", true);
         $("#r_days_reparation").attr("readonly", true);
         $("#r_technical").attr("disabled", true);
         $("#r_check_adm").attr("disabled", true);
         $("#r_check_technical").attr("disabled", true);
         $("#r_date_reparation").datepicker("destroy");
+        $("#r_date_assignment").datepicker("destroy");
         $("#r_btnEdit").val(0);
         $("#r_btnEdit").removeClass("btn btn-danger");
         $("#r_btnEdit").addClass("btn btn-success");
@@ -137,6 +157,7 @@ saveReparation = () =>{
         ot_id : $("#ot_number").val(),
         days_reparation: $('#r_days_reparation').val(),
         date_reparation: $('#r_date_reparation').val(),
+        date_assignment: $('#r_date_assignment').val(),
         check_adm_old: r_check_adm_old,
         date_approve: date_approve,
         user_approve: user_approve,

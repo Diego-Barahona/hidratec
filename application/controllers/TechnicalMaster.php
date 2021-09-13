@@ -78,8 +78,6 @@ class TechnicalMaster extends CI_Controller
     }
 
 
-
-
     public function hydraylicTestForm()
     { 
         
@@ -94,7 +92,6 @@ class TechnicalMaster extends CI_Controller
             redirect('Home/login', 'refresh');
         }
     }
-
 
     public function hydraylicTestFormView()
     { 
@@ -124,7 +121,6 @@ class TechnicalMaster extends CI_Controller
              $this->response->sendJSONResponse(array('msg' => 'No tiene permisos suficientes.'), 400);
            }
     }
-
 
     public function  getEvaluationEnable() { 
        

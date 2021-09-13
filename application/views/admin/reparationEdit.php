@@ -32,7 +32,6 @@
                         <button id="r_popover" type="button" class="btn btn-primary rounded-circle" data-toggle="popover" data-placement="left"><i class="fas fa-info"></i></button>
                     </div>               
                 </div>
-
                 <div class="row mb-2">
                     <div class="col-md-4 mb-3">
                         <label for="actividad">Fecha de reparación</label>
@@ -50,6 +49,14 @@
                         <label>Días de reparación</label>
                         <div class="input-group">
                             <input type="text" class="form-control" name="r_days_reparation" id="r_days_reparation" readonly>
+                        </div>
+                    </div>
+                </div> 
+                <div class="row mb-2">
+                    <div class="col-md-4 mb-3">
+                        <label for="actividad">Fecha de asignación</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="r_date_assignment" id="r_date_assignment" readonly>
                         </div>
                     </div>
                 </div> 
