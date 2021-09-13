@@ -20,7 +20,6 @@ class TechnicalAssistant extends CI_Controller
         }
     }
 
-
     public function getSubstaksReparation() { 
         if ($this->accesscontrol->checkAuth()['correct']) {
             if($res = $this->TechnicalAssistantModel->getSubstaksReparation()){

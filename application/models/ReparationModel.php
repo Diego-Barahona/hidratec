@@ -7,7 +7,7 @@ class ReparationModel extends CI_Model {
     }
 
     public function getReparationByOrder($ot_id){
-        $query= "SELECT r.check_adm check_adm, r.check_technical check_technical, r.user_assignment user, r.date_reparation date, ot.days_reparation days, r.user_interaction
+        $query= "SELECT r.check_adm check_adm, r.date_assignment, r.check_technical check_technical, r.user_assignment user, r.date_reparation date, ot.days_reparation days, r.user_interaction
         FROM reparation r
         LEFT JOIN ot ON ot.id = r.ot_id
         WHERE r.ot_id = ? ";
@@ -68,6 +68,7 @@ class ReparationModel extends CI_Model {
             'check_technical' => $data['check_technical'],   
             'user_assignment' => $technical,
             'date_reparation' => $data['date_reparation'],
+            'date_assignment' => $data['date_assignment'],
             'user_interaction' => json_encode(array(
                 'technical_assignment' => $technical_assignment,
                 'date_reparation' => $date_reparation,

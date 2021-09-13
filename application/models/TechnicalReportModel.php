@@ -29,7 +29,7 @@ class TechnicalReportModel extends CI_Model {
                 }
                 $cont++;
             }
-            $query= "SELECT * FROM images i WHERE .$var. AND i.ot_id = $id_ot";
+            $query= "SELECT * FROM images i WHERE $var AND i.ot_id = $id_ot";
             if($res = $this->db->query($query, array($id_ot))->result()) return $res; else return false;
         }else{
             $query= "SELECT * FROM images i WHERE i.ot_id = $id_ot";

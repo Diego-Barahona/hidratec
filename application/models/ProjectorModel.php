@@ -42,22 +42,15 @@ class ProjectorModel extends CI_Model
     }
 
     public function getOrders(){
-        $query = "SELECT ot.id number_ot, u.full_name technical, ot.type_service service, ot.days_reparation dias_rep, ot.date_reparation fecha_rep ,c.name component 
+        date_default_timezone_set("America/Santiago");
+        $a = date("Y-m-d");
+        $query = "SELECT ot.id number_ot, u.full_name technical, ot.type_service service, ot.days_reparation dias_rep, r.date_assignment date_assignment ,c.name component,
+            5 * (DATEDIFF( '$a' , r.date_assignment) DIV 7) + MID('0123455401234434012332340122123401101234000123450', 7 * WEEKDAY(r.date_assignment) + WEEKDAY('$a') + 1, 1) as days_passed
             FROM ot
-            LEFT JOIN component c ON ot.component_id = c.id
-            LEFT JOIN ot_state os ON ot.id = os.ot_id
-            LEFT JOIN reparation r ON ot.id = r.ot_id
-            LEFT JOIN user u ON r.user_assignment = u.id
-            LEFT JOIN state s ON os.state_id = s.id
-            WHERE r.check_adm = 0 AND os.state_id = 4 AND os.id = (
-                SELECT f.id 
-                FROM ot_state f 
-                WHERE f.ot_id = ot.id AND f.date_update = (
-                      SELECT MAX(j.date_update)
-                      FROM ot_state j
-                      WHERE j.ot_id = ot_id
-                    ) 
-              )    
+            JOIN component c ON ot.component_id = c.id
+            JOIN reparation r ON ot.id = r.ot_id
+            JOIN user u ON r.user_assignment = u.id
+           /*  WHERE r.check_adm = 0 AND r.user_assignment IS NOT NULL */
             "; 
             return $this->db->query($query)->result();
     }

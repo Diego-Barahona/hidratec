@@ -89,9 +89,10 @@
                     <th>Componente</th>
                     <th>Servicio</th>
                     <th>Dias rep </th>
-                    <th>Fecha reparación</th>
+                    <th>Fecha de asignación</th>
                     <th>Asignado</th>
                     <th>Estado</th>
+                    
                   </tr>
                 </thead>
               </table>
