@@ -27,6 +27,7 @@
       <div class="card-header">
         <i class="fas fa-table"></i>
         Lista de marcas
+        <button class="btn btn-success float-right" type='button' data-toggle="modal" data-target="#addBrand" id="btn"><i class="fas fa-plus"></i> Crear marca</button>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -43,11 +44,6 @@
         </div>
       </div>
     </div>
-    <div style="padding-right: 40px">
-      <button class="btn btn-success float-right" type='button' data-toggle="modal" data-target="#addBrand" id="btn"><i class="fas fa-plus"></i> Crear marca</button>
-    </div>
-    <div class="row mb-3"></div>
-
   </div>
 </div>
 
@@ -67,19 +63,20 @@
           </div>
         </div>
         <div class="form-group">
-        <form>
-            <input type="hidden" class="form-control" id="id" name="id" >
-            <div class="form-group" id="frm_name">
-                <label>Nombre</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese nombre">
-                 <div class="invalid-feedback"></div>
-            </div>
-            <div class="form-group float-right">
-            <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="button" id="createBrand" class="btn btn-primary">Guardar</button>
-          </div>
-
-      </form>
+          <form>
+              <input type="hidden" class="form-control" id="id" name="id" >
+              <div class="form-group" id="frm_name">
+                  <label>Nombre</label>
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Ingrese nombre">
+                  <div class="invalid-feedback"></div>
+              </div>
+              <div class="form-group float-right">
+                <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" id="createBrand" class="btn btn-primary">Guardar</button>
+              </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </div>

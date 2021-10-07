@@ -22,6 +22,7 @@
         </div>
       </div>
     </div>
+
     <div class="card mb-3">
       <div class="card-header">
         <i class="fas fa-table"></i>
@@ -44,8 +45,6 @@
         </div>
       </div>
     </div>
-    <div class="row mb-3"></div>
-    <div>
     <!-- Modal Agregar y Editar Empresa -->
     <div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal_enterprise" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -81,7 +80,7 @@
             </div>
         </div>
     </div>
-    </div>
+  </div>
 </div>
 <script src="<?php echo base_url(); ?>assets/js_admin/enterprise.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/rut.js"></script>

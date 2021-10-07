@@ -104,11 +104,27 @@ class TechnicalMasterModel extends CI_Model
     }
 
     public function getTechnicalReportByOrder($id){
-        $query= "SELECT tr.details data, tr.details_images data_images, tr.aux
+        $query= "SELECT tr.details data, tr.details_images data_images, tr.aux, tr.time_init, tr.time_end
         FROM technical_report tr
         WHERE tr.ot_id = ?";
         return $this->db->query($query, $id)->result_array(); 
     } 
+
+    public function getSubstakByEvaluation($id){
+      $query= "SELECT se.id
+      FROM subtask_evaluation se
+      WHERE se.ot_id = ? AND se.check_tm = ? ";
+      $cantidad = $this->db->query($query, array($id,0))->result_array(); 
+      return(count($cantidad));
+    }
+
+    public function getSubstakByReparation($id){
+        $query= "SELECT se.id
+        FROM subtask_reparation se
+        WHERE se.ot_id = ? AND se.check_tm = ? ";
+        $cantidad = $this->db->query($query, array($id,0))->result_array(); 
+        return(count($cantidad));
+    }
 
     public function approveReparation($data){
         $name = $_SESSION['full_name'];
@@ -177,6 +193,20 @@ class TechnicalMasterModel extends CI_Model
         JOIN user u ON sr.user_id = u.id
         JOIN subtask s ON sr.subtask_id = s.id
         WHERE sr.ot_id = ?"; 
+        return $this->db->query($query,array($id))->result();  
+    } 
+
+    public function getStateReparation($id){
+        $query = "SELECT rep.check_technical 
+        FROM reparation rep
+        WHERE rep.ot_id = ?"; 
+        return $this->db->query($query,array($id))->result();  
+    } 
+
+    public function getStateEvaluation($id){
+        $query = "SELECT ev.details ev_details 
+        FROM evaluation ev
+        WHERE ev.ot_id = ?"; 
         return $this->db->query($query,array($id))->result();  
     } 
 

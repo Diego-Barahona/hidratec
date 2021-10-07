@@ -131,8 +131,7 @@ get_data_technical_report = () =>{
 
 tr_enableFields = (a, aux, time_init, time_end)=>{
     if(a == 'false'){
-
-        /*La primera vez */
+        /* Cuando aun no se inicia nada */
         if(aux==null && time_end==null && time_init==null){
             $("#tr_details").attr("readonly", true);
                 $("#tr_notes").attr("readonly", true);
@@ -331,6 +330,7 @@ saveTechnicalReport = () => {
             $("#tr_popover").popover('dispose');
             tr_enableFields();
             get_data_technical_report();
+            window.location.assign(host_url+'tmAdminstechnicalReport');
          });
         }, 
         statusCode: {

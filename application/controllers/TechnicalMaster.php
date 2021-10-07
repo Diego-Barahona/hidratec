@@ -202,6 +202,31 @@ class TechnicalMaster extends CI_Controller
         }
     }
 
+    public function getSubstakByEvaluation()
+    { 
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            
+            $data = $this->input->post('data'); 
+            $id = $data['id'];
+            $subs = $this->TechnicalMasterModel->getSubstakByEvaluation($id);
+            $this->response->sendJSONResponse($subs); 
+        }else {
+			redirect('Home/login', 'refresh');
+        }
+    }
+
+    public function getSubstakByReparation()
+    { 
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $data = $this->input->post('data'); 
+            $id = $data['id'];
+            $subs = $this->TechnicalMasterModel->getSubstakByReparation($id);
+            $this->response->sendJSONResponse($subs); 
+        }else {
+			redirect('Home/login', 'refresh');
+        }
+    }
+
     public function DetailsTechnicalReport($id)
     { 
         if ($this->accesscontrol->checkAuth()['correct']) {
@@ -273,12 +298,13 @@ class TechnicalMaster extends CI_Controller
         if ($this->accesscontrol->checkAuth()['correct']) {
                 $technical_assistans = $this->TechnicalMasterModel->getTechnicalAssistans();
                 $substaks = $this->TechnicalMasterModel->getSubstaks();
+                $stateRep = $this->TechnicalMasterModel->getStateReparation($id);
             if($res = $this->TechnicalMasterModel->getSubstaksReparation($id)){
-                $this->response->sendJSONResponse(array($res, $technical_assistans, $substaks));
+                $this->response->sendJSONResponse(array($res, $technical_assistans, $substaks, $stateRep ));
             }else{
                 //No hay subtareas asociadas
                 $res = false;
-                $this->response->sendJSONResponse(array($res, $technical_assistans, $substaks));
+                $this->response->sendJSONResponse(array($res, $technical_assistans, $substaks, $stateRep));
             }
         }else{
              $this->response->sendJSONResponse(array('msg' => 'No tiene permisos suficientes.'), 400);
@@ -290,12 +316,13 @@ class TechnicalMaster extends CI_Controller
         if ($this->accesscontrol->checkAuth()['correct']) {
                 $technical_assistans = $this->TechnicalMasterModel->getTechnicalAssistans();
                 $substaks = $this->TechnicalMasterModel->getSubstaks();
+                $stateEv = $this->TechnicalMasterModel->getStateEvaluation($id);
             if($res = $this->TechnicalMasterModel->getSubstaksEvaluation($id)){
-                $this->response->sendJSONResponse(array($res, $technical_assistans, $substaks));
+                $this->response->sendJSONResponse(array($res, $technical_assistans, $substaks, $stateEv));
             }else{
                 //No hay subtareas asociadas
                 $res = false;
-                $this->response->sendJSONResponse(array($res, $technical_assistans, $substaks));
+                $this->response->sendJSONResponse(array($res, $technical_assistans, $substaks, $stateEv));
             }
         }else{
              $this->response->sendJSONResponse(array('msg' => 'No tiene permisos suficientes.'), 400);

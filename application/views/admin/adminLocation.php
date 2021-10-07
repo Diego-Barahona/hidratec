@@ -29,6 +29,7 @@
       <div class="card-header">
         <i class="fas fa-table"></i>
         Lista de ubicaciones
+        <button class="btn btn-success float-right" type='button' data-toggle="modal" data-target="#addLocation" id="btn"><i class="fas fa-plus"></i> Crear ubicación</button>
       </div>
       <div class="card-body ">
         <div class="table-responsive">
@@ -45,11 +46,6 @@
         </div>
       </div>
     </div>
-    <div style="padding-right: 40px">
-      <button class="btn btn-success float-right" type='button' data-toggle="modal" data-target="#addLocation" id="btn"><i class="fas fa-plus"></i> Crear ubicación</button>
-    </div>
-    <div class="row mb-3"></div>
-
   </div>
 </div>
 

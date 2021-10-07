@@ -336,12 +336,13 @@ class Orders_model extends CI_Model
         return true;
     }
 
-    public function createTechnicalReport($id_ot){
+    public function createTechnicalReport($id_ot, $id_technical){
         $this->db->select('*'); $this->db->from('technical_report'); $this->db->where('ot_id', $id_ot);
         $query = $this->db->get();
         $datos_tr = array(
-            'state' => 1,
             'ot_id' => $id_ot,
+            'state' => 1,
+            'user_assignment'=> $id_technical,
             'user_interaction' => json_encode(array(
                 'user_create' => '',
                 'date_create' => '',
@@ -442,7 +443,17 @@ class Orders_model extends CI_Model
             );
             $this->db->where('id', $data['ot_number']);
             $this->db->update('ot', $datos_ot);
+        }else if($data['state'] == 5){
+            date_default_timezone_set("America/Santiago");
+            $date = date("Y-m-d G:i:s");
+            $datos_ot = array(
+                'date_cellar' => $date,
+            );
+            $this->db->where('id', $data['ot_number']);
+            $this->db->update('ot', $datos_ot);
         }
+
+
 
         $datos_ot_state = array(
             'ot_id' => $data['ot_number'],

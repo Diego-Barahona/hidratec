@@ -83,12 +83,22 @@ $("#check_evaluation").change(() => {
 	}
 });
 
+$("#check_report_technical").change(() => { 
+	if($('#check_report_technical').is(':checked')){
+		$("#frm_technical_tr").show();
+	}else{
+		$("#frm_technical_re").hide();
+        $('#technical_tr').val('');
+	}
+});
+
 
 /* check_evaluation */
 
 let components = []; /*Variable que almacenara los componentes*/
 let enterprises = []; /*Variable que almacenara las empresas*/
 let technicals = []; /*Variable que almacenara los tecnicos*/
+let technicals_tr = []; /*Variable que almacenara los tecnicos tr*/
 let locations = []; /*Variable que almacenara las ubicaciones*/
 
 /*Funcion para recuperar las ordenes de trabajo*/
@@ -128,6 +138,16 @@ getFields = () => {
                     technicals.push(u.full_name);
                 });
             }
+            if(technicals_tr.length == 0){
+                xhr.response[2].map((u) => {
+                    let option = document.createElement("option"); 
+                    $(option).val(u.id); 
+                    $(option).attr('name', u.full_name);
+                    $(option).html(u.full_name); 
+                    $(option).appendTo("#technical_tr");
+                    technicals_tr.push(u.full_name);
+                });
+            }
             if(locations.length == 0){
                 xhr.response[3].map((u) => {
                     let option = document.createElement("option"); 
@@ -164,6 +184,7 @@ createOrder = () => {
         check_report_technical : $('#check_report_technical').is(':checked'),
         check_hydraulic_test : $('#check_hydraulic_test').is(':checked'),
         technical : $('#technical').val(),
+        technical_tr : $('#technical_tr').val(),
     }
 
     $.ajax({

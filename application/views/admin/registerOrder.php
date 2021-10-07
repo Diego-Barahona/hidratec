@@ -136,6 +136,12 @@
                             <option></option>
                         </select>
                     </div>
+                    <div class="col-md-4 mb-3" id="frm_technical_tr" style="display:none">
+                        <label>Asignar técnico para el informe técnico</label>
+                        <select class="form-select form-control" id="technical_tr" name="technical_tr" >
+                            <option></option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>

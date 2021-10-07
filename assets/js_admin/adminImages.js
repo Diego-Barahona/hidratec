@@ -33,7 +33,7 @@ const tabla = $('#table_images').DataTable({
 		{ "width": "15%", "targets": [2,3]},
 		{ "width": "30%", "targets": 1 },
 		{ "width": "5%", "targets": 0 },
-		{ className: "text-center", "targets": [1,2,3]} ,
+		{ className: "text-center", "targets": [1,2,3,4]} ,
 	  ],
 	columns: [
     
@@ -313,6 +313,7 @@ $("#file").on("change", function() {
 	
 	
   
+
 
 
 

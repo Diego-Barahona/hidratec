@@ -48,13 +48,13 @@ function drawQuotation() {
        let month = m.getMonth()+ 1;
       console.log(month);
        let xhr = new XMLHttpRequest();
-	     xhr.open("get", `${host_url}/api/projector/kpiQuotation/${month}`);
+	     xhr.open("get", `${host_url}/api/projector/kpiQuotation`);
 	     xhr.responseType = "json";
 	     xhr.addEventListener("load", () => {
 
 	    	if (xhr.status === 200) {
 			       response = xhr.response;
-             kpi_quotation = parseInt(response);
+             kpi_quotation = parseInt(response['kpi_quotation']);
           
 		    } 
 	});

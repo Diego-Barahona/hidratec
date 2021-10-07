@@ -24,7 +24,7 @@
             <div class="card-header">
                 <i class="fas fa-table"></i>
                 Lista de subtareas
-                <button class="btn btn-success float-right" type='button' data-toggle="modal" id="btn" data-target="#modalSubstaks"><i class="fas fa-plus"></i> Crear subtarea</button>
+                <button class="btn btn-success float-right" type='button' data-toggle="modal"  id='btn_create_substak'  data-target="#modalSubstaks"><i class="fas fa-plus"></i> Crear subtarea</button>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

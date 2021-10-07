@@ -20,6 +20,7 @@ getTechnicalReports = () => {
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
             let data = xhr.response;
+            console.log(data);
             if(data){
                 $aux=[];
                 data.forEach((item)=>{
@@ -28,8 +29,9 @@ getTechnicalReports = () => {
                         let date;
                         if(validation.date_technical_report) date = validation.date_technical_report;
                         else date = 'Pendiente';
+
                         if(validation.check_technical == 'true'){
-                            if(validation.check_adm == '') {
+                            if(validation.check_adm == 'false' || validation.check_adm == '') {
                                 report = 
                                 {
                                     number_ot : item.number_ot,
@@ -117,13 +119,22 @@ const tabla = $('#tableTechnicalReports').DataTable({
                     return `<button type='button' class='btn btn-primary'>
                     Finalizado
                     </button>`
-                }else{
+                /* }else{
                     if(row.time_init){
                         if(row.aux){
                             return `<button name='tr_btn_play_continue' class="btn btn-success rounded-circle"><i class="fas fa-play"></i></button>`
                         }else{
                             return `<button name='tr_btn_stop' class="btn btn-warning rounded-circle"><i class="fas fa-pause"></i></button>` 
                         }      
+                    }else{
+                        return `<button name='tr_btn_play' class="btn btn-success rounded-circle"><i class="fas fa-play"></i></button>`      
+                    }
+                } */
+                }else{
+                    if(row.time_init){
+                        return `<button type='button' class='btn btn-warning'>
+                            En proceso
+                            </button>`    
                     }else{
                         return `<button name='tr_btn_play' class="btn btn-success rounded-circle"><i class="fas fa-play"></i></button>`      
                     }
