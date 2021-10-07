@@ -19,6 +19,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fas fa-table"></i>
@@ -38,6 +39,8 @@
                             <th>Aprobado por administración </th>
                             <th>Acción</th>
                             <th>Informe</th>
+                            <th>Imágenes</th>
+                            
                         </tr>
                         </thead>
                     </table>

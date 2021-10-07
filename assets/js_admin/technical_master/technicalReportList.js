@@ -156,6 +156,11 @@ const tabla = $('#tableTechnicalReports').DataTable({
 			}
 		   }
 		},
+        { defaultContent: `<button type='button' name='btn_images' class='btn btn-primary'>
+                            Imágenes
+                            <i class="fas fa-images"></i>
+                            </button>`
+		},
 	
 	],
 });
@@ -171,6 +176,11 @@ $("#tableTechnicalReports").on("click", "button", function () {
         show_stop(data);
     }else if($(this)[0].name == "tr_btn_play_continue"){
         show_continue(data);
+    }else if($(this)[0].name == "btn_images"){
+        let ot = data.number_ot;
+		let url = 'adminImages'+'?ot='+ot;
+		window.location.assign(host_url+url);
+
     }
 });
 

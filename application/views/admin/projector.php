@@ -70,16 +70,16 @@
   <body>
     <main id="fullpage">
       <header class="section header active">
-        <h1><span class="title-quotation" >Indicador de cotizaciones</span></h1>  
+        <h1><span class="title-quotation" >Indicador de cotizaciones</span> <i class="fas fa-sign-out-alt btn_exit"></i></h1>  
         <div  id="chart_quotation"></div>
       </header>
       <header class="section ">
-        <h1 > <span class="title-production">Indicador de producción</span></h1>
+        <h1 > <span class="title-production">Indicador de producción</span> <i class="fas fa-sign-out-alt btn_exit"></i></h1>
         <div   id="chart_production"></div>  
       </header>
 
       <footer class="section footer">  
-        <h1><span class="title-work">Seguimiento trabajo </span> </h1>
+        <h1><span class="title-work">Seguimiento trabajo </span> <i class="fas fa-sign-out-alt btn_exit"></i> </h1>
           <div class="card-body">
             <div class="table-responsive ">
               <table class="table table-bordered" id="table-work" width="100%" cellspacing="0">

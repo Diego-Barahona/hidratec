@@ -124,7 +124,9 @@ function drawProduction() {
   google.charts.setOnLoadCallback(drawProduction);
 
 
-
+  $(".btn_exit").on('click',() =>{
+    window.open(host_url+'counterOrders', '_self');
+  });
 
 
  

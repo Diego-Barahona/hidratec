@@ -12,9 +12,14 @@ class Images extends CI_Controller
             $url = parse_url($_SERVER['REQUEST_URI']);
             parse_str($url['query'], $params);
             $id = $params['ot'];
+			if($_SESSION['rango'] == 3){
+				$this->load->view('shared/headerTechnicalMaster');
+				$this->load->view('technicalmaster/adminImages', array ('id'=> $id));
+				$this->load->view('shared/footer');
+			}else{
             $this->load->view('shared/headerSuperAdmin');
             $this->load->view('admin/adminImages', array ('id'=> $id));
-            $this->load->view('shared/footer');
+            $this->load->view('shared/footer');}
         } else {
 			redirect('Home/login', 'refresh');
         }

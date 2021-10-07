@@ -291,3 +291,18 @@ $route['api/projector/kpiQuotation/(:num)']['GET']='Monitor/chartQuotation/$1';
 $route['api/projector/kpiProduction']['GET']='Monitor/chartProduction';
 $route['api/projector/Production']['GET']='Monitor/getProduction';
 $route['api/projector/getOrders']['GET']='Monitor/getOrders';
+
+
+/*------------------------------- Kpi module ------------------------------------ */
+
+$route['module_kpi/menu_kpi']['GET']='Kpi/menuKpi';
+$route['module_kpi/kpiQuotation']['GET']='Kpi/kpiQuotation';
+$route['module_kpi/kpiProduction']['GET']='Kpi/kpiProduction';
+$route['module_kpi/kpi/avgQuotation']['POST']='Kpi/periodFilterQuotation';
+$route['module_kpi/kpi/avgProduction']['POST']='Kpi/periodFilterProduction';
+
+
+
+
+
+

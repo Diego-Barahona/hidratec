@@ -9,8 +9,8 @@ $(() => {
 
 let check_admin_old = false;
 let check_technical_old_ht = false;
-let config =[];
-let medida = []; 
+let config =[]; // la configuracion de medidas de la prueba 
+let medida = []; // es el arreglo donde almacena los datos de las medidas de la prueba hidraulica 
 
 $("#hab_edit").change(() => { 
 	let check = $('#hab_edit').is(':checked');
@@ -53,7 +53,7 @@ unable_edition =()=>{
 }
 
 
-edit_ht = () => {
+edit_ht = () => { // editar la informacion de la prueba hidraulica
 
    
 	event.preventDefault();
@@ -79,7 +79,8 @@ edit_ht = () => {
 		config_caudal:$("#caudal_c").val(),
 		config_temperature:$("#temperature_c").val(),
 	};
-
+    
+	console.log(medida);
 	data2=JSON.stringify(medida);
 	
 	
@@ -245,10 +246,10 @@ get_data_ht = () =>{
 			
 			
 			}else { 
-				$("#speed_c").val("");//lineas nuevas
-				$("#presion_c").val("");
-				$("#caudal_c").val("");
-				$("#temperature_c").val("");
+				$("#speed_c").val(true);//lineas nuevas
+				$("#presion_c").val(true);
+				$("#caudal_c").val(true);
+				$("#temperature_c").val(true);
 			}
 
 
@@ -612,7 +613,7 @@ xhr.send();
 
 
 
-// create register  
+// editar informacion de la tabla de registro de datos de la prueba hidraulica  
 edit_info =()=>{
 
 	let data2 = {
@@ -628,6 +629,8 @@ edit_info =()=>{
 		config_temperature:$("#temperature_c").val(),
 		
 	};
+
+	console.log(data2);
 
 
 	id= $("#ot_number").val();
@@ -664,6 +667,7 @@ edit_info =()=>{
 				text: "El registro se creo con éxito.",
 				button: "OK",
 			}).then(() => {
+				
 				get_info_ht();
 				$("#medidas").modal("hide");
 				medida=[];
@@ -728,6 +732,21 @@ clearInput=()=> {
 
 
 save_config = () => { 
+	let id= $("#ot_number").val();
+
+	let data = {
+		//technical_name: $("#technical_name_ht").val(),
+		config_speed: $("#config_speed").is(':checked'),
+		config_presion: $("#config_presion").is(':checked'),
+		config_caudal:$("#config_caudal").is(':checked'),
+		config_time:$("#config_time").is(':checked'),
+		}
+
+		$("#speed_c").val(data.config_speed);//lineas nuevas
+		$("#presion_c").val(data.config_presion);
+		$("#caudal_c").val(data.config_caudal);
+		$("#temperature_c").val(data.config_time);
+	
     let data2={
 		id: $("#ot_number").val(),
         date_ht :$("#date_ht").val(),
@@ -741,48 +760,66 @@ save_config = () => {
 		config_temperature:$("#temperature_c").val(),
 	}
 
-    let data = {
-	technical_name: $("#technical_name_ht").val(),
-    config_speed: $("#config_speed").is(':checked'),
-	config_presion: $("#config_presion").is(':checked'),
-	config_caudal:$("#config_caudal").is(':checked'),
-	config_time:$("#config_time").is(':checked'),
-	}
+	
+
+	
+//[{"id":1,"dato":"213132","speed":"qwqe","presion":"12132","caudal":"123","time":"123"}]
+	
     config.push(data);
 
-	$.ajax({
-		data: {
-			data,data2
-		},
-		type: "POST",
-		url: host_url + `api/save_config/${id}`,
-		crossOrigin: false,
-		dataType: "json",
-		success: (result) => {
-			swal({
-				title: "Exito",
-				icon: "success",
-				text: "Configuración guardada.",
-				button: "OK",
-			}).then(() => {
-			    get_info_ht();
-				$("#config").modal("hide");
-				
-		        medida=[];
+	let xhr = new XMLHttpRequest();
+	xhr.open("get", `${host_url}/api/get_info_ht/${id}`);
+	xhr.responseType = "json";
+	xhr.addEventListener("load", () => {
 		
-			   });	 
-		},
-		error: (result) => {
-			swal({
-				title: "Denegado!",
-				icon: "error",
-				text: result.responseJSON.msg,
-			}).then(() => {
-			 swal.close();
-			});	 
-		},
-	});
+		if (xhr.status === 200) {
+			
+			let info = xhr.response[0].extra_info;
+			d = JSON.parse(info);
+			data3= JSON.stringify(d);
+
+
+			$.ajax({
+				data: {
+					data,data2,data3
+				},
+				type: "POST",
+				url: host_url + `api/save_config/${id}`,
+				crossOrigin: false,
+				dataType: "json",
+				success: (result) => {
+					swal({
+						title: "Exito",
+						icon: "success",
+						text: "Configuración guardada.",
+						button: "OK",
+					}).then(() => {
+						get_info_ht();
+						$("#config").modal("hide");
+						
+						medida=[];
+				
+					   });	 
+				},
+				error: (result) => {
+					swal({
+						title: "Denegado!",
+						icon: "error",
+						text: result.responseJSON.msg,
+					}).then(() => {
+					 swal.close();
+					});	 
+				},
+			});
+		}	
+		
+});
+xhr.send();
 }
+
+/*
+	 */
+
 
 
 

@@ -63,7 +63,7 @@
               </div>
               <div class="col-md-4 mb-3" id="frm_location">
                         <label>Ubicación</label>
-                        <select class="custom-select d-block w-100" style="background:white" id="location_ev" name="location_ev"disabled>
+                        <select class="custom-select d-block w-100" style="background:white" id="location_ev" name="ubicacion "disabled>
                             <option></option>
                         </select>
                     </div>
