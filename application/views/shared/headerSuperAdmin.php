@@ -16,7 +16,7 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <!-- Custom styles for this template-->
     <link href="<?php echo base_url(); ?>assets/css_admin/sb-admin-2.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/vendor/DataTables/datatables.min.css" rel="stylesheet" type="text/css" />
@@ -91,8 +91,11 @@
                             <a class="collapse-item" href="<?php echo base_url(); ?>api/user"><i class="far fa-list-alt"></i> Empresa</a>
                             <a class="collapse-item" href="<?php echo base_url(); ?>api/client"><i class="far fa-list-alt"></i> Clientes</a>
                         </div>
-                    </div>
-                </li>
+                       </div>
+                  </div>
+             </li>
+
+        
             <!-- Divider -->
             <hr class="sidebar-divider">
                 <!-- Nav Item - Ordenes de trabajo -->
@@ -112,23 +115,21 @@
                     </a>
                 </li>
             <!-- Divider -->
-            <hr class="sidebar-divider">
-              <!-- Nav Item - KPI's -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKpi"
-                        aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>KPI's</span>
-                    </a>
-                    <div id="collapseKpi" class="collapse" aria-labelledby="headingUtilities"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Gestión KPI</h6>
-                            <a class="collapse-item" href="utilities-color.html"><i class="fas fa-chart-bar"></i> Análisis</a>
-                            <a class="collapse-item" href="utilities-color.html"><i class="fas fa-history"></i>  Historial</a>
-                            <a class="collapse-item" href="utilities-border.html"><i class="fas fa-tools"></i> Rendimiento técnico</a>
-                    
-                        </div>
+          
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKpi"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>KPI's</span>
+                </a>
+                <div id="collapseKpi" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gestión KPI</h6>
+                        <a class="collapse-item" href="<?php echo base_url(); ?>module_kpi/menu_kpi"><i class="fas fa-chart-bar"></i> Análisis</a>
+                        <a class="collapse-item" href="utilities-color.html"><i class="fas fa-history"></i>  Historial</a>
+                        <a class="collapse-item" href="utilities-border.html"><i class="fas fa-tools"></i> Rendimiento técnico</a>
                     </div>
                 </li>
             <!-- Divider -->

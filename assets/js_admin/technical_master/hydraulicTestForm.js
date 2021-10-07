@@ -102,6 +102,7 @@ edit_ht = () => {
 				
 				$("#date_ht").datepicker("destroy");
 				unable_edition();
+				window.location.assign(host_url+'adminHydraulicTest');
 				get_data_ht();
 				swal.close();
 			   });
@@ -237,10 +238,10 @@ get_data_ht = () =>{
 			
 			
 			}else { 
-				$("#speed_c").val("");//lineas nuevas
-				$("#presion_c").val("");
-				$("#caudal_c").val("");
-				$("#temperature_c").val("");
+				$("#speed_c").val("true");//lineas nuevas
+				$("#presion_c").val("true");
+				$("#caudal_c").val("true");
+				$("#temperature_c").val("true");
 			}
 
 
@@ -726,12 +727,27 @@ clearInput=()=> {
 
 
 save_config = () => { 
+	let id= $("#ot_number").val();
+
+	let data = {
+		//technical_name: $("#technical_name_ht").val(),
+		config_speed: $("#config_speed").is(':checked'),
+		config_presion: $("#config_presion").is(':checked'),
+		config_caudal:$("#config_caudal").is(':checked'),
+		config_time:$("#config_time").is(':checked'),
+		}
+
+		$("#speed_c").val(data.config_speed);//lineas nuevas
+		$("#presion_c").val(data.config_presion);
+		$("#caudal_c").val(data.config_caudal);
+		$("#temperature_c").val(data.config_time);
+	
     let data2={
 		id: $("#ot_number").val(),
         date_ht :$("#date_ht").val(),
         conclusion: $("#conclusion_ht").val(),
         notes: $("#notes_ht").val(),
-        technical: $("#technical_aux").val(),
+        technical: $("#technical_ht").val(),
 		technical_name: $("#technical_name_ht").val(),
 		config_speed:$("#speed_c").val(),//lineas nuevas
 		config_presion:$("#presion_c").val(),
@@ -739,47 +755,61 @@ save_config = () => {
 		config_temperature:$("#temperature_c").val(),
 	}
 
-    let data = {
-	technical_name: $("#technical_name_ht").val(),
-    config_speed: $("#config_speed").is(':checked'),
-	config_presion: $("#config_presion").is(':checked'),
-	config_caudal:$("#config_caudal").is(':checked'),
-	config_time:$("#config_time").is(':checked'),
-	}
+	
+
+	
+//[{"id":1,"dato":"213132","speed":"qwqe","presion":"12132","caudal":"123","time":"123"}]
+	
     config.push(data);
 
-	$.ajax({
-		data: {
-			data,data2
-		},
-		type: "POST",
-		url: host_url + `api/save_config/${id}`,
-		crossOrigin: false,
-		dataType: "json",
-		success: (result) => {
-			swal({
-				title: "Exito",
-				icon: "success",
-				text: "Configuración guardada.",
-				button: "OK",
-			}).then(() => {
-			    get_info_ht();
-				$("#config").modal("hide");
-				
-		        medida=[];
+	let xhr = new XMLHttpRequest();
+	xhr.open("get", `${host_url}/api/get_info_ht/${id}`);
+	xhr.responseType = "json";
+	xhr.addEventListener("load", () => {
 		
-			   });	 
-		},
-		error: (result) => {
-			swal({
-				title: "Denegado!",
-				icon: "error",
-				text: result.responseJSON.msg,
-			}).then(() => {
-			 swal.close();
-			});	 
-		},
-	});
+		if (xhr.status === 200) {
+			
+			let info = xhr.response[0].extra_info;
+			d = JSON.parse(info);
+			data3= JSON.stringify(d);
+
+
+			$.ajax({
+				data: {
+					data,data2,data3
+				},
+				type: "POST",
+				url: host_url + `api/save_config/${id}`,
+				crossOrigin: false,
+				dataType: "json",
+				success: (result) => {
+					swal({
+						title: "Exito",
+						icon: "success",
+						text: "Configuración guardada.",
+						button: "OK",
+					}).then(() => {
+						get_info_ht();
+						$("#config").modal("hide");
+						
+						medida=[];
+				
+					   });	 
+				},
+				error: (result) => {
+					swal({
+						title: "Denegado!",
+						icon: "error",
+						text: result.responseJSON.msg,
+					}).then(() => {
+					 swal.close();
+					});	 
+				},
+			});
+		}	
+		
+});
+xhr.send();
 }
 
 $("#btn_config").on("click", ()=>{	

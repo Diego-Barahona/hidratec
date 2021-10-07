@@ -6,6 +6,7 @@ $(() => {
 let check_admin_old_ev = false;
 let check_technical_old_ev = false;
 let technicals_user = 0; 
+let location_ev= 0 ;
 
 get_data_evaluation = () =>{
 
@@ -19,8 +20,8 @@ get_data_evaluation = () =>{
 			let technical=xhr.response[0].full_name;
 		    let data2 =xhr.response[0].user_interaction;
 			let priority=xhr.response[0].priority;
-		    let location=xhr.response[0].location;
-            console.log(priority);
+		    location_ev =xhr.response[0].location;
+            
 			let file=xhr.response[0].export;
 
         
@@ -84,10 +85,12 @@ get_data_evaluation = () =>{
 				$("#name_technical" ).val("");
 			}
 
-			if(location){
-            
-				$("#location_ev").val(location);
+			if(location_ev){
+			   
+              let a= $(`#location_ev option[value ="${location_ev}"]`).val();
+			  
 			}else{
+				
 				$("#location_ev").val("");
 			}
 
@@ -126,9 +129,11 @@ disabledAlertEv= () =>{
 
 
 
+
 ev_enableFields = ()=>{
 	a = $("#hab_edit_ev").val();
 	if(a == 0){
+
         $( "#date_evaluation" ).prop( "disabled", false );
         $( "#description_ev" ).prop( "disabled", false );
         $( "#notes" ).prop( "disabled", false );

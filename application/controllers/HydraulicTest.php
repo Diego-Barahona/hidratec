@@ -136,11 +136,15 @@ class HydraulicTest extends CI_Controller
 
         if($this->accesscontrol->checkAuth()['correct']) {
         $data = $this->input->post('data');
+        $data2 = $this->input->post('data2');
+        $data3 = $this->input->post('data3');
+
         $ok=true;
         if($ok){ 
             $this->load->model('HydraulicTestModel');
             if($this->HydraulicTestModel->save_config($id,$data)){
-            
+                $pdf = $this->pdfHidraulicTest($data2,$data3);
+                $this->HydraulicTestModel->pdfHidraulicTest($id, $pdf );
             $this->response->sendJSONResponse( array("msg"=>"Configuración guardada. "));
             }else{ 
             $this->response->sendJSONResponse( array("msg" => "No se han podido registrar los datos "),400); 
@@ -269,7 +273,7 @@ class HydraulicTest extends CI_Controller
         $pdf->Ln(10);
         $pdf->SetFont('Arial', 'B', 9);
         $pdf->SetTextColor(0,0,0);
-        $pdf-> MultiCell(0, 6 , $data['notes'] ,1 ,'J'); // 
+        $pdf-> MultiCell(0, 6 , utf8_decode($data['notes']) ,1 ,'J'); // 
         $pdf->Ln(10);
 
         $pdf->SetFont('Arial','B',15);
@@ -278,7 +282,7 @@ class HydraulicTest extends CI_Controller
         $pdf->Ln(10);
         $pdf->SetFont('Arial', 'B', 9);
         $pdf->SetTextColor(0,0,0);
-        $pdf-> MultiCell(0, 6 , $data['conclusion'] ,1 ,'J'); // 
+        $pdf-> MultiCell(0, 6 , utf8_decode($data['conclusion']) ,1 ,'J'); // 
         $pdf->Ln(10);
        
         $name = "assets/upload/hydraulicTest" . $data['id'] . ".pdf";
