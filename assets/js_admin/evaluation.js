@@ -36,11 +36,11 @@ get_data_evaluation = () =>{
 				check_admin_old_ev = false}
 
 				if(evaluation.approve_technical === "true"){
-				$("#export_ev").show();
+					$("#btn_export_ev").show();
 				$( "#approve_technical_ev").prop('checked', true);
 				check_technical_old_ev = true;
 				} else {
-					$("#export_ev").css("display","none");
+					$("#btn_export_ev").hide();
 					$( "#approve_technical_ev" ).prop('checked', false );
 				check_technical_old_ev = false;
 				}
@@ -128,14 +128,14 @@ disabledAlertEv= () =>{
 
 
 
-
-$("#hab_edit_ev").change(() => { 
-	let check = $('#hab_edit_ev').is(':checked');
-	if(check){
+ev_enableFields = ()=>{
+	a = $("#hab_edit_ev").val();
+	if(a == 0){
         $( "#date_evaluation" ).prop( "disabled", false );
         $( "#description_ev" ).prop( "disabled", false );
         $( "#notes" ).prop( "disabled", false );
         $( "#technical_ev" ).prop( "disabled", false );
+		$( "#location_ev" ).prop( "disabled", false );
 		$( "#approve_admin_ev" ).prop( "disabled", false );
         $( "#approve_technical_ev" ).prop( "disabled", false );
 		$("#priority_ev").prop( "disabled", false );
@@ -147,21 +147,30 @@ $("#hab_edit_ev").change(() => {
             dateFormat: 'yy-mm-dd',
             buttonImage: host_url + 'assets/img/about/calendario2.png',
         });
-	
-	}else{
+		$("#hab_edit_ev").val(1);
+		$("#hab_edit_ev").removeClass("btn btn-success");
+        $("#hab_edit_ev").addClass("btn btn-danger");
+        $("#hab_edit_ev").text("Cancelar");
+        $("#btn_edit").show();
+	}else if(a==1){
         $( "#date_evaluation" ).prop( "disabled", true );
         $( "#description_ev" ).prop( "disabled", true);
 		$( "#priority_ev" ).prop( "disabled", true);
         $(  "#notes").prop( "disabled", true );
+		$( "#location_ev" ).prop( "disabled", true );
         $(  "#technical_ev").prop( "disabled", true );
 		$( "#approve_admin_ev" ).prop( "disabled", true );
         $( "#approve_technical_ev" ).prop( "disabled", true );
 		$( "#id_ot" ).prop( "disabled", true );
 		$("#date_evaluation").datepicker("destroy");	
-
-		
+		$("#hab_edit_ev").val(0);
+		$("#hab_edit_ev").removeClass("btn btn-danger");
+        $("#hab_edit_ev").addClass("btn btn-success");
+        $("#hab_edit_ev").text("Editar");
+        $("#btn_edit").hide();
 	}
-});
+};
+
 
 
 edit_evaluation = () => {
@@ -209,16 +218,9 @@ edit_evaluation = () => {
 				text: result.msg,
                 button: "OK",
 			}).then(() => {
+				$("#hab_edit_ev").val('1');
+				ev_enableFields();
 				get_data_evaluation();
-				$('#hab_edit_ev').prop( "checked", false );
-				$( "#date_evaluation" ).prop( "disabled", true );
-				$( "#description_ev" ).prop( "disabled", true);
-				$( "#notes" ).prop( "disabled", true );
-				$( "#approve_admin_ev" ).prop( "disabled", true );
-				$( "#approve_technical_ev" ).prop( "disabled", true );
-				$( "#technical_ev" ).prop( "disabled", true );
-				$("#date_evaluation").datepicker("destroy");	
-
 			   });
 		},
 		error: (result) => {
@@ -329,7 +331,7 @@ $("#btn_edit").on("click", () => {
 
 $("#btn_export_ev").on("click",showExportEvaluation );
 
-
+$("#hab_edit_ev").on("click", ev_enableFields);
 
 
 

@@ -4,19 +4,20 @@
         </div>
       <div id="accordion">
       <div id="hydraulic_info" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-         <div class="card-header" >
-           <button class="btn btn-link" data-toggle="collapse" data-target="#c1" aria-expanded="true" aria-controls="technicalReportGeneral">
-                <i class="fas fa-table"></i>
-                Información 
-                </button>
-              
-         </div>
-        <div class="card-body collapse in " id= "c1">
+      <div class="card">
+        <div class="card-header" >
+          <button class="btn btn-link" data-toggle="collapse" data-target="#c1" aria-expanded="true" aria-controls="technicalReportGeneral">
+            <i class="fas fa-table"></i>
+            Información 
+          </button>
+            
+        </div>
+        <div class="card-body collapse show" id= "c1">
         <input type="hidden" class="form-control" id="speed_c" name="id" >
         <input type="hidden" class="form-control" id="caudal_c" name="id" >
         <input type="hidden" class="form-control" id="presion_c" name="id" >
         <input type="hidden" class="form-control" id="temperature_c" name="id" >
-     
+    
 
         <input type="hidden" class="form-control" id="user_create" name="id" >
         <input type="hidden" class="form-control" id="date_create" name="id" >
@@ -25,77 +26,75 @@
         <input type="hidden" class="form-control" id="user_approve" name="id" >
         <input type="hidden" class="form-control" id="date_approve" name="id" >
         <input type="hidden" class="form-control" id="technical_name_ht" name="id" >
-
-        <div class="row mb-2 mr-2 justify-content-end">
-        <button id="ht_popover" type="button" class="btn btn-primary rounded-circle" data-toggle="popover" data-placement="left"><i class="fas fa-info"></i></button> 
-        </div>
         
-             <div class="row mb-2 ">
-                 <div class="col-md-2 mb-3 ">
-                      
-                      <div class="form-check">
-                                <input class="form-check-input"  type="checkbox" value="" id="approve_admin_ht" disabled>
-                                <label class="form-check-label"  for="approve_admin_ht">
-                                 Aprobado por administración
-                               </label>
-                             </div>
-                       </div>
-                <div class="col-md-2 mb-3 ">
-                 
-                      <div class="form-check">
-                           <input class="form-check-input"  type="checkbox" value="" id="approve_technical_ht" disabled>
-                           <label class="form-check-label"  for="approve_technical_ht">
-                            Aprobado por técnico master
+        <div class="row mb-2 ">
+            <div class="col-md-2 mb-3 ">
+                <div class="form-check">
+                          <input class="form-check-input"  type="checkbox" value="" id="approve_admin_ht" disabled>
+                          <label class="form-check-label"  for="approve_admin_ht">
+                            Aprobado por administración
                           </label>
                         </div>
-                     </div>
-
-                 <div class="col-md-3 mb-3 " id="export_ht"  style="display:none">
-                 <button type="button"  id="btn_export_ht" class="btn btn-primary btn-circle "><i class="fas fa-file-export"></i></button>
-                     
+                  </div>
+            <div class="col-md-2 mb-3 ">
+                <div class="form-check">
+                  <input class="form-check-input"  type="checkbox" value="" id="approve_technical_ht" disabled>
+                  <label class="form-check-label"  for="approve_technical_ht">
+                  Aprobado por técnico master
+                  </label>
                 </div>
-             </div>
+            </div>
+            <div class="col-md-8 mb-3" style='text-align: right;'>
+              <button type="button"  id="btn_export_ht" style='display: none;' class="btn btn-primary btn-circle "><i class="fas fa-file-export"></i></button>
+              <button id="ht_popover" type="button" class="btn btn-primary rounded-circle" data-toggle="popover" data-placement="left"><i class="fas fa-info"></i></button> 
+            </div>              
+        </div>
 
-              <div class="row mb-2">
-              
-                <div class="col-md-6 mb-3">
-                  <label for="actividad">Fecha de prueba hidráulica</label>
-                  <div class="input-group" id='frm_date_admission'>
-                      <input type="text" class="form-control"style="background:white" name="date_ht" id="date_ht" disabled>
-                      <div class="invalid-feedback"></div>
+        <div class="row mb-2">
+          <div class="col-md-6 mb-3">
+            <label for="actividad">Fecha de prueba hidráulica</label>
+            <div class="input-group" id='frm_date_admission'>
+                <input type="text" class="form-control" name="date_ht" id="date_ht" disabled>
+                <div class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label>Asignar técnico para prueba hidráulica</label>
+            <select class="form-select form-control" id="technical_ht" name="technical_ht" disabled>
+            <option></option>
+            </select>
+            <div class="invalid-feedback"></div>
+          </div>  
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-6 mb-3">
+            <label for="actividad">Notas</label>
+              <div class="input-group">
+                <textarea type="text" class="form-control" rows="2"  name="notes_ht" id="notes_ht" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>
+                  <div class="invalid-feedback descripcion" style="display: none;  color:red">
+                          Ingrese una descripción porfavor.
+                  </div>
+            </div>
+          </div>  
+          <div class="col-md-6 mb-3">
+            <label for="actividad">Conclusiones</label>
+              <div class="input-group">
+                <textarea type="text" class="form-control" rows="2" name="conclusion_ht" id="conclusion_ht" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>
+                  <div class="invalid-feedback descripcion" style="display: none;  color:red">
+                          Ingrese una descripción porfavor.
                   </div>
                 </div>
-             
-                <div class="col-md-6 mb-3">
-                  <label>Asignar técnico para prueba hidráulica</label>
-                  <select class="form-select form-control" style="background:white" id="technical_ht" name="technical_ht" disabled>
-                  <option></option>
-                 </select>
-                  <div class="invalid-feedback"></div>
-                </div>  
-              </div>
-              <div class="row mb-2">
-                <div class="col-md-6 mb-3">
-                  <label for="actividad">Notas</label>
-                    <div class="input-group">
-                      <textarea type="text" class="form-control" rows="2" style="background:white" name="notes_ht" id="notes_ht" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>
-                        <div class="invalid-feedback descripcion" style="display: none;  color:red">
-                                Ingrese una descripción porfavor.
-                        </div>
-                  </div>
-                </div>  
-                <div class="col-md-6 mb-3">
-                  <label for="actividad">Conclusiones</label>
-                    <div class="input-group">
-                      <textarea type="text" class="form-control" rows="2"style="background:white" name="conclusion_ht" id="conclusion_ht" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>
-                        <div class="invalid-feedback descripcion" style="display: none;  color:red">
-                                Ingrese una descripción porfavor.
-                        </div>
-                      </div>
-                </div> 
-              </div>
+          </div> 
+        </div>
 
-              <div class="row mb-2 mr-2 mb-5 justify-content-end">
+
+              <div class="form-group" style="margin-top: 40px; float:right;">
+                <button class="btn btn-success" value='0' type='button' id="ht_btnEdit"><i id='tr_i_btnEdit' class="fas fa-edit" style="margin-right: 5px;"></i>Editar</button>
+                <button class="btn btn-success" style='display:none' type='button' id="btn_hidraulic"><i class="fas fa-save" style="margin-right: 5px;"></i>Guardar Cambios</button>
+            </div>
+
+             <!--  <div class="row mb-2 mr-2 mb-5 justify-content-end">
                       <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="hab_edit">
                                 <label class="form-check-label" for="approve_ht">
@@ -106,8 +105,16 @@
    
                <div class="row mb-2 mr-2 justify-content-end">
                   <button type="button" style="height:40px; width:100px; "id="btn_hidraulic" class="btn btn-primary  ">Guardar</button>
-              </div>
+              </div> -->
+
+
+
+
+
+
           </div>  <!-- End card body information-->
+        </div>
+        <div class="card">
            <!-- Table medidas-->
            <div class="card-header" >
                  <button class="btn btn-link" data-toggle="collapse" data-target="#c2" aria-expanded="true" aria-controls="technicalReportGeneral">
@@ -144,8 +151,8 @@
              </div>
           <!-- Table medidas END -->
         </div> <!-- End card body medidas-->
-  
-   
+        </div>
+        <div class="card">
         <div class="card-header" id="card-option-ht">
              <button class="btn btn-link" data-toggle="collapse" data-target="#c3" aria-expanded="true" aria-controls="technicalReportGeneral">
                   <i class="fas fa-table"></i>
@@ -180,6 +187,7 @@
                      </div>
               </div>
          </div>
+      </div>
  
 
     <!-- End card body archivos-->

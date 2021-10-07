@@ -129,19 +129,26 @@ const tabla = $('#tableReparations').DataTable({
                 }
             }
         },
-        { defaultContent: "oc",
-		   "render": function (data, type, row){
-			if(row.check_technical === 'Realizado'){
-				return `<button type='button' name='btn_substaks' class='btn btn-primary'>
-                    Ver  <i class="fas fa-search"></i>
+        {   defaultContent: "oc",
+        "render": function (data, type, row){
+            if(row.check_technical === 'Realizado'){
+                return `<button type='button' name='btn_substaks' class='btn btn-primary'>
+                    Ver  <i class="fas fa-tasks"></i>
                 </button>`
-			}else{
-				return `<button type='button' name='btn_substaks' class='btn btn-warning'>
+            }else{
+                if(row.time_init){   
+                    return `<button type='button'  name='btn_substaks'  class='btn btn-warning'>
                     Asignar <i class="fas fa-tasks"></i>
-				</button>`
-			}
-		   }
-		},
+                    </button>`
+                }else{  
+                    return `<button type='button' name='btn_substaks' class='btn btn-primary'>
+                    Ver  <i class="fas fa-tasks"></i>
+                    </button>`
+                }
+            }
+            }
+        },// end defaultContent
+
         { defaultContent: "oc",
             "render": function (data, type, row){
                 if(row.check_technical === 'Realizado'){
@@ -206,34 +213,67 @@ approve = (item) => {
         }).then((action) => {
             if (action == "approve") {
                 data = {
-                    ot_id: item.number_ot,
+                    id: item.number_ot,
                 }
                 $.ajax({
+                    data: {
+                        data,
+                    },
                     type: "POST",
-                    url: host_url + "api/tmApproveReparation",
-                    data: {data},
+                    url: host_url + `api/getSubstaksByReparation`,
+                    crossOrigin: false,
                     dataType: "json",
-                    success: () => {
-                     swal({
-                         title: "Éxito!",
-                         icon: "success",
-                         text: "Reparación actualizada con éxito.",
-                         button: "OK",
-                     }).then(() => {
-                        getReparations();
-                     });
-                    }, 
-                    error: () => {
+                    success: (result) => {
+                        console.log(result);
+                        if(result == 0){
+                            data = {
+                                ot_id: item.number_ot,
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: host_url + "api/tmApproveReparation",
+                                data: {data},
+                                dataType: "json",
+                                success: () => {
+                                swal({
+                                    title: "Éxito!",
+                                    icon: "success",
+                                    text: "Reparación actualizada con éxito.",
+                                    button: "OK",
+                                }).then(() => {
+                                    getReparations();
+                                });
+                                }, 
+                                error: () => {
+                                    swal({
+                                        title: "Error",
+                                        icon: "error",
+                                        text: "No se pudo encontrar el recurso",
+                                    }).then(() => {
+                                        $("body").removeClass("loading");
+                                    });
+                                },
+                            });  
+                        }else{
+                            swal({
+                                title: "Denegado!",
+                                icon: "error",
+                                text: 'No puede aprobar porque ha subtareas pendientes',
+                            }).then(() => {
+                             swal.close();
+                            });
+                        }
+                    },
+                    error: (result) => {
                         swal({
-                            title: "Error",
+                            title: "Denegado!",
                             icon: "error",
-                            text: "No se pudo encontrar el recurso",
+                            text: 'No puede aprobar porque ha subtareas pendientes',
                         }).then(() => {
-                            $("body").removeClass("loading");
+                         swal.close();
                         });
                     },
-                });  
-    
+                });
             }
         });
     }else if(op == 1 || op == 2){

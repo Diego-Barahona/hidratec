@@ -40,6 +40,7 @@ class Orders extends CI_Controller
 			$data = $this->input->post('data');
             $ot_number = $data['ot_number'];
             $id_technical = $data['technical'];
+            $id_technical_tr = $data['technical_tr'];
             $check_evaluation = $data['check_evaluation'];
             $check_report_technical = $data['check_report_technical'];
             $check_hydraulic_test = $data['check_hydraulic_test'];
@@ -78,10 +79,12 @@ class Orders extends CI_Controller
                     }
 
                     if($check_report_technical == 'true'){
-                        $this->Orders_model->createTechnicalReport($ot_number);
 
-                        $msg['msg'] = "No se pudo encontrar el recurso.";
-                        $this->response->sendJSONResponse($msg);
+                        if($data['technical_tr']){
+                            $this->Orders_model->createTechnicalReport($ot_number, $id_technical_tr);
+                        }else{
+                            $this->Orders_model->createTechnicalReport($ot_number, null);
+                        }                      
                     }
 
                     if($check_hydraulic_test == 'true'){

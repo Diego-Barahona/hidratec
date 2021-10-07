@@ -68,117 +68,109 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url();?>counterOrders">
-                    <i class="fas fa-home"></i>
-                    <span>Inicio</span></a>
-                    <hr class="sidebar-divider">
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-user"></i>
-                    <span>Usuarios</span>
-                </a>
-                <div id="collapseUser" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Lista de usuarios </h6>
-                        <a class="collapse-item" href="<?php echo base_url(); ?>api/user"><i class="far fa-list-alt"></i> Empresa</a>
-                        <a class="collapse-item" href="<?php echo base_url(); ?>api/client"><i class="far fa-list-alt"></i> Clientes</a>
-                        
-                    </div>
-                </div>
-            </li>
-
+                <!-- Nav Item - Inicio -->
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url();?>counterOrders">
+                        <i class="fas fa-home"></i>
+                        <span>Inicio</span>
+                    </a>
+                </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
-
-             <!-- Nav Item - Utilities Collapse Menu -->
-             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrders"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-list-ul"></i>
-                    <span>Órdenes de trabajo</span>
-                </a>
-                <div id="collapseOrders" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestión OT</h6>
-                        <a class="collapse-item" href="<?php echo base_url(); ?>adminOrders"><i class="far fa-list-alt"></i>  Lista general</a>
-                        
+                <!-- Nav Item - Usuarios -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser"
+                        aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-user"></i>
+                        <span>Usuarios</span>
+                    </a>
+                    <div id="collapseUser" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Lista de usuarios </h6>
+                            <a class="collapse-item" href="<?php echo base_url(); ?>api/user"><i class="far fa-list-alt"></i> Empresa</a>
+                            <a class="collapse-item" href="<?php echo base_url(); ?>api/client"><i class="far fa-list-alt"></i> Clientes</a>
+                        </div>
                     </div>
-                </div>
-                <hr class="sidebar-divider">
-            </li>
-
-            <!-- Nav Item - Finanzas e Menu -->
-            <li class="nav-item">
-                <a class="nav-link"  href="<?php echo base_url(); ?>adminTechnicalReports">
-                <i class="fas fa-file-invoice"></i>
-                    <span>Informes técnicos</span></a>
-                    <hr class="sidebar-divider">
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKpi"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>KPI's</span>
-                </a>
-                <div id="collapseKpi" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestión KPI</h6>
-                        <a class="collapse-item" href="utilities-color.html"><i class="fas fa-chart-bar"></i> Análisis</a>
-                        <a class="collapse-item" href="utilities-color.html"><i class="fas fa-history"></i>  Historial</a>
-                        <a class="collapse-item" href="utilities-border.html"><i class="fas fa-tools"></i> Rendimiento técnico</a>
-                   
+                </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+                <!-- Nav Item - Ordenes de trabajo -->
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url(); ?>adminOrders">
+                        <i class="fas fa-list-ul"></i>
+                        <span>Órdenes de trabajo</span>
+                    </a>
+                </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+                <!-- Nav Item - Informes Tecnicos -->
+                <li class="nav-item">
+                    <a class="nav-link"  href="<?php echo base_url(); ?>adminTechnicalReports">
+                    <i class="fas fa-file-invoice"></i>
+                        <span>Informes técnicos</span>
+                    </a>
+                </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+              <!-- Nav Item - KPI's -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKpi"
+                        aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>KPI's</span>
+                    </a>
+                    <div id="collapseKpi" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Gestión KPI</h6>
+                            <a class="collapse-item" href="utilities-color.html"><i class="fas fa-chart-bar"></i> Análisis</a>
+                            <a class="collapse-item" href="utilities-color.html"><i class="fas fa-history"></i>  Historial</a>
+                            <a class="collapse-item" href="utilities-border.html"><i class="fas fa-tools"></i> Rendimiento técnico</a>
+                    
+                        </div>
                     </div>
-                </div>
-                <hr class="sidebar-divider">
-            </li>
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url(); ?>projector">
-                    <i class="fas fa-tv"></i>
-                    <span>Proyector</span></a>
-                    <hr class="sidebar-divider">
-            </li>
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseResources"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-database"></i>
-                    <span>Recursos</span>
-                </a>
-                <div id="collapseResources" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestión de recursos </h6>
-                        <a class="collapse-item" href="<?php echo base_url(); ?>api/enterprise"><i class="fas fa-file-upload"></i> Empresas</a>
-                        <a class="collapse-item" href="<?php echo base_url(); ?>adminComponent"><i class="fas fa-file-upload"></i> Componentes</a>
-                        <a class="collapse-item" href="<?php echo base_url(); ?>adminBrand"><i class="fas fa-file-upload"></i> Marcas</a>
-                        <a class="collapse-item" href="<?php echo base_url(); ?>adminSubtask"><i class="fas fa-file-upload"></i> Subtareas</a>
-                        <a class="collapse-item" href="<?php echo base_url(); ?>adminLocation"><i class="fas fa-file-upload"></i> Ubicaciones</a>
-                   
+                </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+                <!-- Nav Item - Proyector -->
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url(); ?>projector">
+                        <i class="fas fa-tv"></i>
+                        <span>Proyector</span></a>
+                </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+                <!-- Nav Item - Recursos -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseResources"
+                        aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-database"></i>
+                        <span>Recursos</span>
+                    </a>
+                    <div id="collapseResources" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Gestión de recursos </h6>
+                            <a class="collapse-item" href="<?php echo base_url(); ?>api/enterprise"><i class="fas fa-file-upload"></i> Empresas</a>
+                            <a class="collapse-item" href="<?php echo base_url(); ?>adminComponent"><i class="fas fa-file-upload"></i> Componentes</a>
+                            <a class="collapse-item" href="<?php echo base_url(); ?>adminBrand"><i class="fas fa-file-upload"></i> Marcas</a>
+                            <a class="collapse-item" href="<?php echo base_url(); ?>adminSubtask"><i class="fas fa-file-upload"></i> Subtareas</a>
+                            <a class="collapse-item" href="<?php echo base_url(); ?>adminLocation"><i class="fas fa-file-upload"></i> Ubicaciones</a>
+                    
+                        </div>
                     </div>
-                </div>
-                <hr class="sidebar-divider">
-            </li>
-
+                </li>
+           <!-- Divider -->
+           <hr class="sidebar-divider">
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
         </ul>
         <!-- End of Sidebar -->
+
+        
 <!------------------------------------------------------      content                                        ------------------------------------------------------------->
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">

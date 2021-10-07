@@ -74,6 +74,10 @@ const tabla = $('#list_enterprise').DataTable({
 	language: {
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
 	},
+    columnDefs: [
+        {className: "text-center", "targets": [3]},
+		{className: "text-center", "targets": [4]}
+    ],
 	columns: [
 		{ data: "rut" },
         { data: "name" },

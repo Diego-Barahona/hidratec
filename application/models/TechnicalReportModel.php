@@ -187,11 +187,15 @@ class TechnicalReportModel extends CI_Model {
         return $this->db->query($query)->result_array();
     }
 
+
     public function setTimeEnd($ot_id){
         date_default_timezone_set("America/Santiago");
         $date_end = date("Y-m-d G:i:s");
         $date1 = new DateTime($date_end);
-       
+        $year1 = $date1->format('Y');
+        $month1 = $date1->format('m');
+        $day1 = $date1->format('d');
+           
  
         $query= "SELECT tr.time_init, tr.hours
         FROM technical_report tr
@@ -200,52 +204,43 @@ class TechnicalReportModel extends CI_Model {
 
         $hoursData = $technicalReport[0]['hours'];
 
-
+        $diasferiados = [ '' ];
         $date_init = $technicalReport[0]['time_init'];
         $date2 = new DateTime($date_init);
 
-        $interval = $date1->diff($date2);
+        $year2 = $date2->format('Y');
+        $month2 = $date2->format('m');
+        $day2 = $date2->format('d');
 
-        $year = (int)$interval->format('%y');
-        $month = (int)$interval->format('%m');
-        $day = (int)$interval->format('%d');
-        $hour = (int)$interval->format('%h');
-        $minute = (int)$interval->format('%i');
-        $second = (int)$interval->format('%s seconds');
+    
+        $fechafin = $year1.'-'.$month1.'-'.$day1;
+        $fechainicio = $year2.'-'.$month2.'-'.$day2;
+        $fechainicio = strtotime($fechainicio);
+        $fechafin = strtotime($fechafin);
+        // Incremento en 1 dia
+        $diainc = 24*60*60;
+            
+        // Arreglo de dias habiles, inicianlizacion
+        $diashabiles = array();
 
-        if($minute != 0){
-            $minute = $minute * 60;
+        // Se recorre desde la fecha de inicio a la fecha fin, incrementando en 1 dia
+        for ($midia = $fechainicio; $midia <= $fechafin; $midia += $diainc) {
+                // Si el dia indicado, no es sabado o domingo es habil
+                if (!in_array(date('N', $midia), array(6,7))) { // DOC: http://www.php.net/manual/es/function.date.php
+                        // Si no es un dia feriado entonces es habil
+                        if (!in_array(date('Y-m-d', $midia), $diasferiados)) {
+                                array_push($diashabiles, date('Y-m-d', $midia));
+                        }
+                }
         }
 
-        if($hour != 0){
-            $hour = $hour * 3600;
-        }
-
-        if($day != 0){
-            $day = $day * 86400;
-        }
-
-        $meses = 0;
-        if($month != 0){ 
-        /*     $month = $day * 86400; */
-            $año = date("Y", strtotime($date_init));
-            $mes = date("m", strtotime($date_init));
-
-            for($i=0; $i<$month; $i++){
-                $aux = (int)$mes + $i;
-                $cantDays = date('t', strtotime($año.'-'.$aux.'-05'));
-                $meses = $meses + ($cantDays*86400);
-            }
-        }
-
-        $suma = $minute + $hour + $day + $meses + $second;
-        $hoursTotal = ($suma/3600) + $hoursData;
+        $dias = count($diashabiles);
 
         $datos = array(
             'time_end' => $date_end,
             'time_init' => null,
             'aux' => null,
-            'hours' => $hoursTotal,
+            'hours' => $dias+$hoursData ,
         );
         $this->db->where('ot_id', $ot_id);
         if($this->db->update('technical_report', $datos)) return true; else return false;
