@@ -29,6 +29,10 @@ const tabla = $("#table-brand").DataTable({
 	language: {
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
 	},
+	columnDefs: [
+        {className: "text-center", "targets": [2]},
+		{className: "text-center", "targets": [3]}
+    ],
 	columns: [
         { data: "name" },
 		{ data: "state" },

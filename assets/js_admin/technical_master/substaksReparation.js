@@ -53,9 +53,11 @@ getSubstaks = () => {
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
             let data = xhr.response;
+            console.log(data);
             let substaksReparation = data[0];
             let technicalAssistantData = data[1];
             let substaksData = data[2];
+            let stateRep = data[3][0]['check_technical'];
             let aux = [];
             console.log(data);
             if(substaksReparation){
@@ -63,6 +65,7 @@ getSubstaks = () => {
                     let check_tm;
                     let check_at;
                     console.log(item);
+
                     if(item.check_tm == '1') check_tm = 'Aprobado';
                     else check_tm = 'No aprobado';
                     
@@ -77,15 +80,20 @@ getSubstaks = () => {
                         technical_assistant: item.technical_assistant,
                         check_tm: check_tm,
                         check_at: check_at,
-                        state: item.state == "1" ? 'Activo' : 'Bloqueado'
+                        state: item.state == "1" ? 'Activo' : 'Bloqueado',
+                        state_ev: stateRep
                     }
                     aux.push(substak);
+                    console.log(substak);
                 });
                 tabla.clear();
                 tabla.rows.add(aux);	
                 tabla.draw();  
             }
-            
+          
+            if(stateRep=='1'){
+                $('#btn_create_substak').hide();
+            }
 
             if(technicalAssistant.length == 0){
                 technicalAssistantData.map((u) => {
@@ -127,10 +135,7 @@ const tabla = $('#tableSubstaksReparations').DataTable({
 	},
     "columnDefs": [
         {
-            className: "text-center", "targets": [6] ,
-        },
-        {
-            className: "text-center", "targets": [7] ,
+            className: "text-center", "targets": [8, 9] ,
         },
     ],
 	columns: [
@@ -142,18 +147,34 @@ const tabla = $('#tableSubstaksReparations').DataTable({
         { data: "check_at" },  
         { data: "check_tm" }, 
         { data: "state" }, 
-        { defaultContent: 
-				`<button type='button' name='btn_update' class='btn btn-primary'>
-				Detalles
-				</button>`
-			
-		},
-        {
-			defaultContent: `<button type='button' name='btn_des_hab' class='btn btn-danger'>
-                                Bloquear/Desbloquear
-                                <i class="fas fa-times"></i>
-                            </button>`,                    
-		},
+        {   defaultContent: "oc",
+            "render": function (data, type, row){
+                if(row.state_ev == '1'){
+                    return `<button type='button'  class='btn btn-primary'>
+                    Detalles
+                    </button>`
+                }else{
+                    return `<button type='button' name='btn_update' class='btn btn-primary'>
+                    Detalles
+                    </button>`
+                }
+            }
+        },// end defaultContent
+        {   defaultContent: "oc",
+            "render": function (data, type, row){
+                if(row.state_ev == '1'){
+                    return `<button type='button' class='btn btn-danger'>
+                        Bloquear/Desbloquear
+                        <i class="fas fa-times"></i>
+                    </button>`
+                }else{
+                    return `<button type='button' name='btn_des_hab' class='btn btn-danger'>
+                        Bloquear/Desbloquear
+                        <i class="fas fa-times"></i>
+                    </button>`
+                }
+            }
+        },// end defaultContent
 	],
 });
 
@@ -180,7 +201,7 @@ $("#tableSubstaksReparations").on("click", "button", function () {
     let data = tabla.row($(this).parents("tr")).data();
     if ($(this)[0].name == "btn_des_hab") {
         show_info_des_hab_substask(data);
-    } else {
+    } else if ($(this)[0].name == "btn_update"){
         show_info_update_substask(data);
     }
 });

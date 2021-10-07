@@ -112,6 +112,10 @@ const tabla = $('#list_user').DataTable({
 	language: {
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
 	},
+    columnDefs: [
+        {className: "text-center", "targets": [5]},
+		{className: "text-center", "targets": [6]}
+    ],
 	columns: [
 		{ data: "rut" },
         { data: "full_name" },

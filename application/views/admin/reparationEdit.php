@@ -34,9 +34,9 @@
                 </div>
                 <div class="row mb-2">
                     <div class="col-md-4 mb-3">
-                        <label for="actividad">Fecha de reparación</label>
+                        <label for="actividad">Fecha de asignación</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="r_date_reparation" id="r_date_reparation" readonly>
+                            <input type="text" class="form-control" name="r_date_assignment" id="r_date_assignment" readonly>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
@@ -54,9 +54,9 @@
                 </div> 
                 <div class="row mb-2">
                     <div class="col-md-4 mb-3">
-                        <label for="actividad">Fecha de asignación</label>
+                        <label for="actividad">Fecha de reparación</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="r_date_assignment" id="r_date_assignment" readonly>
+                            <input type="text" class="form-control" name="r_date_reparation" id="r_date_reparation" readonly>
                         </div>
                     </div>
                 </div> 

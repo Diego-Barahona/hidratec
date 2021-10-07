@@ -1,4 +1,4 @@
-<input type="hidden" class="form-control" id="ot_number" name="ot_number" value='<?= $id ?>' >
+    <input type="hidden" class="form-control" id="ot_number" name="ot_number" value='<?= $id ?>' >
     <input type="hidden" class="form-control" id="id_ot" name="id_ot" value='<?= $id ?>' >
     <div id="content-wrapper">
     <div class="container-fluid mb-5" id="adminColors">
@@ -9,7 +9,7 @@
         <div class="card mb-3">
             <div class="card-header">
          </div>
-        <div class="card-body">
+        <div class="card">
 
         <div class="card-header" >
                  <button class="btn btn-link" data-toggle="collapse" data-target="#c2" aria-expanded="true" aria-controls="technicalReportGeneral">
@@ -19,7 +19,7 @@
            </div>
          
         
-         <div class="card-body collapse in " id= "c2">
+         <div class="card-body collapse in show" id= "c2">
           
  <!-- evaluation-->
 

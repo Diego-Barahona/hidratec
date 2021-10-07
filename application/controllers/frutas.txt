@@ -35,7 +35,7 @@ Ryu Ryu: modelo Pteranodon
 King
 
 Ryu Ryu: modelo Allosaurus
-X-Drake
+XDrake
 
 Hana Hana no mi
 Nico Robin
@@ -125,7 +125,7 @@ Neko Neko: modelo Tigre dientes de sable
 Who's Who
 
 Fuku Fuku no mi
-Kin'emon
+Kinemon
 
 Juku Juku no mi
 Shinobu
@@ -271,64 +271,64 @@ Marshall D. Teach
 Fruta Gura Gura no mi
 Marshall D. Teach
 
-Fruta Hie Hie no mi
+Hie Hie no mi
 Kuzan
 
-Fruta Magu Magu no mi
+Magu Magu no mi
 Sakazuki
 
-Fruta Pika Pika no mi
+Pika Pika no mi
 Borsalino
 
-Fruta Woshu Woshu no mi
+Woshu Woshu no mi
 Tsuru
 
-Fruta Hito Hito no mi
+Hito Hito no mi
 Tony Tony Chopper
 
-Fruta Hito Hito: Modelo Daibutsu
+Hito Hito: Modelo Daibutsu
 Sengoku
 
-Fruta Wara Wara no mi
+Wara Wara no mi
 Basil Hawkins
 
-Fruta Doku Doku no mi 
+Doku Doku no mi 
 Magellan
 
-Fruta Fuwa Fuwa no mi
+Fuwa Fuwa no mi
 Shiki
 
-Fruta Goro Goro no mi
+Goro Goro no mi
 Enel
 
-Fruta Zushi Zushi no mi
+Zushi Zushi no mi
 Issho
 
-Fruta Bari Bari no mi
+Bari Bari no mi
 Bartolomeo
 
-Fruta Giro Giro no mi
+Giro Giro no mi
 Viola Riku
 
-Fruta Jake Jake no mi
+Jake Jake no mi
 Kelly Funk
 
-Fruta Pero Pero no mi
+Pero Pero no mi
 Charlotte Perospero
 
-Fruta Mira Mira no mi
+Mira Mira no mi
 Charlotte Brulee
 
-Fruta Bisu Bisu no mi
+Bisu Bisu no mi
 Charlotte Cracker
 
-Fruta Kuri Kuri no mi
+Kuri Kuri no mi
 Charlotte Opera
 
-Fruta Memo Memo no mi
+Memo Memo no mi
 Charlotte Pudding
 
-Fruta Mochi Mochi no mi
+Mochi Mochi no mi
 Charlotte Katakuri
 
 Fruta Hoya Hoya no mi
@@ -348,10 +348,6 @@ Bullet
 
 Ame Ame no mi
 Gasparde
-
-
-
-
 
 
 

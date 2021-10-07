@@ -12,9 +12,11 @@ let check_technical_old_ht = false;
 let config =[]; // la configuracion de medidas de la prueba 
 let medida = []; // es el arreglo donde almacena los datos de las medidas de la prueba hidraulica 
 
-$("#hab_edit").change(() => { 
-	let check = $('#hab_edit').is(':checked');
-	if(check){
+
+
+ht_enableFields = ()=>{
+    a = $("#ht_btnEdit").val();
+    if(a == 0){
         $( "#date_ht" ).prop( "disabled", false );
         $( "#conclusion_ht" ).prop( "disabled", false );
         $( "#notes_ht" ).prop( "disabled", false );
@@ -29,7 +31,12 @@ $("#hab_edit").change(() => {
             dateFormat: 'yy-mm-dd',
             buttonImage: host_url + 'assets/img/about/calendario2.png',
         });
-	}else{
+		$("#ht_btnEdit").val(1);
+        $("#ht_btnEdit").removeClass("btn btn-success");
+        $("#ht_btnEdit").addClass("btn btn-danger");
+        $("#ht_btnEdit").text("Cancelar");
+        $("#btn_hidraulic").show();
+	}else if(a==1){
         $( "#date_ht" ).prop( "disabled", true );
         $( "#conclusion_ht" ).prop( "disabled", true);
         $( "#notes_ht" ).prop( "disabled", true );
@@ -37,9 +44,13 @@ $("#hab_edit").change(() => {
 		$( "#approve_technical_ht" ).prop( "disabled", true );
         $( "#technical_ht" ).prop( "disabled", true );
 		$("#date_ht").datepicker("destroy");	
-		
+		$("#ht_btnEdit").val(0);
+        $("#ht_btnEdit").removeClass("btn btn-danger");
+        $("#ht_btnEdit").addClass("btn btn-success");
+        $("#ht_btnEdit").text("Editar");
+        $("#btn_hidraulic").hide();
 	}
-});
+};
 
 
 unable_edition =()=>{
@@ -113,8 +124,9 @@ edit_ht = () => { // editar la informacion de la prueba hidraulica
 				text: result.msg,
                 button: "OK",
 			}).then(() => {
-				
+				$("#ht_btnEdit").val('1');
 				$("#date_ht").datepicker("destroy");
+				ht_enableFields();
 				unable_edition();
 				get_data_ht();
 				swal.close();
@@ -142,9 +154,7 @@ edit_ht = () => { // editar la informacion de la prueba hidraulica
 let technicals_user_ht = 0; 
 info_popover="";
 get_data_ht = () =>{
-
     id= $("#ot_number").val();
- 
 	let xhr = new XMLHttpRequest();
 	xhr.open("get", `${host_url}/api/getHydraulicTestByOrder/${id}`);
 	xhr.responseType = "json";
@@ -170,15 +180,12 @@ get_data_ht = () =>{
 				}
 
 			    if(ht.approve_technical === "true"){
-					$( "#export_ht").show();
-					$( "#approve_technical_ht").prop('checked', true);
+					$("#btn_export_ht").show();
+					$("#approve_technical_ht").prop('checked', true);
 					check_technical_old_ht=true;
-					
-
 			    } else {
-					
-					$( "#approve_technical_ht" ).prop('checked', false );
-					$("#export_ht").css("display","none");
+					$("#approve_technical_ht" ).prop('checked', false );
+					$("#btn_export_ht").hide();
 					check_technical_old_ht=false;
 				}
 				
@@ -824,7 +831,7 @@ xhr.send();
 
 
 
-
+$("#ht_btnEdit").on("click", ht_enableFields);
 
 $("#btn_config").on("click", ()=>{	
 	$("#config").modal("show");

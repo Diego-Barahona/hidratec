@@ -264,6 +264,8 @@ $route['api/tmGetSubstaksReparation/(:num)']['GET'] = 'TechnicalMaster/getSubsta
 $route['api/update/substakReparation']['POST'] = 'TechnicalMaster/updateSubstakReparation';
 $route['api/create/substakReparation']['POST'] = 'TechnicalMaster/createSubstakReparation';
 $route['api/des_hab/substakReparation']['POST'] = 'TechnicalMaster/desHabSubstakReparation';
+$route['api/getSubstaksByEvaluation']['POST'] = 'TechnicalMaster/getSubstakByEvaluation';
+$route['api/getSubstaksByReparation']['POST'] = 'TechnicalMaster/getSubstakByReparation';
 
 
 $route['api/chronometer/HydraylicTest']['POST'] = 'TechnicalMaster/chronometerHydraulicTest';
@@ -287,7 +289,7 @@ $route['api/counterAssistant']['GET'] = 'TechnicalAssistant/getCounterData';
 
 /*------------------------------- End Routes Technical Assitant------------------------------------ */
 $route['projector']['GET']='Monitor/viewProjector';
-$route['api/projector/kpiQuotation/(:num)']['GET']='Monitor/chartQuotation/$1';
+$route['api/projector/kpiQuotation']['GET']='Monitor/chartQuotation';
 $route['api/projector/kpiProduction']['GET']='Monitor/chartProduction';
 $route['api/projector/Production']['GET']='Monitor/getProduction';
 $route['api/projector/getOrders']['GET']='Monitor/getOrders';

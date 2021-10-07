@@ -16,7 +16,6 @@ get_data_evaluation = () =>{
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
-			
 			let data = xhr.response[0].details;
 			let technical=xhr.response[0].full_name;
 		    let data2 =xhr.response[0].user_interaction;
@@ -130,10 +129,11 @@ disabledAlertEv= () =>{
 
 
 
-$("#hab_edit_ev").change(() => { 
-	let check = $('#hab_edit_ev').is(':checked');
-	console.log(check);
-	if(check){
+
+ev_enableFields = ()=>{
+	a = $("#hab_edit_ev").val();
+	if(a == 0){
+
         $( "#date_evaluation" ).prop( "disabled", false );
         $( "#description_ev" ).prop( "disabled", false );
         $( "#notes" ).prop( "disabled", false );
@@ -149,7 +149,11 @@ $("#hab_edit_ev").change(() => {
             dateFormat: 'yy-mm-dd',
             buttonImage: host_url + 'assets/img/about/calendario2.png',
         });
-	
+		$("#hab_edit_ev").val(1);
+		$("#hab_edit_ev").removeClass("btn btn-success");
+        $("#hab_edit_ev").addClass("btn btn-danger");
+        $("#hab_edit_ev").text("Cancelar");
+        $("#btn_edit").show();
 	}else{
         $( "#date_evaluation" ).prop( "disabled", true );
         $( "#description_ev" ).prop( "disabled", true);
@@ -160,99 +164,127 @@ $("#hab_edit_ev").change(() => {
         $( "#approve_technical_ev" ).prop( "disabled", true );
 		$( "#id_ot" ).prop( "disabled", true );
 		$("#date_evaluation").datepicker("destroy");	
-
-		
+		$("#hab_edit_ev").val(0);
+		$("#hab_edit_ev").removeClass("btn btn-danger");
+        $("#hab_edit_ev").addClass("btn btn-success");
+        $("#hab_edit_ev").text("Editar");
+        $("#btn_edit").hide();
 	}
-});
+};
 
 
 edit_evaluation = () => {
-    
-	event.preventDefault();
-	let id = $("#id_ot").val();//Image ID 
-	let data = {
-		id : $("#id_ot").val(),
-        date_evaluation :$("#date_evaluation").val(),
-        description: $("#description_ev").val(),
-        notes: $("#notes").val(),
-        technical:$("#technical_id").val(),
-		name_technical:  $('#technical_ev option:selected').text(),
-		approve_technical: $("#approve_technical_ev").is(':checked'),
-		approve_admin: $("#approve_admin_ev").is(':checked'),
-		user_create:$("#user_create_ev").val(),//lineas nuevas
-		user_modify:$("#user_modify_ev").val(),
-		user_approve:$("#user_approve_ev").val(),
-		date_create:$("#date_create_ev").val(),
-		date_modify:$("#date_modify_ev").val(),
-		date_approve:$("#date_approve_ev").val(),
-		priority:$("#priority_ev").val(),
-		location:$("#location_ev").val(),
-		check_admin_old:check_admin_old_ev,
-        check_technical_old:check_technical_old_ev,
-		
-	};
-	console.log(data.location);
-   if (data.location != 0) { 
-  // if(data.approve_technical== true ){
-	  
-	Object.keys(data).map((d) => $(`.${d}`).hide());
+
+	id= $("#ot_number").val();
+	data = { id: id };
 	$.ajax({
 		data: {
 			data,
 		},
 		type: "POST",
-		url: host_url + `api/editEvaluation/${id}`,
+		url: host_url + `api/getSubstaksByEvaluation`,
 		crossOrigin: false,
 		dataType: "json",
 		success: (result) => {
-            swal({
-				title: "Exito",
-				icon: "success",
-				text: result.msg,
-                button: "OK",
-			}).then(() => {
-				$('#hab_edit_ev').prop( "checked", false );
-				$( "#date_evaluation" ).prop( "disabled", true );
-				$( "#description_ev" ).prop( "disabled", true);
-				$( "#notes" ).prop( "disabled", true );
-				$( "#approve_admin_ev" ).prop( "disabled", true );
-				$( "#approve_technical_ev" ).prop( "disabled", true );
-				$( "#technical_ev" ).prop( "disabled", true );
-				$("#date_evaluation").datepicker("destroy");	
-				window.location.assign(host_url+'adminEvaluation');
-				get_data_evaluation();
-			   });
+			if(result == 0){
+				event.preventDefault();
+				let id = $("#id_ot").val();//Image ID 
+				let data = {
+					id : $("#id_ot").val(),
+					date_evaluation :$("#date_evaluation").val(),
+					description: $("#description_ev").val(),
+					notes: $("#notes").val(),
+					technical:$("#technical_id").val(),
+					name_technical:  $('#technical_ev option:selected').text(),
+					approve_technical: $("#approve_technical_ev").is(':checked'),
+					approve_admin: $("#approve_admin_ev").is(':checked'),
+					user_create:$("#user_create_ev").val(),//lineas nuevas
+					user_modify:$("#user_modify_ev").val(),
+					user_approve:$("#user_approve_ev").val(),
+					date_create:$("#date_create_ev").val(),
+					date_modify:$("#date_modify_ev").val(),
+					date_approve:$("#date_approve_ev").val(),
+					priority:$("#priority_ev").val(),
+					location:$("#location_ev").val(),
+					check_admin_old:check_admin_old_ev,
+					check_technical_old:check_technical_old_ev,
+					
+				};
+				console.log(data.location);
+				if (data.location != 0) {  
+					if(data.approve_technical== true ){
+						
+						Object.keys(data).map((d) => $(`.${d}`).hide());
+						$.ajax({
+							data: {
+								data,
+							},
+							type: "POST",
+							url: host_url + `api/editEvaluation/${id}`,
+							crossOrigin: false,
+							dataType: "json",
+							success: (result) => {
+								swal({
+									title: "Exito",
+									icon: "success",
+									text: result.msg,
+									button: "OK",
+								}).then(() => {
+									$("#hab_edit_ev").val('1');
+									ev_enableFields();
+									get_data_evaluation();
+									window.location.assign(host_url+'adminEvaluation');
+								});
+							},
+							error: (result) => {
+								swal({
+									title: "Denegado!",
+									icon: "error",
+									text: result.responseJSON.msg,
+								}).then(() => {
+								swal.close();
+								});
+								
+							},
+						});
+					
+					
+					}else{
+						swal({
+							title: "Error",
+							icon: "error",
+							text: "Para guardar es necesario aprobar su informe de evaluación. Apruebe e intente nuevamente",
+						}); 
+					
+					}
+			   }else{
+				swal({
+					title: "Error",
+					icon: "error",
+					text: "Por favor , seleccione la ubicación del componente a evaluado.",
+				});
+			   }
+			}else{
+				swal({
+					title: "Denegado!",
+					icon: "error",
+					text: 'No puede aprobar porque ha subtareas pendientes',
+				}).then(() => {
+				 swal.close();
+				});
+			}
 		},
 		error: (result) => {
             swal({
 				title: "Denegado!",
 				icon: "error",
-				text: result.responseJSON.msg,
+				text: 'No puede aprobar porque ha subtareas pendientes',
 			}).then(() => {
 			 swal.close();
 			});
 		     
 		},
 	});
-
-
-}else{
-    swal({
-		title: "Error",
-		icon: "error",
-		text: "Para guardar es necesario aprobar su informe de evaluación. Apruebe e intente nuevamente",
-	});
-
-}
-  /* }else{
-	swal({
-		title: "Error",
-		icon: "error",
-		text: "Por favor , seleccione la ubicación del componente a evaluado.",
-	});
-
-   }*/
-   
 };
 
 
@@ -330,7 +362,7 @@ $("#btn_edit").on("click", () => {
 });
 
 
-
+$("#hab_edit_ev").on("click", ev_enableFields);
 
 
 

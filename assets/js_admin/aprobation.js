@@ -66,9 +66,11 @@ get_data_ap = () =>{
 	xhr.send();
 }
 
-$("#hab_edit_ap").change(() => { 
-	let check = $('#hab_edit_ap').is(':checked');
-	if(check){
+
+
+ap_enableFields = ()=>{
+    a = $("#hab_edit_ap").val();
+    if(a == 0){
         $('#date_ap').prop( "disabled", false );
 		$('#date_send_qt').prop( "disabled", false );
 		$("#number_qt").prop( "disabled", false );
@@ -89,17 +91,25 @@ $("#hab_edit_ap").change(() => {
             dateFormat: 'yy-mm-dd',
             buttonImage: host_url + 'assets/img/about/calendario2.png',
         });
- 
-	}else{
-
+		$("#hab_edit_ap").val(1);
+        $("#hab_edit_ap").removeClass("btn btn-success");
+        $("#hab_edit_ap").addClass("btn btn-danger");
+        $("#hab_edit_ap").text("Cancelar");
+        $("#btn_aprobation").show();
+	}else if(a==1){
         $("#date_ap").prop( "disabled", true );
 		$('#date_send_qt').prop( "disabled", true);
 		$("#number_qt").prop( "disabled", true );
         $("#approve_client").prop( "disabled", true );
         $("#date_ap").datepicker("destroy");
-		$("#date_send_qt").datepicker("destroy");		
+		$("#date_send_qt").datepicker("destroy");
+		$("#hab_edit_ap").val(0);
+        $("#hab_edit_ap").removeClass("btn btn-danger");
+        $("#hab_edit_ap").addClass("btn btn-success");
+        $("#hab_edit_ap").text("Editar");
+        $("#btn_aprobation").hide();		
 	}
-});
+};
 
 
 
@@ -138,6 +148,7 @@ edit_ap = () => {
 				text: result.msg,
                 button: "OK",
 			}).then(() => {
+					$("#hab_edit_ap").val('1');
 					$('#hab_edit_ap').prop( "checked", false );
 					$("#number_qt").prop( "disabled", true );
 					$("#date_send_qt").datepicker("destroy");
@@ -145,6 +156,7 @@ edit_ap = () => {
 					$("#date_ap").datepicker("destroy");
 	                $("#date_ap").prop( "disabled", true );
 	                $("#approve_client" ).prop( "disabled", true );
+					ap_enableFields();
 				swal.close();
 			   });
 		},
@@ -176,3 +188,5 @@ $("#ap_popover").on('click',function(){
 
 
 $("#btn_aprobation").on("click", edit_ap);
+
+$("#hab_edit_ap").on("click", ap_enableFields);
