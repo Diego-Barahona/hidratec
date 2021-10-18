@@ -59,6 +59,7 @@
                 <th>Componente </th>
                 <th>Estado</th>
                 <th>Tipo de servicio</th>
+                <th>Plazo en producción </th>
                 <th>Alertas de aprobación</th>
                 <th>Administrar</th>
                 <th>Editar</th>

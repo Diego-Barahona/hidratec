@@ -91,8 +91,10 @@
                             <a class="collapse-item" href="<?php echo base_url(); ?>api/user"><i class="far fa-list-alt"></i> Empresa</a>
                             <a class="collapse-item" href="<?php echo base_url(); ?>api/client"><i class="far fa-list-alt"></i> Clientes</a>
                         </div>
+
                     </div>
                 </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
                 <!-- Nav Item - Ordenes de trabajo -->
@@ -129,6 +131,7 @@
                         <a class="collapse-item" href="utilities-border.html"><i class="fas fa-tools"></i> Rendimiento técnico</a>
                         </div>
                     </div>
+                  </div>
                 </li>
 
             <!-- Divider -->
