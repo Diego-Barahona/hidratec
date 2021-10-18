@@ -16,7 +16,15 @@ class TechnicalAssistantModel extends CI_Model
         return $this->db->query($query, array($user, 1, 0))->result();  
     } 
 
-
+    public function getSubstaksEvaluation(){
+        $user= $_SESSION['id'];
+        $query = "SELECT sr.subtask_id, sr.state, sr.ot_id number_ot, sr.date_assigment date, sr.check_tm, sr.check_at, s.name substask,
+        sr.aux, sr.time_init, sr.time_end
+        FROM subtask_evaluation sr
+        JOIN subtask s ON sr.subtask_id = s.id
+        WHERE sr.user_id = ? && sr.state = ? && sr.check_tm = ?"; 
+        return $this->db->query($query, array($user, 1, 0))->result();  
+    } 
 
 
     public function approve($data){

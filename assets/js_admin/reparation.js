@@ -63,6 +63,10 @@ get_data_reparation = () =>{
                 $("#r_days_reparation").val('');
             }
 
+            $("#provider_number").val(xhr.response[0][0].provider_number);
+            $("#date_provider_number").val(xhr.response[0][0].date_provider_number);
+            $("#priority_rep").val(xhr.response[0][0].priority);
+
             interaction = JSON.parse(xhr.response[0][0].user_interaction);
             date_reparation = interaction.date_reparation;
             technical_assignment = interaction.technical_assignment;
@@ -95,14 +99,15 @@ get_data_reparation = () =>{
 r_enableFields = ()=>{
     a = $("#r_btnEdit").val();
     if(a == 0){
-        $("#r_date_reparation").attr("readonly", false);
         $("#r_date_assignment").attr("readonly", false);
         $("#r_days_reparation").attr("readonly", false);
+        $("#date_provider_number").attr("readonly", false);
+        $("#provider_number").attr("readonly", false);
         $("#r_technical").removeAttr("disabled");
         $("#r_check_adm").removeAttr("disabled");
+        $("#priority_rep").removeAttr("disabled");
         $("#r_check_technical").removeAttr("disabled");
-
-        $("#r_date_reparation").datepicker({
+        $("#r_date_assignment").datepicker({
             showOn: "button",
             buttonText: "Calendario",
             changeMonth: true,
@@ -110,8 +115,7 @@ r_enableFields = ()=>{
             dateFormat: 'yy-mm-dd',
             buttonImage: host_url + 'assets/img/about/calendario2.png',
         });
-
-        $("#r_date_assignment").datepicker({
+        $("#date_provider_number").datepicker({
             showOn: "button",
             buttonText: "Calendario",
             changeMonth: true,
@@ -126,20 +130,70 @@ r_enableFields = ()=>{
         $("#r_btnEdit").text("Cancelar");
         $("#r_btnSave").show();
     }else if(a==1){
-        $("#r_date_reparation").attr("readonly", true);
         $("#r_date_assignment").attr("readonly", true);
         $("#r_days_reparation").attr("readonly", true);
+        $("#date_provider_number").attr("readonly", true);
+        $("#priority_rep").attr("readonly", true);
+        $("#provider_number").attr("readonly", true);
         $("#r_technical").attr("disabled", true);
         $("#r_check_adm").attr("disabled", true);
         $("#r_check_technical").attr("disabled", true);
-        $("#r_date_reparation").datepicker("destroy");
         $("#r_date_assignment").datepicker("destroy");
+        $("#date_provider_number").datepicker("destroy");
         $("#r_btnEdit").val(0);
         $("#r_btnEdit").removeClass("btn btn-danger");
         $("#r_btnEdit").addClass("btn btn-success");
         $("#r_btnEdit").text("Editar");
         $("#r_btnSave").hide();
         get_data_reparation();
+    }
+}
+
+calculateDays = () => {
+    if($("#r_date_assignment").val()){
+        data = {
+            date_assignment :  $("#r_date_assignment").val(),
+            days_reparation : $("#r_days_reparation").val()
+        }; 
+        $.ajax({
+            type: "POST",
+            url: host_url + "api/CalculateDateReparation",
+            data: {data},
+            dataType: "json",
+            success: (xhr) => {
+                $("#r_date_reparation").val(xhr);
+            }, error: () => {
+                alert('dasdsa');
+            },
+        });  
+    }else{
+        swal({
+            title: "Error",
+            icon: "error",
+            text: "Debe ingresar primero una fecha de asignación",
+        }).then(() => {
+            $("#r_days_reparation").val('');
+        });
+    }
+}
+
+calculateDaysRep = () => {
+    if($("#r_days_reparation").val()){
+        data = {
+            date_assignment :  $("#r_date_assignment").val(),
+            days_reparation : $("#r_days_reparation").val()
+        }; 
+        $.ajax({
+            type: "POST",
+            url: host_url + "api/CalculateDateReparation",
+            data: {data},
+            dataType: "json",
+            success: (xhr) => {
+                $("#r_date_reparation").val(xhr);
+            }, error: () => {
+                alert('dasdsa');
+            },
+        });  
     }
 }
 
@@ -158,7 +212,10 @@ saveReparation = () =>{
         days_reparation: $('#r_days_reparation').val(),
         date_reparation: $('#r_date_reparation').val(),
         date_assignment: $('#r_date_assignment').val(),
+        date_provider_number : $('#date_provider_number').val(),
+        provider_number : $('#provider_number').val(),
         check_adm_old: r_check_adm_old,
+        priority: $('#priority_rep').val(),
         date_approve: date_approve,
         user_approve: user_approve,
         technical_assignment: $('#r_technical option:selected').text(),
@@ -224,3 +281,8 @@ addErrorStyle = errores => {
 $("#r_btnEdit").on("click", r_enableFields);
 
 $("#r_btnSave").on("click", saveReparation);
+
+$("#r_days_reparation").on("change", calculateDays);
+
+
+$("#r_date_assignment").on("change", calculateDaysRep);

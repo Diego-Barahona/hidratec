@@ -7,7 +7,7 @@ class ReparationModel extends CI_Model {
     }
 
     public function getReparationByOrder($ot_id){
-        $query= "SELECT r.check_adm check_adm, r.date_assignment, r.check_technical check_technical, r.user_assignment user, r.date_reparation date, ot.days_reparation days, r.user_interaction
+        $query= "SELECT ot.date_provider_number, ot.provider_number, r.check_adm check_adm, r.date_assignment, r.check_technical check_technical, r.user_assignment user, r.date_reparation date, ot.days_reparation days, r.user_interaction, r.priority
         FROM reparation r
         LEFT JOIN ot ON ot.id = r.ot_id
         WHERE r.ot_id = ? ";
@@ -69,6 +69,7 @@ class ReparationModel extends CI_Model {
             'user_assignment' => $technical,
             'date_reparation' => $data['date_reparation'],
             'date_assignment' => $data['date_assignment'],
+            'priority' => $data['priority'],
             'user_interaction' => json_encode(array(
                 'technical_assignment' => $technical_assignment,
                 'date_reparation' => $date_reparation,
@@ -84,8 +85,11 @@ class ReparationModel extends CI_Model {
 
             //update OT
             $datos_ot = array(
+                'date_cellar' => $data['date_reparation'],
                 'date_reparation' => $data['date_reparation'],
-                'days_reparation' => $data['days_reparation']
+                'days_reparation' => $data['days_reparation'],
+                'date_provider_number' => $data['date_provider_number'],
+                'provider_number' => $data['provider_number'],
             );
             $this->db->where('id', $data['ot_id']);
             $this->db->update('ot', $datos_ot);
@@ -123,5 +127,25 @@ class ReparationModel extends CI_Model {
             }
             return true;
         }  else return false;
+    }
+
+    public function calculateReparation($data){
+        return $this->dayEnd($data);
+    }
+
+    public function dayEnd($data){
+        $fecha = $data['date_assignment'];
+        $dias = $data['days_reparation'];
+        $datestart= strtotime($fecha);
+        $datesuma = 15 * 86400;
+        $diasemana = date('N',$datestart);
+        $totaldias = $diasemana+$dias;
+        $findesemana = intval( $totaldias/5) *2 ; 
+        $diasabado = $totaldias % 5 ; 
+        if ($diasabado==6) $findesemana++;
+        if ($diasabado==0) $findesemana=$findesemana-2;
+    
+        $total = (($dias+$findesemana) * 86400)+$datestart ; 
+        return (date('Y-m-d', $total));
     }
 }

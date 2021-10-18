@@ -20,6 +20,17 @@ class TechnicalAssistant extends CI_Controller
         }
     }
 
+    public function adminSubstaksEvaluation()
+    {     
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $this->load->view('shared/headerTechnicalAssistant');
+            $this->load->view('technicalAssistant/substasksEvaluationList');
+            $this->load->view('shared/footer');
+        } else {
+            redirect('Home/login', 'refresh');
+        }
+    }
+
     public function getSubstaksReparation() { 
         if ($this->accesscontrol->checkAuth()['correct']) {
             if($res = $this->TechnicalAssistantModel->getSubstaksReparation()){
@@ -34,7 +45,34 @@ class TechnicalAssistant extends CI_Controller
         }
     }
 
+    public function getSubstaksEvaluation() { 
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            if($res = $this->TechnicalAssistantModel->getSubstaksEvaluation()){
+                $this->response->sendJSONResponse($res);
+            }else{
+                //No hay subtareas asociadas
+                $res = false;
+                $this->response->sendJSONResponse($res);
+            }
+        }else{
+             $this->response->sendJSONResponse(array('msg' => 'No tiene permisos suficientes.'), 400);
+        }
+    }
+
     public function approveSubstakReparation(){ 
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $data = $this->input->post('data');
+            if($report=$this->TechnicalAssistantModel->approve($data)){
+                $this->response->sendJSONResponse($report); 
+            }else{
+                $this->response->sendJSONResponse(array('msg' => 'No se pudo actualizar la reparación.'), 400); 
+            }
+        }else {
+			redirect('Home/login', 'refresh');
+        }
+    }
+
+    public function approveSubstakEvaluation(){ 
         if ($this->accesscontrol->checkAuth()['correct']) {
             $data = $this->input->post('data');
             if($report=$this->TechnicalAssistantModel->approve($data)){
@@ -61,8 +99,5 @@ class TechnicalAssistant extends CI_Controller
         }
 
     }
-
-
-
     
 }

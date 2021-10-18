@@ -1,7 +1,7 @@
 <div id="content-wrapper">
     <div class="container-fluid mb-5">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Subtareas de reparación</li>
+            <li class="breadcrumb-item active">Subtareas de Evaluacion</li>
         </ol>
         <div class="accordion" id="accordionExample">
         <div class="card mb-3">
@@ -45,4 +45,4 @@
         </div>
     </div>
 </div>
-<script src="<?php echo base_url(); ?>assets/js_admin/technical_assistant/substasksReparation.js"></script>
+<script src="<?php echo base_url(); ?>assets/js_admin/technical_assistant/substasksEvaluation.js"></script>

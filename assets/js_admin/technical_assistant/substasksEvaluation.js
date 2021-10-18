@@ -8,81 +8,64 @@ $(document).on({
 });
 
 $(() => {
-    getReparations();
+    getSubstaksEvaluation();
 });
 
 let statesOt = [];
 
 /*Funcion para recuperar las ordenes de trabajo*/
-getReparations = () => {
-	let xhr = new XMLHttpRequest();
-	xhr.open("get", `${host_url}/api/tmGetReparation`);
+getSubstaksEvaluation = () => {
+    let xhr = new XMLHttpRequest();
+    xhr.open("get", `${host_url}/api/atGetSubstaksEvaluation/`);
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
             let data = xhr.response;
             let aux = [];
             console.log(data);
-            data.forEach((item)=>{
-
-                let priority = '';
-                if(item.priority == '1'){
-                    priority = 'Baja';
-                }else if(item.priority == '2'){
-                    priority = 'Media'
-                }else if(item.priority == '3'){
-                    priority = 'Alta'
-                }else{
-                    priority = 'NE'
-                }
-
-                if(item.check_technical == '1'){
-                    if(item.check_adm == '0') {
-                        reparation = 
+            if(data){
+                data.forEach((item)=>{
+                    if(item.check_at == '1'){
+                        if(item.check_tm == '0') {
+                            substak = 
+                            {
+                                number_ot : item.number_ot,
+                                id: item.subtask_id,
+                                date : item.date,
+                                substask: item.substask,
+                                check_tm: 'No Aprobado',
+                                check_at: 'Realizado',
+                                time_init: item.time_init,
+                                aux: item.aux,
+                                time_end: item.time_end,
+                            }
+                            aux.push(substak);
+                        } 
+                    }else{
+                        substak = 
                         {
                             number_ot : item.number_ot,
+                            id: item.subtask_id,
                             date : item.date,
-                            client: item.client,
-                            component: item.component,
-                            service : item.service,
-                            date_reparation: item.date_reparation,
-                            priority: priority,
-                            check_technical: 'Realizado',
-                            check_adm: 'No Aprobado',
+                            substask: item.substask,
+                            check_tm: 'No Aprobado',
+                            check_at: 'No Realizado',
                             time_init: item.time_init,
                             aux: item.aux,
                             time_end: item.time_end,
                         }
-                        aux.push(reparation);
+                        aux.push(substak);
                     } 
-                }else{
-                    reparation = 
-                    {
-                        number_ot : item.number_ot,
-                        date : item.date,
-                        client: item.client,
-                        component: item.component,
-                        priority: priority,
-                        date_reparation: item.date_reparation,
-                        service : item.service,
-                        check_technical: 'No Realizado',
-                        check_adm: 'No Aprobado',
-                        time_init: item.time_init,
-                        aux: item.aux,
-                        time_end: item.time_end,
-                    }
-                    aux.push(reparation);
-                } 
-            });
-            console.log(aux);
-            tabla.clear();
-            tabla.rows.add(aux);	
-            tabla.order( [ 7, 'asc' ] ).draw();      
+                }); 
+                tabla.clear();
+                tabla.rows.add(aux);	
+                tabla.order( [ 7, 'asc' ] ).draw();  
+            }
 		} else {
 			swal({
 				title: "Error",
 				icon: "error",
-				text: "Error al obtener las reparaciones",
+				text: "Error al obtener las subtareas",
 			});
 		}
 	});
@@ -90,30 +73,30 @@ getReparations = () => {
 };
 
 /*Constante para rellenar las filas de la tabla: lista de ordenes de trabajo*/
-const tabla = $('#tableReparations').DataTable({
+const tabla = $('#tableSubstaksReparations').DataTable({
 	// searching: true,
 	language: {
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
 	},
     "columnDefs": [
         {
-            className: "text-center", "targets": [3,8,9,10] ,
+            className: "text-center", "targets": [6] ,
+        },
+        {
+            className: "text-center", "targets": [7] ,
         },
     ],
 	columns: [
         { data: "number_ot"}, 
+        { data: "id" }, 
         { data: "date" }, 
-        { data: "date_reparation" }, 
-        { data: "priority" }, 
-        { data: "client" }, 
-        { data: "component" }, 
-        { data: "service" }, 
-        { data: "check_technical" }, 
-        { data: "check_adm" }, 
+        { data: "substask" }, 
+        { data: "check_at" },  
+        { data: "check_tm" }, 
         { defaultContent: "tec",
             "render": function (data, type, row){
                 console.log(row);
-                if(row.check_technical === 'Realizado'){
+                if(row.check_at === 'Realizado'){
                     return `<button type='button' class='btn btn-primary'>
                     Finalizado
                     </button>`
@@ -142,29 +125,9 @@ const tabla = $('#tableReparations').DataTable({
                 }
             }
         },
-        {   defaultContent: "oc",
-        "render": function (data, type, row){
-            if(row.check_technical === 'Realizado'){
-                return `<button type='button' name='btn_substaks' class='btn btn-primary'>
-                    Ver  <i class="fas fa-tasks"></i>
-                </button>`
-            }else{
-                if(row.time_init){   
-                    return `<button type='button'  name='btn_substaks'  class='btn btn-warning'>
-                    Asignar <i class="fas fa-tasks"></i>
-                    </button>`
-                }else{  
-                    return `<button type='button' name='btn_substaks' class='btn btn-primary'>
-                    Ver  <i class="fas fa-tasks"></i>
-                    </button>`
-                }
-            }
-            }
-        },// end defaultContent
-
         { defaultContent: "oc",
             "render": function (data, type, row){
-                if(row.check_technical === 'Realizado'){
+                if(row.check_at === 'Realizado'){
                     return `<button type='button' class='btn btn-primary'>
                     Realizado
                     </button>`
@@ -179,14 +142,9 @@ const tabla = $('#tableReparations').DataTable({
 	],
 });
 
-
-$("#tableReparations").on("click", "button", function () {
+$("#tableSubstaksReparations").on("click", "button", function () {
     let data = tabla.row($(this).parents("tr")).data();
-    if ($(this)[0].name == "btn_substaks") {
-        let ot = data.number_ot;
-		let url = 'tmAdminSubstasks/reparation/index'+'?ot='+ot;
-		window.location.assign(host_url+url);
-	}else if ($(this)[0].name == "btn_approve"){
+    if ($(this)[0].name == "btn_approve"){
         approve(data);
     }else if($(this)[0].name == "tr_btn_play"){
         show_play(data);
@@ -209,9 +167,9 @@ approve = (item) => {
 
     if(op == 0){
         swal({
-            title: `Aprobar Reparación`,
+            title: `Aprobar Subtarea de Evaluación`,
             icon: "warning",
-            text: `Esta  segur@ de marcar como realizada la reparación de la ot n°:${item.number_ot}?, esta acción es irreversible`,
+            text: `Esta  segur@ de marcar como realizada la subtarea de la evaluación asiganda a la ot n°:${item.number_ot}?, esta acción es irreversible`,
             buttons: {
                 confirm: {
                     text: `Confirmar`,
@@ -226,74 +184,43 @@ approve = (item) => {
         }).then((action) => {
             if (action == "approve") {
                 data = {
-                    id: item.number_ot,
+                    ot_id: item.number_ot,
+                    id: item.id,
+                    name: 'subtask_evaluation'
                 }
                 $.ajax({
-                    data: {
-                        data,
-                    },
                     type: "POST",
-                    url: host_url + `api/getSubstaksByReparation`,
-                    crossOrigin: false,
+                    url: host_url + "api/atApproveSubstakEvaluation",
+                    data: {data},
                     dataType: "json",
-                    success: (result) => {
-                        console.log(result);
-                        if(result == 0){
-                            data = {
-                                ot_id: item.number_ot,
-                            }
-                            $.ajax({
-                                type: "POST",
-                                url: host_url + "api/tmApproveReparation",
-                                data: {data},
-                                dataType: "json",
-                                success: () => {
-                                swal({
-                                    title: "Éxito!",
-                                    icon: "success",
-                                    text: "Reparación actualizada con éxito.",
-                                    button: "OK",
-                                }).then(() => {
-                                    getReparations();
-                                });
-                                }, 
-                                error: () => {
-                                    swal({
-                                        title: "Error",
-                                        icon: "error",
-                                        text: "No se pudo encontrar el recurso",
-                                    }).then(() => {
-                                        $("body").removeClass("loading");
-                                    });
-                                },
-                            });  
-                        }else{
-                            swal({
-                                title: "Denegado!",
-                                icon: "error",
-                                text: 'No puede aprobar porque ha subtareas pendientes',
-                            }).then(() => {
-                             swal.close();
-                            });
-                        }
-                    },
-                    error: (result) => {
+                    success: () => {
+                     swal({
+                         title: "Éxito!",
+                         icon: "success",
+                         text: "Subtarea de evaluación actualizada con éxito.",
+                         button: "OK",
+                     }).then(() => {
+                        getSubstaksEvaluation();
+                     });
+                    }, 
+                    error: () => {
                         swal({
-                            title: "Denegado!",
+                            title: "Error",
                             icon: "error",
-                            text: 'No puede aprobar porque ha subtareas pendientes',
+                            text: "No se pudo encontrar el recurso",
                         }).then(() => {
-                         swal.close();
+                            $("body").removeClass("loading");
                         });
                     },
-                });
+                });  
+    
             }
         });
     }else if(op == 1 || op == 2){
         swal({
-            title: `Aprobar Reparación`,
+            title: `Aprobar Subtarea de Reparación`,
             icon: "warning",
-            text: `No puede aprobar la reparación, debe `+text,
+            text: `No puede aprobar la subtarea de reparación, debe `+text,
             buttons: {
                 confirm: {
                     text: `Confirmar`,
@@ -311,9 +238,9 @@ approve = (item) => {
 
 show_play = (data) =>{
     swal({
-        title: `Comenzar la Reapración`,
+        title: `Comenzar Subtarea de la Reapración`,
         icon: "warning",
-        text: `¿Esta seguro de comenzar la reparación asociada a la OT ${data.number_ot}"?`,
+        text: `¿Esta seguro de comenzar la subtarea de reparación asociada a la OT ${data.number_ot}"?`,
         buttons: {
             confirm: {
                 text: `Confirmar`,
@@ -337,9 +264,9 @@ show_play = (data) =>{
 /*Función para preparar la información a des/habilitar*/
 show_continue = (data) =>{
     swal({
-        title: `Continuar Reparación`,
+        title: `Continuar Subtarea de Reparación`,
         icon: "warning",
-        text: `¿Esta seguro de reanudar la reparación asociada a la OT ${data.number_ot}"?`,
+        text: `¿Esta seguro de reanudar la subtarea de reparación asociada a la OT ${data.number_ot}"?`,
         buttons: {
             confirm: {
                 text: `Confirmar`,
@@ -363,9 +290,9 @@ show_continue = (data) =>{
 /*Función para preparar la información a des/habilitar*/
 show_stop = (data) =>{
     swal({
-        title: `Pausar Reparación`,
+        title: `Pausar Subtarea de Reparación`,
         icon: "warning",
-        text: `¿Esta seguro de pausar la reparación asociada a la OT ${data.number_ot}"?`,
+        text: `¿Esta seguro de pausar la subtarea de reparación asociada a la OT ${data.number_ot}"?`,
         buttons: {
             confirm: {
                 text: `Confirmar`,
@@ -386,12 +313,11 @@ show_stop = (data) =>{
     });
 }
 
-
 chronometer = (data, msg) =>{
     datos = {
         ot_id : data.number_ot,
         msg: msg,
-        name: 'reparation'
+        name: 'subtask_evaluation'
     } 
     $.ajax({
         type: "POST",
@@ -405,7 +331,7 @@ chronometer = (data, msg) =>{
              text: result.msg,
              button: "OK",
          }).then(() => {
-            getReparations();
+            getSubstaksEvaluation();
          });
         }, 
         error: () => {
@@ -419,8 +345,3 @@ chronometer = (data, msg) =>{
         },
     });
 }
-
-	
-
-	
-	
