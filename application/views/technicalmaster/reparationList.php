@@ -31,6 +31,8 @@
                         <tr>
                             <th>N° de OT </th>
                             <th>Fecha de realización </th>
+                            <th>Fecha Límite </th>
+                            <th>Prioridad </th>
                             <th>Cliente</th>
                             <th>Componente </th>
                             <th>Tipo de servicio</th>

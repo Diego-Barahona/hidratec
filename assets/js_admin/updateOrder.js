@@ -100,8 +100,6 @@ updateOrder = () => {
         days_quotation : $('#days_quotation').val(),
 		location: $('#location').val(),
 		location_old : location_old,
-        date_provider_number : $('#date_provider_number').val(),
-        provider_number : $('#provider_number').val(),
         check_evaluation : $('#check_evaluation').is(':checked'),
         check_report_technical : $('#check_report_technical').is(':checked'),
         check_hydraulic_test : $('#check_hydraulic_test').is(':checked'),

@@ -150,29 +150,6 @@
                 </div>   
             </div>
         </div>
-
-        <div class="card mb-3">
-            <div class="card-header">
-                <i class="fas fa-table"></i>
-               Información de pedido
-            </div>
-            <div class="card-body">
-                <div class="row mb-2">
-                    <div class="col-md-4 mb-3">
-                        <label for="actividad">Fecha de pedido</label>
-                        <div class="input-group" id="frm_date_provider_number">
-                            <input type="text" style="" class="form-control" value="<?= $date_provider_number ?>" name="date_provider_number" id="date_provider_number" placeholder="" aria-describedby="inputGroupPrepend3">
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                    <label for="actividad">Número de pedido</label>
-                        <div class="input-group" id="frm_provider_number">
-                            <input type="number" min="0" class="form-control" value="<?= $provider_number?>" name="provider_number" id="provider_number" placeholder="" aria-describedby="inputGroupPrepend3">
-                        </div>
-                    </div> 
-                </div>   
-            </div>
-        </div>
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fas fa-table"></i>

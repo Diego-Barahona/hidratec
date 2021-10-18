@@ -45,4 +45,14 @@ class Reparation extends CI_Controller
             redirect('Home/login', 'refresh');
         }
     }
+
+    public function calculateReparation(){
+        if ($this->accesscontrol->checkAuth()['correct']) {
+			$data = $this->input->post('data');
+            $date = $this->ReparationModel->calculateReparation($data);
+            $this->response->sendJSONResponse($date);	
+        }else {
+            redirect('Home/login', 'refresh');
+        }
+    }
 }

@@ -59,7 +59,45 @@
                             <input type="text" class="form-control" name="r_date_reparation" id="r_date_reparation" readonly>
                         </div>
                     </div>
+                    <div class="col-md-4 mb-3" >
+                        <label for="actividad">Tipo de prioridad</label>
+                        <select class="form-select form-control"  id="priority_rep" name="priority_rep" required="" disabled>
+                            <option></option>
+                            <option value="1">BAJA</option>
+                            <option value="2">MEDIA</option>
+                            <option value="3">ALTA</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div> 
                 </div> 
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTR">
+            <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#reparationPedido" aria-expanded="false" aria-controls="technicalReportGeneral">
+                <i class="fas fa-table"></i>
+                Información de pedido
+            </button>
+            </h5>
+        </div>
+        <div id="reparationPedido" class="collapse" aria-labelledby="headingTR">
+            <div class="card-body">
+                <div class="row mb-2 ">
+                    <div class="col-md-4 mb-3">
+                        <label for="actividad">Fecha de pedido</label>
+                        <div class="input-group" id="frm_date_provider_number">
+                            <input type="text" class="form-control" value="" name="date_provider_number" id="date_provider_number" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                    <label for="actividad">Número de pedido</label>
+                        <div class="input-group" id="frm_provider_number">
+                            <input type="number" min="0" class="form-control" value="" name="provider_number" id="provider_number" readonly>
+                        </div>
+                    </div>              
+                </div>
             </div>
         </div>
     </div>
