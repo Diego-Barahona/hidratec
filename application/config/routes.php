@@ -302,7 +302,7 @@ $route['module_kpi/kpiQuotation']['GET']='Kpi/kpiQuotation';
 $route['module_kpi/kpiProduction']['GET']='Kpi/kpiProduction';
 $route['module_kpi/kpi/avgQuotation']['POST']='Kpi/periodFilterQuotation';
 $route['module_kpi/kpi/avgProduction']['POST']='Kpi/periodFilterProduction';
-
+$route['module_kpi/kpi/orders']['POST']='Kpi/getOrders';
 
 
 

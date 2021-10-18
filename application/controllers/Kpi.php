@@ -76,6 +76,16 @@ class Kpi extends CI_Controller
     }
 
 
+    public function getOrders()
+    { 
+
+        $data = $this->input->post('data');
+        $this->load->model('KpiModel');
+		$orders = $this->KpiModel->getOrdersQuotation($data);
+        $this->response->sendJSONResponse($orders);
+    }
+
+
     
 
 

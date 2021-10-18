@@ -92,7 +92,7 @@
                             <a class="collapse-item" href="<?php echo base_url(); ?>api/client"><i class="far fa-list-alt"></i> Clientes</a>
                         </div>
                        </div>
-                  </div>
+               
              </li>
 
         
@@ -131,6 +131,7 @@
                         <a class="collapse-item" href="utilities-color.html"><i class="fas fa-history"></i>  Historial</a>
                         <a class="collapse-item" href="utilities-border.html"><i class="fas fa-tools"></i> Rendimiento técnico</a>
                     </div>
+                  </div>
                 </li>
             <!-- Divider -->
             <hr class="sidebar-divider">

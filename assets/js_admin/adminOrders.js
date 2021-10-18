@@ -70,6 +70,7 @@ get_orders_test = () => {
 			evaluation = JSON.parse(item.evaluation);
 			technical_report = JSON.parse(item.technical_report);
 			hydraulic_test = JSON.parse(item.hydraulic_test);
+			date_reparation = item.date_reparation;
 			
 			 alert_on =false;
 			 
@@ -99,6 +100,7 @@ get_orders_test = () => {
              console.log(item.number_ot);
 			 console.log(alert_on);
 			 console.log($alert);
+			 console.log(date_reparation);
 			 
 			 object = {
                 number_ot: item.number_ot,
@@ -109,6 +111,8 @@ get_orders_test = () => {
 		        service: item.service,
 				alert:alert_on,
 				alert_info:$alert,
+				date_reparation: date_reparation,
+				id_state:item.id_state,
 
 			 }
 			
@@ -174,6 +178,26 @@ const tabla = $('#table_orders').DataTable({
         { data: "component" },
         { data: "state" },
 		{ data: "service" },
+		{ "render": function(data,type,row){
+                      if(row.date_reparation){
+						  
+						  if(row.id_state >=4 && row.id_state <= 6){
+							return `<button type='button' name='date_show' class='btn btn-success'>
+							<i class="fas fa-clock"></i>
+						   </button>`
+						  }else{
+							return `<button type='button' name='not_date' class='btn btn-danger'>
+							<i class="far fa-calendar-times"></i>
+								 </button>`
+						  }
+					  }else{
+						   return `<button type='button' name='not_date' class='btn btn-danger'>
+						   <i class="far fa-calendar-times"></i>
+								 </button>`
+
+					  }
+		}
+	},
 		{   defaultContent: "oc",
         "render": function (data, type, row){
                                 if(row.alert == true){
@@ -216,38 +240,71 @@ $("#table_orders").on("click", "button", function () {
 		let url = 'stagesOrder'+'?ot='+ot;
 		window.location.assign(host_url+url);
 	}else{
-	if($(this)[0].name == "btn_images"){
-		let ot = data.number_ot;
-		let url = 'adminImages'+'?ot='+ot;
-		window.location.assign(host_url+url);
-    }else{
-		if($(this)[0].name == "alert_info"){
-			swal({
-				title: `Aprobaciones pendientes`,
-				icon: "warning",
-				text: addAlerts(data.alert_info),
-				buttons: {
+	     if($(this)[0].name == "btn_images"){
+		    let ot = data.number_ot;
+		    let url = 'adminImages'+'?ot='+ot;
+		    window.location.assign(host_url+url);
+         }else{
+		      if($(this)[0].name == "alert_info"){
+			     swal({
+				  title: `Aprobaciones pendientes`,
+				  icon: "warning",
+				  text: addAlerts(data.alert_info),
+				  buttons: {
 					
 					cancel: {
 						text: "Aceptar",
 						value: "cancelar",
 						visible: true,
-					},
-				},
-			});
-        }else{
-			if($(this)[0].name == "alert_show"){
-				console.log("alert");}
-				else{
+					   },
+				     },
+			      });
+              }else{
+			      if($(this)[0].name == "alert_show"){
+				  console.log("alert");}
+				  else{
+                        if($(this)[0].name == "btn_update"){
+		                   let ot = data.number_ot;
+		                   let url = 'newUpdateOrder'+'?ot='+ot;
+		                   window.location.assign(host_url+url);	
+		                }else{
+						    if($(this)[0].name == "date_show"){
+							  swal({
+								title: `Plazo de reparación`,
+								icon: "warning",
+								text: data.date_reparation,
+								buttons: {
+									
+									cancel: {
+										text: "Aceptar",
+										value: "cancelar",
+										visible: true,
+									},
+								},
+						      });
+		                    }else{
+						         swal({
+							      title: `Plazo de reparación`,
+							       icon: "warning",
+							      text: "Aun no hay plazos de reparación para esta orden.",
+							      buttons: {
+								
+								  cancel: {
+									text: "Aceptar",
+									value: "cancelar",
+									visible: true,
+								   },
+							      },
+					             });
 
-		let ot = data.number_ot;
-		let url = 'newUpdateOrder'+'?ot='+ot;
-		window.location.assign(host_url+url);	
-		}
+					         }
+						}
+					}
+	          }
+	    }
 	}
-	}}
 
-
+	
 	
 });
 

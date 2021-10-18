@@ -29,6 +29,32 @@ close_modal_1=()=>{
     $("#month").val("");
 }
 
+get_order=(data)=> {
+    
+ 
+  $.ajax({
+  data: { data },
+  type: "POST",
+  url: host_url + "module_kpi/kpi/orders",
+  crossOrigin: false,
+  dataType: "json",
+  success: (result) => {
+        let data = result;
+        console.log(data);
+  },
+  error: (result) => {   
+    swal({
+      title: "Error",
+      icon: "error",
+      text: "No se encuentran registros en este período.",
+    }).then(()=>{  
+              swal.close();
+              cleanModal();
+           });
+  },
+});
+}
+
 
 get_avg = () => {
      let search = $("#periodo").val();
@@ -38,10 +64,12 @@ get_avg = () => {
      }else{
       data = { year : $("#year").val(), month: $("#month").val() , period : $("#periodo").val()}
     }
-     
     month_avg(data);
     
 }
+
+
+
 
 month_avg=(data)=>{
     console.log("entre ajax");
@@ -64,7 +92,7 @@ month_avg=(data)=>{
             cleanModal();
             drawQuotation(avg);
             fillInput(data.year ,data.month,5,avg,data.period);
-            
+            get_order(data);
            }else {
             
             $("#search_year").modal('hide');
@@ -73,7 +101,7 @@ month_avg=(data)=>{
             cleanModal();
             drawQuotation(avg);
             fillInput(data.year ,0,5,avg,data.period);
-
+            get_order(data);
             }
 
             

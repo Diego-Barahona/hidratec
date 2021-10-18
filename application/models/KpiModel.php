@@ -65,6 +65,36 @@ class KpiModel extends CI_Model
    
  
      }
+
+
+     public function getOrdersQuotation($data) { 
+
+        if($data['period']==2){
+
+        $month = $data['month'];
+        $year = $data['year'];
+        $query1 = "SELECT  *
+                   FROM ot
+                   WHERE  ot.date_quotation IS NOT NULL and ot.date_admission  IS NOT NULL and MONTH(ot.date_quotation) = $month and YEAR(ot.date_quotation)=$year
+                   ";
+
+        $value = $this->db->query($query1)->result();
+        return $value ;
+
+       }else{
+
+        $year = $data['year'];
+        $query1 = "SELECT  *
+                   FROM ot
+                   WHERE  ot.date_quotation IS NOT NULL and ot.date_admission  IS NOT NULL  and YEAR(ot.date_quotation)=$year
+                   ";
+
+        $value = $this->db->query($query1)->result();
+        return $value ;
+
+
+       }
+    }
    
  
 }
