@@ -180,9 +180,10 @@ $route['api/editOC/(:num)']['POST'] = 'Aprobation/editOC/$1';
 $route['api/getOC/(:num)']['GET'] = 'Aprobation/getOC/$1';
 $route['api/deleteOC/(:num)']['POST'] = 'Aprobation/deleteOC/$1';
 
-
+//api reparation 
 $route['api/getReparationByOrder/(:num)']['GET'] = 'Reparation/getReparationByOrder/$1';
 $route['api/editReparation']['POST']  = 'Reparation/editReparation';
+$route['api/CalculateDateReparation']['POST']  = 'Reparation/calculateReparation';
 
 
 //api notes
@@ -285,6 +286,8 @@ $route['api/atApproveSubstakReparation']['POST'] = 'TechnicalAssistant/approveSu
 $route['atAdminSubstaksEvaluation']['GET'] = 'TechnicalAssistant/adminSubstaksEvaluation';
 $route['api/atGetSubstaksEvaluation']['GET'] = 'TechnicalAssistant/getSubstaksEvaluation';
 $route['api/atApproveSubstakEvaluation']['POST'] = 'TechnicalAssistant/approveSubstakEvaluation';
+
+
 $route['api/counterAssistant']['GET'] = 'TechnicalAssistant/getCounterData';
 
 /*------------------------------- End Routes Technical Assitant------------------------------------ */

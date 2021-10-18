@@ -74,7 +74,7 @@ class TechnicalMasterModel extends CI_Model
     { 
         $user= $_SESSION['id'];
     
-        $query = "SELECT r.ot_id number_ot, r.user_interaction ,r.date_reparation date , r.check_adm, r.check_technical, 
+        $query = "SELECT r.date_reparation, r.priority, r.ot_id number_ot, r.user_interaction ,r.date_reparation date, r.check_adm, r.check_technical, 
         e.name client, c.name component, ot.type_service service,
         r.time_init, r.aux, r.time_end
         FROM reparation r 

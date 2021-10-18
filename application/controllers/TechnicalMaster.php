@@ -240,7 +240,7 @@ class TechnicalMaster extends CI_Controller
         }
     }
 
-    public function EditTechnicalReport()
+/*     public function EditTechnicalReport()
     { 
         if ($this->accesscontrol->checkAuth()['correct']) {
             if($report=$this->TechnicalMasterModel->getTechnicalReportByOrder($id)){
@@ -251,7 +251,7 @@ class TechnicalMaster extends CI_Controller
         }else {
 			redirect('Home/login', 'refresh');
         }
-    }
+    } */
 
     public function adminReparation()
     { 
@@ -537,6 +537,8 @@ class TechnicalMaster extends CI_Controller
                 $nombre = 'Reparación'; 
             }else if($data['name'] == 'subtask_reparation'){
                 $nombre = 'Subtarea de reparación';
+            }else if($data['name'] == 'subtask_evaluation'){
+                $nombre = 'Subtarea de evaluación';
             }
 
             if($data['msg'] == 'reanudado' || $data['msg'] == 'iniciado'){

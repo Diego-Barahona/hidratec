@@ -237,8 +237,8 @@ class Orders_model extends CI_Model
                 'priority' => $data['priority'],
                 'component_id' => $data['component'],
                 'enterprise_id' => $data['enterprise'],
-                'date_provider_number' => $data['date_provider_number'],
-                'provider_number' => $data['provider_number'],
+/*                 'date_provider_number' => $data['date_provider_number'],
+                'provider_number' => $data['provider_number'], */
                 'config' => json_encode(array(
                     'evaluation' => $data['check_evaluation'],
                     'technical_report' => $data['check_report_technical'],
@@ -443,18 +443,8 @@ class Orders_model extends CI_Model
             );
             $this->db->where('id', $data['ot_number']);
             $this->db->update('ot', $datos_ot);
-        }else if($data['state'] == 5){
-            date_default_timezone_set("America/Santiago");
-            $date = date("Y-m-d G:i:s");
-            $datos_ot = array(
-                'date_cellar' => $date,
-            );
-            $this->db->where('id', $data['ot_number']);
-            $this->db->update('ot', $datos_ot);
         }
-
-
-
+        
         $datos_ot_state = array(
             'ot_id' => $data['ot_number'],
             'state_id' => $data['state'],

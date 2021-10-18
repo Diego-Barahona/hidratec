@@ -47,18 +47,19 @@ let idEdit = "";
 getSubstaks = () => {
     let id = $('#ot_id').val();
 	let xhr = new XMLHttpRequest();
-	xhr.open("post", `${host_url}/api/tmGetSubstaksEvaluation`);
     xhr.open("get", `${host_url}/api/tmGetSubstaksEvaluation/${id}`);
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
             let data = xhr.response;
+            console.log(data);
             let substaksReparation = data[0];
             let technicalAssistantData = data[1];
             let substaksData = data[2];
             let state = data[3];
             let detalles_Ev = JSON.parse(state[0]['ev_details']);
             let aux = [];
+            console.log(detalles_Ev);
             let stateRep = detalles_Ev.approve_technical;
             console.log(stateRep);
             if(substaksReparation){
