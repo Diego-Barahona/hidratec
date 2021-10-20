@@ -170,12 +170,12 @@ class HydraulicTest extends CI_Controller
         
         $ok = true;
 
-        if($_SESSION['rango']== 3){
+       /* if($_SESSION['rango']== 3){
 
                 if ($conclusion == "") { $ok = false;  $err['conclusion']  = "Ingrese fecha de evaluación";  }
                 if ($notes == "") { $ok = false;  $err['notes']  = "Ingrese un tecnico";  }
 
-            }
+            }*/
         
   
         if($ok){ 
