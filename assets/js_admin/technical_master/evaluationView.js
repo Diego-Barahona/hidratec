@@ -1,5 +1,6 @@
 $(() => {
     get_data_evaluation();
+	getFields();
 });
 let check_admin_old_ev = false;
 let check_technical_old_ev = false;
@@ -13,15 +14,11 @@ get_data_evaluation = () =>{
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
-			
 			let data = xhr.response[0].details;
 			let technical=xhr.response[0].full_name;
 		    let data2 =xhr.response[0].user_interaction;
 			let location=xhr.response[0].location;
 			let file=xhr.response[0].export;
-
-        
-		
 			if(data){
 				let evaluation= JSON.parse(data);
 
@@ -78,12 +75,8 @@ get_data_evaluation = () =>{
 				$("#date_approve_ev").val("");
 				$("#name_technical" ).val("");
 			}
-			if(location){
-            
-				$("#location_ev").val(location);
-			}else{
-				$("#location_ev").val("");
-			}
+
+			getLocation(id);
 
 			if(technical){
 				let a = $(`option[name ="${technical}"]`).val();
@@ -102,6 +95,65 @@ get_data_evaluation = () =>{
 	});
 	xhr.send();
 }
+
+
+getLocation=(id)=>{
+	let xhr = new XMLHttpRequest();
+	xhr.open("get", `${host_url}/api/getEvaluationByOrder/${id}`);
+	xhr.responseType = "json";
+	xhr.addEventListener("load", () => {
+		if (xhr.status === 200) {
+		    location_ev =xhr.response[0].location;
+			if(location_ev){
+			    $("#location_ev").val(location_ev);
+			}else{
+				$("#location_ev").val("");
+			}
+		}
+	})
+	xhr.send();
+}
+
+let technicals = [];
+let locations = [];
+getFields = () => {
+	let xhr = new XMLHttpRequest();
+	xhr.open("get", `${host_url}/api/getFieldsOrder`);
+	xhr.responseType = "json";
+	xhr.addEventListener("load", () => {
+		if (xhr.status === 200) {
+            if(technicals.length == 0){
+				
+                xhr.response[2].map((u) => {
+                    let option = document.createElement("option"); 
+                    $(option).val(u.id); 
+                    $(option).attr('name', u.full_name);
+                    $(option).html(u.full_name); 
+                    $(option).appendTo("#technical_ev");
+					$("#technical_ev").val(technicals_user);
+                     technicals.push(u.full_name);
+                });
+            }
+	        if(locations.length == 0){
+                xhr.response[3].map((u) => {
+                    let option = document.createElement("option"); 
+                    $(option).val(u.id); 
+                    $(option).attr('name', u.name);
+                    $(option).html(u.name); 
+                    $(option).appendTo("#location_ev");
+                    locations.push(u.name);
+                });
+            }
+		} else {
+			swal({
+				title: "Error",
+				icon: "error",
+				text: "Error al obtener technicos",
+			});
+		}
+	});
+	xhr.send();
+};
 
 alert_not_evaluation = (msg)=>{
 	

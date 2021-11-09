@@ -30,7 +30,7 @@ class ProjectorModel extends CI_Model
         // date_quotation -> fecha de cotizacion 
         // date _reparation -> fecha reparacion 
         // date_cellar -> fecha de bodega 
-        $query1 = "SELECT  AVG(5 * (DATEDIFF( ot.date_cellar,ot.date_reparation) DIV 7) + MID('0123455401234434012332340122123401101234000123450', 7 * WEEKDAY(ot.date_reparation) + WEEKDAY(ot.date_cellar) + 1, 1)) as kpi_reparation
+        $query1 = "SELECT  AVG(5 * (DATEDIFF( ot.date_cellar, ot.date_reparation) DIV 7) + MID('0123455401234434012332340122123401101234000123450', 7 * WEEKDAY(ot.date_reparation) + WEEKDAY(ot.date_cellar) + 1, 1)) as kpi_reparation
                    FROM ot
                    WHERE  ot.date_cellar IS NOT NULL AND ot.date_reparation IS NOT NULL AND MONTH(ot.date_cellar) = $a
                    ";
@@ -44,13 +44,13 @@ class ProjectorModel extends CI_Model
     public function getOrders(){
         date_default_timezone_set("America/Santiago");
         $a = date("Y-m-d");
-        $query = "SELECT ot.id number_ot, u.full_name technical, ot.type_service service, ot.days_reparation dias_rep, r.date_assignment date_assignment ,c.name component,
+        $query = "SELECT r.date_reparation, ot.id number_ot, u.full_name technical, ot.type_service service, ot.days_reparation dias_rep, r.date_assignment date_assignment ,c.name component,
             5 * (DATEDIFF( '$a' , r.date_assignment) DIV 7) + MID('0123455401234434012332340122123401101234000123450', 7 * WEEKDAY(r.date_assignment) + WEEKDAY('$a') + 1, 1) as days_passed
             FROM ot
             JOIN component c ON ot.component_id = c.id
             JOIN reparation r ON ot.id = r.ot_id
             JOIN user u ON r.user_assignment = u.id
-           /*  WHERE r.check_adm = 0 AND r.user_assignment IS NOT NULL */
+            WHERE r.check_adm = 0 AND r.user_assignment IS NOT NULL 
             "; 
             return $this->db->query($query)->result();
     }

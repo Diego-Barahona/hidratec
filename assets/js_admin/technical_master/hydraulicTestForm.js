@@ -53,8 +53,6 @@ unable_edition =()=>{
 
 
 edit_ht = () => {
-
-   
 	event.preventDefault();
 	let id = $("#ot_number").val();//Image ID 
 	
@@ -80,8 +78,6 @@ edit_ht = () => {
 	};
 
 	data2=JSON.stringify(medida);
-	
-  if(data.approve_technical== true){
 	Object.keys(data).map((d) => $(`.${d}`).hide());
 	$.ajax({
 		data: {
@@ -118,14 +114,6 @@ edit_ht = () => {
 		     
 		},
 	});
-} else{
-	swal({
-		title: "Error",
-		icon: "error",
-		text: "Para guardar es necesario aprobar su informe de prueba hidráulica. Apruebe e intente nuevamente",
-	});
-
-}
 };
 
 

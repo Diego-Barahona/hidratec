@@ -90,7 +90,7 @@ class Orders_model extends CI_Model
     public function getOrdersTest()
     {        
         $query = "SELECT ot.id number_ot, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, c.name component, s.name state,r.check_adm ,r.check_technical
-                         , tr.details technical_report ,ot.date_cellar date_reparation ,ev.details evaluation ,ht.details hydraulic_test,ev.state ev_state, ht.state ht_state, tr.state tr_state, s.id id_state
+                         , tr.details technical_report , r.date_reparation date_reparation ,ev.details evaluation ,ht.details hydraulic_test,ev.state ev_state, ht.state ht_state, tr.state tr_state, s.id id_state
                   FROM ot
                   JOIN enterprise e ON ot.enterprise_id = e.id
                   JOIN component c ON ot.component_id = c.id
@@ -342,6 +342,16 @@ class Orders_model extends CI_Model
         $datos_tr = array(
             'ot_id' => $id_ot,
             'state' => 1,
+            'details' => json_encode(array(
+                'date_technical_report' => '',
+                'image_header' => '',
+                'details' => '',
+                'notes' => '',
+                'check_adm' => '',
+                'check_technical' => '',
+                'conclusion' => '',
+                'recommendation' => '',
+            )),
             'user_assignment'=> $id_technical,
             'user_interaction' => json_encode(array(
                 'user_create' => '',

@@ -86,13 +86,7 @@ get_data_evaluation = () =>{
 				$("#name_technical" ).val("");
 			}
 
-			if(location){
-                
-				
-				$("#location_ev").val(location);
-			}else{
-				$("#location_ev").val("");
-			}
+			getLocation(id);
 
 			if(technical){
 				let a = $(`option[name ="${technical}"]`).val();
@@ -111,6 +105,26 @@ get_data_evaluation = () =>{
 	});
 	xhr.send();
 }
+
+getLocation=(id)=>{
+	let xhr = new XMLHttpRequest();
+	xhr.open("get", `${host_url}/api/getEvaluationByOrder/${id}`);
+	xhr.responseType = "json";
+	xhr.addEventListener("load", () => {
+		if (xhr.status === 200) {
+		    location_ev =xhr.response[0].location;
+            
+			if(location_ev){
+			    $("#location_ev").val(location_ev);
+				
+			  }else{
+				  
+				  $("#location_ev").val("");
+			  }}
+
+})
+xhr.send();}
+
 
 alert_not_evaluation = (msg)=>{
 	
@@ -227,7 +241,7 @@ edit_evaluation = () => {
             swal({
 				title: "Denegado!",
 				icon: "error",
-				text: result.responseJSON.msg,
+				text: 'Denegado',
 			}).then(() => {
 			 swal.close();
 			});

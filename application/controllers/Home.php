@@ -52,5 +52,11 @@ class Home extends CI_Controller {
 		$this->load->view($folderView.'/counterOrders');
 		$this->load->view('shared/footer');
 	}
+
+	public function error()
+	{
+		$this->load->view('shared/error');
+	}
+	
 	
 }

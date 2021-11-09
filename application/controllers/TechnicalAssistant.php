@@ -13,7 +13,7 @@ class TechnicalAssistant extends CI_Controller
     {     
         if ($this->accesscontrol->checkAuth()['correct']) {
             $this->load->view('shared/headerTechnicalAssistant');
-            $this->load->view('technicalAssistant/substasksReparationList');
+            $this->load->view('TechnicalAssistant/substasksReparationList');
             $this->load->view('shared/footer');
         } else {
             redirect('Home/login', 'refresh');
@@ -24,7 +24,7 @@ class TechnicalAssistant extends CI_Controller
     {     
         if ($this->accesscontrol->checkAuth()['correct']) {
             $this->load->view('shared/headerTechnicalAssistant');
-            $this->load->view('technicalAssistant/substasksEvaluationList');
+            $this->load->view('TechnicalAssistant/substasksEvaluationList');
             $this->load->view('shared/footer');
         } else {
             redirect('Home/login', 'refresh');

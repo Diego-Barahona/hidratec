@@ -34,7 +34,7 @@
                 </div>
                 <div class="row mb-2">
                     <div class="col-md-4 mb-3">
-                        <label for="actividad">Fecha de asignación</label>
+                        <label for="actividad">Fecha de inicio</label>
                         <div class="input-group">
                             <input type="text" class="form-control" name="r_date_assignment" id="r_date_assignment" readonly>
                         </div>
@@ -54,9 +54,9 @@
                 </div> 
                 <div class="row mb-2">
                     <div class="col-md-4 mb-3">
-                        <label for="actividad">Fecha de reparación</label>
+                        <label for="actividad">Fecha de Limite</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="r_date_reparation" id="r_date_reparation" readonly>
+                            <input type="text" class="form-control" name="r_date_limite" id="r_date_limite" readonly>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3" >
@@ -69,6 +69,12 @@
                         </select>
                         <div class="invalid-feedback"></div>
                     </div> 
+                    <div class="col-md-4 mb-3">
+                        <label for="actividad">Fecha de reparación</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="r_date_reparation" id="r_date_reparation" readonly>
+                        </div>
+                    </div>
                 </div> 
             </div>
         </div>
@@ -107,4 +113,9 @@
     </div>
 </div>
 <script src="<?php echo base_url(); ?>assets/js_admin/reparation.js"></script>
+
+
+
+(`hidratec1`.`evaluation`, CONSTRAINT `evaluation_ibfk_2` FOREIGN KEY (`user_assignment`) REFERENCES `user` (`id`) )
+
 

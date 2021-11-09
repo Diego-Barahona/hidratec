@@ -88,11 +88,11 @@
                     <th>OT</th>
                     <th>Componente</th>
                     <th>Servicio</th>
-                    <th>Dias rep </th>
                     <th>Fecha de asignación</th>
+                    <th>Dias rep </th>
+                    <th>Fecha límite</th>
                     <th>Asignado</th>
                     <th>Estado</th>
-                    
                   </tr>
                 </thead>
               </table>

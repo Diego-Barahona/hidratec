@@ -55,7 +55,7 @@ class HydraulicTest extends CI_Controller
             $this->response->sendJSONResponse( array("msg" => "No se han podido editar los datos "),400); 
             }
             
-        }else { $this->response->sendJSONResponse( array("msg" => "Complete todos los campos de la evaluación. ", "err"=> $err),400); }
+        }else { $this->response->sendJSONResponse( array("msg" => "Complete todos los campos de la evaluación. "),400); }
 
         }else {
             $this->response->sendJSONResponse( array("msg" => "No tiene los permisos suficientes "),400);
@@ -150,7 +150,7 @@ class HydraulicTest extends CI_Controller
             $this->response->sendJSONResponse( array("msg" => "No se han podido registrar los datos "),400); 
             }
             
-        }else { $this->response->sendJSONResponse( array("msg" => "Complete todos los campos de la evaluación. ", "err"=> $err),400); }
+        }else { $this->response->sendJSONResponse( array("msg" => "Complete todos los campos de la evaluación. "),400); }
 
         }else {
             $this->response->sendJSONResponse( array("msg" => "No tiene los permisos suficientes "),400);
@@ -168,15 +168,7 @@ class HydraulicTest extends CI_Controller
         $technical = $data['technical'];
 
         
-        $ok = true;
-
-        if($_SESSION['rango']== 3){
-
-                if ($conclusion == "") { $ok = false;  $err['conclusion']  = "Ingrese fecha de evaluación";  }
-                if ($notes == "") { $ok = false;  $err['notes']  = "Ingrese un tecnico";  }
-
-            }
-        
+        $ok = true;  
   
         if($ok){ 
             $this->load->model('HydraulicTestModel');
@@ -192,7 +184,7 @@ class HydraulicTest extends CI_Controller
             $this->response->sendJSONResponse( array("msg" => "No se han podido editar los datos "),400); 
             }
             
-        }else { $this->response->sendJSONResponse( array("msg" => "Complete todos los campos de la evaluación. ", "err"=> $err),400); }
+        }else { $this->response->sendJSONResponse( array("msg" => "Complete todos los campos de la evaluación. "),400); }
 
         }else {
             $this->response->sendJSONResponse( array("msg" => "No tiene los permisos suficientes "),400);

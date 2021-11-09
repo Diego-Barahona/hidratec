@@ -50,6 +50,13 @@ get_data_reparation = () =>{
                 $("#r_date_reparation").val('');
             }
 
+            
+            if(xhr.response[0][0].date_limit){
+                $("#r_date_limite").val(xhr.response[0][0].date_limit);
+            }else{
+                $("#r_date_limite").val('');
+            }
+
             console.log(xhr.response[0][0].date_assignment);
             if(xhr.response[0][0].date_assignment){
                 $("#r_date_assignment").val(xhr.response[0][0].date_assignment);
@@ -103,6 +110,7 @@ r_enableFields = ()=>{
         $("#r_days_reparation").attr("readonly", false);
         $("#date_provider_number").attr("readonly", false);
         $("#provider_number").attr("readonly", false);
+        $("#r_date_reparation").attr("readonly", false);
         $("#r_technical").removeAttr("disabled");
         $("#r_check_adm").removeAttr("disabled");
         $("#priority_rep").removeAttr("disabled");
@@ -123,6 +131,14 @@ r_enableFields = ()=>{
             dateFormat: 'yy-mm-dd',
             buttonImage: host_url + 'assets/img/about/calendario2.png',
         });
+        $("#r_date_reparation").datepicker({
+            showOn: "button",
+            buttonText: "Calendario",
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'yy-mm-dd',
+            buttonImage: host_url + 'assets/img/about/calendario2.png',
+        });
 
         $("#r_btnEdit").val(1);
         $("#r_btnEdit").removeClass("btn btn-success");
@@ -134,12 +150,14 @@ r_enableFields = ()=>{
         $("#r_days_reparation").attr("readonly", true);
         $("#date_provider_number").attr("readonly", true);
         $("#priority_rep").attr("readonly", true);
+        $("#r_date_reparation").attr("readonly", true);
         $("#provider_number").attr("readonly", true);
         $("#r_technical").attr("disabled", true);
         $("#r_check_adm").attr("disabled", true);
         $("#r_check_technical").attr("disabled", true);
         $("#r_date_assignment").datepicker("destroy");
         $("#date_provider_number").datepicker("destroy");
+        $("#r_date_reparation").datepicker("destroy");
         $("#r_btnEdit").val(0);
         $("#r_btnEdit").removeClass("btn btn-danger");
         $("#r_btnEdit").addClass("btn btn-success");
@@ -161,10 +179,8 @@ calculateDays = () => {
             data: {data},
             dataType: "json",
             success: (xhr) => {
-                $("#r_date_reparation").val(xhr);
-            }, error: () => {
-                alert('dasdsa');
-            },
+                $("#r_date_limite").val(xhr);
+            }
         });  
     }else{
         swal({
@@ -189,76 +205,152 @@ calculateDaysRep = () => {
             data: {data},
             dataType: "json",
             success: (xhr) => {
-                $("#r_date_reparation").val(xhr);
-            }, error: () => {
-                alert('dasdsa');
-            },
+                $("#r_date_limite").val(xhr);
+            }
         });  
     }
 }
 
 saveReparation = () =>{
     let user_assignment =null;
+    let date_assignment =null;
+    let date_reparation = null;
+    let days_reparation = null;
+    let date_limit = null;
     let check_adm = 0;
     let check_technical = 0;
     if($("#r_technical").val()) user_assignment = $("#r_technical").val(); else user_assignment = null;
     if($('#r_check_adm').is(':checked')) check_adm = 1; else check_adm = 0;
     if($('#r_check_technical').is(':checked')) check_technical = 1; else check_technical = 0;
-    data = {
-        check_adm :  check_adm,
-        check_technical : check_technical,
-        user_assignment : user_assignment,
-        ot_id : $("#ot_number").val(),
-        days_reparation: $('#r_days_reparation').val(),
-        date_reparation: $('#r_date_reparation').val(),
-        date_assignment: $('#r_date_assignment').val(),
-        date_provider_number : $('#date_provider_number').val(),
-        provider_number : $('#provider_number').val(),
-        check_adm_old: r_check_adm_old,
-        priority: $('#priority_rep').val(),
-        date_approve: date_approve,
-        user_approve: user_approve,
-        technical_assignment: $('#r_technical option:selected').text(),
-    } 
+    if($('#r_date_reparation').val()) date_reparation = $('#r_date_reparation').val(); else date_reparation = null;
+    if($('#r_date_assignment').val()) date_assignment = $('#r_date_assignment').val(); else date_assignment = null;
+    if($('#r_date_limite').val()) date_limit = $('#r_date_limite').val(); else date_limit = null;
+    if($('#r_days_reparation').val()) days_reparation = $('#r_days_reparation').val(); else days_reparation = null;
+    
 
-    $.ajax({
-        type: "POST",
-        url: host_url + "api/editReparation",
-        data: {data},
-        dataType: "json",
-        success: () => {
-         swal({
-             title: "Éxito!",
-             icon: "success",
-             text: "Reparación actualizada con éxito.",
-             button: "OK",
-         }).then(() => {
-            $("#r_btnEdit").val('1');
-            $("#r_popover").popover('dispose');
-            r_enableFields();
-            get_data_reparation();
-         });
-        }, 
-        statusCode: {
-         405: (xhr) =>{
-            let msg = xhr.responseJSON;
+    if(check_adm == '1'){
+        if(date_reparation && date_assignment && user_assignment){
+            data = {
+                check_adm :  check_adm,
+                check_technical : check_technical,
+                user_assignment : user_assignment,
+                ot_id : $("#ot_number").val(),
+                days_reparation: days_reparation,
+                date_reparation: date_reparation,
+                date_limit: date_limit,
+                date_assignment: date_assignment,
+                date_provider_number : $('#date_provider_number').val(),
+                provider_number : $('#provider_number').val(),
+                check_adm_old: r_check_adm_old,
+                priority: $('#priority_rep').val(),
+                date_approve: date_approve,
+                user_approve: user_approve,
+                technical_assignment: $('#r_technical option:selected').text(),
+            } 
+        
+            $.ajax({
+                type: "POST",
+                url: host_url + "api/editReparation",
+                data: {data},
+                dataType: "json",
+                success: () => {
+                 swal({
+                     title: "Éxito!",
+                     icon: "success",
+                     text: "Reparación actualizada con éxito.",
+                     button: "OK",
+                 }).then(() => {
+                    $("#r_btnEdit").val('1');
+                    $("#r_popover").popover('dispose');
+                    r_enableFields();
+                    get_data_reparation();
+                 });
+                }, 
+                statusCode: {
+                 405: (xhr) =>{
+                    let msg = xhr.responseJSON;
+                    swal({
+                        title: "Error",
+                        icon: "error",
+                        text: addErrorStyle(msg),
+                    });
+                },
+                },
+                error: () => {
+                    swal({
+                        title: "Error",
+                        icon: "error",
+                        text: "No se pudo encontrar el recurso",
+                    }).then(() => {
+                        $("body").removeClass("loading");
+                    });
+                },
+            }); 
+        }else{
             swal({
                 title: "Error",
                 icon: "error",
-                text: addErrorStyle(msg),
+                text: 'Los campos: Fecha de reparación, fecha límite y técnico asignado son obligatorios',
             });
-        },
-        },
-        error: () => {
-			swal({
-				title: "Error",
-				icon: "error",
-				text: "No se pudo encontrar el recurso",
-			}).then(() => {
-				$("body").removeClass("loading");
-			});
-		},
-    });  
+        }
+    }else{
+        data = {
+            check_adm :  check_adm,
+            check_technical : check_technical,
+            user_assignment : user_assignment,
+            ot_id : $("#ot_number").val(),
+            days_reparation: days_reparation,
+            date_reparation: date_reparation,
+            date_limit: date_limit,
+            date_assignment: date_assignment,
+            date_provider_number : $('#date_provider_number').val(),
+            provider_number : $('#provider_number').val(),
+            check_adm_old: r_check_adm_old,
+            priority: $('#priority_rep').val(),
+            date_approve: date_approve,
+            user_approve: user_approve,
+            technical_assignment: $('#r_technical option:selected').text(),
+        } 
+    
+        $.ajax({
+            type: "POST",
+            url: host_url + "api/editReparation",
+            data: {data},
+            dataType: "json",
+            success: () => {
+             swal({
+                 title: "Éxito!",
+                 icon: "success",
+                 text: "Reparación actualizada con éxito.",
+                 button: "OK",
+             }).then(() => {
+                $("#r_btnEdit").val('1');
+                $("#r_popover").popover('dispose');
+                r_enableFields();
+                get_data_reparation();
+             });
+            }, 
+            statusCode: {
+             405: (xhr) =>{
+                let msg = xhr.responseJSON;
+                swal({
+                    title: "Error",
+                    icon: "error",
+                    text: addErrorStyle(msg),
+                });
+            },
+            },
+            error: () => {
+                swal({
+                    title: "Error",
+                    icon: "error",
+                    text: "No se pudo encontrar el recurso",
+                }).then(() => {
+                    $("body").removeClass("loading");
+                });
+            },
+        }); 
+    }
 }
 
 /*Función para manejo de errores*/

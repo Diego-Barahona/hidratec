@@ -85,14 +85,7 @@ get_data_evaluation = () =>{
 				$("#name_technical" ).val("");
 			}
 
-			if(location_ev){
-			   
-              let a= $(`#location_ev option[value ="${location_ev}"]`).val();
-			  
-			}else{
-				
-				$("#location_ev").val("");
-			}
+			getLocation(id);
 
 			if(technical){
 				let a = $(`option[name ="${technical}"]`).val();
@@ -111,6 +104,26 @@ get_data_evaluation = () =>{
 	});
 	xhr.send();
 }
+
+getLocation=(id)=>{
+	let xhr = new XMLHttpRequest();
+	xhr.open("get", `${host_url}/api/getEvaluationByOrder/${id}`);
+	xhr.responseType = "json";
+	xhr.addEventListener("load", () => {
+		if (xhr.status === 200) {
+		    location_ev =xhr.response[0].location;
+            
+			if(location_ev){
+			    $("#location_ev").val(location_ev);
+				
+			  }else{
+				  
+				  $("#location_ev").val("");
+			  }}
+
+})
+xhr.send();}
+
 
 alert_not_evaluation = (msg)=>{
 	
@@ -212,51 +225,39 @@ edit_evaluation = () => {
 				};
 				console.log(data.location);
 				if (data.location != 0) {  
-					if(data.approve_technical== true ){
-						
-						Object.keys(data).map((d) => $(`.${d}`).hide());
-						$.ajax({
-							data: {
-								data,
-							},
-							type: "POST",
-							url: host_url + `api/editEvaluation/${id}`,
-							crossOrigin: false,
-							dataType: "json",
-							success: (result) => {
-								swal({
-									title: "Exito",
-									icon: "success",
-									text: result.msg,
-									button: "OK",
-								}).then(() => {
-									$("#hab_edit_ev").val('1');
-									ev_enableFields();
-									get_data_evaluation();
-									window.location.assign(host_url+'adminEvaluation');
-								});
-							},
-							error: (result) => {
-								swal({
-									title: "Denegado!",
-									icon: "error",
-									text: result.responseJSON.msg,
-								}).then(() => {
-								swal.close();
-								});
-								
-							},
-						});
-					
-					
-					}else{
-						swal({
-							title: "Error",
-							icon: "error",
-							text: "Para guardar es necesario aprobar su informe de evaluación. Apruebe e intente nuevamente",
-						}); 
-					
-					}
+					Object.keys(data).map((d) => $(`.${d}`).hide());
+					$.ajax({
+						data: {
+							data,
+						},
+						type: "POST",
+						url: host_url + `api/editEvaluation/${id}`,
+						crossOrigin: false,
+						dataType: "json",
+						success: (result) => {
+							swal({
+								title: "Exito",
+								icon: "success",
+								text: result.msg,
+								button: "OK",
+							}).then(() => {
+								$("#hab_edit_ev").val('1');
+								ev_enableFields();
+								get_data_evaluation();
+								window.location.assign(host_url+'adminEvaluation');
+							});
+						},
+						error: (result) => {
+							swal({
+								title: "Denegado!",
+								icon: "error",
+								text: result.responseJSON.msg,
+							}).then(() => {
+							swal.close();
+							});
+							
+						},
+					});
 			   }else{
 				swal({
 					title: "Error",

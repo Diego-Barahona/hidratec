@@ -30,7 +30,6 @@ class EvaluationModel extends CI_Model {
         $date_create="";
         $priority = $data['priority'];
         $location = $data['location'];
-        $technical = $data['technical'];
 
         if($data['approve_admin'] == "true"){
       
@@ -38,10 +37,11 @@ class EvaluationModel extends CI_Model {
             $user_approve= $user;
            
         }
-
+        $technical = null;
+        if($data['technical']){$technical = $data['technical'];};
 
         if($data['approve_technical'] == "true" && $data['check_technical_old'] == "false"){
-             $this->setTimeEnd($id);
+            $this->setTimeEnd($id);
             $date_create= $date;
             $user_create= $user;
            
