@@ -30,7 +30,7 @@
                         <thead>
                         <tr>
                             <th>N° de OT </th>
-                            <th>Fecha de realización </th>
+                            <th>Fecha de asignación </th>
                             <th>Fecha Límite </th>
                             <th>Prioridad </th>
                             <th>Cliente</th>
@@ -50,3 +50,9 @@
     </div>
 </div>
 <script src="<?php echo base_url(); ?>assets/js_admin/technical_master/reparationList.js"></script>
+
+
+
+
+
+

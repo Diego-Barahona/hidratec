@@ -15,8 +15,9 @@ const tabla = $("#table-work").DataTable({
         { data: "number_ot" },
 		{ data: "component" }, 
         { data: "service" }, 
+		{ data: "date_assignment" },
 		{ data: "dias_rep" },
-        { data: "date_assignment" },
+		{ data: "date_reparation" },
         { data: "technical" },
 		
 		{ defaultContent: "oc",

@@ -61,7 +61,7 @@ login = () => {
 			data
 		},
 		type: "POST",
-		url: host_url + "api/login",
+		url: host_url + "Login/login_user",
 		crossOrigin: false,
 		dataType: "json",
 		success: () => {
