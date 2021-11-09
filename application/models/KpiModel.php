@@ -11,7 +11,7 @@ class KpiModel extends CI_Model
        
        if( $data['period'] == 2) { // month by year 
              
-        $this->db->select(' month, kpi_quotation');
+        $this->db->select(' month, kpi_quotation,ot_quotation');
         $this->db->from('record');
         $this->db->where('year', $data['year'] );
         $this->db->where('month', $data['month'] );
@@ -37,11 +37,21 @@ class KpiModel extends CI_Model
     }
 
 
-    public function kpiProduction($data) { 
+    public function getYears() { 
+       
+         $this->db->select('year');
+         $this->db->from('record');
+         $this->db->group_by("year");
+         $query = $this->db->get(); 
+         return $query->result();
+     }
+
+
+     public function kpiProduction($data) { 
        
         if( $data['period'] == 2) { // month by year 
               
-         $this->db->select(' month, kpi_production');
+         $this->db->select(' month, kpi_production,ot_production');
          $this->db->from('record');
          $this->db->where('year', $data['year'] );
          $this->db->where('month', $data['month'] );

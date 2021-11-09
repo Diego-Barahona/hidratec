@@ -306,8 +306,16 @@ $route['module_kpi/kpiProduction']['GET']='Kpi/kpiProduction';
 $route['module_kpi/kpi/avgQuotation']['POST']='Kpi/periodFilterQuotation';
 $route['module_kpi/kpi/avgProduction']['POST']='Kpi/periodFilterProduction';
 $route['module_kpi/kpi/orders']['POST']='Kpi/getOrders';
+$route['module_kpi/kpi/report']['POST']='Kpi/generateReport';
+
+$route['module_kpi/kpi/clean']['POST']='Kpi/clean';
+$route['module_kpi/kpi/convertImage']['POST']='Kpi/convertImage';
+$route['module_kpi/kpi/getYears']['GET']='Kpi/getYears';
 
 
-
-
-
+/*------------------------------- Technical Information ------------------------------------ */
+$route['module_technical/info/technical']['GET']='Techinformation/viewInfoTech';
+$route['module_technical/info/technical/getTechnical']['GET']='Techinformation/getTechnical';
+$route['module_technical/info/technical/getAssistent']['GET']='Techinformation/getAssistent';
+$route['module_technical/info/technical/getOrdersWorked']['POST']='Techinformation/getOrdersWorked';
+$route['module_technical/info/technical/selectTech']['POST']='Techinformation/selectTech';

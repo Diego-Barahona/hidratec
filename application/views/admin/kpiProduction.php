@@ -65,6 +65,24 @@
                   </div>  
               </div> 
               <br>
+                 <div class="row justify-content-left" >
+                 <div class="col-md-8 mb-3" >
+                   <div class="table-responsive">
+                      <table class="table table-bordered" id="table-kpi-production" width="100%" cellspacing="0">
+                       <thead>
+                            <tr>
+                             <th>N°</th>
+                            <th>Número OT</th>
+                             
+                        </tr>
+                  </thead>
+               </table>
+             </div>
+             </div>
+            </div>
+
+              
+              <br>
               <div class ="row justify-content-left "  >
                   <h4> <i class="fa fa-th-large" style="font-size: 20px"></i><span>&nbsp; Observaciones:<span></h4> 
              </div> 
@@ -87,7 +105,7 @@
                </div>
              </div>
              <div style="margin-right: 40px; margin-bottom: 40px;">
-                <button style="float: right" class="btn btn-success" type='button' id="btn"> Generar reporte</button>
+                <button style="float: right" class="btn btn-success" type='button' id="pdf_report"> Generar reporte</button>
              </div>
              </div>
 
@@ -137,7 +155,7 @@
                </div>
              </div>
              <div style="margin-right: 40px; margin-bottom: 40px;">
-                <button style="float: right" class="btn btn-success" type='button' id="btn"> Generar reporte</button>
+                <button style="float: right" class="btn btn-success" type='button' id="pdf_report2"> Generar reporte</button>
              </div>
              </div>
       </div>
@@ -185,10 +203,7 @@
                   <label for="actividad">Año </label>
                         <select class="custom-select d-block w-100 year"  name="year" id="year" required="">
                             <option></option>
-                            <option value="2020">2020</option>
-                            <option value="2021">2021</option>
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
+                            
                         </select>
                       <div class="invalid-feedback"></div>
                   </div>
@@ -219,10 +234,7 @@
                   <label for="actividad">Año </label>
                         <select class="custom-select d-block w-100 year"  name="year" id="year1" required="">
                             <option></option>
-                            <option value="2020">2020</option>
-                            <option value="2021">2021</option>
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
+                            
                         </select>
                       <div class="invalid-feedback"></div>
                   </div>
