@@ -2,10 +2,24 @@ $(()=>{
     $("#alert").hide();
     $('.title').hide();
     $('.title2').hide();
+    fillYear();
 });
+
+let global_period ;
+
+let valores = [{"id":1,"ot":"8000"},{"id":2,"ot":"5000"},{"id":2,"ot":"5000"},
+{"id":3,"ot":"5000"},{"id":4,"ot":"5000"},{"id":5,"ot":"5000"},{"id":6,"ot":"5000"},
+{"id":7,"ot":"5000"},{"id":8,"ot":"5000"}];
 
 $("#periodo").on('change',()=>{
 let valor = $("#periodo").val();
+if(valor==1){
+  $("#observation").val("");
+  $("#sugerence").val("");
+}else if(valor==2){
+  $("#observation2").val("");
+  $("#sugerence2").val("");
+}
 open_modal(valor);
 });
 
@@ -31,7 +45,10 @@ close_modal_1=()=>{
 
 
 get_avg = () => {
+
    let search = $("#periodo").val();
+   global_period = search;
+
    let data={};
    if(search==1){
     data = { year : $("#year1").val() ,period : $("#periodo").val()}
@@ -43,6 +60,18 @@ get_avg = () => {
   
 }
 
+const tabla = $("#table-kpi-production").DataTable({
+	// searching: true,
+	language: {
+		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
+	},
+	
+	columns: [
+		{ data: "id" },
+		{ data: "ot" },
+	],
+});
+
 month_avg=(data)=>{
   console.log("entre ajax");
   console.log(data);
@@ -53,17 +82,21 @@ month_avg=(data)=>{
       crossOrigin: false,
       dataType: "json",
       success: (result) => {
-        
+          
           avg = parseInt(result[0].kpi_production);
-
-          if(data.period == 2){
-                
+       
+          
+     if(data.period == 2){
+       
+          let ots = JSON.parse(result[0].ot_production);
+          let count_ot = ots.length;
           $("#search_month").modal('hide');
           $(".title2").hide();
           $("#periodo").val("");
           cleanModal();
           drawProduction(avg);
-          fillInput(data.year ,data.month,5,avg,data.period);
+          dataTable(ots);
+          fillInput(data.year ,data.month,count_ot,avg,data.period);
           
          }else {
           
@@ -72,7 +105,7 @@ month_avg=(data)=>{
           $("#periodo").val("");
           cleanModal();
           drawProduction(avg);
-          fillInput(data.year ,0,5,avg,data.period);
+          fillInput(data.year ,0,8,avg,data.period);
 
           }
 
@@ -96,9 +129,19 @@ $(".year").val("");
 $("#month").val("");
 }
 
+dataTable =(data)=>{
+
+  tabla.clear();
+  tabla.rows.add(data);	
+  tabla.draw();
+
+}
+
 
 $("#btn_month").on("click", get_avg);
 $("#btn_year").on("click", get_avg);
+
+
 
 fillInput=(year, month, ot , avg ,period )=>{
 
@@ -121,6 +164,66 @@ fillInput=(year, month, ot , avg ,period )=>{
 }
 
 
+pdf_report =()=> {
+  console.log(global_period);
+  html2canvas ($ ('#gaugeChart').get(0),{ letterRendering: 1,allowTaint: true, useCORS: true }).then (function (canvas) {
+    let image = canvas.toDataURL("image/png");
+    let send = { base64: image};
+    $.ajax({
+      data: { send },
+      type: "POST",
+      url: host_url + "module_kpi/kpi/convertImage",
+      crossOrigin: false,
+      dataType: "json",
+  
+      success: (result) => {
+       
+       let data = {};
+    
+       if (global_period == 2){
+          data  =  { year: $("#year_info").val(), month: $("#month_info").val(), counter:$("#ot_info").val() , avg : $("#avg_info").val() , observations : $("#observation").val(),periodo : global_period  , base64:result.msg , sugerence: $("#sugerence").val(),kpi:2}
+          console.log(data);  
+      }else if ( global_period ==1 ) {
+          data = { year: $("#year_info_2").val(),counter:$("#ot_info_2").val() , avg : $("#avg_info_2").val() , observations:$("#observation2").val(),periodo : global_period,base64:result.msg ,sugerence: $("#sugerence2").val(),kpi:2}
+          console.log(data);
+      }
+     
+      $.ajax({
+        data: { data },
+        type: "POST",
+        url: host_url + "module_kpi/kpi/report",
+        crossOrigin: false,
+        dataType: "json",
+    
+        success: (result) => {
+         
+          clean_report(result.msg);
+          window.open(host_url+result.msg);
+       
+                
+        },
+        error: (result) => {   
+          swal({
+            title: "",
+            icon: "info",
+            text: "Complete el campo de observaciones para generar reporte.",
+        }).then(()=>{  
+            swal.close();
+           
+         });
+        }});
+        
+      },
+      error: (result) => {   
+        console.log("error");
+      }});
+   
+    });
+}
+$("#pdf_report").on("click",pdf_report);
+$("#pdf_report2").on("click", pdf_report);
+
+
 convertirMes = (valor )=>{ 
 
   let mes ="";
@@ -134,6 +237,47 @@ convertirMes = (valor )=>{
 
   return mes;
 }
+
+fillYear =()=> { 
+
+  $.ajax({
+		type: "GET",
+		url: host_url + "module_kpi/kpi/getYears",
+		crossOrigin: false,
+		dataType: "json",
+
+		success: (result) => {
+           let data = result;
+          data.forEach((i)=>{
+               console.log(i.year);
+               $(".year").append('<option value="' + i.year + '">' + i.year + '</option>');
+          });
+		},
+		error: (result) => { console.log("error"); }
+  
+  });
+}
+
+clean_report=(report)=>{
+
+  let data ={ clean :report}
+  $.ajax({
+    data: { data },
+    type: "POST",
+    url: host_url + "module_kpi/kpi/clean",
+    crossOrigin: false,
+    dataType: "json",
+
+    success: (result) => {
+      console.log("borrado");
+            
+    },
+    error: (result) => {   
+      console.log("error");
+    }});
+
+}
+
 
 
 
@@ -164,4 +308,4 @@ function drawProduction(avg) {
 }
 
 google.charts.load('current', {'packages':['gauge']});
-google.charts.setOnLoadCallback(drawQuotation);
+google.charts.setOnLoadCallback(drawProduction);

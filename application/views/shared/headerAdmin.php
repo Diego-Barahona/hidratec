@@ -116,11 +116,20 @@
 
             <!-- Nav Item - Finanzas e Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="<?php echo base_url(); ?>adminTechnicalReports">
                 <i class="fas fa-file-invoice"></i>
                     <span>Informes técnicos</span></a>
                     <hr class="sidebar-divider">
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url();?>module_techical/info/technical">
+                <i class="fas fa-file-invoice"></i>
+                    <span>Seguimiento técnico</span></a>
+                    <hr class="sidebar-divider">
+            </li>
+
+           
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">

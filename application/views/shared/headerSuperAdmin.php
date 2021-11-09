@@ -18,6 +18,9 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    
     <link href="<?php echo base_url(); ?>assets/css_admin/sb-admin-2.min.css" rel="stylesheet">
     <link href="<?php echo base_url(); ?>assets/vendor/DataTables/datatables.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url(); ?>assets/vendor/DataTables/fixedHeader.dataTables.min.css" rel="stylesheet" type="text/css" />
@@ -112,6 +115,7 @@
                     </a>
                 </li>
             <!-- Divider -->
+
             <hr class="sidebar-divider">
               <!-- Nav Item - KPI's -->
                 <li class="nav-item">
@@ -125,8 +129,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestión KPI</h6>
                         <a class="collapse-item" href="<?php echo base_url(); ?>module_kpi/menu_kpi"><i class="fas fa-chart-bar"></i> Análisis</a>
-                        <a class="collapse-item" href="utilities-color.html"><i class="fas fa-history"></i>  Historial</a>
-                        <a class="collapse-item" href="utilities-border.html"><i class="fas fa-tools"></i> Rendimiento técnico</a>
+                        <a class="collapse-item" href="<?php echo base_url();?>module_technical/info/technical"><i class="fas fa-tools"></i> Rendimiento técnico</a>
                         </div>
                     </div>
                 </li>
@@ -240,7 +243,7 @@
             </div>
         </div>
     </div>
-
+    <script src="<?php echo base_url(); ?>assets/vendor/canvas/html2canvas.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendor/jquery/jquery.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
