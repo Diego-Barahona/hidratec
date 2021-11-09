@@ -7,7 +7,7 @@ class ReparationModel extends CI_Model {
     }
 
     public function getReparationByOrder($ot_id){
-        $query= "SELECT ot.date_provider_number, ot.provider_number, r.check_adm check_adm, r.date_assignment, r.check_technical check_technical, r.user_assignment user, r.date_reparation date, ot.days_reparation days, r.user_interaction, r.priority
+        $query= "SELECT ot.date_provider_number, ot.provider_number, r.check_adm check_adm, r.date_assignment, r.check_technical check_technical, r.user_assignment user, r.date_reparation date, r.date_limit date_limit, ot.days_reparation days, r.user_interaction, r.priority
         FROM reparation r
         LEFT JOIN ot ON ot.id = r.ot_id
         WHERE r.ot_id = ? ";
@@ -53,6 +53,8 @@ class ReparationModel extends CI_Model {
             $date_approve = '';
             $user_approve = '';
         } 
+
+
         /*Verify if technical finalize report */
         if($data['check_technical'] == '1' AND $data['technical_assignment']){
             $technical_assignment = $data['technical_assignment'];
@@ -62,13 +64,26 @@ class ReparationModel extends CI_Model {
             $date_reparation = '';
         }
 
+        $date_limit = null;
+        if($data['date_limit']){$date_limit = $data['date_limit'];};
+
+        $date_assignment = null;
+        if($data['date_assignment']){$date_assignment = $data['date_assignment'];};
+
+        $date_reparationR = null;
+        if($data['date_reparation']){$date_reparationR = $data['date_reparation'];};
+
+        $days_reparation = null;
+        if($data['days_reparation']){$days_reparation = $data['days_reparation'];};
+
         $datos_r = array(
             'user_assignment' => $data['user_assignment'],
             'check_adm' => $data['check_adm'],   
             'check_technical' => $data['check_technical'],   
             'user_assignment' => $technical,
-            'date_reparation' => $data['date_reparation'],
-            'date_assignment' => $data['date_assignment'],
+            'date_reparation' => $date_reparationR,
+            'date_limit' => $date_limit,
+            'date_assignment' => $date_assignment,
             'priority' => $data['priority'],
             'user_interaction' => json_encode(array(
                 'technical_assignment' => $technical_assignment,
@@ -83,14 +98,25 @@ class ReparationModel extends CI_Model {
         $this->db->where('ot_id', $data['ot_id']);
         if($this->db->update('reparation', $datos_r)){
 
+            if($data['check_adm'] == '1'){
+                $datos_ot = array(
+                    'date_cellar' => $data['date_reparation'],
+                    'date_reparation' =>  $data['date_assignment'],
+                    'days_reparation' => $days_reparation,
+                    'date_provider_number' => $data['date_provider_number'],
+                    'provider_number' => $data['provider_number'],
+                );
+            }else{
+                $datos_ot = array(
+                    'date_cellar' => null,
+                    'date_reparation' =>  null,
+                    'days_reparation' => $days_reparation,
+                    'date_provider_number' => $data['date_provider_number'],
+                    'provider_number' => $data['provider_number'],
+                );
+            }
+
             //update OT
-            $datos_ot = array(
-                'date_cellar' => $data['date_reparation'],
-                'date_reparation' => $data['date_reparation'],
-                'days_reparation' => $data['days_reparation'],
-                'date_provider_number' => $data['date_provider_number'],
-                'provider_number' => $data['provider_number'],
-            );
             $this->db->where('id', $data['ot_id']);
             $this->db->update('ot', $datos_ot);
 

@@ -63,7 +63,7 @@ class TechnicalReportModel extends CI_Model {
         $user = $_SESSION['full_name'];
         date_default_timezone_set("America/Santiago");
         $date = date("Y-m-d G:i:s");
-        $datos_tr;
+        $datos_tr = '';
         $user_create = '';    
         $date_create = '';
         $imagenes = $data['details_images'];

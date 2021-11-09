@@ -59,7 +59,7 @@ get_orders_ht = () => {
 			swal({
 				title: "Error",
 				icon: "error",
-				text: "Error al obtener los reportes técnicos",
+				text: "El usuario no tiene asignado pruebas hidraulicas",
 			});
 		}
 	});

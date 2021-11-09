@@ -62,7 +62,7 @@ get_orders_test = () => {
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
             let data = xhr.response;
-         
+			console.log(data);
             $global=[];
 			
             data.forEach((item)=>{

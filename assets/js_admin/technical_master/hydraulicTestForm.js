@@ -53,8 +53,6 @@ unable_edition =()=>{
 
 
 edit_ht = () => {
-
-   
 	event.preventDefault();
 	let id = $("#ot_number").val();//Image ID 
 	
@@ -80,8 +78,7 @@ edit_ht = () => {
 	};
 
 	data2=JSON.stringify(medida);
-	
-  
+
 	Object.keys(data).map((d) => $(`.${d}`).hide());
 	$.ajax({
 		data: {
@@ -118,7 +115,6 @@ edit_ht = () => {
 		     
 		},
 	});
-
 };
 
 

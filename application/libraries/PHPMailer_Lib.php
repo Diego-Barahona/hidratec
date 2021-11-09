@@ -101,18 +101,21 @@ class PHPMailer_Lib
         $mail->Subject ="Recuperación de contraseña - HIDRATEC";
         
         // Set email format to HTML
-        $mail->isHTML(true);
+        $mail->isHTML();
         
         // Email body content
         $mail->Body = $template;
         $env = 'no';
         $noenv = 'so';
+        var_dump($mail->send());
         // Send email
-        if(!$mail->send()){
+        /* if(!$mail->send()){
+            var_dump('error');
             return $mail->ErrorInfo;
         }else{
+            var_dump('si llego');
             return true;
-        }
+        } */
     }
 
 
@@ -134,7 +137,7 @@ class PHPMailer_Lib
         $template = str_replace("{{operating_system}}", get_os(), $template);
         $template = str_replace("{{browser_name}}", get_brow(), $template);
         
-        $mail = new PHPMailer;
+        $mail = new PHPMailer(True);
         $mail->CharSet = "UTF-8";
         
         // SMTP configuration

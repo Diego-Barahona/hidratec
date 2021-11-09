@@ -14,16 +14,12 @@ get_data_evaluation = () =>{
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
-			
 			let data = xhr.response[0].details;
 			let technical=xhr.response[0].full_name;
 		    let data2 =xhr.response[0].user_interaction;
 			let location=xhr.response[0].location;
 			console.log(location);
 			let file=xhr.response[0].export;
-
-        
-		
 			if(data){
 				let evaluation= JSON.parse(data);
 
@@ -80,7 +76,7 @@ get_data_evaluation = () =>{
 				$("#date_approve_ev").val("");
 				$("#name_technical" ).val("");
 			}
-			getLocation(id);
+
 			if(technical){
 				let a = $(`option[name ="${technical}"]`).val();
 				$("#technical_ev").val(a);
@@ -107,18 +103,19 @@ getLocation=(id)=>{
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
 		    location_ev =xhr.response[0].location;
-              console.log(location_ev);
 			if(location_ev){
 			    $("#location_ev").val(location_ev);
-				
-			  }else{
-				  
-				  $("#location_ev").val("");
-			  }}
+			}else{
+				$("#location_ev").val("");
+			}
+		}
+	})
+	xhr.send();
+}
 
-})
 
 xhr.send();}
+
 
 
 
@@ -162,7 +159,6 @@ getFields = () => {
 	});
 	xhr.send();
 };
-
 
 
 alert_not_evaluation = (msg)=>{

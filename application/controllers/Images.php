@@ -14,7 +14,7 @@ class Images extends CI_Controller
             $id = $params['ot'];
 			if($_SESSION['rango'] == 3){
 				$this->load->view('shared/headerTechnicalMaster');
-				$this->load->view('technicalmaster/adminImages', array ('id'=> $id));
+				$this->load->view('TechnicalMaster/adminImages', array ('id'=> $id));
 				$this->load->view('shared/footer');
 			}else{
             $this->load->view('shared/headerSuperAdmin');
