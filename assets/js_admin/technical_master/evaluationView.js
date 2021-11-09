@@ -18,6 +18,7 @@ get_data_evaluation = () =>{
 			let technical=xhr.response[0].full_name;
 		    let data2 =xhr.response[0].user_interaction;
 			let location=xhr.response[0].location;
+			console.log(location);
 			let file=xhr.response[0].export;
 			if(data){
 				let evaluation= JSON.parse(data);
@@ -76,8 +77,6 @@ get_data_evaluation = () =>{
 				$("#name_technical" ).val("");
 			}
 
-			getLocation(id);
-
 			if(technical){
 				let a = $(`option[name ="${technical}"]`).val();
 				$("#technical_ev").val(a);
@@ -113,6 +112,12 @@ getLocation=(id)=>{
 	})
 	xhr.send();
 }
+
+
+xhr.send();}
+
+
+
 
 let technicals = [];
 let locations = [];
@@ -154,6 +159,7 @@ getFields = () => {
 	});
 	xhr.send();
 };
+
 
 alert_not_evaluation = (msg)=>{
 	

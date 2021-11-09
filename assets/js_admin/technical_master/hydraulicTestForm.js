@@ -78,6 +78,7 @@ edit_ht = () => {
 	};
 
 	data2=JSON.stringify(medida);
+
 	Object.keys(data).map((d) => $(`.${d}`).hide());
 	$.ajax({
 		data: {

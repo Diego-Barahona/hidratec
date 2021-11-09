@@ -141,6 +141,27 @@ disabledAlertEv= () =>{
 }
 
 
+getLocation=(id)=>{
+	let xhr = new XMLHttpRequest();
+	xhr.open("get", `${host_url}/api/getEvaluationByOrder/${id}`);
+	xhr.responseType = "json";
+	xhr.addEventListener("load", () => {
+		if (xhr.status === 200) {
+		    location_ev =xhr.response[0].location;
+              console.log(location_ev);
+			if(location_ev){
+			    $("#location_ev").val(location_ev);
+				
+			  }else{
+				  
+				  $("#location_ev").val("");
+			  }}
+
+})
+
+xhr.send();}
+
+
 
 ev_enableFields = ()=>{
 	a = $("#hab_edit_ev").val();

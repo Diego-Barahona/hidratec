@@ -168,7 +168,15 @@ class HydraulicTest extends CI_Controller
         $technical = $data['technical'];
 
         
-        $ok = true;  
+
+        $ok = true;
+
+       /* if($_SESSION['rango']== 3){
+
+                if ($conclusion == "") { $ok = false;  $err['conclusion']  = "Ingrese fecha de evaluación";  }
+                if ($notes == "") { $ok = false;  $err['notes']  = "Ingrese un tecnico";  }
+
+            }*/
   
         if($ok){ 
             $this->load->model('HydraulicTestModel');
