@@ -182,11 +182,6 @@ details_rep=(ot_number)=>{
 }
 
 
-
-
-
-
-
 getTechnical = ()=> { 
 	
 	$("#nameTech").empty();
@@ -242,78 +237,82 @@ getAssistent=()=> {
 let user=0;
 
 getOrdersWorked=()=> {
-	
-	 typeTech = $("#typeTech").val();
-     user = $('#nameTech').val();
-     if(periodo !=0 ){
-		 if(typeTech != ""){
-		let data = {user: $("#nameTech").val()}
-	    let obj_periode ;
-       
-		if(periodo ==2 ){
-           obj_periode = {year: $( '#year').val() }
-	    }else if (periodo ==1){
-		    obj_periode = {year: $( '#year').val() , month:$('#month').val() }
-        }
-	 
-	$.ajax({
+	typeTech = $("#typeTech").val();
+	user = $('#nameTech').val();
+	if(periodo !=0 ){
+		if(typeTech != ""){
+			let data = {user: $("#nameTech").val()}
+			let obj_periode ;
+			if(periodo ==2 ){
+				obj_periode = {year: $( '#year').val() }
+			}else if (periodo ==1){
+				obj_periode = {year: $( '#year').val() , month:$('#month').val() }
+			}
+			console.log(data);
+			console.log(typeTech);
+			if(typeTech=='1'){
+				$("#div_tm").show();
+				$("#div_at").hide();
+				$.ajax({
+					data:{data},
+					type: "POST",
+					url: host_url + "module_technical/info/technical/getOrdersWorked",
+					crossOrigin: false,
+					dataType: "json",
+					success: (result) => {
+					let orders =result[0];
+					console.log(orders);
 
-		data:{data},
-		type: "POST",
-		url: host_url + "module_technical/info/technical/getOrdersWorked",
-		crossOrigin: false,
-		dataType: "json",
-		success: (result) => {
-		  let orders =result[0];
-		  console.log(orders);
+					if(periodo==1){
+						
+						selectTechnical();
+						dataTableMonths(orders,obj_periode);
+						close_modal();
+						$("#general_info").show();
 
-		  if(periodo==1){
-			
-			selectTechnical();
-			dataTableMonths(orders,obj_periode);
-			close_modal();
-			$("#general_info").show();
-
-		  }else if (periodo==2){
-			
-			selectTechnical();
-			dataTableYears(orders,obj_periode);
-			close_modal();
-			$("#general_info").show();
-		  }else{
-			selectTechnical();
-			dataTableAll(orders);
-			close_modal();
-			$("#general_info").show();
-		  }
-		 
-		},
-		error: (result) => {
+					}else if (periodo==2){
+						
+						selectTechnical();
+						dataTableYears(orders,obj_periode);
+						close_modal();
+						$("#general_info").show();
+					}else{
+						selectTechnical();
+						dataTableAll(orders);
+						close_modal();
+						$("#general_info").show();
+					}
+					substacks_list = [];
+					
+					},
+					error: (result) => {
+						swal({
+							title: "Error",
+							icon: "error",
+							text: result.responseJSON.msg,
+						});
+					},
+				});
+			}else if(typeTech=='2'){
+				getTechnicalWorked(periodo, user, obj_periode);
+			}
+		}else{
 			swal({
 				title: "Error",
 				icon: "error",
-				text: result.responseJSON.msg,
+				text: "Ingrese el tipo de técnico a consultar.",
 			});
-		},
-	});
+			
+		}
 
-}else{
-	swal({
-		title: "Error",
-		icon: "error",
-		text: "Ingrese el tipo de técnico a consultar.",
-	});
-	
-}
+	}else{
+		swal({
+			title: "Error",
+			icon: "error",
+			text: "Ingrese un período a consultar.",
+		});
 
-}else{
-	swal({
-		title: "Error",
-		icon: "error",
-		text: "Ingrese un período a consultar.",
-	});
-
-} 
+	} 
 }
 
 
@@ -832,4 +831,453 @@ close_modal_details = () =>{
 	$("#titulo_modal_report").text("");
     $("#details_process").modal("hide");
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let substacks_list = [];
+getTechnicalWorked = (periodo, user, obj_periode)=>{
+	tabla.clear();
+	substacks_list = [];
+	$("#div_tm").hide();
+	$("#div_at").show();
+	selectTechnical();
+	per = '';
+	data = {};
+
+	if(obj_periode['year'] && obj_periode['month']){
+		data = {
+			user: user, 
+			periodo : 1,
+			month: obj_periode['month'],
+			year: obj_periode['year'],
+		};
+	}else if(obj_periode['year']){
+		data = {
+			user: user, 
+			periodo : 2,
+			month: '2',
+			year: obj_periode['year'],
+		};		
+	};
+	console.log(data);
+
+	$.ajax({
+		data:{data},
+		type: "POST",
+		url: host_url + "module_technical/info/technical/getOrdersWorkedAT",
+		crossOrigin: false,
+		dataType: "json",
+		success: (result) => {
+		let subs_ev =result[0]['subs_ev'];
+		let subs_sr =result[0]['subs_sr'];
+		console.log(subs_ev);
+		console.log(subs_sr);
+
+
+
+		if(subs_ev){  
+			subs_ev.forEach((item)=>{	
+			
+			/*Revisar si la lista esta vacia*/
+				console.log(item);
+				if(substacks_list.length == 0){ 
+					
+					let sub = {
+						name : item.sub_ev,
+						date_assignment : item.date_assigment,
+						date_end : item.date_end,
+						hours : item.hours,
+					}
+					console.log(sub);
+
+					let obj = {
+						ot_number : item.ot_number,
+						date_admission : item.date_admission,
+						state_name : item.state_name,
+						subs_ev : [sub],
+						subs_sr : []
+					};
+					substacks_list.push(obj);
+				}else{
+					/* Si no esta vacia revisar si la ot ya esta ingresada */
+					let op = 0;
+					substacks_list.forEach((item_list)=>{
+						if(item_list.ot_number == item.ot_number){
+							op = 1;
+							let sub = {
+								name : item.sub_ev,
+								date_assignment : item.date_assigment,
+								date_end : item.date_end,
+								hours : item.hours,
+							}
+							item_list.subs_ev.push(sub);
+						};
+					});
+
+					/* En caso que se mantenga 0 mi subtarea es para otra ot */
+					if(op == 0){
+						let sub = {
+							name : item.sub_ev,
+							date_assignment : item.date_assigment,
+							date_end : item.date_end,
+							hours : item.hours,
+						}
+	
+						let obj = {
+							ot_number : item.ot_number,
+							date_admission : item.date_admission,
+							state_name : item.state_name,
+							subs_ev : [sub],
+							subs_sr : []
+						};
+						substacks_list.push(obj);
+					}
+
+
+				}
+				console.log(substacks_list);
+			});
+		}
+
+		if(subs_sr){  
+			subs_sr.forEach((item)=>{	
+			
+			/*Revisar si la lista esta vacia*/
+				console.log(item);
+				if(substacks_list.length == 0){ 
+					
+					let sub = {
+						name : item.sub_sr,
+						date_assignment : item.date_assignment,
+						date_end : item.date_end,
+						hours : item.hours,
+					}
+
+					let obj = {
+						ot_number : item.ot_number,
+						date_admission : item.date_admission,
+						state_name : item.state_name,
+						subs_ev : [],
+						subs_sr : [sub]
+					};
+					substacks_list.push(obj);
+				}else{
+					/* Si no esta vacia revisar si la ot ya esta ingresada */
+					let op = 0;
+					substacks_list.forEach((item_list)=>{
+						if(item_list.ot_number == item.ot_number){
+							op = 1;
+							let sub = {
+								name : item.sub_sr,
+								date_assignment : item.date_assigment,
+								date_end : item.date_end,
+								hours : item.hours,
+							}
+							item_list.subs_sr.push(sub);
+						};
+					});
+
+					/* En caso que se mantenga 0 mi subtarea es para otra ot */
+					if(op == 0){
+						let sub = {
+							name : item.sub_sr,
+							date_assignment : item.date_assigment,
+							date_end : item.date_end,
+							hours : item.hours,
+						}
+	
+						let obj = {
+							ot_number : item.ot_number,
+							date_admission : item.date_admission,
+							state_name : item.state_name,
+							subs_ev : [],
+							subs_sr : [sub]
+						};
+						substacks_list.push(obj);
+					}
+				}
+				console.log(substacks_list);
+			});
+		}
+
+		tabla_sub.clear();
+		tabla_sub.rows.add(substacks_list);	
+		tabla_sub.draw();
+
+		if(periodo==1){
+			$("#g_year").val(obj_periode['year']);
+			$("#g_month").val(obj_periode['month']);
+		}else if (periodo==2){
+			$("#g_year").val(obj_periode['year']);
+			$("#g_month").val('General');
+		}
+		
+		},
+		error: (result) => {
+			swal({
+				title: "Error",
+				icon: "error",
+				text: result.responseJSON.msg,
+			});
+		},
+	});
+
+	close_modal();
+	$("#general_info").show();
+};
+
+const tabla_sub = $("#table-orders-worked_substacks").DataTable({
+	// searching: true,
+	language: {
+		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
+	},
+	columnDefs: [
+		{className: "text-center", "targets": [1]},
+        {className: "text-center", "targets": [2]},
+		{className: "text-center", "targets": [3]},
+		{className: "text-center", "targets": [4]},
+    ],
+	columns: [
+		{ data: "ot_number" },
+		{ data: "date_admission" },
+		{ data: "state_name" },
+		{ "render": function(data,type,row){
+			if(row.subs_ev.length > 0){		
+				return `<button type='button' name='details_se' class='btn btn-success'>
+				<i class="fas fa-check-circle"></i>
+				</button>`
+			}else if(row.subs_ev.length == 0){
+				return `<button type='button' name='not_details' class='btn btn-danger'>
+				<i class="fas fa-minus-circle"></i>
+				</button>`
+			}
+			}
+		},
+		{ "render": function(data,type,row){
+			if(row.subs_sr.length > 0){		
+				return `<button type='button' name='details_sr' class='btn btn-success'>
+				<i class="fas fa-check-circle"></i>
+				</button>`
+			}else if(row.subs_sr.length == 0){
+				return `<button type='button' name='not_details' class='btn btn-danger'>
+				<i class="fas fa-minus-circle"></i>
+				</button>`
+			}
+			}
+		}
+	],
+});
+
+const tabla_sub_details = $("#table-details-sub").DataTable({
+	// searching: true,
+	language: {
+		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
+	},
+	columnDefs: [
+	/* 	{className: "text-center", "targets": [1]},
+        {className: "text-center", "targets": [2]},
+		{className: "text-center", "targets": [3]}, */
+
+    ],
+	columns: [
+		{ data: "name" },
+		{ data: "date_assignment" },
+		{ data: "date_end" },
+		{ data: "hours" },
+	],
+});
+
+
+$("#table-orders-worked_substacks").on("click", "button", function () {
+	let data = tabla_sub.row($(this).parents("tr")).data();
+	let id_ot = data.ot_number;
+	if ($(this)[0].name == "not_details") {
+		swal({
+			title: "",
+			icon: "warning",
+			text: `Este proceso es responsabilidad de otro técnico o bien no ha sido asignado aún.`,
+		
+		}).then(()=>{
+			swal.close();
+		})
+	}else if ($(this)[0].name == "details_se"){
+
+		substacks_list.forEach((item)=>{
+			if(item.ot_number == id_ot){
+				tabla_sub_details.clear();
+				tabla_sub_details.rows.add(item.subs_ev);	
+				tabla_sub_details.draw();
+			};
+		});
+		$("#titulo_modal_report_subs").text("Detalles de subtareas de evaluación");
+		$("#details_process_subs").modal('show');
+
+	}else if($(this)[0].name == "details_sr"){
+		substacks_list.forEach((item)=>{
+			if(item.ot_number == id_ot){
+				tabla_sub_details.clear();
+				tabla_sub_details.rows.add(item.subs_sr);	
+				tabla_sub_details.draw();
+			};
+		});
+		$("#titulo_modal_report_subs").text("Detalles de subtareas de reparación");
+		$("#details_process_subs").modal('show');
+	}
+});
+
+
+
+close_modal_details_sub = () =>{
+	$("#titulo_modal_report").text("");
+    $("#details_process_subs").modal("hide");
 }

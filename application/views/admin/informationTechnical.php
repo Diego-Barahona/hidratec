@@ -60,7 +60,22 @@
 
 
 
-      <div class="table-responsive">
+        <div id='div_at' class="table-responsive" style="display: none">
+          <table class="table table-bordered" id="table-orders-worked_substacks" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Ot</th>
+                <th>Ingreso OT</th>
+                <th>Estado</th>
+                <th>Sub Evaluación</th>
+                <th>Sub Reparación</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+
+
+        <div id='div_tm' class="table-responsive" >
           <table class="table table-bordered" id="table-orders-worked" width="100%" cellspacing="0">
             <thead>
               <tr>
@@ -201,6 +216,33 @@
                     </div>
                     
                 </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="details_process_subs" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div  class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titulo_modal_report_subs"></h5>
+                    <button type="button" class="close" onclick="close_modal_details_sub()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                <div id='div_tm' class="table-responsive" >
+                    <table class="table table-bordered" id="table-details-sub" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>Subtarea</th>
+                          <th>Fecha de asignación</th>
+                          <th>Fecha de termino</th>
+                          <th>Horas gastadas</th>
+                        </tr>
+                      </thead>
+                    </table>
+                  </div>
                 </div>
             </div>
         </div>

@@ -80,27 +80,39 @@ class Techinformation extends CI_Controller
         } else {
             redirect('Home/login', 'refresh');
         }
-        
-
     }
 
+   public function getOrdersWorkedAT(){
+
+          if ($this->accesscontrol->checkAuth()['correct']) {
+              $data =  $this->input->post('data');
+              $this->load->model('TechinformationModel');
+              if($data= $this->TechinformationModel-> getOrdersWorkedAT($data)){
+                  $this->response->sendJSONResponse(array($data));
+              }else {
+                  $this->response->sendJSONResponse(array('msg' => 'No se ha podido cargar la información'), 400);
+              }
+
+          } else {
+              redirect('Home/login', 'refresh');
+          }
+      }
+  
     public function getInfoEvaluation(){
-           
-        if ($this->accesscontrol->checkAuth()['correct']) {
-            $data =  $this->input->post('data');
-            $this->load->model('TechinformationModel');
-            if($res= $this->TechinformationModel-> getInfoEvaluation($data['ot_number'])){
-                $this->response->sendJSONResponse($res);
-            }else {
-                $this->response->sendJSONResponse(array('msg' => 'No se ha podido cargar la información'), 400);
-            }
-            
-        } else {
-            redirect('Home/login', 'refresh');
-        }
-        
 
-    }
+          if ($this->accesscontrol->checkAuth()['correct']) {
+              $data =  $this->input->post('data');
+              $this->load->model('TechinformationModel');
+              if($res= $this->TechinformationModel-> getInfoEvaluation($data['ot_number'])){
+                  $this->response->sendJSONResponse($res);
+              }else {
+                  $this->response->sendJSONResponse(array('msg' => 'No se ha podido cargar la información'), 400);
+              }
+
+          } else {
+              redirect('Home/login', 'refresh');
+          }
+      }
 
 
     public function getInfoRep(){
@@ -158,10 +170,4 @@ class Techinformation extends CI_Controller
 
     }
 
-
-
-
-
-
-   
 }
