@@ -678,20 +678,139 @@ $("#table-orders-worked").on("click", "button", function () {
 		})
 		}else if ($(this)[0].name == "details_ev"){
 			$("#titulo_modal_report").text("Detalles de evaluación");
+			infoEv(data.ot_number,1);
 			$("#details_process").modal('show');
 
 		}else if($(this)[0].name == "details_tr"){
 			$("#titulo_modal_report").text("Detalles de informe técnico");
+			infoTr(data.ot_number,2);
 			$("#details_process").modal('show');
 		}else if($(this)[0].name == "details_ht"){
 			$("#titulo_modal_report").text("Detalles de prueba hidráulica");
+			infoHt(data.ot_number,3);
 			$("#details_process").modal('show');
 		}else if($(this)[0].name == "details_r"){
+			
 			$("#titulo_modal_report").text("Detalles de reparación");
+			infoRep(data.ot_number,4);
 			$("#details_process").modal('show');
 		}
 	
 	});
+
+
+
+   fill_info=(data,type_info)=>{
+	let details; 
+	if(type_info != 4){
+		details = JSON.parse(data.details);
+		console.log(details);
+	}
+	
+	$("#technical_master").val(data.full_name);
+	if(type_info == 1){
+	$("#date_begin").val(details.date_evaluation);
+    }else if(type_info == 2){
+		$("#date_begin").val(details.date_technical_report);
+	}else if (type_info == 3){
+		$("#date_begin").val(details.date_ht);
+	}else { 
+		$("#date_begin").val(data.date_reparation);
+	}
+	
+	$("#date_end").val(data.time_end);
+	data.hours? $("#time_used").val(data.full_name): $("#time_used").val('Aun no calculada');
+	$("#report").val('archivo');
+   }
+
+   infoEv =(id,type)=>{ // evaluation information 
+	   data={ot_number:id};
+	$.ajax({
+
+		data:{data},
+		type: "POST",
+		url: host_url + "module_technical/info/technical/getInfoEvaluation",
+		crossOrigin: false,
+		dataType: "json",
+		success: (result) => {
+		 fill_info(result[0],type);
+		},
+		error: (result) => {
+			swal({
+				title: "Error",
+				icon: "error",
+				text: result.responseJSON.msg,
+			});
+		},
+	});
+   }
+   
+   infoRep =(id,type)=>{ // evaluation information 
+	 data={ot_number:id};
+     $.ajax({
+
+	 data:{data},
+	 type: "POST",
+	 url: host_url + "module_technical/info/technical/getInfoRep",
+	 crossOrigin: false,
+	 dataType: "json",
+	 success: (result) => {
+	  fill_info(result[0],type);
+	 },
+	 error: (result) => {
+		 swal({
+			 title: "Error",
+			 icon: "error",
+			 text: result.responseJSON.msg,
+		 });
+	 },
+ });
+}
+
+   infoTr =(id,type)=>{ // technical report  information 
+	data={ot_number:id};
+    $.ajax({
+
+	 data:{data},
+	 type: "POST",
+	 url: host_url + "module_technical/info/technical/getInfoTr",
+	 crossOrigin: false,
+	 dataType: "json",
+	 success: (result) => {
+		fill_info(result[0],type);
+	 },
+	 error: (result) => {
+		 swal({
+			 title: "Error",
+			 icon: "error",
+			 text: result.responseJSON.msg,
+		 });
+	  },
+    });
+  }
+
+
+  infoHt =(id,type)=>{ // hidraulic_test information 
+	data={ot_number:id};
+    $.ajax({
+
+	 data:{data},
+	 type: "POST",
+	 url: host_url + "module_technical/info/technical/getInfoHt",
+	 crossOrigin: false,
+	 dataType: "json",
+	 success: (result) => {
+		fill_info(result[0],type);
+	 },
+	 error: (result) => {
+		 swal({
+			 title: "Error",
+			 icon: "error",
+			 text: result.responseJSON.msg,
+		 });
+	  },
+    });
+  }
 	 
 
  showPeriode=()=>{ $("#frm_year").show(); $("#frm_month").show();}

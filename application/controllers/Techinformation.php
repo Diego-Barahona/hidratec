@@ -84,6 +84,81 @@ class Techinformation extends CI_Controller
 
     }
 
+    public function getInfoEvaluation(){
+           
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $data =  $this->input->post('data');
+            $this->load->model('TechinformationModel');
+            if($res= $this->TechinformationModel-> getInfoEvaluation($data['ot_number'])){
+                $this->response->sendJSONResponse($res);
+            }else {
+                $this->response->sendJSONResponse(array('msg' => 'No se ha podido cargar la información'), 400);
+            }
+            
+        } else {
+            redirect('Home/login', 'refresh');
+        }
+        
+
+    }
+
+
+    public function getInfoRep(){
+           
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $data =  $this->input->post('data');
+            $this->load->model('TechinformationModel');
+            if($res= $this->TechinformationModel-> getInfoRep($data['ot_number'])){
+                $this->response->sendJSONResponse($res);
+            }else {
+                $this->response->sendJSONResponse(array('msg' => 'No se ha podido cargar la información'), 400);
+            }
+            
+        } else {
+            redirect('Home/login', 'refresh');
+        }
+        
+
+    }
+
+
+    public function getInfoTr(){
+           
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $data =  $this->input->post('data');
+            $this->load->model('TechinformationModel');
+            if($res= $this->TechinformationModel-> getInfoTr($data['ot_number'])){
+                $this->response->sendJSONResponse($res);
+            }else {
+                $this->response->sendJSONResponse(array('msg' => 'No se ha podido cargar la información'), 400);
+            }
+            
+        } else {
+            redirect('Home/login', 'refresh');
+        }
+        
+
+    }
+
+    public function getInfoHt(){
+           
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $data =  $this->input->post('data');
+            $this->load->model('TechinformationModel');
+            if($res= $this->TechinformationModel-> getInfoHt($data['ot_number'])){
+                $this->response->sendJSONResponse($res);
+            }else {
+                $this->response->sendJSONResponse(array('msg' => 'No se ha podido cargar la información'), 400);
+            }
+            
+        } else {
+            redirect('Home/login', 'refresh');
+        }
+        
+
+    }
+
+
 
 
 
