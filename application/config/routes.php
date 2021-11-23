@@ -318,4 +318,5 @@ $route['module_technical/info/technical']['GET']='Techinformation/viewInfoTech';
 $route['module_technical/info/technical/getTechnical']['GET']='Techinformation/getTechnical';
 $route['module_technical/info/technical/getAssistent']['GET']='Techinformation/getAssistent';
 $route['module_technical/info/technical/getOrdersWorked']['POST']='Techinformation/getOrdersWorked';
+$route['module_technical/info/technical/getOrdersWorkedAT']['POST']='Techinformation/getOrdersWorkedAT';
 $route['module_technical/info/technical/selectTech']['POST']='Techinformation/selectTech';

@@ -57,6 +57,117 @@ class TechinformationModel extends CI_Model
         return $this->db->query($query)->result_array(); 
     }
 
+    public function getOrdersWorkedAT($data)
+    {        
+        $periodo = $data['periodo'];
+        $user = $data['user'];
+        $year = $data['year'];
+        $month = $data['month'];
+    
+        if($periodo == '2'){
+            $query = "SELECT 
+                        ot.id ot_number, ot.date_admission,  s.name state_name,
+                        se.id, se.check_tm , se.check_at, se.date_assigment, se.date_end, se.hours, subs_ev.name sub_ev
+            
+                        FROM ot
+                                JOIN enterprise e ON ot.enterprise_id = e.id
+                                JOIN component c ON ot.component_id = c.id
+                                JOIN ot_state os ON ot.id = os.ot_id
+                                JOIN state s ON os.state_id = s.id
+                                LEFT JOIN subtask_evaluation se ON ot.id = se.ot_id
+                                LEFT JOIN subtask subs_ev ON se.subtask_id = subs_ev.id                           
+                        WHERE (
+                               (se.user_id = $user AND YEAR(se.date_end)= $year) 
+                              ) and os.id = (
+                                            SELECT f.id 
+                                            FROM ot_state f 
+                                            WHERE f.ot_id = ot.id AND f.date_update = (
+                                                    SELECT MAX(j.date_update)
+                                                    FROM ot_state j
+                                                    WHERE j.ot_id = ot.id
+                                                ) 
+                    )";
+            $subs_ev =  $this->db->query($query)->result_array();
+
+            $query = "SELECT 
+                        ot.id ot_number, ot.date_admission,  s.name state_name,
+                        sr.id, sr.check_tm , sr.check_at, sr.date_assigment, sr.date_end, sr.hours, subs_sr.name sub_sr
+            
+                        FROM ot
+                                JOIN enterprise e ON ot.enterprise_id = e.id
+                                JOIN component c ON ot.component_id = c.id
+                                JOIN ot_state os ON ot.id = os.ot_id
+                                JOIN state s ON os.state_id = s.id                         
+                                LEFT JOIN subtask_reparation sr ON ot.id = sr.ot_id
+                                LEFT JOIN subtask subs_sr ON sr.subtask_id = subs_sr.id                             
+                        WHERE (
+                               (sr.user_id = $user AND YEAR(sr.date_end)= $year) and (sr.check_tm =1)
+                              ) AND (sr.check_tm =1) and os.id = (
+                                            SELECT f.id 
+                                            FROM ot_state f 
+                                            WHERE f.ot_id = ot.id AND f.date_update = (
+                                                    SELECT MAX(j.date_update)
+                                                    FROM ot_state j
+                                                    WHERE j.ot_id = ot.id
+                                                ) 
+                    )";
+            $subs_sr =  $this->db->query($query)->result_array();
+            return array("subs_ev" => $subs_ev, "subs_sr" => $subs_sr);
+
+        }else if ($periodo == '1'){
+            $query = "SELECT 
+                        ot.id ot_number, ot.date_admission,  s.name state_name,
+                        se.id, se.check_tm , se.check_at, se.date_assigment, se.date_end, se.hours, subs_ev.name sub_ev
+            
+                        FROM ot
+                                JOIN enterprise e ON ot.enterprise_id = e.id
+                                JOIN component c ON ot.component_id = c.id
+                                JOIN ot_state os ON ot.id = os.ot_id
+                                JOIN state s ON os.state_id = s.id
+                                LEFT JOIN subtask_evaluation se ON ot.id = se.ot_id
+                                LEFT JOIN subtask subs_ev ON se.subtask_id = subs_ev.id
+                                                            
+                        WHERE (
+                               (se.user_id = $user AND YEAR(se.date_end)= $year AND  MONTH(se.date_end) = $month) 
+                              )  AND (se.check_tm =1) and os.id = (
+                                            SELECT f.id 
+                                            FROM ot_state f 
+                                            WHERE f.ot_id = ot.id AND f.date_update = (
+                                                    SELECT MAX(j.date_update)
+                                                    FROM ot_state j
+                                                    WHERE j.ot_id = ot.id
+                                                ) 
+                    )";
+             $subs_ev =  $this->db->query($query)->result_array();
+
+             $query = "SELECT 
+             ot.id ot_number, ot.date_admission,  s.name state_name,
+             sr.id, sr.check_tm , sr.check_at, sr.date_assigment, sr.date_end, sr.hours, subs_sr.name sub_sr
+ 
+             FROM ot
+                     JOIN enterprise e ON ot.enterprise_id = e.id
+                     JOIN component c ON ot.component_id = c.id
+                     JOIN ot_state os ON ot.id = os.ot_id
+                     JOIN state s ON os.state_id = s.id
+                     LEFT JOIN subtask_reparation sr ON ot.id = sr.ot_id
+                     LEFT JOIN subtask subs_sr ON sr.subtask_id = subs_sr.id                             
+             WHERE (
+                    (sr.user_id = $user AND YEAR(sr.date_end)= $year AND  MONTH(sr.date_end) = $month)
+                   )  AND (sr.check_tm =1) AND os.id = (
+                                 SELECT f.id 
+                                 FROM ot_state f 
+                                 WHERE f.ot_id = ot.id AND f.date_update = (
+                                         SELECT MAX(j.date_update)
+                                         FROM ot_state j
+                                         WHERE j.ot_id = ot.id
+                                     ) 
+                )";
+              $subs_sr =  $this->db->query($query)->result_array();
+              return array("subs_ev" => $subs_ev, "subs_sr" => $subs_sr);
+        }
+ 
+    }
+
     public function selectTech($technical){
         $this->db->select('user.full_name');
         $this->db->from('user');
@@ -115,3 +226,4 @@ class TechinformationModel extends CI_Model
 
     
 }
+

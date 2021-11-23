@@ -482,4 +482,3 @@ $("#tr_btn_add").on("click", createFields);
 
 $("#tr_btnEdit").on("click", checkTechnicalReport);
 
-

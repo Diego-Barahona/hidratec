@@ -133,28 +133,25 @@ Shinobu
 Maki Maki no mi
 Raizo
 
-Fruta Numa Numa no mi
-Caribou
-
-Fruta Mato Mato no mi
+Mato Mato no mi
 Vander Decken
 
-Fruta Pamu Pamu no mi
+Pamu Pamu no mi
 Gladius
 
-Fruta Zou Zou no mi
+Zou Zou no mi
 Funk Freed
 
-Fruta Tori Tori: Modelo Halcón
+Tori Tori: Modelo Halcón
 Pell
 
-Fruta Tori Tori: Modelo Fénix
+Tori Tori: Modelo Fénix
 Marco
 
-Fruta Poke Poke no mi
+Poke Poke no mi
 Blamenco
 
-Fruta Beta Beta no mi
+Beta Beta no mi
 Trébol
 
 Fruta Kira Kira no mi
@@ -271,14 +268,6 @@ Marshall D. Teach
 Fruta Gura Gura no mi
 Marshall D. Teach
 
-Hie Hie no mi
-Kuzan
-
-Magu Magu no mi
-Sakazuki
-
-Pika Pika no mi
-Borsalino
 
 Woshu Woshu no mi
 Tsuru
@@ -297,9 +286,6 @@ Magellan
 
 Fuwa Fuwa no mi
 Shiki
-
-Goro Goro no mi
-Enel
 
 Zushi Zushi no mi
 Issho
@@ -346,39 +332,32 @@ Kozuki Toki
 Gasha Gasha nomi
 Bullet
 
+
+-Logias-
+
 Ame Ame no mi
 Gasparde
 
 Mera mera no mi
 Ace
 
-Ace 
-Alvida
-Aisa
+Hie Hie no mi
+Kuzan
 
+Magu Magu no mi
+Sakazuki
+
+Pika Pika no mi
+Borsalino
+
+Goro Goro no mi
 Enel
-Elmy
-Eiri
 
-Ideo
-Im
-Ikkaku
-inazuma
-
-Oars
-Oimo
-Oide
+Numa Numa no mi
+Caribou
 
 
-Ulti
-Ucy
-Uni
-Urouge
-
-Yamato
-
-
-
-
-
-
+Cantidad  /Canon/   /No canon/ 
+Logias      11          3
+Paramecia   82          33
+Zoan        37          7            
