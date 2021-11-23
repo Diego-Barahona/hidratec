@@ -67,49 +67,57 @@ class TechinformationModel extends CI_Model
     }
 
 
+    public function getInfoRep($ot_id)
+    {        
+        $query = "SELECT  r.time_end  , r.hours ,u.full_name ,r.date_reparation   
+                  FROM ot
+                  JOIN component c ON ot.component_id = c.id
+                  LEFT JOIN reparation r ON ot.id = r.ot_id
+                  JOIN user u ON u.id = r.user_assignment
+                  WHERE r.ot_id = $ot_id
+        "; 
+        return $this->db->query($query)->result_array(); 
+    }
+
+
 
     public function getInfoEvaluation($ot_id)
     {        
-        $query = "SELECT ev.details  , ev.time_end  , ev.hours, ev.export
+        $query = "SELECT ev.details  , ev.time_end  , ev.hours, ev.export ,u.full_name  
                   FROM ot
                   JOIN component c ON ot.component_id = c.id
-                  JOIN ot_state os ON ot.id = os.ot_id
                   LEFT JOIN evaluation ev ON ot.id=ev.ot_id
-                  JOIN state s ON os.state_id = s.id
-                  WHERE ev.ot_id = $ot_id and os.id = (
-                      SELECT f.id 
-                      FROM ot_state f 
-                      WHERE f.ot_id = ot.id AND f.date_update = (
-                            SELECT MAX(j.date_update)
-                            FROM ot_state j
-                            WHERE j.ot_id = ot.id
-                          ) 
-                    ) 
+                  JOIN user u ON u.id = ev.user_assignment
+                  WHERE ev.ot_id = $ot_id
         "; 
         return $this->db->query($query)->result_array(); 
     }
 
     
-    public function getInfoTechnicalReport($ot_id)
+    public function getInfoTr($ot_id)
     {        
-        $query = "SELECT tr.details , tr.time_end , tr.hours
+        $query = "SELECT tr.details , tr.time_end , tr.hours,  u.full_name
                   FROM ot
                   JOIN component c ON ot.component_id = c.id
-                  JOIN ot_state os ON ot.id = os.ot_id
                   LEFT JOIN technical_report tr ON ot.id=tr.ot_id
-                  JOIN state s ON os.state_id = s.id
-                  WHERE tr.ot_id = $ot_id and os.id = (
-                      SELECT f.id 
-                      FROM ot_state f 
-                      WHERE f.ot_id = ot.id AND f.date_update = (
-                            SELECT MAX(j.date_update)
-                            FROM ot_state j
-                            WHERE j.ot_id = ot.id
-                          ) 
-                    ) 
+                  JOIN user u ON u.id = tr.user_assignment
+                  WHERE tr.ot_id = $ot_id 
         "; 
         return $this->db->query($query)->result_array(); 
     }
+
+    public function getInfoHt($ot_id)
+    {        
+        $query = "SELECT ht.details , ht.time_end ,ht.hours, u.full_name , ht.export
+                  FROM ot
+                  JOIN component c ON ot.component_id = c.id
+                  LEFT JOIN hydraulic_test ht ON ot.id=ht.ot_id
+                  JOIN user u ON u.id = ht.user_assignment
+                  WHERE ht.ot_id = $ot_id 
+        "; 
+        return $this->db->query($query)->result_array(); 
+    }
+
 
 
 
