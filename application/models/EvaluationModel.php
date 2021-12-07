@@ -29,7 +29,9 @@ class EvaluationModel extends CI_Model {
         $user_create="";
         $date_create="";
         $priority = $data['priority'];
+
         $location = $data['location'];
+
 
         if($data['approve_admin'] == "true"){
       
@@ -95,9 +97,18 @@ class EvaluationModel extends CI_Model {
             )
         );
 
+        if($location == 0 ){
 
-        $query = "UPDATE evaluation SET details = ? , user_assignment = ? , user_interaction = ? , priority = ? , evaluation.location = ?  WHERE ot_id = ?";
-        return $this->db->query($query, array($details,$technical,$user_interaction,$priority,$location,$id));  
+            $query = "UPDATE evaluation SET details = ? , user_assignment = ? , user_interaction = ? , priority = ?  WHERE ot_id = ?";
+            return $this->db->query($query, array($details,$technical,$user_interaction,$priority,$id)); 
+        
+        }else{
+
+            $query = "UPDATE evaluation SET details = ? , user_assignment = ? , user_interaction = ? , priority = ? , evaluation.location = ?  WHERE ot_id = ?";
+            return $this->db->query($query, array($details,$technical,$user_interaction,$priority,$location,$id));
+    
+
+        } 
     }  
 
 

@@ -15,14 +15,9 @@ const tabla = $("#table-orders").DataTable({
 		{ data: "date" },
 		{ data: "priority" },
 		{ data: "component" },
-    { data: "enterprise" },
-    { data: "service" },
-		{
-			defaultContent: `<button type='button' name='btn_admin' class='btn btn-primary'>
-                                  Realizar
-                                  <i class="fas fa-edit"></i>
-                              </button>`,
-		},
+       { data: "enterprise" },
+       { data: "service" },
+		
 	],
 });
 
@@ -338,27 +333,7 @@ $("#btnReparations").on("click", () => {
 
 $("#table-orders").on("click", "button", function () {
 	let data = tabla.row($(this).parents("tr")).data();
-	if ($(this)[0].name == "btn_admin") {
-
-		if(data.type =="evaluation"){
-		let ot = data.number_ot;
-		let url = 'editEvaluation'+'?ot='+ot; 
-		window.location.assign(host_url+url);
-	    }else{
-
-		if(data.type =="hidraulic"){
-		let ot = data.number_ot;
-		let url = 'hydraylicTestForm'+'?ot='+ot; 
-		window.location.assign(host_url+url);
-        }else{
-     
-      if(urlRedirect == 'technicalReport'){
-			window.location.assign(host_url+`tmAdminViewTechnicalReport/${data.number_ot}`);
-		}   
-     }
-
-	}
-  }
+	
 });
 
 $("#tableReparations").on("click", "button", function () {

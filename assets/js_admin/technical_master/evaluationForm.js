@@ -246,14 +246,14 @@ edit_evaluation = () => {
 					date_create:$("#date_create_ev").val(),
 					date_modify:$("#date_modify_ev").val(),
 					date_approve:$("#date_approve_ev").val(),
+					location:0,
 					priority:$("#priority_ev").val(),
-					location:$("#location_ev").val(),
 					check_admin_old:check_admin_old_ev,
 					check_technical_old:check_technical_old_ev,
 					
 				};
-				console.log(data.location);
-				if (data.location != 0) {  
+				
+				 
 						Object.keys(data).map((d) => $(`.${d}`).hide());
 						$.ajax({
 							data: {
@@ -287,13 +287,7 @@ edit_evaluation = () => {
 								
 							},
 						});
-			   }else{
-				swal({
-					title: "Error",
-					icon: "error",
-					text: "Por favor , seleccione la ubicación del componente a evaluado.",
-				});
-			   }
+			
 			}else{
 				swal({
 					title: "Denegado!",
