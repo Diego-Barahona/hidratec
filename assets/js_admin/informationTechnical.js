@@ -718,7 +718,11 @@ $("#table-orders-worked").on("click", "button", function () {
 	}
 	
 	$("#date_end").val(data.time_end);
-	data.hours? $("#time_used").val(data.full_name): $("#time_used").val('Aun no calculada');
+
+	if(data.hours){
+		$("#time_used").val(calculate_time_dataTable(parseFloat(data.hours*3600)));
+	} else{ $("#time_used").val('Aun no calculada');}
+	
 	$("#report").val('archivo');
    }
 
@@ -833,6 +837,19 @@ close_modal_details = () =>{
 
 }
 
+calculate_time_dataTable = (seconds) =>{
+	console.log(seconds);
+	var days = Math.floor(seconds / (3600*24));
+	
+	seconds  -= days*3600*24;
+	var hrs   = Math.floor(seconds / 3600);
+	seconds  -= hrs*3600;
+	var mnts = Math.floor(seconds / 60);
+	console.log(seconds);
+	seconds  -= mnts*60;
+	console.log(seconds);
+	return(days+" Dias, "+hrs+" Horas, "+mnts+" Minutos, "+seconds+" Segundos");
+}
 
 
 
