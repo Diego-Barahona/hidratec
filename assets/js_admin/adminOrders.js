@@ -107,6 +107,7 @@ get_orders_test = () => {
 				date: item.date,
                 enterprise:item.enterprise,
                 component:item.component,
+				description:item.description,
                 state:item.state,
 		        service: item.service,
 				alert:alert_on,
@@ -163,19 +164,21 @@ const tabla = $('#table_orders').DataTable({
         { "width": "15%", "targets": 1 }, /*Fecha Ingreso*/
         { "width": "20%", "targets": 2 }, /*Cliente */
         { "width": "15%", "targets": 3 }, /*Componente */
-        { "width": "10%", "targets": 4 }, /*Estado */
-        { "width": "10%", "targets": 5 }, /*Tipo De Servicio */
-		{ "width": "5%", "targets": 6 }, /*alertas */
-        { "width": "5%", "targets": 7 },  /*Administrar */
-        { "width": "5%", "targets": 8 },  /*Editar */
-		{ "width": "5%", "targets": 9 },
-		{className: "text-center", "targets": [6]}/*Imagenes */
+		{ "width": "15%", "targets": 4 }, /*Description */
+        { "width": "10%", "targets": 5 }, /*Estado */
+        { "width": "10%", "targets": 6 }, /*Tipo De Servicio */
+		{ "width": "5%", "targets": 7 }, /*alertas */
+        { "width": "5%", "targets": 8 },  /*Administrar */
+        { "width": "5%", "targets": 9 },  /*Editar */
+		{ "width": "5%", "targets": 10 },
+		{className: "text-center", "targets": [7, 8]},
     ],
 	columns: [
         { data: "number_ot"},
         { data: "date" },
         { data: "enterprise" },
         { data: "component" },
+		{ data: "description" },
         { data: "state" },
 		{ data: "service" },
 		{ "render": function(data,type,row){
@@ -331,4 +334,3 @@ addAlerts = errores => {
 
 
     
-

@@ -71,7 +71,6 @@
                       <table class="table table-bordered" id="table-kpi-production" width="100%" cellspacing="0">
                        <thead>
                             <tr>
-                             <th>N°</th>
                             <th>Número OT</th>
                              
                         </tr>

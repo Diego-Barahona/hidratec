@@ -74,7 +74,7 @@ get_data_technical_report = () =>{
             let data_interaction = xhr.response[0][0].data_interaction;
 
             let user = xhr.response[0][0].user;
-            
+            console.log(data_images);
             if(data){
                 technical_report = JSON.parse(data);
                 $("#tr_date_technical_report").val(technical_report.date_technical_report);
@@ -123,9 +123,10 @@ get_data_technical_report = () =>{
                 technical_report_images = JSON.parse(data_images);
                 if(tr_id_images.length == 0){
                     $.each(technical_report_images, function(i, item) {
+                        console.log(item.name);
                         let image = "<div id='tr_div_details_image_"+item.id+"'><div class='row mb-2'><div class='col-md-5 mb-3'><label id='tr_label_image_"+item.id+"'>Imagen</label><button id='tr_btn_image_"+item.id+"' onclick='loadImages("+item.id+")' class='btn btn-primary' style='margin-right: 5px; margin-bottom: 5px; display:none;'><i class='fas fa-plus'></i>Seleccione imagen</button><div class='input-group'><img style='display:block;margin:auto;' width='400' heigth='400' id='tr_image_file_"+item.id+"' src='http://localhost/hidrat/assets/upload/"+item.image+"' width='100%' class='responsive'></div></div>"
                         let minus = "<div class='col-md-7 mb-3'><div name='tr_delete_' id='tr_delete_"+item.id+"' style='text-align: right; display:none;'><button class='btn btn-danger rounded-circle' id='tr_btn_delete_"+item.id+"' onclick='deleteFields("+item.id+")'><i class='fas fa-minus'></i></button></div>"
-                        let name = "<div><label>Nombre</label><div class='input-group'><input value="+item.name+" type='text' class='form-control' id='tr_image_name_"+item.id+"' readonly></div></div>"
+                        let name = "<div><label>Nombre</label><div class='input-group'><input value='"+item.name+"' type='text' class='form-control' id='tr_image_name_"+item.id+"' readonly></div></div>"
                         let description = "<div style='padding-top: 15px;'><label>Descripción</label><div class='input-group'><textarea type='text' rows='6' class='form-control' id='tr_image_description_"+item.id+"' readonly>"+item.description+"</textarea></div></div></div></div><hr></div>"
                         let admin_images = image+minus+name+description;
                         $(admin_images).appendTo("#tr_images"); 
@@ -340,6 +341,7 @@ saveTechnicalReport = () =>{
             check_technical_old: tr_check_technical_old,
             profile: 'admin',
         } 
+        console.log(data);
        $.ajax({
             type: "POST",
             url: host_url + "api/editTechnicalReport",
