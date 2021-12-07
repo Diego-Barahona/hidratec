@@ -114,7 +114,7 @@ getLocation=(id)=>{
 }
 
 
-xhr.send();}
+
 
 
 

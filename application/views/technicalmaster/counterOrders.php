@@ -79,7 +79,7 @@
                               <th>Component</th>
                               <th>Cliente</th>
                               <th>Servicio</th>
-                              <th>Acción</th>
+                           
                  
                            </tr>
                         </thead>
