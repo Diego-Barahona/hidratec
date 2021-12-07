@@ -93,7 +93,7 @@ class TechnicalReportModel extends CI_Model {
                     'recommendation' => $data['recommendation'],
                 )),
                 'time_end' => $date_create,
-                'details_images' => $details_images,
+                'details_images' =>  strval($details_images),
                 'user_interaction' => json_encode(array(
                     'user_create' => $user_create,
                     'date_create' => $date_create,
@@ -137,7 +137,6 @@ class TechnicalReportModel extends CI_Model {
 
             if($data['details_images']) $details_images = json_encode($data['details_images']);
             else $details_images = null;
-            
 
             $datos_tr = array(
                 'user_assignment' => $technical,
@@ -151,7 +150,7 @@ class TechnicalReportModel extends CI_Model {
                     'conclusion' => $data['conclusion'],
                     'recommendation' => $data['recommendation'],
                 )),
-                'details_images' => $details_images,
+                'details_images' => strval($details_images),
                 'user_interaction' => json_encode(array(
                     'user_create' => $user_create,
                     'date_create' => $date_create,
@@ -160,7 +159,7 @@ class TechnicalReportModel extends CI_Model {
                     'user_approve' => $user_approve,
                     'date_approve' => $date_approve,
                 )),
-            );
+            );                   
         }
         $this->db->where('ot_id', $data['ot_id']);
         if($this->db->update('technical_report', $datos_tr)) return true; else return false;

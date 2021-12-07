@@ -68,7 +68,6 @@ const tabla = $("#table-kpi-production").DataTable({
 	
 	columns: [
 		{ data: "id" },
-		{ data: "ot" },
 	],
 });
 
@@ -99,13 +98,36 @@ month_avg=(data)=>{
           fillInput(data.year ,data.month,count_ot,avg,data.period);
           
          }else {
-          
+            
+          let count_ot = result.length;
+          console.log(count_ot);
+
+          let sum = 0;
+          let sumOt = 0;
+
+          /*Recorre cada mes encontrado en ese año */
+          result.forEach((item)=>{
+            sum = sum + parseInt(item.kpi_production);
+            a = JSON.parse(item.ot_production);
+            console.log(a);
+
+            b = a.length;
+            console.log(b);
+            
+            sumOt = sumOt + b;        
+          });
+          console.log(sum);
+          let avg = sum/count_ot;
+
+
+          console.log(avg);
+
           $("#search_year").modal('hide');
           $(".title").hide();
           $("#periodo").val("");
           cleanModal();
           drawProduction(avg);
-          fillInput(data.year ,0,8,avg,data.period);
+          fillInput(data.year ,0, sumOt, avg,data.period);
 
           }
 
@@ -197,10 +219,10 @@ pdf_report =()=> {
     
         success: (result) => {
          
-          clean_report(result.msg);
+         
           window.open(host_url+result.msg);
-       
-                
+          
+         /*  clean_report(result.msg);   */
         },
         error: (result) => {   
           swal({
@@ -259,7 +281,6 @@ fillYear =()=> {
 }
 
 clean_report=(report)=>{
-
   let data ={ clean :report}
   $.ajax({
     data: { data },
@@ -275,7 +296,6 @@ clean_report=(report)=>{
     error: (result) => {   
       console.log("error");
     }});
-
 }
 
 

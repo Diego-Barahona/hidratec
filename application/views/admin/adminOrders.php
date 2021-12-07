@@ -57,6 +57,7 @@
                 <th>Fecha de ingreso </th>
                 <th>Cliente</th>
                 <th>Componente </th>
+                <th>Descripción </th>
                 <th>Estado</th>
                 <th>Tipo de servicio</th>
                 <th>Plazo en producción </th>

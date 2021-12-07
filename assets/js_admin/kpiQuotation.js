@@ -64,7 +64,6 @@ const tabla = $("#table-kpi-quotation").DataTable({
 	
 	columns: [
 		{ data: "id" },
-		{ data: "ot" },
 	],
 });
 
@@ -79,11 +78,15 @@ month_avg=(data)=>{
 		dataType: "json",
 
 		success: (result) => {
-             let ots = JSON.parse(result[0].ot_quotation);
+          
+      
+            console.log(result);
             avg = parseInt(result[0].kpi_quotation);
+            let ots = JSON.parse(result[0].ot_quotation);
+            console.log(ots);
             let count_ot = ots.length;
+
             if(data.period == 2){
-			      
             $("#search_month").modal('hide');
             $(".title2").hide();
             $("#periodo").val("");
@@ -95,12 +98,36 @@ month_avg=(data)=>{
             
            }else {
             
+            let count_ot = result.length;
+            console.log(count_ot);
+
+            let sum = 0;
+            let sumOt = 0;
+
+            /*Recorre cada mes encontrado en ese año */
+            result.forEach((item)=>{
+              sum = sum + parseInt(item.kpi_quotation);
+              a = JSON.parse(item.ot_quotation);
+              console.log(a);
+
+              b = a.length;
+              console.log(b);
+              
+              sumOt = sumOt + b;        
+            });
+            console.log(sum);
+            let avg = sum/count_ot;
+
+
+            console.log(avg);
+
+
             $("#search_year").modal('hide');
             $(".title").hide();
             $("#periodo").val("");
             cleanModal();
             drawQuotation(avg);
-            fillInput(data.year ,0,count_ot,avg,data.period);
+            fillInput(data.year ,0, sumOt,avg,data.period);
             
            }
 		},
@@ -163,9 +190,9 @@ pdf_report =()=> {
     
         success: (result) => {
          
-          clean_report(result.msg);
+        
           window.open(host_url+result.msg);
-       
+          
                 
         },
         error: (result) => {   

@@ -89,7 +89,7 @@ class Orders_model extends CI_Model
 
     public function getOrdersTest()
     {        
-        $query = "SELECT ot.id number_ot, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, c.name component, s.name state,r.check_adm ,r.check_technical
+        $query = "SELECT ot.id number_ot, ot.date_admission date , ot.description, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, c.name component, s.name state,r.check_adm ,r.check_technical
                          , tr.details technical_report , r.date_reparation date_reparation ,ev.details evaluation ,ht.details hydraulic_test,ev.state ev_state, ht.state ht_state, tr.state tr_state, s.id id_state
                   FROM ot
                   JOIN enterprise e ON ot.enterprise_id = e.id

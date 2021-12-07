@@ -229,9 +229,9 @@ class TechnicalReport extends CI_Controller
                         $pdf->SetY(50);
                         $pdf->SetX(90);
             
-                        $charactersName = strlen($data_images[$i]['name']);
+                        $charactersName =  utf8_decode(strlen($data_images[$i]['name']));
                         $total = ceil($charactersName/50); 
-                        $pdf->MultiCell(120,10, $data_images[$i]['name'], 1, 'L');
+                        $pdf->MultiCell(120,10,  utf8_decode($data_images[$i]['name']), 1, 'L');
     
                         if($total >= 2){
                             $y_description = 62;
@@ -242,7 +242,7 @@ class TechnicalReport extends CI_Controller
                         $pdf->SetFont('Arial', '', 10);
                         $pdf->SetY($y_description);
                         $pdf->SetX(90);
-                        $pdf->MultiCell(120,10, $data_images[$i]['description'], 0, 'L');
+                        $pdf->MultiCell(120,10,  utf8_decode($data_images[$i]['description']), 0, 'L');
                         $pdf->SetY($y_description);
                         $pdf->SetX(90); 
                         $pdf->MultiCell(120, 49, '' , 1, 'J'); 
