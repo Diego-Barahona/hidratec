@@ -86,7 +86,7 @@
               </div> 
           </div>
           <div class="row mb-2">
-              <div class="col-md-8 mb-3">
+              <div class="col-md-4 mb-3">
                   <label for="actividad">Descripción</label>
                   <div class="input-group">
                       <textarea type="text" class="form-control" rows="1" name="description" id="description" readonly><?= $description ?></textarea>
@@ -98,6 +98,13 @@
                       <input type="text" class="form-control" name="priority" id="priority" value='<?= $priority ?>' readonly>
                       <div class="invalid-feedback"></div>
                   </div>
+              </div> 
+              <div class="col-md-2 mb-3" id='frm_state'>
+                  <label>Ubicación</label>
+                  <input type="text" class="form-control" name="location" id="location" value='<?= $location ?>'>
+              </div>
+              <div class="col-md-2 mb-3" style="margin: auto;">
+                  <button id="btn_change_location" type="button" class="btn btn-primary btn-success">Cambiar ubicación</button>
               </div> 
           </div>
         </div>
@@ -157,4 +164,5 @@
   </div>
 </div>
 
+<script src="<?php echo base_url(); ?>assets/vendor/fuzzy/fuzzy-autocomplete.js"></script>
 <script src="<?php echo base_url(); ?>assets/js_admin/stagesOrder.js"></script>

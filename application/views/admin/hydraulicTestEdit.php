@@ -82,7 +82,7 @@
               <div class="input-group">
                 <textarea type="text" class="form-control" rows="2" name="conclusion_ht" id="conclusion_ht" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>
                   <div class="invalid-feedback descripcion" style="display: none;  color:red">
-                          Ingrese una descripción porfavor.
+                          Ingrese una  conclusión porfavor.
                   </div>
                 </div>
           </div> 
@@ -92,7 +92,7 @@
               <div class="form-group" style="margin-top: 40px; float:right;">
                 <button class="btn btn-success" value='0' type='button' id="ht_btnEdit"><i id='tr_i_btnEdit' class="fas fa-edit" style="margin-right: 5px;"></i>Editar</button>
                 <button class="btn btn-success" style='display:none' type='button' id="btn_hidraulic"><i class="fas fa-save" style="margin-right: 5px;"></i>Guardar Cambios</button>
-            </div>
+              </div>
 
              <!--  <div class="row mb-2 mr-2 mb-5 justify-content-end">
                       <div class="form-check">
@@ -112,7 +112,7 @@
 
 
 
-          </div>  <!-- End card body information-->
+      </div>  <!-- End card body information-->
         </div>
         <div class="card">
            <!-- Table medidas-->

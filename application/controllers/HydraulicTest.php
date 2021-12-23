@@ -228,7 +228,7 @@ class HydraulicTest extends CI_Controller
             $pdf->Cell(40, 6, $data['date_ht'], 1, 0, 'C', 1);
         }
         $pdf->Cell(50, 6, $data['id'], 1, 0, 'C', 1);
-        $pdf->Cell(50, 6, $data['technical_name'], 1, 0, 'C', 1);
+        $pdf->Cell(50, 6, utf8_decode($data['technical_name']), 1, 0, 'C', 1);
         $pdf->Cell(50, 6, date('Y-m-d H:i:s'), 1, 1, 'C', 1);
         $pdf->Ln(10);
 
@@ -250,18 +250,18 @@ class HydraulicTest extends CI_Controller
         foreach ($info as $key => $value) {
             
            
-            $pdf->Cell(50, 6, $value->dato, 1, 0, 'C', 1);
-            if($data['config_speed']=="true"){ $pdf->Cell(35, 6, $value->speed, 1, 0, 'C', 1);}else{
+            $pdf->Cell(50, 6, utf8_decode($value->dato), 1, 0, 'C', 1);
+            if($data['config_speed']=="true"){ $pdf->Cell(35, 6, utf8_decode($value->speed), 1, 0, 'C', 1);}else{
                 $pdf->Cell(35, 6, "-", 1, 0, 'C', 1);
             }
-            if($data['config_presion']=="true"){ $pdf->Cell(35, 6, $value->presion, 1, 0, 'C', 1);}else{
+            if($data['config_presion']=="true"){ $pdf->Cell(35, 6, utf8_decode($value->presion), 1, 0, 'C', 1);}else{
                 $pdf->Cell(35, 6, "-", 1, 0, 'C', 1);
             }
-            if($data['config_caudal']=="true"){$pdf->Cell(35, 6, $value->caudal, 1, 0, 'C', 1);}else{
+            if($data['config_caudal']=="true"){$pdf->Cell(35, 6, utf8_decode($value->caudal), 1, 0, 'C', 1);}else{
                 $pdf->Cell(35, 6, "-", 1, 0, 'C', 1);
             }
             if($data['config_temperature']=="true"){
-                $pdf->Cell(35, 6, $value->time , 1, 1, 'C', 1);}else{
+                $pdf->Cell(35, 6, utf8_decode($value->time) , 1, 1, 'C', 1);}else{
                      $pdf->Cell(35, 6, "-", 1, 1, 'C', 1);
                 }
             

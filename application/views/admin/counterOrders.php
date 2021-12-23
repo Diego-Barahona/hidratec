@@ -49,7 +49,7 @@
 
          <div class="card-header text-center" style="font-weight: bold; color:black" id="finished"><strong>0</strong> </div>
          <div class="card-body">
-            <h5 class="card-title"> Terminadas</h5>
+            <h5 class="card-title"> Cerradas </h5>
             <button type="button" class="btn btn-outline-light"><i class="fa fa-check-circle" style="font-size:60px;" id="btnfinished"></i></button>
          </div>
       </div>

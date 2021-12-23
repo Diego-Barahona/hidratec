@@ -1,183 +1,158 @@
-
-     <input type="hidden" class="form-control" id="ot_number" name="ot_number" value='<?= $id ?>' >
-    <div id="content-wrapper">
-    <div class="container-fluid mb-5" id="adminColors">
+<input type="hidden" class="form-control" id="ot_number" name="ot_number" value='<?= $id ?>' >
+<div id="content-wrapper">
+  <div class="container-fluid mb-5" id="adminColors">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">Prueba hidráulica</li>
             <li class="breadcrumb-item active">OT NÚMERO <?php echo $id; ?></li>
         </ol>
-
-        <div class="card mb-3">
-            <div class="card-header">
-         </div>
-        <div class="card-body">
-         <div class="card-header" >
-           <button class="btn btn-link" data-toggle="collapse" data-target="#c1" aria-expanded="true" aria-controls="technicalReportGeneral">
-                <i class="fas fa-table"></i>
-                Información 
-                </button>
-              
-         </div>
-        <div class="card-body collapse in " id= "c1">
-        <input type="hidden" class="form-control" id="speed_c" name="id" >
-        <input type="hidden" class="form-control" id="caudal_c" name="id" >
-        <input type="hidden" class="form-control" id="presion_c" name="id" >
-        <input type="hidden" class="form-control" id="temperature_c" name="id" >
-        <input type="hidden" class="form-control" id="technical_aux" name="technical_aux" >
-     
-
-        <input type="hidden" class="form-control" id="user_create" name="id" >
-        <input type="hidden" class="form-control" id="date_create" name="id" >
-        <input type="hidden" class="form-control" id="user_modify" name="id" >
-        <input type="hidden" class="form-control" id="date_modify" name="id" >
-        <input type="hidden" class="form-control" id="user_approve" name="id" >
-        <input type="hidden" class="form-control" id="date_approve" name="id" >
-        <input type="hidden" class="form-control" id="technical_name_ht" name="id" >
-
+        <div class="card">
+          <div class="card-header" >
+              <button class="btn btn-link" data-toggle="collapse" data-target="#c1" aria-expanded="true" aria-controls="technicalReportGeneral">
+                  <i class="fas fa-table"></i>
+                  Información 
+              </button>   
+          </div>
+          <div class="card-body collapse show" id= "c1">
+            <input type="hidden" class="form-control" id="speed_c" name="id" >
+            <input type="hidden" class="form-control" id="caudal_c" name="id" >
+            <input type="hidden" class="form-control" id="presion_c" name="id" >
+            <input type="hidden" class="form-control" id="temperature_c" name="id" >
+            <input type="hidden" class="form-control" id="technical_aux" name="technical_aux" >
         
-        
-             <div class="row mb-2 ">
-                
-                      
-                <div class="form-check">
-                                <input class="form-check-input"  type="hidden" value="" id="approve_admin_ht" disabled>
-                                <label class="form-check-label"  for="approve_admin_ht">
-                               </label>
-                </div>
-                    
-                <div class="col-md-2 mb-3 ">
-                 
-                      <div class="form-check">
-                           <input class="form-check-input"  type="checkbox" value="" id="approve_technical_ht" disabled>
-                           <label class="form-check-label"  for="approve_technical_ht">
-                            Aprobado por técnico master
-                          </label>
-                        </div>
-                     </div>
 
-                 
-             </div>
+            <input type="hidden" class="form-control" id="user_create" name="id" >
+            <input type="hidden" class="form-control" id="date_create" name="id" >
+            <input type="hidden" class="form-control" id="user_modify" name="id" >
+            <input type="hidden" class="form-control" id="date_modify" name="id" >
+            <input type="hidden" class="form-control" id="user_approve" name="id" >
+            <input type="hidden" class="form-control" id="date_approve" name="id" >
+            <input type="hidden" class="form-control" id="technical_name_ht" name="id" >
+
           
-   
-              <div class="row mb-2">
-              
-               
-                <div class="col-md-8 mb-3">
-                  <label for="actividad">Notas</label>
-                    <div class="input-group">
-                      <textarea type="text" class="form-control" rows="2" style="background:white" name="notes_ht" id="notes_ht" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>
-                        <div class="invalid-feedback descripcion" style="display: none;  color:red">
-                                Ingrese una descripción porfavor.
-                        </div>
-                  </div>
-                </div>  
-             
+          
+            <div class="row mb-2 "> 
+              <div class="form-check">
+                  <input class="form-check-input"  type="hidden" value="" id="approve_admin_ht" disabled>
+                    <label class="form-check-label"  for="approve_admin_ht">
+                  </label>
               </div>
-              <div class="row mb-2">
-                
-                <div class="col-md-12 mb-3">
-                  <label for="actividad">Conclusiones</label>
-                    <div class="input-group">
-                      <textarea type="text" class="form-control" rows="2"style="background:white" name="conclusion_ht" id="conclusion_ht" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>
-                        <div class="invalid-feedback descripcion" style="display: none;  color:red">
-                                Ingrese una descripción porfavor.
-                        </div>
-                      </div>
-                </div> 
+              <div class="col-md-2 mb-3 ">
+                    <div class="form-check">
+                      <input class="form-check-input"  type="checkbox" value="" id="approve_technical_ht" disabled>
+                      <label class="form-check-label"  for="approve_technical_ht">
+                      Aprobado por técnico master
+                      </label>
+                    </div>
               </div>
+            </div>
 
-              <div class="row mb-2 mr-2 mb-5 justify-content-end">
-                      <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="hab_edit">
-                                <label class="form-check-label" for="approve_ht">
-                                 Activar edición 
-                               </label>
-                             </div>
-              </div>
-   
-               <div class="row mb-2 mr-2 justify-content-end">
-                  <button type="button" style="height:40px; width:100px; "id="btn_hidraulic" class="btn btn-primary  ">Guardar</button>
-              </div>
-          </div>  <!-- End card body information-->
-           <!-- Table medidas-->
-           <div class="card-header" >
-                 <button class="btn btn-link" data-toggle="collapse" data-target="#c2" aria-expanded="true" aria-controls="technicalReportGeneral">
-                    <i class="fas fa-table"></i>
-                     Mediciones 
-                   </button>
-           </div>
+            <div class="row mb-2">
+              <div class="col-md-8 mb-3">
+                <label for="actividad">Notas</label>
+                  <div class="input-group">
+                    <textarea type="text" class="form-control" rows="2" style="background:white" name="notes_ht" id="notes_ht" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>
+                      <div class="invalid-feedback descripcion" style="display: none;  color:red">
+                              Ingrese una descripción porfavor.
+                      </div>
+                  </div>
+              </div>  
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-md-12 mb-3">
+                <label for="actividad">Conclusiones</label>
+                  <div class="input-group">
+                    <textarea type="text" class="form-control" rows="2"style="background:white" name="conclusion_ht" id="conclusion_ht" placeholder="" aria-describedby="inputGroupPrepend3" disabled></textarea>
+                      <div class="invalid-feedback descripcion" style="display: none;  color:red">
+                              Ingrese una conclusión porfavor.
+                      </div>
+                  </div>
+              </div> 
+            </div>
+
+            <div class="form-group" style="margin-top: 40px; float:right;">
+              <button class="btn btn-success" value='0' type='button' id="ht_btnEdit"><i id='tr_i_btnEdit' class="fas fa-edit" style="margin-right: 5px;"></i>Editar</button>
+              <button class="btn btn-success" style='display:none' type='button' id="btn_hidraulic"><i class="fas fa-save" style="margin-right: 5px;"></i>Guardar Cambios</button>
+            </div>
+          </div> <!-- End card body information-->  
+        </div> <!-- End card-->
+        
+
+
+        <div class="card">
+          <!-- Table medidas-->
+          <div class="card-header" >
+                <button class="btn btn-link" data-toggle="collapse" data-target="#c2" aria-expanded="true" aria-controls="technicalReportGeneral">
+                  <i class="fas fa-table"></i>
+                    Mediciones 
+                  </button>
+          </div>
          
         
-         <div class="card-body collapse in " id= "c2">
-             <div class="row mb-2  justify-content-end">
-                <div class="col-md-2 mb-2 ">
-                <button class="btn btn-success offset-6 " type='button' data-toggle="modal"    id="btn_config"><i class="fas fa-cog"></i> Configuración</button>
-               </div>
-                <div class="col-md-2 mb-2 ">
-                <button class="btn btn-success offset-6 " type='button' data-toggle="modal"  id="btn_information"><i class="fas fa-plus"></i> Agregar</button>
-               </div>
-               
-             </div>
-             <div class="table-responsive">
-             <table class="table table-bordered" id="table-ht" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                <th>Dato</th>
-                <th>Velocidad</th>
-                <th>Presión</th>
-                <th>Caudal</th>
-                <th>Temperatura</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
-                </tr>
-              </thead>
-             </table>
-             </div>
-          <!-- Table medidas END -->
-        </div> <!-- End card body medidas-->
-  
-   
-        <div class="card-header" id="card-option-ht">
-             <button class="btn btn-link" data-toggle="collapse" data-target="#c3" aria-expanded="true" aria-controls="technicalReportGeneral">
+          <div class="card-body collapse in " id= "c2">
+                <div class="row mb-2  justify-content-end">
+                  <div class="col-md-2 mb-2 ">
+                    <button class="btn btn-success offset-6 " type='button' data-toggle="modal"    id="btn_config"><i class="fas fa-cog"></i> Configuración</button>
+                  </div>
+                  <div class="col-md-2 mb-2 ">
+                    <button class="btn btn-success offset-6 " type='button' data-toggle="modal"  id="btn_information"><i class="fas fa-plus"></i> Agregar</button>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-bordered" id="table-ht" width="100%" cellspacing="0">
+                    <thead>
+                      <tr>
+                      <th>Dato</th>
+                      <th>Velocidad</th>
+                      <th>Presión</th>
+                      <th>Caudal</th>
+                      <th>Temperatura</th>
+                      <th>Editar</th>
+                      <th>Eliminar</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+            </div> <!-- End card body medidas-->
+        </div><!-- End card-->
+
+        <div class="card">
+          <div class="card-header" id="card-option-ht">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#c3" aria-expanded="true" aria-controls="technicalReportGeneral">
                   <i class="fas fa-table"></i>
-                  Archivos(PDF) 
-                  </button>
-        </div>
+                    Archivos(PDF) 
+              </button>
+          </div>
    
-        <div class="card-body collapse in " id= "c3">
+          <div class="card-body collapse in " id= "c3">
               <div class="row mb-2 " id ="input_pdf">
                 <div class="col-md-3 mb-3 ">
-                 
-                       <form id="pdfs">
-                       <input type="file"  name="pdf" id="pdf" data-preview-file-type="any" accept="application/pdf" aria-describedby="inputGroupPrepend3">
-                     </form>
-                 </div>
-                 <div class="col-md-3 mb-3 offset-2">
-                      <button class="btn btn-success " type='button' data-toggle="modal"  id="upload_pdf"><i class="fas fa-file-upload"></i> Subir</button>
+                    <form id="pdfs">
+                      <input type="file"  name="pdf" id="pdf" data-preview-file-type="any" accept="application/pdf" aria-describedby="inputGroupPrepend3">
+                    </form>
+                </div>
+                <div class="col-md-3 mb-3 offset-2">
+                    <button class="btn btn-success " type='button' data-toggle="modal"  id="upload_pdf"><i class="fas fa-file-upload"></i> Subir</button>
                 </div>
               </div>
 
               <div id="actions">
-      
-                 <label for="actividad">¿Qué acciones desea realizar sobre el archivo? </label> 
-                   <div class="row mb-4 ">
-                 
-                          <div class="col-md-2 mb-3 ">
-                             <button class="btn btn-primary " type='button' data-toggle="modal"  id="show_pdf"><i class="fas fa-file-upload"></i> Ver</button>
-                          </div>
-                          <div class="col-md-2 mb-3  mr-5 ">
-                              <button class="btn btn-danger " type='button' data-toggle="modal"  id="delete_pdf"><i class="fas fa-file-upload"></i> Eliminar</button>
-                          </div>
-                     </div>
+                  <label for="actividad">¿Qué acciones desea realizar sobre el archivo? </label> 
+                  <div class="row mb-4 ">
+                    <div class="col-md-2 mb-3 ">
+                        <button class="btn btn-primary " type='button' data-toggle="modal"  id="show_pdf"><i class="fas fa-file-upload"></i> Ver</button>
+                    </div>
+                    <div class="col-md-2 mb-3  mr-5 ">
+                        <button class="btn btn-danger " type='button' data-toggle="modal"  id="delete_pdf"><i class="fas fa-file-upload"></i> Eliminar</button>
+                    </div>
+                  </div>
               </div>
-         </div>
- 
+          </div><!-- End card body archivos-->
+        </div> <!-- End card-->
    </div>
-   </div>
-    <!-- End card body archivos-->
-    </div> 
-    </div>
-    </div> <!-- End content Evaluation-->
+    
+  </div>
+</div> <!-- End content Evaluation-->
    
   <div class="modal fade bd-example-modal-lg" id="config" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">

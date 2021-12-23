@@ -30,8 +30,7 @@ class Evaluation extends CI_Controller
         $notes = $data['notes'];
         $technical = $data['technical'];
         $priority= $data['priority'];
-        $location= $data['location'];
-        
+       
         $ok=true;
 
         if($_SESSION['rango']== 2 || $_SESSION['rango']== 1 ){
@@ -86,9 +85,9 @@ class Evaluation extends CI_Controller
         $pdf->Cell(50, 6, utf8_decode('Fecha emisión'), 1, 1, 'C', 1);
       //date('Y-m-d H:i:s') sacar datos de fecha
         $pdf->SetFillColor(250, 250, 250);
-        $pdf->Cell(40, 6, $data['date_evaluation'], 1, 0, 'C', 1);
-        $pdf->Cell(50, 6, $data['id'], 1, 0, 'C', 1);
-        $pdf->Cell(50, 6, $data['name_technical'], 1, 0, 'C', 1);
+        $pdf->Cell(40, 6, utf8_decode($data['date_evaluation']), 1, 0, 'C', 1);
+        $pdf->Cell(50, 6, utf8_decode($data['id']), 1, 0, 'C', 1);
+        $pdf->Cell(50, 6, utf8_decode($data['name_technical']), 1, 0, 'C', 1);
         $pdf->Cell(50, 6, date('Y-m-d H:i:s'), 1, 1, 'C', 1);
         $pdf->Ln(10);
       
@@ -98,7 +97,7 @@ class Evaluation extends CI_Controller
         $pdf->Ln(10);
         $pdf->SetFont('Arial', 'B', 9);
         $pdf->SetTextColor(0,0,0);
-        $pdf-> MultiCell(190, 6 , $data['description'] ,1 ,'J'); // 
+        $pdf-> MultiCell(190, 6 , utf8_decode($data['description']) ,1 ,'J'); // 
         $pdf->Ln(10);
 
         $pdf->SetFont('Arial','B',15);
@@ -107,7 +106,7 @@ class Evaluation extends CI_Controller
         $pdf->Ln(10);
         $pdf->SetFont('Arial', 'B', 9);
         $pdf->SetTextColor(0,0,0);
-        $pdf-> MultiCell(190, 6 , $data['notes'] ,1 ,'J'); // 
+        $pdf-> MultiCell(190, 6 , utf8_decode($data['notes']) ,1 ,'J'); // 
         $pdf->Ln(10);
        
         

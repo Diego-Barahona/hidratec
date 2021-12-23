@@ -1,7 +1,9 @@
-
-
+$(() => {
+    get_locations();
+});
 
 let state = $('#state').val();
+let ubicaciones = [];
 
 getOrders = () => {
 	let xhr = new XMLHttpRequest();
@@ -19,6 +21,30 @@ getOrders = () => {
 				title: "Error",
 				icon: "error",
 				text: "Error al obtener las órdenes de trabajo",
+			});
+		}
+	});
+	xhr.send();
+};
+
+get_locations = () => {
+	let xhr = new XMLHttpRequest();
+	xhr.open("get", `${host_url}/api/getLocations`);
+	xhr.responseType = "json";
+	xhr.addEventListener("load", () => {
+		if (xhr.status === 200) {
+            ubicaciones = xhr.response;
+            let locationSearch = [];
+            ubicaciones.map((u) => {
+                locationSearch.push(u.name);
+            });
+            console.log(ubicaciones);
+            fuzzyAutocomplete($("#location"), locationSearch);
+		} else {
+			swal({
+				title: "Error",
+				icon: "error",
+				text: "Error al obtener las ubicaciones",
 			});
 		}
 	});
@@ -85,6 +111,69 @@ changeState = () => {
                     },
                 })   
             }
+        } else {
+            swal.close();
+        }
+    }); 
+}
+
+
+changeLocation = () => {
+    swal({
+        title: `Cambio de ubicación`,
+        icon: "warning",
+        text: `Esta  segur@ de cambiar la ubicación de la OT:  ${$('#ot_number').val()}?`,
+        buttons: {
+            confirm: {
+                text: `Confirmar`,
+                value: "change",
+            },
+            cancel: {
+                text: "Cancelar",
+                value: "cancelar",
+                visible: true,
+            },
+        },
+    }).then((action) => {
+        if (action == "change") {
+            let location_change = $('#location').val();
+            let location;
+
+            ubicaciones.forEach(function(item) {
+                if(location_change == item.name){
+                    location = item.id;
+                }
+            });
+
+            data = {
+                ot_number: $('#ot_number').val(),
+                location:  location,
+            }
+            $.ajax({
+                type: "POST",
+                url: host_url + 'api/changeLocationOrder',
+                data: {data},
+                dataType: "json",
+                success: (result) => {
+                    swal({
+                        title: "Éxito!",
+                        icon: "success",
+                        text: result.msg,
+                        button: "OK",
+                    }).then(() => {
+                        $("#location").val(location_change);
+                    });
+                }, 
+                error: () => {
+                    swal({
+                        title: "Error",
+                        icon: "error",
+                        text: "No se pudo encontrar el recurso",
+                    }).then(() => {
+                        $("body").removeClass("loading");
+                    });
+                },
+            })            
         } else {
             swal.close();
         }
@@ -177,6 +266,8 @@ addErrorStyle = errores => {
 };
 
 $("#btn_change_state").on("click", changeState);
+
+$("#btn_change_location").on("click", changeLocation);
 
 $("#btn_search").on("click", getOrders);
 

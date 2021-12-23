@@ -112,6 +112,12 @@ class Orders extends CI_Controller
         $this->response->sendJSONResponse($orders);
     }
 
+    public function getLocations()
+    { 
+		$locations = $this->Orders_model->getLocations();
+        $this->response->sendJSONResponse($locations);
+    }
+
     public function getOrdersTest()
     { 
 		$orders = $this->Orders_model->getOrdersTest();
@@ -249,6 +255,20 @@ class Orders extends CI_Controller
             $id = $_SESSION['id'];
             if($this->Orders_model->changeStateOrder($data, $id)){
             /*Crear los informes de ser necesario*/
+                $msg['msg'] = "Estado cambiado con éxito.";
+                $this->response->sendJSONResponse($msg);
+            }	
+        } else {
+            redirect('Home/login', 'refresh');
+        }
+    }
+
+    public function changeLocationOrder()
+    { 
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $data = $this->input->post('data');
+            $id = $_SESSION['id'];
+            if($this->Orders_model->changeLocationOrder($data, $id)){
                 $msg['msg'] = "Estado cambiado con éxito.";
                 $this->response->sendJSONResponse($msg);
             }	

@@ -69,11 +69,13 @@ $route['stagesOrder']['GET'] ='Orders/stagesOrder';
 $route['newUpdateOrder']['GET']='Orders/newUpdateOrder';
 $route['api/updateOrder']['POST']='Orders/updateOrder';
 $route['api/changeStateOrder']['POST']='Orders/changeStateOrder';
+$route['api/changeLocationOrder']['POST']='Orders/changeLocationOrder';
 $route['adminOrders']['GET']='Orders/adminOrders';
 $route['api/getOrders']['GET']='Orders/getOrders';
 $route['api/getOrdersTest']['GET']='Orders/getOrdersTest';
 $route['api/getFieldsOrder']['GET']='Orders/getFieldsOrder';
 $route['api/getHistoryStatesByOrder/(:num)']['GET'] = 'Orders/getHistoryStatesByOrder/$1';
+$route['api/getLocations']['GET']='Orders/getLocations';
 
 //view counter
 $route['counterOrders']['GET']='Counter/counterOrders';

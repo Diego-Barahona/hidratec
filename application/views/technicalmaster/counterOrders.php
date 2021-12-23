@@ -112,7 +112,7 @@
             <div class="card mb-3">
                <div class="card-header">
                   <i class="fas fa-table"></i>
-                  Lista de informes técnicos
+                  Lista de reparaciones
                </div>
                <div class="card-body">
                   <div class="table-responsive">
@@ -123,8 +123,6 @@
                               <th>Componente </th>
                               <th>Cliente</th>
                               <th>Servicio</th>
-                              <th>Subtareas</th>
-                              <th>Acción</th>
                            </tr>
                            </thead>
                      </table>

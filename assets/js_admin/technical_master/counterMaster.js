@@ -27,31 +27,19 @@ const tablaReparation = $("#tableReparations").DataTable({
 	language: {
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
 	},
-	"columnDefs": [
+	/* "columnDefs": [
         {
             className: "text-center", "targets": [4] ,
         },
         {
             className: "text-center", "targets": [5] ,
         },
-    ],
+    ], */
 	columns: [
 		{ data: "number_ot" },
 		{ data: "component" },
         { data: "enterprise" },
         { data: "service" },	
-		{ defaultContent: `<button type='button' name='btn_substaks' class='btn btn-primary'>
-				Asignar subtareas
-				<i class="fas fa-pencil-alt"></i>
-				</button>`
-		},
-
-	 	{ defaultContent: 
-			`<button type='button' name='btn_approve' class='btn btn-primary'>
-					Marcar Como Realizado
-					<i class="fas fa-pencil-alt"></i>
-					</button>`
-	 	},
 	],
 });
 

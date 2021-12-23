@@ -254,13 +254,13 @@ class TechnicalReport extends CI_Controller
                         $pdf->SetTextColor(0,0,0);
                         $pdf->SetY(114);
                         $pdf->SetX(90);
-                        $pdf->MultiCell(120,10, $data_images[$i]['name'] , 1, 'L');
+                        $pdf->MultiCell(120,10,  utf8_decode($data_images[$i]['name']) , 1, 'L');
                 
                 
                         $pdf->SetFont('Arial', '', 10);
                         $pdf->SetY(124);
                         $pdf->SetX(90);
-                        $pdf->MultiCell(0,6, $data_images[$i]['description'] , 0, 'L');
+                        $pdf->MultiCell(0,6,  utf8_decode($data_images[$i]['description']) , 0, 'L');
                         $pdf->SetY(114);
                         $pdf->SetX(90);
                         $pdf->MultiCell(120, 58, '' , 1, 'J');
@@ -272,13 +272,13 @@ class TechnicalReport extends CI_Controller
                         $pdf->SetTextColor(0,0,0);
                         $pdf->SetY(177);
                         $pdf->SetX(90);
-                        $pdf->MultiCell(120,10, $data_images[$i]['name'] , 1, 'L');
+                        $pdf->MultiCell(120,10,  utf8_decode($data_images[$i]['name']) , 1, 'L');
                 
                 
                         $pdf->SetFont('Arial', '', 10);
                         $pdf->SetY(187);
                         $pdf->SetX(90);
-                        $pdf->MultiCell(0,6, $data_images[$i]['description'] , 0, 'L');
+                        $pdf->MultiCell(0,6,  utf8_decode($data_images[$i]['description']) , 0, 'L');
                         $pdf->SetY(177);
                         $pdf->SetX(90);
                         $pdf->MultiCell(120, 58, '' , 1, 'J');
@@ -350,7 +350,7 @@ class PDF extends FPDF
         $this->SetFont('Arial', 'B', 10);
         $this->SetTextColor(19,66,115);
         $this->SetX(-50);
-        $this->Write(10, 'Fecha: 12/05/20121');
+        $this->Write(10,'Fecha: '.date('Y-m-d'));
         $this->SetDrawColor(19,66,115);
         $this->Line(10,22,200,22);
         $this->Ln(20);

@@ -14,7 +14,7 @@ class Orders_model extends CI_Model
         $result = $this->db->query($query, array($id));
 
         if(sizeof($result->result()) >= 1){
-            $query = "SELECT ot.id number_ot, ot.config, ot.provider_number, ot.date_provider_number ,ot.days_quote days_quote, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, l.name location, c.name component, s.name state
+            $query = "SELECT ot.id number_ot, ot.config, ot.provider_number, ot.date_provider_number ,ot.days_quote days_quote, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service,  e.name enterprise, l.name location, c.name component, s.name state
             FROM ot
             LEFT JOIN enterprise e ON ot.enterprise_id = e.id
             LEFT JOIN component c ON ot.component_id = c.id
@@ -64,6 +64,8 @@ class Orders_model extends CI_Model
         return $query=$this->db->get('state')->result_array();
     }
 
+
+
     public function getOrders()
     {        
         $query = "SELECT ot.id number_ot, ot.date_admission date, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, c.name component, s.name state
@@ -89,13 +91,15 @@ class Orders_model extends CI_Model
 
     public function getOrdersTest()
     {        
-        $query = "SELECT ot.id number_ot, ot.date_admission date , ot.description, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, c.name component, s.name state,r.check_adm ,r.check_technical
+        $query = "SELECT ot.id number_ot, ot.date_admission date , ot.description, ot.priority priority, ot.description description, ot.type_service service, e.name enterprise, l.name location, c.name component, s.name state,r.check_adm ,r.check_technical
                          , tr.details technical_report , r.date_reparation date_reparation ,ev.details evaluation ,ht.details hydraulic_test,ev.state ev_state, ht.state ht_state, tr.state tr_state, s.id id_state
                   FROM ot
                   JOIN enterprise e ON ot.enterprise_id = e.id
                   JOIN component c ON ot.component_id = c.id
                   JOIN ot_state os ON ot.id = os.ot_id
                   JOIN reparation r ON ot.id=r.ot_id
+                  LEFT JOIN ot_location ol ON ot.id = ol.ot_id
+                  LEFT JOIN locations l ON ol.location_id = l.id
                   LEFT JOIN evaluation ev ON ot.id=ev.ot_id
                   LEFT JOIN hydraulic_test ht ON ot.id=ht.ot_id
                   LEFT JOIN technical_report tr ON ot.id= tr.ot_id
@@ -108,7 +112,12 @@ class Orders_model extends CI_Model
                             FROM ot_state j
                             WHERE j.ot_id = ot.id
                           ) 
-                    ) 
+                    )   AND
+                ol.id =  (
+                    SELECT MAX(j.id)
+                    FROM ot_location j
+                    WHERE j.ot_id = ot.id
+                ) 
         "; 
         return $this->db->query($query)->result_array(); 
     }
@@ -122,12 +131,10 @@ class Orders_model extends CI_Model
         return $query = $this->db->get_where('enterprise', array('state' => 1))->result_array();
     }
 
-    public function getLocations(){
-        $this->db->select('*');
-        $this->db->from('locations l'); 
-        $this->db->where('l.state', 1);
-        $this->db->where('l.id !=', 1);
-        return $query = $this->db->get()->result_array();
+    public function getLocations()
+    {
+
+        return $query=$this->db->get('locations')->result_array();
     }
 
     public function getTechnicals()
@@ -461,6 +468,16 @@ class Orders_model extends CI_Model
             'user_id' => $user_id,
         );
         if($this->db->insert('ot_state', $datos_ot_state)) return true; else return false; 
+    }
+
+    public function changeLocationOrder($data, $user_id){
+
+        $datos_ot_location= array(
+            'ot_id' => $data['ot_number'],
+            'location_id' => $data['location'],
+            'user_id' => $user_id,
+        );
+        if($this->db->insert('ot_location', $datos_ot_location)) return true; else return false; 
     }
 
     public function getHistoryStatesByOrder($id){

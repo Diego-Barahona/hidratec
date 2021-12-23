@@ -11,9 +11,10 @@ let check_technical_old_ht = false;
 let config =[];
 let medida = []; 
 
-$("#hab_edit").change(() => { 
-	let check = $('#hab_edit').is(':checked');
-	if(check){
+
+ht_enableFields = ()=>{
+    a = $("#ht_btnEdit").val();
+    if(a == 0){
         $( "#date_ht" ).prop( "disabled", false );
         $( "#conclusion_ht" ).prop( "disabled", false );
         $( "#notes_ht" ).prop( "disabled", false );
@@ -28,7 +29,12 @@ $("#hab_edit").change(() => {
             dateFormat: 'yy-mm-dd',
             buttonImage: host_url + 'assets/img/about/calendario2.png',
         });
-	}else{
+		$("#ht_btnEdit").val(1);
+        $("#ht_btnEdit").removeClass("btn btn-success");
+        $("#ht_btnEdit").addClass("btn btn-danger");
+        $("#ht_btnEdit").text("Cancelar");
+        $("#btn_hidraulic").show();
+	}else if(a==1){
         $( "#date_ht" ).prop( "disabled", true );
         $( "#conclusion_ht" ).prop( "disabled", true);
         $( "#notes_ht" ).prop( "disabled", true );
@@ -36,9 +42,13 @@ $("#hab_edit").change(() => {
 		$( "#approve_technical_ht" ).prop( "disabled", true );
         $( "#technical_ht" ).prop( "disabled", true );
 		$("#date_ht").datepicker("destroy");	
-		
+		$("#ht_btnEdit").val(0);
+        $("#ht_btnEdit").removeClass("btn btn-danger");
+        $("#ht_btnEdit").addClass("btn btn-success");
+        $("#ht_btnEdit").text("Editar");
+        $("#btn_hidraulic").hide();
 	}
-});
+};
 
 
 unable_edition =()=>{
@@ -96,10 +106,11 @@ edit_ht = () => {
 				text: result.msg,
                 button: "OK",
 			}).then(() => {
-				
+				$("#ht_btnEdit").val('1');
 				$("#date_ht").datepicker("destroy");
+				ht_enableFields();
 				unable_edition();
-				window.location.assign(host_url+'adminHydraulicTest');
+				/* window.location.assign(host_url+'adminHydraulicTest'); */
 				get_data_ht();
 				swal.close();
 			   });
@@ -801,6 +812,9 @@ save_config = () => {
 xhr.send();
 }
 
+
+$("#ht_btnEdit").on("click", ht_enableFields);
+
 $("#btn_config").on("click", ()=>{	
 	$("#config").modal("show");
 }); 
@@ -837,7 +851,7 @@ $("#btn_hidraulic").on("click", ()=>{
 	});
 
 
-
+$("#btn_hidraulic").on("click", edit_ht);
 $("#save_config").on("click", save_config);
 
 $("#btn_information").on("click", ()=>{	

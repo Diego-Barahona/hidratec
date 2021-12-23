@@ -230,7 +230,6 @@ edit_evaluation = () => {
 		date_modify:$("#date_modify_ev").val(),
 		date_approve:$("#date_approve_ev").val(),
 		priority:$("#priority_ev").val(),
-		location:$("#location_ev").val(),
 		check_admin_old:check_admin_old_ev,
         check_technical_old:check_technical_old_ev,
 		

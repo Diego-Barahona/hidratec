@@ -108,6 +108,7 @@ get_orders_test = () => {
                 enterprise:item.enterprise,
                 component:item.component,
 				description:item.description,
+				location: item.location,
                 state:item.state,
 		        service: item.service,
 				alert:alert_on,
@@ -179,6 +180,7 @@ const tabla = $('#table_orders').DataTable({
         { data: "enterprise" },
         { data: "component" },
 		{ data: "description" },
+		{ data: "location" },
         { data: "state" },
 		{ data: "service" },
 		{ "render": function(data,type,row){

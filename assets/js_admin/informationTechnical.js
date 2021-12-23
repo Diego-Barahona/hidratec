@@ -1053,7 +1053,7 @@ getTechnicalWorked = (periodo, user, obj_periode)=>{
 						name : item.sub_ev,
 						date_assignment : item.date_assigment,
 						date_end : item.date_end,
-						hours : calculate_time_dataTable(parseFloat(item.hours)*3600),
+						hours : item.hours,
 					}
 					console.log(sub);
 
@@ -1075,7 +1075,7 @@ getTechnicalWorked = (periodo, user, obj_periode)=>{
 								name : item.sub_ev,
 								date_assignment : item.date_assigment,
 								date_end : item.date_end,
-								hours : calculate_time_dataTable(parseFloat(item.hours)*3600),
+								hours : item.hours,
 							}
 							item_list.subs_ev.push(sub);
 						};
@@ -1087,7 +1087,7 @@ getTechnicalWorked = (periodo, user, obj_periode)=>{
 							name : item.sub_ev,
 							date_assignment : item.date_assigment,
 							date_end : item.date_end,
-							hours : calculate_time_dataTable(parseFloat(item.hours)*3600),
+							hours : item.hours,
 						}
 	
 						let obj = {
@@ -1112,11 +1112,12 @@ getTechnicalWorked = (periodo, user, obj_periode)=>{
 			/*Revisar si la lista esta vacia*/
 				console.log(item);
 				if(substacks_list.length == 0){ 
+					
 					let sub = {
 						name : item.sub_sr,
 						date_assignment : item.date_assignment,
 						date_end : item.date_end,
-						hours : calculate_time_dataTable(parseFloat(item.hours)*3600),
+						hours : item.hours,
 					}
 
 					let obj = {
@@ -1137,7 +1138,7 @@ getTechnicalWorked = (periodo, user, obj_periode)=>{
 								name : item.sub_sr,
 								date_assignment : item.date_assigment,
 								date_end : item.date_end,
-								hours : calculate_time_dataTable(parseFloat(item.hours)*3600),
+								hours : item.hours,
 							}
 							item_list.subs_sr.push(sub);
 						};
@@ -1149,7 +1150,7 @@ getTechnicalWorked = (periodo, user, obj_periode)=>{
 							name : item.sub_sr,
 							date_assignment : item.date_assigment,
 							date_end : item.date_end,
-							hours :calculate_time_dataTable(parseFloat(item.hours)*3600),
+							hours : item.hours,
 						}
 	
 						let obj = {
@@ -1296,20 +1297,4 @@ $("#table-orders-worked_substacks").on("click", "button", function () {
 close_modal_details_sub = () =>{
 	$("#titulo_modal_report").text("");
     $("#details_process_subs").modal("hide");
-}
-
-
-
-calculate_time_dataTable = (seconds) =>{
-	console.log(seconds);
-	var days = Math.floor(seconds / (3600*24));
-	
-	seconds  -= days*3600*24;
-	var hrs   = Math.floor(seconds / 3600);
-	seconds  -= hrs*3600;
-	var mnts = Math.floor(seconds / 60);
-	console.log(seconds);
-	seconds  -= mnts*60;
-	console.log(seconds);
-	return(days+" Dias, "+hrs+" Horas, "+mnts+" Minutos, "+seconds+" Segundos");
 }
