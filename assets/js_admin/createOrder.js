@@ -99,7 +99,8 @@ let components = []; /*Variable que almacenara los componentes*/
 let enterprises = []; /*Variable que almacenara las empresas*/
 let technicals = []; /*Variable que almacenara los tecnicos*/
 let technicals_tr = []; /*Variable que almacenara los tecnicos tr*/
-let locations = []; /*Variable que almacenara las ubicaciones*/
+let locations = [];  /*Variable que almacenara las ubicaciones*/
+let ubicaciones = [];
 
 /*Funcion para recuperar las ordenes de trabajo*/
 getFields = () => {
@@ -149,14 +150,18 @@ getFields = () => {
                 });
             }
             if(locations.length == 0){
+                ubicaciones = xhr.response[3];
+                let locationSearch = [];
                 xhr.response[3].map((u) => {
-                    let option = document.createElement("option"); 
+                   /*  let option = document.createElement("option"); 
                     $(option).val(u.id); 
                     $(option).attr('name', u.name);
                     $(option).html(u.name); 
-                    $(option).appendTo("#location");
+                    $(option).appendTo("#location");*/ 
                     locations.push(u.name);
+                    locationSearch.push(u.name);
                 });
+                fuzzyAutocomplete($("#location"), locationSearch);
             }
 		} else {
 			swal({
@@ -187,57 +192,75 @@ createOrder = () => {
         technical_tr : $('#technical_tr').val(),
     }
 
-    $.ajax({
-        type: "POST",
-        url: host_url + "api/createOrder",
-        data: {data},
-        dataType: "json",
-        success: () => {
-         swal({
-             title: "Éxito!",
-             icon: "success",
-             text: "órden de trabajo ingresada con éxito",
-             button: "OK",
-         }).then(() => {
-            window.location.assign(host_url+"adminOrders");
-         });
-        }, 
-        statusCode: {
-         400: (xhr) => {
-             let msg = xhr.responseJSON;
-             swal({
-                 title: "Error",
-                 icon: "error",
-                 text: "Por favor corrige los errores de este formulario",
-             }).then(() => {
-                if(msg.ot_number){$("#frm_ot_number > div").html(msg.ot_number); $("#frm_ot_number > input").addClass("is-invalid");}
-                if(msg.enterprise){$("#frm_enterprise > div").html(msg.enterprise); $("#frm_enterprise > select").addClass("is-invalid");}
-                if(msg.service){$("#frm_service > div").html(msg.service); $("#frm_service > select").addClass("is-invalid");}
-                if(msg.component){$("#frm_component > div").html(msg.component); $("#frm_component > select").addClass("is-invalid");}
-                if(msg.priority){$("#frm_priority > div").html(msg.priority); $("#frm_priority > select").addClass("is-invalid");}
-                if(msg.date_admission){$("#frm_date_admission > div").html(msg.date_admission); $("#frm_date_admission > input").addClass("is-invalid");}
-                if(msg.days_quotation){$("#frm_days_quotation > div").html(msg.days_quotation); $("#frm_days_quotation > input").addClass("is-invalid");}
-             });
-         },
-         405: (xhr) =>{
-            let msg = xhr.responseJSON;
+    let location_change = $('#location').val();
+    let location;
+
+    ubicaciones.forEach(function(item) {
+        if(location_change == item.name){
+            location = item.id;
+        }
+    });
+
+    if(location){
+
+        $.ajax({
+            type: "POST",
+            url: host_url + "api/createOrder",
+            data: {data},
+            dataType: "json",
+            success: () => {
             swal({
-                title: "Error",
-                icon: "error",
-                text: addErrorStyle(msg),
+                title: "Éxito!",
+                icon: "success",
+                text: "órden de trabajo ingresada con éxito",
+                button: "OK",
+            }).then(() => {
+                window.location.assign(host_url+"adminOrders");
             });
-        },
-        },
-        error: () => {
-			swal({
-				title: "Error",
-				icon: "error",
-				text: "No se pudo encontrar el recurso",
-			}).then(() => {
-				$("body").removeClass("loading");
-			});
-		},
-    });  
+            }, 
+            statusCode: {
+            400: (xhr) => {
+                let msg = xhr.responseJSON;
+                swal({
+                    title: "Error",
+                    icon: "error",
+                    text: "Por favor corrige los errores de este formulario",
+                }).then(() => {
+                    if(msg.ot_number){$("#frm_ot_number > div").html(msg.ot_number); $("#frm_ot_number > input").addClass("is-invalid");}
+                    if(msg.enterprise){$("#frm_enterprise > div").html(msg.enterprise); $("#frm_enterprise > select").addClass("is-invalid");}
+                    if(msg.service){$("#frm_service > div").html(msg.service); $("#frm_service > select").addClass("is-invalid");}
+                    if(msg.component){$("#frm_component > div").html(msg.component); $("#frm_component > select").addClass("is-invalid");}
+                    if(msg.priority){$("#frm_priority > div").html(msg.priority); $("#frm_priority > select").addClass("is-invalid");}
+                    if(msg.date_admission){$("#frm_date_admission > div").html(msg.date_admission); $("#frm_date_admission > input").addClass("is-invalid");}
+                    if(msg.days_quotation){$("#frm_days_quotation > div").html(msg.days_quotation); $("#frm_days_quotation > input").addClass("is-invalid");}
+                });
+            },
+            405: (xhr) =>{
+                let msg = xhr.responseJSON;
+                swal({
+                    title: "Error",
+                    icon: "error",
+                    text: addErrorStyle(msg),
+                });
+            },
+            },
+            error: () => {
+                swal({
+                    title: "Error",
+                    icon: "error",
+                    text: "No se pudo encontrar el recurso",
+                }).then(() => {
+                    $("body").removeClass("loading");
+                });
+            },
+        });
+    }else{
+        swal({
+            title: "Error",
+            icon: "error",
+            text: "Seleccione una ubicación valida",
+        })
+    }     
 }
 
 /*Función para manejo de errores*/

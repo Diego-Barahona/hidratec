@@ -144,36 +144,45 @@ changeLocation = () => {
                     location = item.id;
                 }
             });
+            console.log(location);
 
-            data = {
-                ot_number: $('#ot_number').val(),
-                location:  location,
-            }
-            $.ajax({
-                type: "POST",
-                url: host_url + 'api/changeLocationOrder',
-                data: {data},
-                dataType: "json",
-                success: (result) => {
-                    swal({
-                        title: "Éxito!",
-                        icon: "success",
-                        text: result.msg,
-                        button: "OK",
-                    }).then(() => {
-                        $("#location").val(location_change);
-                    });
-                }, 
-                error: () => {
-                    swal({
-                        title: "Error",
-                        icon: "error",
-                        text: "No se pudo encontrar el recurso",
-                    }).then(() => {
-                        $("body").removeClass("loading");
-                    });
-                },
-            })            
+            if(location){
+                data = {
+                    ot_number: $('#ot_number').val(),
+                    location:  location,
+                }
+                $.ajax({
+                    type: "POST",
+                    url: host_url + 'api/changeLocationOrder',
+                    data: {data},
+                    dataType: "json",
+                    success: (result) => {
+                        swal({
+                            title: "Éxito!",
+                            icon: "success",
+                            text: result.msg,
+                            button: "OK",
+                        }).then(() => {
+                            $("#location").val(location_change);
+                        });
+                    }, 
+                    error: () => {
+                        swal({
+                            title: "Error",
+                            icon: "error",
+                            text: "No se pudo encontrar el recurso",
+                        }).then(() => {
+                            $("body").removeClass("loading");
+                        });
+                    },
+                })   
+            }else{
+                swal({
+                    title: "Error",
+                    icon: "error",
+                    text: "Seleccione una ubicación valida",
+                })
+            }      
         } else {
             swal.close();
         }

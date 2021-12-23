@@ -58,8 +58,7 @@
                     </div> 
                     <div class="col-md-4 mb-3" id="frm_location">
                         <label>Ubicación</label>
-                        <select class="custom-select d-block w-100" id="location" name="location">
-                        </select>
+                        <input type="text" class="form-control" name="location" id="location" value='Indefinido'>
                     </div>
                 </div>
                 <div class="row mb-2">
@@ -149,6 +148,7 @@
         </div>
     </div>
 </div>
+<script src="<?php echo base_url(); ?>assets/vendor/fuzzy/fuzzy-autocomplete.js"></script>
 <script src="<?php echo base_url(); ?>assets/js_admin/createOrder.js"></script>
 <script>
   $( function() {
