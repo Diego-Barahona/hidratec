@@ -346,19 +346,10 @@ class Orders_model extends CI_Model
     public function createTechnicalReport($id_ot, $id_technical){
         $this->db->select('*'); $this->db->from('technical_report'); $this->db->where('ot_id', $id_ot);
         $query = $this->db->get();
+        
         $datos_tr = array(
             'ot_id' => $id_ot,
             'state' => 1,
-            'details' => json_encode(array(
-                'date_technical_report' => '',
-                'image_header' => '',
-                'details' => '',
-                'notes' => '',
-                'check_adm' => '',
-                'check_technical' => '',
-                'conclusion' => '',
-                'recommendation' => '',
-            )),
             'user_assignment'=> $id_technical,
             'user_interaction' => json_encode(array(
                 'user_create' => '',
@@ -369,12 +360,16 @@ class Orders_model extends CI_Model
                 'date_approve' => '',
             )),
         );
+        $datos_tr_update = array(
+            'state' => 1,
+        );
         if(sizeof($query->result()) == 0){
             $this->db->insert('technical_report', $datos_tr);
             return true; 
         }else if (sizeof($query->result()) == 1){
+            
             $this->db->where('ot_id', $id_ot);
-            $this->db->update('technical_report', $datos_tr);
+            $this->db->update('technical_report', $datos_tr_update);
             return true;  
         }else{
             return false;

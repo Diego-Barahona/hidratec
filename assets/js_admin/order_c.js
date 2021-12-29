@@ -41,7 +41,7 @@ showOC =()=>{
 		if (xhr.status === 200) {
 			    
 			$file=xhr.response[0].correlative_oc;
-			window.open(`${host_url}assets/upload/${$file}`);
+			window.open(`${host_url}assets/upload/purshaseOrder/${$file}`);
 		
         }else { 
 			swal({

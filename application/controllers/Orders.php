@@ -212,7 +212,7 @@ class Orders extends CI_Controller
 				/*Actualizar los informes de ser necesario*/
                     if($check_evaluation != $check_evaluation_old){
                         if($check_evaluation == 'true'){
-                            $this->Orders_model->createEvaluation($data['ot_number'], null, $name, $date);
+                            $this->Orders_model->createEvaluation($data['ot_number'], null);
                         }else{
                             $this->Orders_model->desEvaluation($data['ot_number']);
                         }
@@ -220,7 +220,7 @@ class Orders extends CI_Controller
 
                     if($check_report_technical != $check_report_technical_old){
                         if($check_report_technical == 'true'){
-                            $this->Orders_model->createTechnicalReport($data['ot_number'], $name, $date);
+                            $this->Orders_model->createTechnicalReport($data['ot_number'], null);
                         }else{
                             $this->Orders_model->desTechnicalReport($data['ot_number']);
                         }
@@ -228,7 +228,7 @@ class Orders extends CI_Controller
 
                     if($check_hydraulic_test != $check_hydraulic_test_old){
                         if($check_hydraulic_test == 'true'){
-                            $this->Orders_model->createHydraulicTest($data['ot_number'], $name, $date);
+                            $this->Orders_model->createHydraulicTest($data['ot_number']);
                         }else{
                             $this->Orders_model->desHydraulicTest($data['ot_number']);
                         }

@@ -91,6 +91,7 @@ class PHPMailer_Lib
         $mail->SMTPSecure = 'ssl';
         $mail->Port = 465; 
         
+        
         $mail->setFrom('baraippox835@gmail.com', 'Sistema recuperación de contraseña Hidratec');
         //$mail->addReplyTo('picamaderomuebles@gmail.com', 'Picamadero');
         
@@ -107,24 +108,21 @@ class PHPMailer_Lib
         $mail->Body = $template;
         $env = 'no';
         $noenv = 'so';
-        var_dump($mail->send());
         // Send email
-        /* if(!$mail->send()){
-            var_dump('error');
+        if(!$mail->send()){
+/*             var_dump('error'); */
             return $mail->ErrorInfo;
         }else{
-            var_dump('si llego');
+            /* var_dump('si llego'); */
             return true;
-        } */
+        }
     }
 
 
     public function send_approve($email_info, $pdf, $emails){
-
         require_once APPPATH.'third_party/PHPMailer/Exception.php';
         require_once APPPATH.'third_party/PHPMailer/PHPMailer.php';
         require_once APPPATH.'third_party/PHPMailer/SMTP.php';
-
 
         $name = $_SESSION['full_name'];
         $email = $_SESSION['email'];
@@ -155,9 +153,7 @@ class PHPMailer_Lib
         for($i=0; $i< count($emails); $i++){
             $mail->addAddress($emails[$i]['email']);
         }
-        $mail->addAddress($email);
-        $mail->addAddress('p.pinnola28@gmail.com');
-        
+      
         // Email subject
         $mail->Subject ="Aprobación OT ".$email_info[0]['number_ot'];
         

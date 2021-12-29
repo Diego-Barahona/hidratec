@@ -151,6 +151,7 @@ Marco
 Poke Poke no mi
 Blamenco
 
+
 Beta Beta no mi
 Trébol
 
@@ -169,7 +170,7 @@ Hina
 Fruta Doa Doa no mi
 Blueno
 
-Fruta ito ito no mi
+ito ito no mi
 Donquixote Doflamingo
 
 Fruta Gasu Gasu no mi
@@ -187,16 +188,16 @@ Donquixote Rosinante
 Fruta Ato Ato no mi
 Giolla
 
-Fruta Sui Sui no mi
+Sui Sui no mi
 Sr. Pink
 
-Fruta Ton Ton no mi
+Ton Ton no mi
 Machvise
 
-Fruta Guru Guru no mi
+Guru Guru no mi
 Buffalo
 
-Fruta Ushi Ushi: Modelo Bisonte
+Ushi Ushi: Modelo Bisonte
 Dalton
 
 Fruta Ushi Ushi: Modelo Jirafa
@@ -235,31 +236,32 @@ Shiryu
 Fruta Noro Noro no mi
 Foxi
 
-Fruta Beri Beri no mi
+Beri Beri no mi
 Very Good
 
-Fruta Sabi Sabi no mi
+
+Sabi Sabi no mi
 Shu
 
-Fruta Shari Shari no mi
+Shari Shari no mi
 Sharinguru
 
-Fruta Shiro Shiro no mi
+Shiro Shiro no mi
 Capone Bege
 
-Fruta Gomu Gomu no mi
+Gomu Gomu no mi
 Monkey D. Luffy
 
 Moku moku no mi
 Smoker
 
-Fruta Horo Horo no mi
+Horo Horo no mi
 Perona
 
-Fruta Mero Mero no mi
+Mero Mero no mi
 Boa Hancock
 
-Fruta Bara Bara no mi
+Bara Bara no mi
 Buggy
 
 Fruta Yami Yami no mi
@@ -361,3 +363,6 @@ Cantidad  /Canon/   /No canon/
 Logias      11          3
 Paramecia   82          33
 Zoan        37          7            
+
+
+

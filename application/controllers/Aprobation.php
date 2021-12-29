@@ -58,7 +58,7 @@ class Aprobation extends CI_Controller
     public function editOC($id)
     {   
         
-        $config['upload_path'] = "./assets/upload/";
+        $config['upload_path'] = "./assets/upload/purshaseOrder/";
         $config['allowed_types'] = '*';
         $config['encrypt_name'] = TRUE;
         $this->load->library('upload', $config);
@@ -116,7 +116,7 @@ class Aprobation extends CI_Controller
             $name = $data['pdf'];
             $this->load->model('AprobationModel');
             if ($response = $this->AprobationModel->deleteOC($id)) {
-                unlink('./assets/upload/' . $name);
+                unlink('./assets/upload/purshaseOrder/' . $name);
                 $this->response->sendJSONResponse(array("msg" => "El archivo fue eliminado con éxito"));
             } else {
                 $this->response->sendJSONResponse(array('status' => "error"), 500);

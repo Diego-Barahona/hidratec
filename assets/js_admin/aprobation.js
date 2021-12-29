@@ -32,14 +32,13 @@ get_data_ap = () =>{
 
 				$( "#date_ap" ).val(data.date_quotation);
 				$( "#date_send_qt" ).val(data.date_send_qt);
-				$("#number_qt").val(data.number_qt);
-			
+				$( "#number_qt").val(data.number_qt);
 			
 			}else{
 				$( "#date_ap" ).val('');
 				$( "#date_send_qt" ).val('');
 				$( "#approve_client" ).prop('checked', false);
-				$("#number_qt").val('');
+				$( "#number_qt").val('');
 	
 			}
 
@@ -48,9 +47,7 @@ get_data_ap = () =>{
 			    $("#user_modify_ap").val(us.user_modify);
 				$("#user_approve_ap").val(us.user_approve);
 				$("#date_modify_ap").val(us.date_modify);
-				$("#date_approve_ap").val(us.date_approve);//fin lineas nuevas
-				$("#date_send_email").val(xhr.response[0].date_send_email );
-			
+				$("#date_approve_ap").val(us.date_approve);//fin lineas nuevas			
 			}else { 
 
 				$("#user_modify_ap").val("");
@@ -58,7 +55,12 @@ get_data_ap = () =>{
 				$("#date_modify_ap").val("");
 				$("#date_approve_ap").val("");
 				
-            }  
+            } 
+			console.log(xhr.response[0]);
+			if(xhr.response[0].date_send_email){
+			   $("#date_send_email").val(xhr.response[0].date_send_email );
+			}
+
         }else{
             console.log("error al cargar datos ");
         }

@@ -90,13 +90,14 @@ class OrdersClient extends CI_Controller
                     $this->response->sendJSONResponse(array('msg' => "Archivo subido con éxito."));
                     $email_info = $this->OrdersModel->approveEmail($id);
                     $emails = $this->OrdersModel->getEmails($id);
-                   /*  $this->phpmailer_lib->send_approve($email_info, $pdf, $emails); */
+                    $this->phpmailer_lib->send_approve($email_info, $pdf, $emails);
                 } else {
                     $this->response->sendJSONResponse(array('msg' => "error"), 500);
                 }
             }else { 
                 unlink('assets/upload/purshaseOrder/'.$pdf);
-                $this->response->sendJSONResponse(array('msg' => "Cargue un formato correcto por favor"), 500); } 
+                $this->response->sendJSONResponse(array('msg' => "Cargue un formato correcto por favor"), 500); 
+            } 
         } else {
             $this->response->sendJSONResponse(array(
                 "msg" => "error",

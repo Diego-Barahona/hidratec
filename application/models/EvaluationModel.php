@@ -9,7 +9,7 @@ class EvaluationModel extends CI_Model {
     public function getEvaluationByOrder($id){
         
         
-        $query= "SELECT e.details , u.full_name , e.user_assignment,e.state,e.export,e.user_interaction,e.priority,e.location
+        $query= "SELECT e.details , u.full_name , e.user_assignment,e.state,e.export,e.user_interaction,e.priority
         FROM evaluation e
         LEFT JOIN user_role ur ON ur.user_id = e.user_assignment
         LEFT JOIN user u ON u.id = ur.user_id

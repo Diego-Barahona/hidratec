@@ -19,6 +19,7 @@ get_orders_eaprobation = () => {
 	xhr.responseType = "json";
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
+			console.log(xhr.response);
             let data = xhr.response.map((u) => {
 				if (u.approve_client == 1) {
 					u.approve_client = "Aprobado";
@@ -57,11 +58,26 @@ const tabla = $('#table-order').DataTable({
         { data: "state" },
         { data: "service" },
         { data: "approve_client" },
-		{
+/* 		{
             defaultContent: `<button type='button' name='btnAprove' class='btn btn-primary'>
                                  Aprobar
 								 <i class="fas fa-thumbs-up"></i>
                               </button>`,
+		}, */
+		{ defaultContent: "ap",
+		   "render": function (data, type, row){
+			if(row.approve_client == 'Pendiente de aprobación'){
+				return `<button type='button' name='btnAprove' class='btn btn-primary'>
+				Aprobar
+				<i class="fas fa-thumbs-up"></i>
+			 	</button>`
+			}else{
+				return `<button type='button' name='' class='btn btn-warning'>
+				Aprobado
+				<i class="fas fa-user-check"></i>
+				</button>`
+			}
+		   }
 		},
         {
             defaultContent: `<button type='button' name='btn_show' class='btn btn-primary'>

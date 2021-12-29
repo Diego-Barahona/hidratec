@@ -175,13 +175,24 @@ getFields = () => {
 };
 
 createOrder = () => {
+
+
+    let location_change = $('#location').val();
+    let location;
+
+    ubicaciones.forEach(function(item) {
+        if(location_change == item.name){
+            location = item.id;
+        }
+    });
+
     let data = {
         ot_number : $('#ot_number').val(),
         enterprise : $('#enterprise').val(),
         service : $('#service').val(),
         component : $('#component').val(),
         priority : $('#priority').val(),
-        location: $('#location').val(),
+        location: location,
         description : $('#description').val(),
         date_admission : $('#date_admission').val(),
         days_quotation : $('#days_quotation').val(),
@@ -192,14 +203,6 @@ createOrder = () => {
         technical_tr : $('#technical_tr').val(),
     }
 
-    let location_change = $('#location').val();
-    let location;
-
-    ubicaciones.forEach(function(item) {
-        if(location_change == item.name){
-            location = item.id;
-        }
-    });
 
     if(location){
 
@@ -281,3 +284,6 @@ addErrorStyle = errores => {
 };
 
 $("#btn").on("click", createOrder);
+
+
+
