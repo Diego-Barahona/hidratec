@@ -35,8 +35,6 @@
               <tr>
                 <th>N° de OT </th>
                 <th>Fecha de realización </th>
-                <th>Cliente</th>
-                <th>Componente </th>
                 <th>Realizado </th>
                 <th>Aprobado por administración</th>
                 <th>Tipo de servicio</th>

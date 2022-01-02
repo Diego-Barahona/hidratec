@@ -36,8 +36,6 @@ getTechnicalReports = () => {
                                 {
                                     number_ot : item.number_ot,
                                     date : date,
-                                    client: item.client,
-                                    component: item.component,
                                     service : item.service,
                                     check_technical: 'Realizado',
                                     check_adm: 'No Aprobado',
@@ -63,6 +61,19 @@ getTechnicalReports = () => {
                             }
                             $aux.push(report);
                         }
+                    }else{
+                        report = 
+                        {
+                            number_ot : item.number_ot,
+                            date : 'Pendiente',
+                            service : item.service,
+                            check_technical: 'No Realizado',
+                            check_adm: 'No Aprobado',
+                            time_init: item.time_init,
+                            aux: item.aux,
+                            time_end: item.time_end,
+                        }
+                        $aux.push(report);
                     }
                 });
     
@@ -89,10 +100,10 @@ const tabla = $('#tableTechnicalReports').DataTable({
 	},
     "columnDefs": [
         {
-            className: "text-center", "targets": [7] ,
+            className: "text-center", "targets": [5] ,
         },
         {
-            className: "text-center", "targets": [8] ,
+            className: "text-center", "targets": [6] ,
         },
         { "width": "5%", "targets": 0 },
         { "width": "10%", "targets": 1 },
@@ -101,15 +112,11 @@ const tabla = $('#tableTechnicalReports').DataTable({
         { "width": "10%", "targets": 4 },
         { "width": "10%", "targets": 5 },
         { "width": "10%", "targets": 6 },
-        { "width": "10%", "targets": 7 },
-        { "width": "10%", "targets": 8 },
 
     ],
 	columns: [
         { data: "number_ot"}, 
         { data: "date" }, 
-        { data: "client" }, 
-        { data: "component" }, 
         { data: "service" }, 
         { data: "check_technical" }, 
         { data: "check_adm" }, 

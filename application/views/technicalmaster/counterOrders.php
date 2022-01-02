@@ -9,7 +9,7 @@
          <div class="card-header text-center" style="font-weight: bold; color:black;" id="evaluation"><strong>0</strong> </div>
          <div class="card-body">
             <h5 class="card-title">Evaluaciones</h5>
-            <button type="button" class="btn btn-outline-light"><i class="fas fa-brain" style="font-size:60px;" id="btnevaluation"></i></button>
+            <button type="button" class="btn btn-outline-light"><i class="fas fa-brain" style="font-size:60px;"></i></i></button>
          </div>
       
       </div>
@@ -18,7 +18,7 @@
          <div class="card-body">
             <h5 class="card-title">Inf. Técnicos </h5>
 
-            <button type="button" class="btn btn-outline-light"><i class="fas fa-file-invoice" style="font-size:60px;" id="btnTechnicalReports"></i></button>
+            <button type="button" class="btn btn-outline-light"><i class="fas fa-file-invoice" style="font-size:60px;"></i></button>
 
          </div>
      
@@ -32,7 +32,7 @@
          <div class="card-body">
             <h5 class="card-title">Reparaciones</h5>
 
-            <button type="button" class="btn btn-outline-light"><i class="fa fa-cogs" style="font-size:60px;" id="btnReparations"></i></button>
+            <button type="button" class="btn btn-outline-light"><i class="fa fa-cogs" style="font-size:60px;"></i></i></button>
 
          </div> 
         
@@ -41,7 +41,7 @@
          <div class="card-header text-center" style="font-weight: bold; color:black" id="hydraulicTest"><strong>0</strong> </div>
          <div class="card-body">
             <h5 class="card-title">Tests hidráulicos</h5>
-            <button type="button" class="btn btn-outline-light"><i class="fas fa-vial" style="font-size:60px;" id="btnHydraulicTest"></i></button>
+            <button type="button" class="btn btn-outline-light"><i class="fas fa-vial" style="font-size:60px;"></i></button>
          </div>
         
       </div>

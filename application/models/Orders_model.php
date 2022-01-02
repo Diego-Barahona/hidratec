@@ -413,10 +413,14 @@ class Orders_model extends CI_Model
         }
     }
 
-    public function createAprobation($id_ot){
+    public function createAprobation($data){
+        $fecha = $data['date_admission'];
+        $dias = $data['days_quotation'];
+        $day_limit = $this-> dayEnd($fecha, $dias);
         $datos_ap = array(
-            'ot_id' => $id_ot,
-            'approve_client'=> false
+            'ot_id' =>$data['ot_number'],
+            'approve_client'=> false,
+            'date_limit' => $day_limit,
         );
 
         return $this->db->insert('quotation', $datos_ap);
@@ -475,6 +479,17 @@ class Orders_model extends CI_Model
         if($this->db->insert('ot_location', $datos_ot_location)) return true; else return false; 
     }
 
+    public function updateApprobation($data){
+        $fecha = $data['date_admission'];
+        $dias = $data['days_quotation'];
+        $day_limit = $this-> dayEnd($fecha, $dias);
+        $datos_ap = array(
+            'date_limit' => $day_limit
+        );
+        $this->db->where('ot_id', $data['ot_number']);
+        $this->db->update('quotation', $datos_ap);
+    }
+
     public function getHistoryStatesByOrder($id){
         $query = "SELECT ot_s.date_update date, u.full_name user, s.name state
         FROM ot_state ot_s
@@ -482,6 +497,22 @@ class Orders_model extends CI_Model
         JOIN state s ON ot_s.state_id = s.id
         WHERE ot_s.ot_id = $id"; 
         return $this->db->query($query)->result_array(); 
+    }
+
+    public function dayEnd($fecha_v, $dias_v){
+        $fecha = $fecha_v;
+        $dias = $dias_v;
+        $datestart= strtotime($fecha);
+        $datesuma = 15 * 86400;
+        $diasemana = date('N',$datestart);
+        $totaldias = $diasemana+$dias;
+        $findesemana = intval( $totaldias/5) *2 ; 
+        $diasabado = $totaldias % 5 ; 
+        if ($diasabado==6) $findesemana++;
+        if ($diasabado==0) $findesemana=$findesemana-2;
+    
+        $total = (($dias+$findesemana) * 86400)+$datestart ; 
+        return (date('Y-m-d', $total));
     }
 }
 

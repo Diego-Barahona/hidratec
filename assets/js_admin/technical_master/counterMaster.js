@@ -163,23 +163,26 @@ get_orders_tr= () => {
 	xhr.addEventListener("load", () => {
 		if (xhr.status === 200) {
             let data =xhr.response;
+            console.log(data);
             data.forEach((item)=>{
              validation = JSON.parse(item.details);
              interaction = JSON.parse(item.user_interaction);
-             if(validation.check_technical == "false"){
-             report = 
-                  {
-                      number_ot : item.number_ot,
-					  priority: item.priority,
-					  component: item.client,
-					  enterprise: item.client,
-					  service: item.service,
-                      date : "Pendiente",
-                  }
-                  
-				  technicalsReports.push(report);
-
-				}
+             if(validation){
+                if(validation.check_technical == "false"){
+                    report = 
+                         {
+                             number_ot : item.number_ot,
+                             priority: item.priority,
+                             component: item.client,
+                             enterprise: item.client,
+                             service: item.service,
+                             date : "Pendiente",
+                         }
+                         
+                         technicalsReports.push(report);
+       
+                       }    
+             }
 			});
          
            $("#technicalReportCount").html(technicalsReports.length);

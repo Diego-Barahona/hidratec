@@ -99,6 +99,29 @@
             </div>
           </div>
       </footer> 
+
+      
+      <footer class="section footer">  
+        <h1><span class="title-work">Seguimiento cotizaciones </span> <i class="fas fa-sign-out-alt btn_exit"></i> </h1>
+          <div class="card-body">
+            <div class="table-responsive ">
+              <table class="table table-bordered" id="table-quotation" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>OT</th>
+                    <th>Componente</th>
+                    <th>Servicio</th>
+                    <th>Fecha de ingreso</th>
+                    <th>Dias Cotización </th>
+                    <th>Fecha límite</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+      </footer> 
+
     </main>  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.1.2/fullpage.js" ></script>
     <script src="<?php echo base_url(); ?>assets/vendor/jquery/jquery.min.js"></script>

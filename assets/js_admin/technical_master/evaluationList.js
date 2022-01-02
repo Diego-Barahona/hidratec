@@ -90,13 +90,11 @@ const tabla = $('#table_ev').DataTable({
 		url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
 	},
     columnDefs: [
-        {className: "text-center", "targets": [7,8,9]},
+        {className: "text-center", "targets": [5,6,7]},
     ],
 	columns: [
         { data: "number_ot"},
         { data: "date" },
-        { data: "enterprise" },
-        { data: "component" },
         { data: "approve_technical"},
         { data: "approve_admin" },
 		{ data: "service" },

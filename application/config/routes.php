@@ -298,7 +298,7 @@ $route['api/projector/kpiQuotation']['GET']='Monitor/chartQuotation';
 $route['api/projector/kpiProduction']['GET']='Monitor/chartProduction';
 $route['api/projector/Production']['GET']='Monitor/getProduction';
 $route['api/projector/getOrders']['GET']='Monitor/getOrders';
-
+$route['api/projector/getQuotation']['GET']='Monitor/getQuotation';
 
 /*------------------------------- Kpi module ------------------------------------ */
 

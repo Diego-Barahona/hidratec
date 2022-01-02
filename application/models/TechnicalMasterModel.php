@@ -42,12 +42,10 @@ class TechnicalMasterModel extends CI_Model
     
 
         $query = "SELECT tr.ot_id number_ot, ot.priority ,tr.user_interaction , tr.details details,
-         e.name client, c.name component, ot.type_service service, tr.time_init, tr.aux, tr.time_end
+         ot.type_service service, tr.time_init, tr.aux, tr.time_end
 
         FROM technical_report tr 
         JOIN ot ON tr.ot_id = ot.id
-        JOIN enterprise e ON ot.enterprise_id = e.id
-        JOIN component c ON ot.component_id = c.id
         JOIN ot_state os ON ot.id = os.ot_id
         JOIN state s ON os.state_id = s.id
         WHERE  tr.state = ? AND tr.user_assignment = ? AND os.id = (
@@ -61,7 +59,7 @@ class TechnicalMasterModel extends CI_Model
             ) 
         "; 
 
-        $res = $this->db->query($query,array(true,$user))->result(); 
+        $res = $this->db->query($query,array('1',$user))->result(); 
 
         if(sizeof($res) != 0){
             return $res;

@@ -55,4 +55,17 @@ class ProjectorModel extends CI_Model
             return $this->db->query($query)->result();
     }
 
+    public function getQuotation(){
+        date_default_timezone_set("America/Santiago");
+        $a = date("Y-m-d");
+        $query = "SELECT ot.date_admission, q.date_limit, ot.id number_ot, ot.days_quote dias_cotizacion, ot.type_service service, c.name component,
+            5 * (DATEDIFF( '$a' , ot.date_admission) DIV 7) + MID('0123455401234434012332340122123401101234000123450', 7 * WEEKDAY(ot.date_admission) + WEEKDAY('$a') + 1, 1) as days_passed
+            FROM ot
+            JOIN component c ON ot.component_id = c.id
+            JOIN quotation q ON ot.id = q.ot_id
+            WHERE q.approve_client = 0  
+            "; 
+            return $this->db->query($query)->result();
+    }
+
 }

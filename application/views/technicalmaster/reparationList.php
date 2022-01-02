@@ -33,8 +33,6 @@
                             <th>Fecha de asignación </th>
                             <th>Fecha Límite </th>
                             <th>Prioridad </th>
-                            <th>Cliente</th>
-                            <th>Componente </th>
                             <th>Tipo de servicio</th>
                             <th>Estado </th>
                             <th>Aprobado por administración </th>

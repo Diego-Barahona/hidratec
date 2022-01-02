@@ -17,20 +17,20 @@
             <div class="card-body">
                 <div class="row mb-2 ">
                     <div class="col-md-3 mb-3 ">
-                        <div class="form-check">
+                        <!-- <div class="form-check">
                                 <input class="form-check-input"  type="checkbox" value="" id="tr_check_adm" disabled>
                                 <label class="form-check-label"  for="tr_check_adm">
                                 Aprobado por administración
                             </label>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="col-md-3 mb-3 ">
-                        <div class="form-check">
+                      <!--   <div class="form-check">
                             <input class="form-check-input"  type="checkbox" value="" id="tr_check_technical" disabled>
                             <label class="form-check-label"  for="tr_check_technical">
                                 Aprobado por técnico master
                             </label>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="col-md-6 mb-3" style='text-align: right;'>
                         <button id="tr_export" style='display: none;' type="button" class="btn btn-primary rounded-circle" data-toggle="popover" data-placement="left"><i class="fas fa-file-export"></i></i></button>
@@ -127,9 +127,31 @@
             </div>
         </div>
     </div>
-    <div class="form-group" style="margin-top: 40px; float:right;">
-        <button class="btn btn-success" value='0' type='button' id="tr_btnEdit"><i id='tr_i_btnEdit' class="fas fa-edit" style="margin-right: 5px;"></i>Editar</button>
-        <button class="btn btn-success" style='display:none' type='button' id="tr_btnSave"><i class="fas fa-save" style="margin-right: 5px;"></i>Guardar Cambios</button>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3" >
+                <div class="form-check">
+                        <input class="form-check-input"  type="checkbox" value="" id="tr_check_adm" disabled>
+                        <label class="form-check-label"  for="tr_check_adm">
+                        Aprobado por administración
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input"  type="checkbox" value="" id="tr_check_technical" disabled>
+                    <label class="form-check-label"  for="tr_check_technical">
+                        Aprobado por técnico master
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row"   style ="float:right;">
+            <div class="form-group" style="margin-top: 40px; float:right;">
+                <button class="btn btn-success" value='0' type='button' id="tr_btnEdit"><i id='tr_i_btnEdit' class="fas fa-edit" style="margin-right: 5px;"></i>Editar</button>
+                <button class="btn btn-success" style='display:none' type='button' id="tr_btnSave"><i class="fas fa-save" style="margin-right: 5px;"></i>Guardar Cambios</button>
+            </div>
+        </div>
     </div>
 </div>
 

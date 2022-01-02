@@ -80,10 +80,10 @@ get_orders_test = () => {
                         if(evaluation.approve_admin ==="false" && evaluation.approve_technical==="true"){ alert_on =true; $alert.push('Aprobar evaluación'); } 
 			 }}}
 
-             if(technical_report){ 
+			  if(technical_report){ 
 				if(item.tr_state){ 
 					if(item.tr_state==1){
-						if(technical_report.check_adm === "false" && technical_report.check_technical==="true"){ alert_on =true; $alert.push('Aprobar reporte técnico');
+						if(technical_report.check_adm === "false" && technical_report.check_technical === "true"|| technical_report.check_adm ==="" && technical_report.check_technical==="true" ) { console.log("entre a report"); alert_on =true; $alert.push('Aprobar reporte técnico');
 						  }
 			  }}}
 				

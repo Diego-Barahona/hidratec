@@ -91,7 +91,7 @@ class Orders extends CI_Controller
                         $this->Orders_model->createHydraulicTest($ot_number);
                     }
 
-                    $this->Orders_model->createAprobation($ot_number);
+                    $this->Orders_model->createAprobation($data);
                     $msg['msg'] = "OT registrado con éxito.";
                     $this->response->sendJSONResponse($msg);
                 /*Fallo en el ingreso */
@@ -233,6 +233,10 @@ class Orders extends CI_Controller
                             $this->Orders_model->desHydraulicTest($data['ot_number']);
                         }
                     }
+
+                    /* Actualizar fecha limite de cotización*/
+                    $this->Orders_model->updateApprobation($data);
+
                     $msg['msg'] = "OT actualizada con éxito.";
                     $this->response->sendJSONResponse($msg);
                 /*Fallo en el ingreso */

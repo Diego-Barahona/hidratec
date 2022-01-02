@@ -63,12 +63,17 @@ public function __construct(){
 
 
 
-
-
-
-
-
-
+    public function getQuotation(){
+        
+        if ($this->accesscontrol->checkAuth()['correct']) {
+            $this->load->model('ProjectorModel');
+            $orders = $this->ProjectorModel->getQuotation();
+       
+            $this->response->sendJSONResponse($orders);
+        } else {
+            $this->response->sendJSONResponse(array('msg' => 'Permisos insuficientes'), 400);
+        }
+    }
 
 
 

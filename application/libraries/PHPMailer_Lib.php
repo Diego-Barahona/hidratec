@@ -86,13 +86,13 @@ class PHPMailer_Lib
         $mail->isSMTP();
         $mail->Host = 'smtp.googlemail.com';  //gmail SMTP server
         $mail->SMTPAuth = true;
-        $mail->Username = 'baraippox835@gmail.com';   //username
-        $mail->Password = 'hnaijciomlee';   //password
+        $mail->Username = 'servicio@hidratec.cl';   //username
+        $mail->Password = 'Ht687364';   //password
         $mail->SMTPSecure = 'ssl';
         $mail->Port = 465; 
         
         
-        $mail->setFrom('baraippox835@gmail.com', 'Sistema recuperación de contraseña Hidratec');
+        $mail->setFrom('servicio@hidratec.cl', 'Sistema recuperación de contraseña Hidratec');
         //$mail->addReplyTo('picamaderomuebles@gmail.com', 'Picamadero');
         
         // Add a recipient
@@ -142,12 +142,12 @@ class PHPMailer_Lib
         $mail->isSMTP();
         $mail->Host = 'smtp.googlemail.com';  //gmail SMTP server
         $mail->SMTPAuth = true;
-        $mail->Username = 'baraippox835@gmail.com';   //username
-        $mail->Password = 'hnaijciomlee';   //password
+        $mail->Username = 'servicio@hidratec.cl';   //username
+        $mail->Password = 'Ht687364';   //password
         $mail->SMTPSecure = 'ssl';
         $mail->Port = 465; 
         
-        $mail->setFrom('baraippox835@gmail.com', 'Sistema de notificación Hidratec');
+        $mail->setFrom('servicio@hidratec.cl', 'Sistema de notificación Hidratec');
         
         // Add a recipient
         for($i=0; $i< count($emails); $i++){

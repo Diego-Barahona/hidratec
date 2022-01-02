@@ -97,7 +97,7 @@ const tabla = $('#tableReparations').DataTable({
 	},
     "columnDefs": [
         {
-            className: "text-center", "targets": [3,8,9,10] ,
+            className: "text-center", "targets": [1,2,3,4,5,6,7] ,
         },
     ],
 	columns: [
@@ -105,8 +105,6 @@ const tabla = $('#tableReparations').DataTable({
         { data: "date" }, 
         { data: "date_reparation" }, 
         { data: "priority" }, 
-        { data: "client" }, 
-        { data: "component" }, 
         { data: "service" }, 
         { data: "check_technical" }, 
         { data: "check_adm" }, 

@@ -32,15 +32,12 @@
                         <tr>
                             <th>N° de OT </th>
                             <th>Fecha de realización </th>
-                            <th>Cliente</th>
-                            <th>Componente </th>
                             <th>Tipo de servicio</th>
                             <th>Estado </th>
                             <th>Aprobado por administración </th>
                             <th>Acción</th>
                             <th>Informe</th>
-                            <th>Imágenes</th>
-                            
+                            <th>Imágenes</th> 
                         </tr>
                         </thead>
                     </table>
